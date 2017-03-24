@@ -24,7 +24,7 @@ Req.fsLevel = lvl => ({
 
 Req.fsType = etypeName => ({
   checkFleet: onNonEmpty( fleet => 
-    et.isEt[etypeName](fleet[0].stype)),
+    et.isESType[etypeName](fleet[0].stype)),
   renderStr: () => "Flagship Type: " + etypeName,
 })
 
@@ -66,13 +66,13 @@ Req.sparkledCount = count => ({
 
 Req.shipTypeCount = (count, etName) => ({
   checkFleet: fleet =>
-    fleet.map( ship => ship.stype ).length >= count,
-  renderStr: () => "Ship Type " + etName + " with count " + count,
+    fleet.filter( ship =>  et.isESType[etName](ship.stype) ).length >= count,
+  renderStr: () => "Ship Type: " + etName + " with count " + count,
 })
 
 // TODO: not sure...
 Req.morale = {
-  checkFleet: fleet => fleet.every( ship => ship.morale >= 30 ),
+  checkFleet: fleet => fleet.every( ship => ship.morale >= 40 ),
   renderStr: () => "Morale",
 }
 
@@ -94,6 +94,21 @@ const checkAllReq = obj => fleet => {
   for (const k in obj)
     ret[k] = checkAllReq(obj[k])(fleet)
   return ret
+}
+
+const collectUnmetReqs = (obj,result) => {
+  if (Array.isArray( obj ))
+    return [].concat(
+      ...obj.map( (x,ind) => collectUnmetReqs(x,result[ind]) ))
+
+  if (obj.checkFleet) {
+    return result ? [] : [obj]
+  }
+
+  const ret = []
+  for (const k in obj)
+    ret.push( collectUnmetReqs(obj[k],result[k]) )
+  return [].concat(... ret)
 }
 
 const mkSTypeReqs = function () {
@@ -381,4 +396,4 @@ const expedReqs = (() => {
   return ret
 })()
 
-export { expedReqs }
+export { expedReqs, checkAllReq, collectUnmetReqs }
