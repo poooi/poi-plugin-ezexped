@@ -6,7 +6,12 @@ import { mkFleetInfoSelector } from './selectors'
 
 const { _, $, $$, FontAwesome } = window
 
-import { Button, ButtonGroup, Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { 
+  Button, 
+  ButtonGroup, 
+  Grid, Row, Col, 
+  ButtonToolbar, DropdownButton, MenuItem,
+  ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs } from './requirement'
 
@@ -16,6 +21,19 @@ const enumFromTo = (frm,to,succ=(x => x+1)) => {
     arr.push( i )
   return arr
 }
+
+class TestComponent extends Component {
+  render() {
+    return (
+      <ButtonToolbar>
+        <DropdownButton bsSize="large" title="Large button" id="dropdown-size-large">
+          <MenuItem eventKey="1">Action</MenuItem>
+          <MenuItem eventKey="2">Another action</MenuItem>
+          <MenuItem eventKey="3">Something else here</MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey="4">Separated link</MenuItem>
+        </DropdownButton>
+      </ButtonToolbar>)}}
 
 class RequirementList extends Component {
   render() {
@@ -76,6 +94,7 @@ class EZExpedMain extends Component {
             fleet={this.props.fleets[ this.state.curFleetId ]}
             expedId={this.state.curExpedId}
         />
+        <TestComponent />
       </div>
     )
   }
