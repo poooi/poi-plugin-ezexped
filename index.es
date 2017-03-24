@@ -6,13 +6,28 @@ import { mkFleetInfoSelector } from './selectors'
 
 const { _, $, $$, FontAwesome } = window
 
-import { Button, ButtonGroup, Grid, Row, Col } from 'react-bootstrap'
+import { Button, ButtonGroup, Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 const enumFromTo = (frm,to,succ=(x => x+1)) => {
   const arr = []
   for (let i=frm; i<=to; i=succ(i))
     arr.push( i )
   return arr
+}
+
+class RequirementList extends Component {
+  render() {
+    return (
+      <ListGroup>
+        { 
+        enumFromTo(1,10).map(x=>
+        <ListGroupItem key={x}>
+          {x + " Exped: " + this.props.expedId}
+        </ListGroupItem>)
+        }
+      </ListGroup>
+    )
+  }
 }
 
 class EZExpedMain extends Component {
@@ -48,15 +63,19 @@ class EZExpedMain extends Component {
                 </Col>)}
            </Row>)}
         </Grid>
+        <RequirementList
+            fleet={this.props.fleets[ this.state.curFleetId ]}
+            expedId={this.state.curExpedId}
+        />
       </div>
     )
   }
 }
 
-// TODO: fixing on first fleet for now for debuging.
-const dbgFleetId = 3
-
 export const reactClass = connect(
-  state => ({
-    fleetInfo: mkFleetInfoSelector(dbgFleetId)(state),
-  }))(EZExpedMain)
+  (state, props) => {
+    return {
+      fleets: [0,1,2,3].map( fleetId =>
+        mkFleetInfoSelector(fleetId)(state)),
+    }
+  })(EZExpedMain)
