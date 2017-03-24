@@ -8,7 +8,7 @@ const { _, $, $$, FontAwesome } = window
 
 import { Button, ButtonGroup, Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 
-import { expedReqs, checkAllReq, collectUnmetReqs } from './requirement'
+import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs } from './requirement'
 
 const enumFromTo = (frm,to,succ=(x => x+1)) => {
   const arr = []
@@ -23,10 +23,13 @@ class RequirementList extends Component {
     const reqObj = expedReqs[ this.props.expedId ]
     const result = checkAllReq(reqObj)(fleet)
     const unmetReqs = collectUnmetReqs(reqObj,result).map( x => x.renderStr() )
+    const reqObjGS = expedGSReqs[ this.props.expedId ]
+    const gsResult = checkAllReq(reqObjGS)(fleet)
+    const unmetReqsGS = collectUnmetReqs(reqObjGS,gsResult).map( x => "GS:"+ x.renderStr() )
     return (
       <ListGroup>
         { 
-          unmetReqs.map((x,ind)=>
+          [...unmetReqs, ...unmetReqsGS].map((x,ind)=>
             <ListGroupItem key={ind}>
               {x}
             </ListGroupItem>)

@@ -396,4 +396,48 @@ const expedReqs = (() => {
   return ret
 })()
 
-export { expedReqs, checkAllReq, collectUnmetReqs }
+
+const enumFromTo = (frm,to,succ=(x => x+1)) => {
+  const arr = []
+  for (let i=frm; i<=to; i=succ(i))
+    arr.push( i )
+  return arr
+}
+
+const expedGSReqs = (() => {
+  const ret = new Array(40+1)
+
+  ret[21] = [
+    Req.sparkledCount(4),
+    Req.drumCount(3+1),
+  ]
+
+  ret[24] = [
+    Req.sparkledCount(4),
+    Req.drumCount(0+4),
+  ]
+
+  ret[37] = [
+    Req.sparkledCount(4),
+    Req.drumCount(4+1),
+  ]
+
+  ret[38] = [
+    Req.sparkledCount(4),
+    Req.drumCount(8+2),
+  ]
+
+  ret[40] = [
+    Req.sparkledCount(4),
+    Req.drumCount(0+4),
+  ]
+  
+  enumFromTo(1,40).map( expedId => {
+    if (!ret[expedId])
+      ret[expedId] = []
+  })
+
+  return ret
+})()
+
+export { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs }
