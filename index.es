@@ -16,6 +16,8 @@ import {
 
 import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs } from './requirement'
 
+import { MaterialIcon } from 'views/components/etc/icon'
+
 const enumFromTo = (frm,to,succ=(x => x+1)) => {
   const arr = []
   for (let i=frm; i<=to; i=succ(i))
@@ -80,11 +82,35 @@ class FleetPicker extends Component {
 class ExpeditionViewer extends Component {
   render() {
     return (
-      <div>
-        <Button onClick={this.props.onClick}>
-          Expedition #{this.props.expedId}
+      <div style={{display: "flex"}}>
+        <div style={{flex: "6", display: "flex", flexDirection: "column"}}>
+          <Button onClick={this.props.onClick}>
+            Expedition #{this.props.expedId}
         </Button>
-        I'll do this later™
+        <div> Time: 19:26 </div>
+        <div><MaterialIcon materialId={1} className="material-icon" /> 60%,
+             <MaterialIcon materialId={2} className="material-icon" /> 50%</div>
+      </div>
+      <div style={{ 
+        flex: "3", display:"flex",
+        justifyContent: "space-around", flexDirection: "column"}}>
+        <div><MaterialIcon materialId={1} className="material-icon" />214</div>
+        <div><MaterialIcon materialId={2} className="material-icon" />748</div>
+      </div>
+      <div style={{flex: "3", display:"flex", 
+                   justifyContent: "space-around", flexDirection: "column"}}>
+        <div><MaterialIcon materialId={3} className="material-icon" />36</div>
+        <div><MaterialIcon materialId={4} className="material-icon" />47</div>
+      </div>
+      <div style={{flex: "2", display:"flex",
+                   justifyContent: "space-around", flexDirection: "column"}}>
+        <div>Prob. Itm</div>
+        <div>GS Itm</div>
+      </div>
+      <Button style={{flex: "1"}}>
+        <FontAwesome name="check-square-o" />
+        GS
+      </Button>
       </div>
     )
   }
@@ -101,7 +127,7 @@ class EZExpedMain extends Component {
   }
   render() {
     return (
-      <div style={{padding: "5px"}}>
+      <div style={{paddingRight: "5px"}}>
         <FleetPicker
             fleetId={this.state.curFleetId}
             onSelectFleet={(x) => this.setState({curFleetId: x}) } />
