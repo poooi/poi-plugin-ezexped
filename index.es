@@ -11,6 +11,7 @@ import {
   ButtonGroup, 
   Grid, Row, Col, 
   ButtonToolbar, DropdownButton, MenuItem,
+  Panel,
   ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs } from './requirement'
@@ -21,16 +22,6 @@ const enumFromTo = (frm,to,succ=(x => x+1)) => {
     arr.push( i )
   return arr
 }
-
-class TestComponent extends Component {
-  render() {
-    return (
-      <ButtonToolbar title="aaa">
-        <DropdownButton bsSize="large">
-          <MenuItem eventKey="1">Action</MenuItem>
-          <MenuItem eventKey="4">Separated link</MenuItem>
-        </DropdownButton>
-      </ButtonToolbar>)}}
 
 class RequirementList extends Component {
   render() {
@@ -54,44 +45,91 @@ class RequirementList extends Component {
   }
 }
 
+// props:
+// - fleetId: current selected fleet id
+// - onSelectFleet: callback when a new fleet is selected
+//   this callback should accept a fleet id
+class FleetPicker extends Component {
+  render() {
+    return (
+      <div style={{ 
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "5px",
+      }}>
+        <ButtonGroup style={{display: "flex", width: "80%"}}>
+          {[0,1,2,3].map((x) =>
+            <Button
+              style={{marginRight: "5px", flex: "1"}}
+              key={x}
+              active={this.props.fleetId === x}
+              onClick={() => this.props.onSelectFleet(x)}>Fleet {x+1}</Button>
+          )}
+        </ButtonGroup>
+        <Button 
+            key="auto-fleet"
+            disabled={true}
+            active={false}>
+          Auto
+        </Button>
+      </div>)}}
+
+// props:
+// - expedId: expedition id
+// - onClick
+class ExpeditionViewer extends Component {
+  render() {
+    return (
+      <div>
+        <Button onClick={this.props.onClick}>
+          Expedition #{this.props.expedId}
+        </Button>
+        I'll do this later™
+      </div>
+    )
+  }
+}
+
 class EZExpedMain extends Component {
   constructor() {
     super()
     this.state = {
       curFleetId: 0,
       curExpedId: 21,
+      expedGridExpanded: true,
     }
   }
   render() {
     return (
-      <div>
-        <ButtonGroup>
-          {[0,1,2,3].map((x) =>
+      <div style={{padding: "5px"}}>
+        <FleetPicker
+            fleetId={this.state.curFleetId}
+            onSelectFleet={(x) => this.setState({curFleetId: x}) } />
+        <ExpeditionViewer
+            expedId={this.state.curExpedId}
+            onClick={() => this.setState({expedGridExpanded: !this.state.expedGridExpanded}) }
+      />
+      <Panel collapsible expanded={this.state.expedGridExpanded}>
+        <div style={{display: "flex"}} >
+          {enumFromTo(1,5).map(world => 
+          <div key={world} 
+               style={{flex: "1", display: "flex", marginRight: "5px", flexDirection: "column"}}>
+            { enumFromTo(1+8*(world-1), 8*world).map(expedId =>
             <Button
-                key={x}
-                active={this.state.curFleetId === x}
-                onClick={() => this.setState({curFleetId: x})}>Fleet {x+1}</Button>
-           )}
-        </ButtonGroup>
-        <Grid>{
-          enumFromTo(1,5).map(world => 
-           <Row className="show-grid" key={world}>
-              {enumFromTo(1+8*(world-1), 8*world).map(expedId =>
-                <Col xs={1} md={1} key={expedId}>
-                  <Button
-                    style={ {width: "40px"} }
-                    active={this.state.curExpedId === expedId}
-                    onClick={ () => this.setState({curExpedId: expedId})}>
-                    {expedId}
-                  </Button>
-                </Col>)}
-           </Row>)}
-        </Grid>
+                key={expedId}
+                style={ {flex: "1", marginBottom: "2px"} }
+                active={this.state.curExpedId === expedId}
+                onClick={ () => this.setState({curExpedId: expedId, expedGridExpanded: false})}>
+              {expedId}
+            </Button>)
+            }
+      </div>)}
+          </div>
+        </Panel>
         <RequirementList
             fleet={this.props.fleets[ this.state.curFleetId ]}
             expedId={this.state.curExpedId}
         />
-        <TestComponent />
       </div>
     )
   }

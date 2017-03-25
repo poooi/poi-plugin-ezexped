@@ -24,7 +24,7 @@
   "homepage": "https://github.com/Javran/poi-plugin-ezexped#readme",
   "poiPlugin": {
     "title": "EZ Exped",
-    "priority": 10,
+    "priority": 5,
     "icon": "check-square-o"
   },
   "dependencies": {
