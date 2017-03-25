@@ -6,31 +6,40 @@
 
 import * as et from './estype'
 
-// expedition id => array of requirements
-// const expedRequirements = new Array(40+1)
+// NOTE: certainly if we allow "checkFleet" to return more info
+// and allow any rendering method to have access to that info,
+// we can give user more details, but there are drawbacks:
+// - now that result of "checkFleet" cannot be directly used as if it's a boolean value
+// - more i18n stuff means more maintenance effort
+// - user rarely needs that much of detail
+// so simply put, this doesn't justify the effort.
 
-// every Requirement has two fields:
+// every Requirement has the following fields:
 // checkFleet: Fleet -> Bool
-// renderStr: any -> String
+// renderStr: any -> String  (TODO: moving this outside.)
+// data: type and parameter regarding this requirement.
 const Req = {}
 
 const onNonEmpty = callback => fleet =>
   fleet.length > 0 && callback(fleet)
 
-Req.fsLevel = lvl => ({
-  checkFleet: onNonEmpty( fleet => fleet[0].level >= lvl ),
-  renderStr: () => "Flagship Level: " + lvl,
+Req.fsLevel = level => ({
+  checkFleet: onNonEmpty( fleet => fleet[0].level >= level ),
+  renderStr: () => "Flagship Level: " + level,
+  data: {type: "FSLevel", level},
 })
 
-Req.fsType = etypeName => ({
+Req.fsType = estypeName => ({
   checkFleet: onNonEmpty( fleet => 
-    et.isESType[etypeName](fleet[0].stype)),
-  renderStr: () => "Flagship Type: " + etypeName,
+    et.isESType[estypeName](fleet[0].stype)),
+  renderStr: () => "Flagship Type: " + estypeName,
+  data: {type: "FSType", estype: estypeName},
 })
 
 Req.shipCount = count => ({
   checkFleet: fleet => fleet.length >= count,
   renderStr: () => "Ship Count: " + count,
+  data: {type: "ShipCount", count},
 })
 
 // equip -> bool
@@ -44,41 +53,47 @@ Req.drumCarrierCount = count => ({
     fleet.filter( ship => 
       ship.equips.some( isDrum )).length >= count,
   renderStr: () => "Drum Carrier Count: " + count,
+  data: {type: "DrumCarrierCount", count},
 })
 
 Req.drumCount = count => ({
   checkFleet: fleet =>
     sum(fleet.map( ship => ship.equips.filter( isDrum ).length )) >= count,
   renderStr: () => "Drum Count: " + count,
+  data: {type: "DrumCount", count},
 })
 
 Req.levelSum = lvlSum => ({
   checkFleet: fleet =>
     sum(fleet.map( ship => ship.level )) >= lvlSum,
   renderStr: () => "Level Sum: " + lvlSum,
+  data: {type: "LevelSum", sum: lvlSum},
 })
 
 Req.sparkledCount = count => ({
   checkFleet: fleet =>
     fleet.filter( ship => ship.morale >= 50 ).length >= count,
   renderStr: () => "Sparkled Ships: " + count,
+  data: {type: "SparkledCount", count},
 })
 
 Req.shipTypeCount = (count, etName) => ({
   checkFleet: fleet =>
     fleet.filter( ship =>  et.isESType[etName](ship.stype) ).length >= count,
   renderStr: () => "Ship Type: " + etName + " with count " + count,
+  data: {type: "ShipType", count, estype: etName },
 })
 
-// TODO: not sure...
-Req.morale = {
-  checkFleet: fleet => fleet.every( ship => ship.morale >= 40 ),
+Req.morale = morale => ({
+  checkFleet: fleet => fleet.every( ship => ship.morale >= morale ),
   renderStr: () => "Morale",
-}
+  data: {type: "Morale", morale},
+})
 
 Req.resupply = {
   checkFleet: fleet => fleet.every( ship => ! ship.needResupply ),
   renderStr: () => "Resupply",
+  data: {type: "Resupply"},
 }
 
 // check a nested structure of requirements against a single fleet
@@ -129,25 +144,31 @@ const mkSTypeReqs = function () {
 const expedReqs = (() => {
   const ret = new Array(40+1)
 
-  const basicReqs = [ Req.morale, Req.resupply ]
+  const basicReqs = [ Req.resupply ]
   const flagshipLevelAndShipCount = (fsl,sc) => 
     [Req.fsLevel(fsl), Req.shipCount(sc)]
+
+  // please check out "docs/morale-check.md" for
+  // all of the following morale magic numbers
 
   // world 1
 
   ret[1] = [
     ...flagshipLevelAndShipCount(1,2),
     ...basicReqs,
+    Req.morale(28),
   ]
 
   ret[2] = [
     ...flagshipLevelAndShipCount(2,4),
     ...basicReqs,
+    Req.morale(13),
   ]
 
   ret[3] = [
     ...flagshipLevelAndShipCount(3,3),
     ...basicReqs,
+    Req.morale(22),
   ]
 
   ret[4] = [
@@ -165,6 +186,7 @@ const expedReqs = (() => {
   ret[6] = [
     ...flagshipLevelAndShipCount(4,4),
     ...basicReqs,
+    Req.morale(1),
   ]
 
   ret[7] = [
