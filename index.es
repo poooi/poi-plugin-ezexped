@@ -4,6 +4,8 @@ import React, { Component, PropTypes } from 'react'
 import * as estype from './estype'
 import { mkFleetInfoSelector } from './selectors'
 import { enumFromTo } from './utils'
+import { FleetPicker } from './FleetPicker'
+import { expedInfo } from './exped-info'
 
 const { _, $, $$, FontAwesome } = window
 
@@ -42,59 +44,32 @@ class RequirementList extends Component {
 }
 
 // props:
-// - fleetId: current selected fleet id
-// - onSelectFleet: callback when a new fleet is selected
-//   this callback should accept a fleet id
-class FleetPicker extends Component {
-  render() {
-    return (
-      <div style={{ 
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: "5px",
-      }}>
-        <ButtonGroup style={{display: "flex", width: "80%"}}>
-          {[0,1,2,3].map((x) =>
-            <Button
-              style={{marginRight: "5px", flex: "1"}}
-              key={x}
-              active={this.props.fleetId === x}
-              onClick={() => this.props.onSelectFleet(x)}>Fleet {x+1}</Button>
-          )}
-        </ButtonGroup>
-        <Button 
-            key="auto-fleet"
-            disabled={true}
-            active={false}>
-          Auto
-        </Button>
-      </div>)}}
-
-// props:
 // - expedId: expedition id
 // - onClick
 class ExpeditionViewer extends Component {
   render() {
+    const info = expedInfo[ this.props.expedId ]
+    console.log(info)
     return (
       <div style={{display: "flex"}}>
         <div style={{flex: "6", display: "flex", flexDirection: "column"}}>
           <Button onClick={this.props.onClick}>
-            Expedition #{this.props.expedId}
+            {this.props.expedId} {info.name}
         </Button>
-        <div> Time: 19:26 </div>
-        <div><MaterialIcon materialId={1} className="material-icon" /> 60%,
-             <MaterialIcon materialId={2} className="material-icon" /> 50%</div>
+        <div>Required Time: 19:26 </div>
+        <div><MaterialIcon materialId={1} className="material-icon" />{info.cost.fuelPercent}%,
+             <MaterialIcon materialId={2} className="material-icon" />{info.cost.ammoPercent}%</div>
       </div>
       <div style={{ 
         flex: "3", display:"flex",
         justifyContent: "space-around", flexDirection: "column"}}>
-        <div><MaterialIcon materialId={1} className="material-icon" />214</div>
-        <div><MaterialIcon materialId={2} className="material-icon" />748</div>
+        <div><MaterialIcon materialId={1} className="material-icon" />{info.resource.fuel}</div>
+        <div><MaterialIcon materialId={2} className="material-icon" />{info.resource.ammo}</div>
       </div>
       <div style={{flex: "3", display:"flex", 
                    justifyContent: "space-around", flexDirection: "column"}}>
-        <div><MaterialIcon materialId={3} className="material-icon" />36</div>
-        <div><MaterialIcon materialId={4} className="material-icon" />47</div>
+        <div><MaterialIcon materialId={3} className="material-icon" />{info.resource.steel}</div>
+        <div><MaterialIcon materialId={4} className="material-icon" />{info.resource.bauxite}</div>
       </div>
       <div style={{flex: "2", display:"flex",
                    justifyContent: "space-around", flexDirection: "column"}}>
@@ -116,12 +91,12 @@ class EZExpedMain extends Component {
     this.state = {
       curFleetId: 0,
       curExpedId: 21,
-      expedGridExpanded: true,
+      expedGridExpanded: false,
     }
   }
   render() {
     return (
-      <div style={{paddingRight: "5px"}}>
+      <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
         <FleetPicker
             fleetId={this.state.curFleetId}
             onSelectFleet={(x) => this.setState({curFleetId: x}) } />
@@ -143,7 +118,7 @@ class EZExpedMain extends Component {
               {expedId}
             </Button>)
             }
-      </div>)}
+          </div>)}
           </div>
         </Panel>
         <RequirementList
