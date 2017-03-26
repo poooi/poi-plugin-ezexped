@@ -1,10 +1,11 @@
 /*
-   
+
    Expedition Requirement
-   
+
  */
 
 import * as et from './estype'
+import { throwWith, enumFromTo } from './utils'
 
 // NOTE: certainly if we allow "checkFleet" to return more info
 // and allow any rendering method to have access to that info,
@@ -16,29 +17,27 @@ import * as et from './estype'
 
 // every Requirement has the following fields:
 // checkFleet: Fleet -> Bool
-// renderStr: any -> String  (TODO: moving this outside.)
-// data: type and parameter regarding this requirement.
+// data: type and parameter regarding this requirement,
+//   type should be the same string that indexed the requirement in Req.
 const Req = {}
 
 const onNonEmpty = callback => fleet =>
   fleet.length > 0 && callback(fleet)
 
-Req.fsLevel = level => ({
+Req.FSLevel = level => ({
   checkFleet: onNonEmpty( fleet => fleet[0].level >= level ),
-  renderStr: () => "Flagship Level: " + level,
   data: {type: "FSLevel", level},
 })
 
-Req.fsType = estypeName => ({
-  checkFleet: onNonEmpty( fleet => 
+
+Req.FSType = estypeName => ({
+  checkFleet: onNonEmpty( fleet =>
     et.isESType[estypeName](fleet[0].stype)),
-  renderStr: () => "Flagship Type: " + estypeName,
   data: {type: "FSType", estype: estypeName},
 })
 
-Req.shipCount = count => ({
+Req.ShipCount = count => ({
   checkFleet: fleet => fleet.length >= count,
-  renderStr: () => "Ship Count: " + count,
   data: {type: "ShipCount", count},
 })
 
@@ -48,53 +47,60 @@ const isDrum = equip => equip.mstId === 75
 // array of number -> number
 const sum = arr => arr.reduce((x,y) => x+y, 0)
 
-Req.drumCarrierCount = count => ({
+Req.DrumCarrierCount = count => ({
   checkFleet: fleet =>
-    fleet.filter( ship => 
+    fleet.filter( ship =>
       ship.equips.some( isDrum )).length >= count,
-  renderStr: () => "Drum Carrier Count: " + count,
   data: {type: "DrumCarrierCount", count},
 })
 
-Req.drumCount = count => ({
+Req.DrumCount = count => ({
   checkFleet: fleet =>
     sum(fleet.map( ship => ship.equips.filter( isDrum ).length )) >= count,
-  renderStr: () => "Drum Count: " + count,
   data: {type: "DrumCount", count},
 })
 
-Req.levelSum = lvlSum => ({
+Req.LevelSum = lvlSum => ({
   checkFleet: fleet =>
     sum(fleet.map( ship => ship.level )) >= lvlSum,
-  renderStr: () => "Level Sum: " + lvlSum,
   data: {type: "LevelSum", sum: lvlSum},
 })
 
-Req.sparkledCount = count => ({
+Req.SparkledCount = count => ({
   checkFleet: fleet =>
     fleet.filter( ship => ship.morale >= 50 ).length >= count,
-  renderStr: () => "Sparkled Ships: " + count,
   data: {type: "SparkledCount", count},
 })
 
-Req.shipTypeCount = (count, etName) => ({
+Req.ShipTypeCount = (count, etName) => ({
   checkFleet: fleet =>
     fleet.filter( ship =>  et.isESType[etName](ship.stype) ).length >= count,
-  renderStr: () => "Ship Type: " + etName + " with count " + count,
-  data: {type: "ShipType", count, estype: etName },
+  data: {type: "ShipTypeCount", count, estype: etName },
 })
 
-Req.morale = morale => ({
+Req.Morale = morale => ({
   checkFleet: fleet => fleet.every( ship => ship.morale >= morale ),
-  renderStr: () => "Morale",
   data: {type: "Morale", morale},
 })
 
-Req.resupply = {
+Req.Resupply = {
   checkFleet: fleet => fleet.every( ship => ! ship.needResupply ),
-  renderStr: () => "Resupply",
   data: {type: "Resupply"},
 }
+
+const renderReqData = data =>
+    data.type === "FSLevel" ? `Flagship Level: ${data.level}`
+  : data.type === "FSType" ? `Flagship Type: ${data.estype}`
+  : data.type === "ShipCount" ? `Ship Count: ${data.count}`
+  : data.type === "DrumCarrierCount" ? `Drum Carrier Count: ${data.count}`
+  : data.type === "DrumCount" ? `Drum Count: ${data.count}`
+  : data.type === "LevelSum" ? `Level Sum: ${data.sum}`
+  : data.type === "SparkledCount" ? `Sparkled Ships: ${data.count}`
+  : data.type === "ShipTypeCount" ?
+      `Fleet should contain ${data.count} ships of type ${data.estype}`
+  : data.type === "Morale" ? `Morale: >=${data.morale}`
+  : data.type === "Resupply" ? `Fleet Needs Resupply`
+  : throwWith (`Req of unknown type ${data.type}, full dump: ${JSON.stringify(data)}`)
 
 // check a nested structure of requirements against a single fleet
 // a requirement object is recognized by testing whether "checkFleet" exists
@@ -136,7 +142,7 @@ const mkSTypeReqs = function () {
     const etName = arguments[ind+1]
     if (! Number.isInteger( count ))
       throw `expecting an int on arg list (offset ${ind})`
-    ret.push( Req.shipTypeCount(count,etName) )
+    ret.push( Req.ShipTypeCount(count,etName) )
   }
   return ret
 }
@@ -144,9 +150,9 @@ const mkSTypeReqs = function () {
 const expedReqs = (() => {
   const ret = new Array(40+1)
 
-  const basicReqs = [ Req.resupply ]
-  const flagshipLevelAndShipCount = (fsl,sc) => 
-    [Req.fsLevel(fsl), Req.shipCount(sc)]
+  const basicReqs = [ Req.Resupply ]
+  const flagshipLevelAndShipCount = (fsl,sc) =>
+    [Req.FSLevel(fsl), Req.ShipCount(sc)]
 
   // please check out "docs/morale-check.md" for
   // all of the following morale magic numbers
@@ -156,19 +162,19 @@ const expedReqs = (() => {
   ret[1] = [
     ...flagshipLevelAndShipCount(1,2),
     ...basicReqs,
-    Req.morale(28),
+    Req.Morale(28),
   ]
 
   ret[2] = [
     ...flagshipLevelAndShipCount(2,4),
     ...basicReqs,
-    Req.morale(13),
+    Req.Morale(13),
   ]
 
   ret[3] = [
     ...flagshipLevelAndShipCount(3,3),
     ...basicReqs,
-    Req.morale(22),
+    Req.Morale(22),
   ]
 
   ret[4] = [
@@ -186,7 +192,7 @@ const expedReqs = (() => {
   ret[6] = [
     ...flagshipLevelAndShipCount(4,4),
     ...basicReqs,
-    Req.morale(1),
+    Req.Morale(1),
   ]
 
   ret[7] = [
@@ -277,31 +283,31 @@ const expedReqs = (() => {
 
   ret[21] = [
     ...flagshipLevelAndShipCount(15,5),
-    Req.levelSum(30),
+    Req.LevelSum(30),
     mkSTypeReqs(1,"CL",4,"DD"),
-    Req.drumCarrierCount(3),
+    Req.DrumCarrierCount(3),
     ...basicReqs,
   ]
 
   ret[22] = [
     ...flagshipLevelAndShipCount(30,6),
-    Req.levelSum(45),
+    Req.LevelSum(45),
     mkSTypeReqs(1,"CA",1,"CL",2,"DD"),
     ...basicReqs,
   ]
 
   ret[23] = [
     ...flagshipLevelAndShipCount(50,6),
-    Req.levelSum(200),
+    Req.LevelSum(200),
     mkSTypeReqs(2,"BBV",2,"DD"),
     ...basicReqs,
   ]
 
   ret[24] = [
     ...flagshipLevelAndShipCount(50,6),
-    Req.levelSum(200),
+    Req.LevelSum(200),
     mkSTypeReqs(1,"CL",4,"DD"),
-    Req.fsType("CL"),
+    Req.FSType("CL"),
     ...basicReqs,
   ]
 
@@ -345,7 +351,7 @@ const expedReqs = (() => {
 
   ret[31] = [
     ...flagshipLevelAndShipCount(60,4),
-    Req.levelSum(200),
+    Req.LevelSum(200),
     mkSTypeReqs(4,"SSLike"),
     ...basicReqs,
   ]
@@ -353,7 +359,7 @@ const expedReqs = (() => {
   ret[32] = [
     ...flagshipLevelAndShipCount(5,3),
     mkSTypeReqs(1,"CT",2,"DD"),
-    Req.fsType("CT"),
+    Req.FSType("CT"),
     ...basicReqs,
   ]
 
@@ -385,75 +391,67 @@ const expedReqs = (() => {
 
   ret[37] = [
     ...flagshipLevelAndShipCount(50,6),
-    Req.levelSum(200),
+    Req.LevelSum(200),
     mkSTypeReqs(1,"CL",5,"DD"),
-    Req.drumCarrierCount(4),
+    Req.DrumCarrierCount(4),
     ...basicReqs,
   ]
 
   ret[38] = [
     ...flagshipLevelAndShipCount(65,6),
-    Req.levelSum(240),
+    Req.LevelSum(240),
     mkSTypeReqs(5,"DD"),
-    Req.drumCarrierCount(4),
-    Req.drumCount(8),
+    Req.DrumCarrierCount(4),
+    Req.DrumCount(8),
     ...basicReqs,
   ]
 
   ret[39] = [
     ...flagshipLevelAndShipCount(3,5),
-    Req.levelSum(180),
+    Req.LevelSum(180),
     mkSTypeReqs(1,"AS",4,"SSLike"),
     ...basicReqs,
   ]
 
   ret[40] = [
     ...flagshipLevelAndShipCount(25,6),
-    Req.levelSum(150),
+    Req.LevelSum(150),
     mkSTypeReqs(1,"CL",2,"AV",2,"DD"),
-    Req.fsType("CL"),
+    Req.FSType("CL"),
     ...basicReqs,
   ]
-  
+
   return ret
 })()
-
-
-const enumFromTo = (frm,to,succ=(x => x+1)) => {
-  const arr = []
-  for (let i=frm; i<=to; i=succ(i))
-    arr.push( i )
-  return arr
-}
 
 const expedGSReqs = (() => {
   const ret = new Array(40+1)
 
   ret[21] = [
-    Req.sparkledCount(4),
-    Req.drumCount(3+1),
+    Req.SparkledCount(4),
+    Req.DrumCount(3+1),
   ]
 
   ret[24] = [
-    Req.sparkledCount(4),
-    Req.drumCount(0+4),
+    Req.SparkledCount(4),
+    Req.DrumCount(0+4),
   ]
 
   ret[37] = [
-    Req.sparkledCount(4),
-    Req.drumCount(4+1),
+    Req.SparkledCount(4),
+    Req.DrumCount(4+1),
   ]
 
   ret[38] = [
-    Req.sparkledCount(4),
-    Req.drumCount(8+2),
+    Req.SparkledCount(4),
+    Req.DrumCount(8+2),
   ]
 
   ret[40] = [
-    Req.sparkledCount(4),
-    Req.drumCount(0+4),
+    Req.SparkledCount(4),
+    Req.DrumCount(0+4),
   ]
-  
+
   enumFromTo(1,40).map( expedId => {
     if (!ret[expedId])
       ret[expedId] = []
@@ -462,4 +460,9 @@ const expedGSReqs = (() => {
   return ret
 })()
 
-export { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs }
+export {
+  expedReqs,
+  expedGSReqs,
+  checkAllReq,
+  collectUnmetReqs,
+  renderReqData }

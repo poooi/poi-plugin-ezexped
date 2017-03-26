@@ -3,37 +3,31 @@ import React, { Component, PropTypes } from 'react'
 
 import * as estype from './estype'
 import { mkFleetInfoSelector } from './selectors'
+import { enumFromTo } from './utils'
 
 const { _, $, $$, FontAwesome } = window
 
 import { 
   Button, 
-  ButtonGroup, 
+  ButtonGroup,
   Grid, Row, Col, 
   ButtonToolbar, DropdownButton, MenuItem,
   Panel,
   ListGroup, ListGroupItem } from 'react-bootstrap'
 
-import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs } from './requirement'
+import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs, renderReqData } from './requirement'
 
 import { MaterialIcon } from 'views/components/etc/icon'
-
-const enumFromTo = (frm,to,succ=(x => x+1)) => {
-  const arr = []
-  for (let i=frm; i<=to; i=succ(i))
-    arr.push( i )
-  return arr
-}
 
 class RequirementList extends Component {
   render() {
     const fleet = this.props.fleet
     const reqObj = expedReqs[ this.props.expedId ]
     const result = checkAllReq(reqObj)(fleet)
-    const unmetReqs = collectUnmetReqs(reqObj,result).map( x => x.renderStr() )
+    const unmetReqs = collectUnmetReqs(reqObj,result).map( x => renderReqData(x.data) )
     const reqObjGS = expedGSReqs[ this.props.expedId ]
     const gsResult = checkAllReq(reqObjGS)(fleet)
-    const unmetReqsGS = collectUnmetReqs(reqObjGS,gsResult).map( x => "GS:"+ x.renderStr() )
+    const unmetReqsGS = collectUnmetReqs(reqObjGS,gsResult).map( x => "GS:"+ renderReqData(x.data) )
     return (
       <ListGroup>
         { 
@@ -137,7 +131,7 @@ class EZExpedMain extends Component {
       />
       <Panel collapsible expanded={this.state.expedGridExpanded}>
         <div style={{display: "flex"}} >
-          {enumFromTo(1,5).map(world => 
+          {enumFromTo(1,5).map(world =>
           <div key={world} 
                style={{flex: "1", display: "flex", marginRight: "5px", flexDirection: "column"}}>
             { enumFromTo(1+8*(world-1), 8*world).map(expedId =>
