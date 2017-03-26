@@ -3,11 +3,20 @@ import React, { Component } from 'react'
 import { expedInfo } from './exped-info'
 import { throwWith } from './utils'
 
-import {
-  Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 import { MaterialIcon } from 'views/components/etc/icon'
+import { resolveTime } from 'views/utils/tools'
+
 const { FontAwesome } = window
+
+const formatTime = mins => {
+  const str = resolveTime(mins * 60)
+  const matchResult = str.match(/^(.*):\d{2}$/)
+  if (!matchResult)
+    throw `failed while trying to truncate seconds from ${str}`
+  return matchResult[1]
+}
 
 class IconAndLabel extends Component {
   render() {
@@ -45,7 +54,6 @@ class ExpeditionViewer extends Component {
       flexDirection: "column",
       marginLeft: "10px",
     }
-    console.log(info)
     const hasNormalItem = info.itemNormal
     const hasGreatSuccessItem = this.props.greatSuccess && info.itemGreatSuccess
     const prettyRange = (x,y) => x === y ? `${x}` : `${x} ~ ${y}`
@@ -55,8 +63,9 @@ class ExpeditionViewer extends Component {
           <Button onClick={this.props.onClickExped}>
             {this.props.expedId} {info.name}
           </Button>
-          <div>Required Time (mins): 19:26</div>
+          <div>Required Time (mins): {formatTime(info.timeInMin)}</div>
           <div style={{display: "flex"}}>
+            <div style={{marginRight: "2px"}}>Cost:</div>
             <IconAndLabel
                 icon={mkMat(1)} label={`${info.cost.fuelPercent}%`} />
             <IconAndLabel
