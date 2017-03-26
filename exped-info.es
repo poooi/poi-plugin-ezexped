@@ -1,6 +1,8 @@
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
+import { throwWith } from './utils'
+
 const expedInfoRaw = readJsonSync(join(__dirname, 'assets', 'exped-info.json'))
 
 const expedInfo = (() => {
@@ -9,10 +11,19 @@ const expedInfo = (() => {
   expedInfoRaw.map( data => {
     const id = data.api_id
     const toPercent = x => Math.round(100 * x)
+    const itemIdToName = x =>
+        x === 1 ? "Bucket"
+      : x === 2 ? "Flamethrower"
+      : x === 3 ? "DevMat"
+      : x === 10 ? "FCoinSmall"
+      : x === 11 ? "FCoinMedium"
+      : x === 12 ? "FCoinLarge"
+      : throwWith(`unknown item id: ${x}`)
+      
     const mkItem = itemData =>
       itemData[0] === 0 
         ? null
-        : { itemId: itemData[0], itemMaxCount: itemData[1] }
+        : { itemId: itemIdToName(itemData[0]), itemMaxCount: itemData[1] }
 
     ret[id] = {
       id,
