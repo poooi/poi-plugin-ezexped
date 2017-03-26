@@ -6,6 +6,7 @@ import { mkFleetInfoSelector } from './selectors'
 import { enumFromTo } from './utils'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
+import { ExpeditionTable } from './ExpeditionTable'
 
 const { _, $, $$, FontAwesome } = window
 
@@ -47,8 +48,8 @@ class EZExpedMain extends Component {
   constructor() {
     super()
     this.state = {
-      curFleetId: 0,
-      curExpedId: 21,
+      fleetId: 0,
+      expedId: 21,
       expedGridExpanded: false,
       greatSuccess: true,
     }
@@ -57,34 +58,24 @@ class EZExpedMain extends Component {
     return (
       <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
         <FleetPicker
-            fleetId={this.state.curFleetId}
-            onSelectFleet={(x) => this.setState({curFleetId: x}) } />
+            fleetId={this.state.fleetId}
+            onSelectFleet={(x) => this.setState({fleetId: x}) } />
         <ExpeditionViewer
-            expedId={this.state.curExpedId}
+            expedId={this.state.expedId}
             greatSuccess={this.state.greatSuccess}
             onClickExped={() => this.setState({expedGridExpanded: !this.state.expedGridExpanded}) }
             onClickGS={() => this.setState({greatSuccess: !this.state.greatSuccess})}
       />
       <Panel collapsible expanded={this.state.expedGridExpanded}>
-        <div style={{display: "flex"}} >
-          {enumFromTo(1,5).map(world =>
-          <div key={world}
-               style={{flex: "1", display: "flex", marginRight: "5px", flexDirection: "column"}}>
-            { enumFromTo(1+8*(world-1), 8*world).map(expedId =>
-            <Button
-                key={expedId}
-                style={ {flex: "1", marginBottom: "2px"} }
-                active={this.state.curExpedId === expedId}
-                onClick={ () => this.setState({curExpedId: expedId, expedGridExpanded: false})}>
-              {expedId}
-            </Button>)
-            }
-          </div>)}
-          </div>
+        <ExpeditionTable
+            expedId={this.state.expedId}
+            onSelectExped={ (newExpedId) =>
+              this.setState({expedId: newExpedId, expedGridExpanded: false}) }
+        />
         </Panel>
         <RequirementList
-            fleet={this.props.fleets[ this.state.curFleetId ]}
-            expedId={this.state.curExpedId}
+            fleet={this.props.fleets[ this.state.fleetId ]}
+            expedId={this.state.expedId}
         />
       </div>
     )
