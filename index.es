@@ -5,12 +5,11 @@ import { mkFleetInfoSelector } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
 import { ExpeditionTable } from './ExpeditionTable'
+import { RequirementViewer } from './RequirementViewer'
 
 import {
   Panel,
-  ListGroup, ListGroupItem } from 'react-bootstrap'
-
-import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs, renderReqData } from './requirement'
+ } from 'react-bootstrap'
 
 import * as storage from './storage'
 
@@ -27,30 +26,9 @@ import * as storage from './storage'
    - record last exped through KCAPI responses
    - gs flag should be able to toggle between GS / normal calculation
    - gs flag should be able to toggle GS conditions
+   - utilize React PropTypes
 
  */
-
-class RequirementList extends Component {
-  render() {
-    const fleet = this.props.fleet
-    const reqObj = expedReqs[ this.props.expedId ]
-    const result = checkAllReq(reqObj)(fleet)
-    const unmetReqs = collectUnmetReqs(reqObj,result).map( x => renderReqData(x.data) )
-    const reqObjGS = expedGSReqs[ this.props.expedId ]
-    const gsResult = checkAllReq(reqObjGS)(fleet)
-    const unmetReqsGS = collectUnmetReqs(reqObjGS,gsResult).map( x => "GS:"+ renderReqData(x.data) )
-    return (
-      <ListGroup>
-        {
-          [...unmetReqs, ...unmetReqsGS].map((x,ind)=>
-            <ListGroupItem key={ind}>
-              {x}
-            </ListGroupItem>)
-        }
-      </ListGroup>
-    )
-  }
-}
 
 class EZExpedMain extends Component {
   constructor() {
@@ -84,9 +62,10 @@ class EZExpedMain extends Component {
                   config: storage.setSelectedExped(this.state.fleetId, newExpedId),
                   expedGridExpanded: false}) } />
         </Panel>
-        <RequirementList
+        <RequirementViewer
             fleet={this.props.fleets[ this.state.fleetId ]}
             expedId={expedId}
+            greatSuccess={gsFlag}
         />
       </div>
     )
