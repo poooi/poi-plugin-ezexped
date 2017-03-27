@@ -58,7 +58,7 @@ class ExpeditionViewer extends Component {
     const hasGreatSuccessItem = this.props.greatSuccess && info.itemGreatSuccess
     const prettyRange = (x,y) => x === y ? `${x}` : `${x} ~ ${y}`
     return (
-      <div style={{display: "flex"}}>
+      <div style={{display: "flex", marginBottom: "5px"}}>
         <div style={{flex: "6", display: "flex", flexDirection: "column"}}>
           <Button onClick={this.props.onClickExped}>
             {this.props.expedId} {info.name}

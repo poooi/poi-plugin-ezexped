@@ -54,7 +54,7 @@ class EZExpedMain extends Component {
               this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
             onClickGS={() =>               
               this.setState({config: storage.modifyGSFlag(expedId, x => !x)})}/>
-        <Panel collapsible expanded={this.state.expedGridExpanded}>
+        <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
           <ExpeditionTable
               expedId={expedId}
               onSelectExped={ (newExpedId) =>                
