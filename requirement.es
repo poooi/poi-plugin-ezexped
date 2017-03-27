@@ -72,6 +72,13 @@ Req.SparkledCount = count => ({
   data: {type: "SparkledCount", count},
 })
 
+// same as Sparkled Count but just a recommendation
+Req.RecommendSparkledCount = count => ({
+  checkFleet: fleet =>
+    fleet.filter( ship => ship.morale >= 50 ).length >= count,
+  data: {type: "RecommendSparkledCount", count},
+})
+
 Req.ShipTypeCount = (count, etName) => ({
   checkFleet: fleet =>
     fleet.filter( ship =>  et.isESType[etName](ship.stype) ).length >= count,
@@ -96,6 +103,8 @@ const renderReqData = data =>
   : data.type === "DrumCount" ? `Drum Count: ${data.count}`
   : data.type === "LevelSum" ? `Level Sum: ${data.sum}`
   : data.type === "SparkledCount" ? `Sparkled Ships: ${data.count}`
+  : data.type === "RecommendSparkledCount" ? 
+      `Recommended to have at least ${data.count} sparked ships`
   : data.type === "ShipTypeCount" ?
       `Fleet should contain ${data.count} ships of type ${data.estype}`
   : data.type === "Morale" ? `Morale: >=${data.morale}`
@@ -460,7 +469,7 @@ const expedGSReqs = (() => {
 
   enumFromTo(1,40).map( expedId => {
     if (!ret[expedId])
-      ret[expedId] = []
+      ret[expedId] = [Req.RecommendSparkledCount(4)]
   })
 
   return ret

@@ -17,7 +17,6 @@ import * as storage from './storage'
 
    TODO
 
-   - render requirements
    - landing craft-related calculation, on screen & on tooltip
    - consumption estimation
    - in tooltip of fleet tab, list ships in that fleet
@@ -25,7 +24,6 @@ import * as storage from './storage'
    - tab autoswitch
    - record last exped through KCAPI responses
    - gs flag should be able to toggle between GS / normal calculation
-   - gs flag should be able to toggle GS conditions
    - utilize React PropTypes
 
  */
