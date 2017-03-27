@@ -22,18 +22,21 @@ import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs, renderReqData } 
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
+import * as storage from './storage'
+
 /*
 
    TODO
 
    - render requirements
-   - save to localStorage: fleet => last exped mappings, exped => expect GS flag mappings
    - landing craft-related calculation, on screen & on tooltip
    - consumption estimation
    - in tooltip of fleet tab, list ships in that fleet
    - Expedition Grid, give color to each of them, green when passing all checks (resupply check ignored)
    - tab autoswitch
    - record last exped through KCAPI responses
+   - gs flag should be able to toggle between GS / normal calculation
+   - gs flag should be able to toggle GS conditions
 
  */
 
@@ -64,33 +67,36 @@ class EZExpedMain extends Component {
     super()
     this.state = {
       fleetId: 0,
-      expedId: 21,
       expedGridExpanded: false,
-      greatSuccess: true,
+      config: storage.load(),
     }
   }
   render() {
+    const expedId = this.state.config.selectedExpeds[this.state.fleetId]
+    const gsFlag = this.state.config.gsFlags[expedId]
     return (
       <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
         <FleetPicker
             fleetId={this.state.fleetId}
-            onSelectFleet={(x) => this.setState({fleetId: x}) } />
+            onSelectFleet={(x) => this.setState({fleetId: x})} />
         <ExpeditionViewer
-            expedId={this.state.expedId}
-            greatSuccess={this.state.greatSuccess}
-            onClickExped={() => this.setState({expedGridExpanded: !this.state.expedGridExpanded}) }
-            onClickGS={() => this.setState({greatSuccess: !this.state.greatSuccess})}
-      />
-      <Panel collapsible expanded={this.state.expedGridExpanded}>
-        <ExpeditionTable
-            expedId={this.state.expedId}
-            onSelectExped={ (newExpedId) =>
-              this.setState({expedId: newExpedId, expedGridExpanded: false}) }
-        />
+            expedId={expedId}
+            greatSuccess={gsFlag}
+            onClickExped={() => 
+              this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
+            onClickGS={() =>               
+              this.setState({config: storage.modifyGSFlag(expedId, x => !x)})}/>
+        <Panel collapsible expanded={this.state.expedGridExpanded}>
+          <ExpeditionTable
+              expedId={expedId}
+              onSelectExped={ (newExpedId) =>                
+                this.setState({
+                  config: storage.setSelectedExped(this.state.fleetId, newExpedId),
+                  expedGridExpanded: false}) } />
         </Panel>
         <RequirementList
             fleet={this.props.fleets[ this.state.fleetId ]}
-            expedId={this.state.expedId}
+            expedId={expedId}
         />
       </div>
     )
