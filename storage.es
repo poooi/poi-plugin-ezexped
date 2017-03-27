@@ -4,8 +4,8 @@
 
    the structure will be:
 
-   - lastExped: a mapping from fleetId (0..3) to a number or null, 
-     indicating the last expedition this fleetId has went to
+   - selectedExpeds: a mapping from fleetId (0..3) to a number,
+     indicating the selected expedition for this fleetId
    - gsFlags: a mapping from expedition id (1..40) to a boolean,
      indicating whether the user is expecting great success
    
@@ -15,9 +15,9 @@ const PLUGIN_KEY = "plugin-ezexped"
 
 // generate a config with default values
 const defConfig = (() => {
-  const lastExped = new Array(4).fill(null)
+  const selectedExpeds = new Array(4).fill(1)
   const gsFlags = new Array(40+1).fill(false)
-  return { lastExped, gsFlags }
+  return { selectedExpeds, gsFlags }
 })()
 
 const load = () =>
@@ -37,36 +37,39 @@ const modifyStorage = modifier => {
 
 // copy a config object
 const cloneConfig = config => ({
-  lastExped: [...config.lastExped],
+  selectedExpeds: [...config.selectedExpeds],
   gsFlags: [...config.gsFlags],
 })
 
-const modifyLastExped = (fleetId,modifier) =>
+const modifySelectedExped = (fleetId,modifier) =>
   modifyStorage( config => {
     const newConfig = cloneConfig( config )
-    newConfig.lastExped[fleetId] = modifier( config.lastExped[fleetId] )
+    newConfig.selectedExpeds[fleetId] = modifier( config.selectedExpeds[fleetId] )
     return newConfig })
 
-const modifyGSFlags = (expedId,modifier) =>
+const modifyGSFlag = (expedId,modifier) =>
   modifyStorage( config => {
     const newConfig = cloneConfig( config )
     newConfig.gsFlags[expedId] = modifier( config.gsFlags[expedId] )
     return newConfig })
 
-// modify lastExped of the specified fleet, 
+// modify selectedExped of the specified fleet, 
 // return full config structure after modification
-const setLastExped = (fleetId, newVal) =>
-  modifyLastExped(fleetId, () => newVal)
+const setSelectedExped = (fleetId, newVal) =>
+  modifySelectedExped(fleetId, () => newVal)
 
 // modify gsFlag of the specified expedition,
 // return full config structure after modification
-const setGSFlags = (expedId, newVal) =>
-  modifyGSFlags(expedId, () => newVal)
+const setGSFlag = (expedId, newVal) =>
+  modifyGSFlag(expedId, () => newVal)
 
 export { 
   load,
   modifyStorage,
 
-  setLastExped,
-  setGSFlags,
+  modifySelectedExped,
+  setSelectedExped,
+
+  modifyGSFlag,
+  setGSFlag,
 }
