@@ -1,26 +1,16 @@
 import { connect } from 'react-redux'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
-import * as estype from './estype'
 import { mkFleetInfoSelector } from './selectors'
-import { enumFromTo } from './utils'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
 import { ExpeditionTable } from './ExpeditionTable'
 
-const { _, $, $$, FontAwesome } = window
-
 import {
-  Button,
-  ButtonGroup,
-  Grid, Row, Col,
-  ButtonToolbar, DropdownButton, MenuItem,
   Panel,
   ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs, renderReqData } from './requirement'
-
-import { MaterialIcon } from 'views/components/etc/icon'
 
 import * as storage from './storage'
 
