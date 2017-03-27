@@ -147,6 +147,12 @@ const mkSTypeReqs = function () {
   return ret
 }
 
+// INVARIANT: for requirement of each expedition:
+// - top-level is guaranteed to be an array
+// - ShipTypeCount requirement is always grouped by a nested array
+// - every object should be either a Req object, or an array.
+//   if it is an array, then all elements of it should be ShipTypeCount
+// - every element of the list is of a unique type
 const expedReqs = (() => {
   const ret = new Array(40+1)
 
