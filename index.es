@@ -22,6 +22,21 @@ import { expedReqs, expedGSReqs, checkAllReq, collectUnmetReqs, renderReqData } 
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
+/*
+
+   TODO
+
+   - render requirements
+   - save to localStorage: fleet => last exped mappings, exped => expect GS flag mappings
+   - landing craft-related calculation, on screen & on tooltip
+   - consumption estimation
+   - in tooltip of fleet tab, list ships in that fleet
+   - Expedition Grid, give color to each of them, green when passing all checks (resupply check ignored)
+   - tab autoswitch
+   - record last exped through KCAPI responses
+
+ */
+
 class RequirementList extends Component {
   render() {
     const fleet = this.props.fleet
