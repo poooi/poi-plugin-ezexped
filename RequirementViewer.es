@@ -24,7 +24,7 @@ class CheckResultBox extends Component {
                 borderRadius: "10px", display: "flex",
                 visibility: this.props.visible ? "visible" : "hidden"}}>
         <FontAwesome
-            style={{marginRight: "5px"}}
+            style={{marginRight: "5px", marginTop: "2px"}}
             name={this.props.ready ? "check-square-o" : "square-o"} />
         <div>{this.props.content}</div>
       </Button>
