@@ -16,7 +16,7 @@ import {
 import * as storage from './storage'
 
 /*
-
+   
    TODO (non-urgent)
 
    - tab autoswitch
@@ -46,6 +46,7 @@ class EZExpedMain extends Component {
               fleets={this.props.fleets}
               fleetsExtra={this.props.fleetsExtra}
               fleetId={this.state.fleetId}
+              config={this.state.config}
               onSelectFleet={(x) => this.setState({fleetId: x})} />
           <ExpeditionViewer
               expedId={expedId}

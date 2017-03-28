@@ -6,10 +6,13 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
+import { expedReqs, expedGSReqs, checkAllReq, collapseResults } from './requirement'
+
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
 // - fleetsExtra: array of fleet extra info
+// - config: for looking up fleetId => expedId => greatSuccess
 // - onSelectFleet: callback when a new fleet is selected
 //   this callback should accept a fleet id
 class FleetPicker extends Component {
@@ -26,6 +29,48 @@ class FleetPicker extends Component {
         </div>
       </Tooltip>)
     }
+
+    // Button color:
+    // - available:
+    //   - first fleet always green 
+    //     (TODO for combined fleet, second fleet is always green too)
+    //   - if everything is satisfied: green
+    //   - if just needs resupply: yellow
+    //   - otherwise red
+    // - not available: always blue
+    const mkButton = fleetId => {
+      const fleet = this.props.fleets[fleetId]
+      const fleetExtra = this.props.fleetsExtra[fleetId]
+      const expedId = this.props.config.selectedExpeds[fleetId]
+      const greatSuccess = this.props.config.gsFlags[expedId]
+
+      const normReqs = expedReqs[expedId]
+      const normReqsWOResupply = normReqs
+        .filter( r => Array.isArray(r) || r.data.type !== "Resupply" )
+      const normReadyFlag = 
+        collapseResults( checkAllReq( normReqs )(fleet) )
+      const normReadyFlagWOResupply = 
+        collapseResults( checkAllReq( normReqsWOResupply )(fleet) )
+
+      const gsReadyFlag = 
+        !greatSuccess ||
+        (greatSuccess && collapseResults( checkAllReq( expedGSReqs[expedId ] )(fleet) ))
+
+      const bsStyle =
+          fleetId === 0 ? "success"
+        : !fleetExtra.available ? "primary"
+        : normReadyFlag && gsReadyFlag ? "success"
+        : normReadyFlagWOResupply && gsReadyFlag ? "warning"
+        : "danger"
+
+      return (<Button
+          bsStyle={bsStyle}
+          style={{marginRight: "5px", flex: "1"}}
+          active={this.props.fleetId === fleetId}
+          onClick={() => this.props.onSelectFleet(fleetId)}>
+        {fleetExtra.name}
+      </Button>)
+    }
     
     return (
       <div style={{ 
@@ -37,14 +82,8 @@ class FleetPicker extends Component {
           {[0,1,2,3].map((x) =>
             <OverlayTrigger
                 key={x}
-                placement="top" overlay={mkTooltip(x)}>           
-              <Button
-                  bsStyle={this.props.fleetsExtra[x].available?"success":"primary"}
-                  style={{marginRight: "5px", flex: "1"}}
-                  active={this.props.fleetId === x}
-                  onClick={() => this.props.onSelectFleet(x)}>
-                {this.props.fleetsExtra[x].name}
-              </Button>
+                placement="top" overlay={mkTooltip(x)}> 
+              {mkButton(x)}
             </OverlayTrigger>
            )}
         </ButtonGroup>
