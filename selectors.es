@@ -22,6 +22,7 @@ const mkFleetInfo = fleetId => (shipsData, equipsData) =>
       equips,
       level: shipInst.api_lv,
       morale: shipInst.api_cond,
+      maxAmmo, maxFuel,
       needResupply: curAmmo !== maxAmmo || curFuel !== maxFuel,
       stype: $ship.api_stype,
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { expedInfo } from './exped-info'
 import { throwWith } from './utils'
+import { daihatsu } from './income-calc'
 
 import { Button } from 'react-bootstrap'
 
@@ -43,6 +44,7 @@ const itemNameToMaterialId = x =>
 // - greatSuccess: bool
 // - onClickExped: when expedition button is clicked
 // - onClickGS: when great success button is clicked
+// - fleet: fleet representation
 class ExpeditionViewer extends Component {
   render() {
     const info = expedInfo[ this.props.expedId ]
