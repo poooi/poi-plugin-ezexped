@@ -110,10 +110,11 @@ class ResourceWithDetail extends Component {
     ].filter( k => this.props.renderedResource[k] )
      .map( k => `${translateKey[k]}: ${this.props.renderedResource[k]}`)
     const tooltip = (
-      <Tooltip 
+      <Tooltip
+          className="ezexped-pop"
           style={{display:"flex"}}
           id={`tooltip-${this.props.resourceName}`}>
-          {tooltipTexts.map( (x,ind) => <div style={{flex: "1"}} key={ind}>{x}</div> )}
+          {tooltipTexts.map( (x,ind) => <div style={{flex: "1", textAlign: "left"}} key={ind}>{x}</div> )}
       </Tooltip>
     )
 

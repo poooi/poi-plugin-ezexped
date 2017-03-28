@@ -5,6 +5,7 @@ const { _, FontAwesome } = window
 import {
   Button,
   ListGroup, ListGroupItem,
+  OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
 import { 
@@ -41,8 +42,24 @@ class CheckResultBox extends Component {
 
 const renderRequirement = (req,ok) => {
   if (Array.isArray(req)) {
+    const tooltip = (<Tooltip className="ezexped-pop">
+      <div style={{display: "flex", flexDirection: "column"}}>
+        {req.map( ({data},ind) =>
+          <div key={ind} style={{flex: "1", display: "flex"}}>
+            <FontAwesome
+              style={{marginRight: "5px", marginTop: "2px"}}
+              name={ok[ind] ? "check-square-o" : "square-o"} />
+            <div style={{flex:"1", whiteSpace: "nowrap"}}>
+              {`${estype.longDesc(data.estype)} x ${data.count}`}
+            </div>
+          </div>)}
+      </div>
+    </Tooltip>)
+
     // every object in this array should be of type "ShipTypeCount"
     return (
+      <OverlayTrigger
+        placement="bottom" overlay={tooltip}>
       <div style={{display: "flex"}}>
         <div key="header">Fleet Composition:</div>
         {req.map( ({data: {count, estype: estypeName}}, ind) => 
@@ -51,49 +68,48 @@ const renderRequirement = (req,ok) => {
               key={`ce-${ind}`} >
             {`${count}${estype.shortDesc(estypeName)}`}
           </div> )}
-      </div>)
+      </div>
+    </OverlayTrigger>)
   }
 
-  const renderSimpleText = text => (<div>{text}</div>)
-
   if (req.data.type === "FSType") {
-    return renderSimpleText(`Flagship type: ${estype.longDesc(req.data.estype)}`)
+    return `Flagship type: ${estype.longDesc(req.data.estype)}`
   }
 
   if (req.data.type === "FSLevel") {
-    return renderSimpleText(`Flagship level ≥${req.data.level}`)
+    return `Flagship level ≥${req.data.level}`
   }
 
   if (req.data.type === "ShipCount") {
-    return renderSimpleText(`Fleet contains ≥${req.data.count} ship(s)`)
+    return `Fleet contains ≥${req.data.count} ship(s)`
   }
 
   if (req.data.type === "DrumCarrierCount") {
-    return renderSimpleText(`≥${req.data.count} ship(s) should carry \"ドラム缶(輸送用)\"`)
+    return `≥${req.data.count} ship(s) should carry \"ドラム缶(輸送用)\"`
   }
 
   if (req.data.type === "DrumCount") {
-    return renderSimpleText(`Fleet carries ≥${req.data.count} \"ドラム缶(輸送用)\" in total`)
+    return `Fleet carries ≥${req.data.count} \"ドラム缶(輸送用)\" in total`
   }
 
   if (req.data.type === "LevelSum") {
-    return renderSimpleText(`Total level of this fleet should be at least ${req.data.sum}`)
+    return `Total level of this fleet should be at least ${req.data.sum}`
   }
 
   if (req.data.type === "SparkledCount") {
-    return renderSimpleText(`≥${req.data.count} sparkled ship(s) for a great success rate boost`)
+    return `≥${req.data.count} sparkled ship(s) for a great success rate boost`
   }
 
   if (req.data.type === "RecommendSparkledCount") {
-    return renderSimpleText(`≥${req.data.count} sparkled ship(s) for a better great success rate`)
+    return `≥${req.data.count} sparkled ship(s) for a better great success rate`
   }
 
   if (req.data.type === "Morale") {
-    return renderSimpleText(`All ships in this fleet should have morale ≥${req.data.morale}`)
+    return `All ships in this fleet should have morale ≥${req.data.morale}`
   }
 
   if (req.data.type === "Resupply") {
-    return renderSimpleText(`All ships in this fleet should be fully resupplied`)
+    return `All ships in this fleet should be fully resupplied`
   }
 
   throw "Unhandled Req type: ${req.data.type}"
@@ -115,7 +131,7 @@ class RequirementListItem extends Component {
       <ListGroupItem 
           style={{padding: "10px", display: "flex"}}>
         <FontAwesome
-            style={{marginRight: "5px", color: checkBoxColor }}
+            style={{marginRight: "5px", marginTop: "2px", color: checkBoxColor }}
             name={allOk ? "check-square-o" : "square-o"} />
         { renderRequirement(this.props.req, this.props.ok) }
       </ListGroupItem>)}}

@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 
+import { join } from 'path-extra'
+
 import { mkFleetInfoSelector } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
@@ -37,33 +39,36 @@ class EZExpedMain extends Component {
     const gsFlag = this.state.config.gsFlags[expedId]
     const fleet = this.props.fleets[ this.state.fleetId ]
     return (
-      <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
-        <FleetPicker
-            fleets={this.props.fleets}
-            fleetId={this.state.fleetId}
-            onSelectFleet={(x) => this.setState({fleetId: x})} />
-        <ExpeditionViewer
-            expedId={expedId}
-            fleet={fleet}
-            greatSuccess={gsFlag}
-            onClickExped={() => 
-              this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
-            onClickGS={() =>               
-              this.setState({config: storage.modifyGSFlag(expedId, x => !x)})}/>
-        <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
-          <ExpeditionTable
+      <div className="poi-plugin-ezexped">
+        <link rel="stylesheet" href={join(__dirname, 'assets', 'ezexped.css')} />
+        <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
+          <FleetPicker
+              fleets={this.props.fleets}
+              fleetId={this.state.fleetId}
+              onSelectFleet={(x) => this.setState({fleetId: x})} />
+          <ExpeditionViewer
+              expedId={expedId}
+              fleet={fleet}
+              greatSuccess={gsFlag}
+              onClickExped={() => 
+                this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
+              onClickGS={() =>               
+                this.setState({config: storage.modifyGSFlag(expedId, x => !x)})}/>
+          <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
+            <ExpeditionTable
+                fleet={fleet}
+                expedId={expedId}
+                onSelectExped={ (newExpedId) =>                
+                  this.setState({
+                    config: storage.setSelectedExped(this.state.fleetId, newExpedId),
+                    expedGridExpanded: false}) } />
+          </Panel>
+          <RequirementViewer
               fleet={fleet}
               expedId={expedId}
-              onSelectExped={ (newExpedId) =>                
-                this.setState({
-                  config: storage.setSelectedExped(this.state.fleetId, newExpedId),
-                  expedGridExpanded: false}) } />
-        </Panel>
-        <RequirementViewer
-            fleet={fleet}
-            expedId={expedId}
-            greatSuccess={gsFlag}
-        />
+              greatSuccess={gsFlag}
+          />
+        </div>
       </div>
     )
   }
