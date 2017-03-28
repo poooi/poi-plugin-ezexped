@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import { join } from 'path-extra'
 
-import { mkFleetInfoSelector } from './selectors'
+import { mkFleetInfoSelector, combinedFlagSelector } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
 import { ExpeditionTable } from './ExpeditionTable'
@@ -47,6 +47,7 @@ class EZExpedMain extends Component {
               fleetsExtra={this.props.fleetsExtra}
               fleetId={this.state.fleetId}
               config={this.state.config}
+              combinedFlag={this.props.combinedFlag}
               onSelectFleet={(x) => this.setState({fleetId: x})} />
           <ExpeditionViewer
               expedId={expedId}
@@ -78,6 +79,7 @@ class EZExpedMain extends Component {
 
 export const reactClass = connect(
   (state, props) => {
+    const combinedFlag = combinedFlagSelector(state)
     const fleets = []
     const fleetsExtra = [];
 
@@ -87,5 +89,5 @@ export const reactClass = connect(
       fleetsExtra[fleetId] = fleetExtra
     })
 
-    return { fleets, fleetsExtra }
+    return { fleets, fleetsExtra, combinedFlag }
   })(EZExpedMain)

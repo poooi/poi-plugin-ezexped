@@ -42,8 +42,13 @@ const mkFleetInfoSelector = fleetId =>
     fleetShipsDataSelectorFactory(fleetId),
     fleetShipsEquipDataSelectorFactory(fleetId),
     fleetSelectorFactory(fleetId),
+    store => store.sortie.combinedFlag,
     mkFleetInfo(fleetId))
+
+const combinedFlagSelector = 
+  store => store.sortie.combinedFlag
 
 export {
   mkFleetInfoSelector,
+  combinedFlagSelector,
 }

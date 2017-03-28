@@ -33,7 +33,7 @@ class FleetPicker extends Component {
     // Button color:
     // - available:
     //   - first fleet always green 
-    //     (TODO for combined fleet, second fleet is always green too)
+    //     (for combined fleet, second fleet is always green too)
     //   - if everything is satisfied: green
     //   - if just needs resupply: yellow
     //   - otherwise red
@@ -58,6 +58,7 @@ class FleetPicker extends Component {
 
       const bsStyle =
           fleetId === 0 ? "success"
+        : this.props.combinedFlag !== 0 && fleetId === 1 ? "success"
         : !fleetExtra.available ? "primary"
         : normReadyFlag && gsReadyFlag ? "success"
         : normReadyFlagWOResupply && gsReadyFlag ? "warning"
