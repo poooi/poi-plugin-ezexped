@@ -27,8 +27,10 @@
 
    returns a structure:
 
-   { aveImp:
-       average improvement level of daihatsu-class equipments
+   { impLvlCount:
+       improvement level count of daihatsu-class equipments
+   , dhtCount:
+       # of daihatsu-class equipments
    , normalBonus: 
        bonus granted by all Daihatsu-class equipments and Kinu K2
        without taking into account improvements
@@ -108,17 +110,18 @@ const computeBonus = fleet => {
   const bStar = b1 * aveImp / 100
 
   return {
-    aveImp,
+    dhtCount,
+    impLvlCount,
     normalBonus: b1,
     normalBonusStar: bStar,
     tokuBonus: computeTokuBonus(normalCount,tokuCount),
   }
 }
 
-// "resupplyCost(ship)(fuelCostPercent,ammoCostPercent)" returns a structure:
+// "shipResupplyCost(ship)(fuelCostFactor,ammoCostFactor)" returns a structure:
 // { fuelCost: <fuel cost>, ammoCost: <ammo cost> }
 // results are guaranteed to be properly rounded given that input does so as well.
-const resupplyCost = ship => {
+const shipResupplyCost = ship => {
   // "after marriage modifier":
   // - if there's no consumption before marriage, no consumption applied after marriage either.
   // - consumption is applied with 0.85 and then floor is taken, with a minimum cost of 1
@@ -126,9 +129,9 @@ const resupplyCost = ship => {
     v => (v === 0) ? 0 : Math.max(1, Math.floor(v*0.85))
   const modifier = ship.level >= 100 ? applyAfterMarriage : (x => x)
 
-  return (fuelCostPercent, ammoCostPercent) => {
-    const fuelCost = Math.floor( ship.maxFuel * fuelCostPercent )
-    const ammoCost = Math.floor( ship.maxAmmo * ammoCostPercent )
+  return (fuelCostFactor, ammoCostFactor) => {
+    const fuelCost = Math.floor( ship.maxFuel * fuelCostFactor )
+    const ammoCost = Math.floor( ship.maxAmmo * ammoCostFactor )
     return { 
       fuelCost: modifier(fuelCost),
       ammoCost: modifier(ammoCost),
@@ -136,6 +139,20 @@ const resupplyCost = ship => {
   }
 }
 
+// "fleetResupplyCost(ship)(fuelCostFactor,ammoCostFactor)"
+// is the same as "shipResupplyCost" 
+// but for fleet representation (an array of ship representation)
+const fleetResupplyCost = fleet => {
+  const ks = fleet.map( shipResupplyCost )
+  const mergeCost = (x,y) => ({
+    fuelCost: x.fuelCost + y.fuelCost,
+    ammoCost: x.ammoCost + y.ammoCost,
+  })
+  return (fFactor,aFactor) => 
+    ks.map( x => x(fFactor,aFactor) )
+      .reduce(mergeCost, {fuelCost:0, ammoCost:0})
+}
+
 const daihatsu = { computeBonus }
 
-export { daihatsu, resupplyCost }
+export { daihatsu, shipResupplyCost, fleetResupplyCost }

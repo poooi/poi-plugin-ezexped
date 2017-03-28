@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { expedInfo } from './exped-info'
 import { throwWith } from './utils'
-import { daihatsu } from './income-calc'
+import { daihatsu, fleetResupplyCost } from './income-calc'
 
 import { Button } from 'react-bootstrap'
 
@@ -39,6 +39,50 @@ const itemNameToMaterialId = x =>
   : x === "FCoinLarge" ? 11
   : throwWith(`unknown item name: ${x}`)
 
+// pretty-printing a floating number
+const pprFloat = (v,digits=2) => v.toFixed(digits)
+
+// pretty-printing a percentage
+const pprAsPercent = (v,digits=2) => `${(v*100).toFixed(digits)}%`
+
+const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
+  const basicIncome = greatSuccess ? Math.floor( rawIncome * 1.5 ) : rawIncome
+  const basicIncomeText = basicIncome + 
+    (greatSuccess ? ` (=${rawIncome}x150%)` : "")
+
+  const aveImpText = basicIncome > 0 && bonus.dhtCount > 0 &&
+    `${pprFloat(bonus.impLvlCount / bonus.dhtCount)} (= ${bonus.impLvlCount}/${bonus.dhtCount})`
+
+  const dhtBonus = Math.floor(basicIncome * (bonus.normalBonus + bonus.normalBonusStar))
+  const dhtBonusText = basicIncome > 0 && (bonus.normalBonus > 0 || bonus.normalBonusStar > 0) &&
+    `${dhtBonus} (=${basicIncome}x` +
+    `(${pprAsPercent(bonus.normalBonus)}+` +
+    `${pprAsPercent(bonus.normalBonusStar)}))`
+
+  const tokuBonus = Math.floor(basicIncome * bonus.tokuBonus)
+  const tokuBonusText = basicIncome > 0 && bonus.tokuBonus > 0 &&
+    `${tokuBonus} (=${basicIncome}x${pprAsPercent(bonus.tokuBonus)})`
+
+  const totalIncome = basicIncome + dhtBonus + tokuBonus
+  const totalIncomeInnerText = [basicIncome,dhtBonus,tokuBonus].filter(x => x > 0).join("+")
+  const totalIncomeText = basicIncome > 0 && basicIncome !== totalIncome &&
+    `${totalIncome} (=${totalIncomeInnerText})`
+
+  const netIncome = totalIncome - resupply
+  const netIncomeText = resupply > 0 &&
+    `${netIncome} (=${totalIncome}-${resupply})`
+
+  return {
+    basicIncomeText,
+    aveImpText,
+    dhtBonusText,
+    tokuBonusText,
+    totalIncomeText,
+    netIncomeText,
+    finalIncome: netIncome,
+  }
+}
+
 // props:
 // - expedId: expedition id
 // - greatSuccess: bool
@@ -48,6 +92,26 @@ const itemNameToMaterialId = x =>
 class ExpeditionViewer extends Component {
   render() {
     const info = expedInfo[ this.props.expedId ]
+    const resupplyCost = 
+      fleetResupplyCost(this.props.fleet)(
+        info.cost.fuelPercent / 100, info.cost.ammoPercent / 100)
+    const daihatsuBonus =
+      daihatsu.computeBonus( this.props.fleet )
+
+    // have to apply a semicolon otherwise parser won't recognize this properly
+    const renderedResources = {};
+    ["fuel","ammo","steel","bauxite"].map( resourceName => {
+      const resupply = 
+        resourceName === "fuel" ? resupplyCost.fuelCost
+        : resourceName === "ammo" ? resupplyCost.ammoCost 
+        : 0
+      renderedResources[resourceName] = renderTexts(
+        info.resource[resourceName],
+        this.props.greatSuccess,
+        daihatsuBonus,
+        resupply)
+    })
+
     const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
     const mkMatFromName = name => mkMat(itemNameToMaterialId( name ))
     const colFlexStyle = {
@@ -75,12 +139,12 @@ class ExpeditionViewer extends Component {
           </div>
       </div>
       <div style={{flex: "3", ...colFlexStyle}}>
-        <IconAndLabel icon={mkMat(1)} label={info.resource.fuel} />
-        <IconAndLabel icon={mkMat(2)} label={info.resource.ammo} />
+        <IconAndLabel icon={mkMat(1)} label={renderedResources.fuel.finalIncome} />
+        <IconAndLabel icon={mkMat(2)} label={renderedResources.ammo.finalIncome} />
       </div>
       <div style={{flex:"3", ...colFlexStyle}}>
-        <IconAndLabel icon={mkMat(3)} label={info.resource.steel} />
-        <IconAndLabel icon={mkMat(4)} label={info.resource.bauxite} />
+        <IconAndLabel icon={mkMat(3)} label={renderedResources.steel.finalIncome} />
+        <IconAndLabel icon={mkMat(4)} label={renderedResources.bauxite.finalIncome} />
       </div>
       <div style={{flex:"2", ...colFlexStyle}}>
         <IconAndLabel 
