@@ -85,21 +85,52 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
 
 const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
 
-// TODO: tooltip not working yet
+const translateKey = {
+  "basicIncomeText": "Basic Income",
+  "aveImpText": "Ave. Improvement",
+  "dhtBonusText": "Daihatsu-class Bonus",
+  "tokuBonusText": "Toku Daihatsu Bonus",
+  "totalIncomeText": "Total Income",
+  "netIncomeText": "Net Income",
+}
+
+// TODO: better tooltip rendering
+// - larger font?
+// - try not to use line wrap while keeping content inside tooltip...
+
 // props:
+// - resourceName
 // - icon
 // - one of "renderedResources"'s value in "ExpeditionViewer"
 class ResourceWithDetail extends Component {
   render() {
+    const tooltipTexts = [
+      "basicIncomeText",
+      "aveImpText",
+      "dhtBonusText",
+      "tokuBonusText",
+      "totalIncomeText",
+      "netIncomeText",
+    ].filter( k => this.props.renderedResource[k] )
+     .map( k => `${translateKey[k]}: ${this.props.renderedResource[k]}`)
     const tooltip = (
-      <Tooltip id="tooltip"><strong>Holy guacamole!</strong> Check this info.</Tooltip>
+      <Tooltip 
+      style={{display:"flex"}}
+          id={`tooltip-${this.props.resourceName}`}>
+      <div>
+        {tooltipTexts.map( (x,ind) => <div style={{flex: "1"}}  key={ind}>{x}</div> )}
+      </div>
+      </Tooltip>
     )
+
     return (
-      <OverlayTrigger 
+      <OverlayTrigger
         placement="bottom" overlay={tooltip}>
-        <IconAndLabel 
-          icon={this.props.icon} 
+      <div>
+        <IconAndLabel
+          icon={this.props.icon}
           label={this.props.renderedResource.finalIncome} />
+      </div>
       </OverlayTrigger>)}}
 
 // props:
@@ -157,12 +188,20 @@ class ExpeditionViewer extends Component {
           </div>
         </div>
         <div style={{flex: "3", ...colFlexStyle}}>
-          <ResourceWithDetail icon={mkMat(1)} renderedResource={renderedResources.fuel} />
-          <ResourceWithDetail icon={mkMat(2)} renderedResource={renderedResources.ammo} />
+          <ResourceWithDetail
+              resourceName="fuel"
+              icon={mkMat(1)} renderedResource={renderedResources.fuel} />
+          <ResourceWithDetail 
+              resourceName="ammo"
+              icon={mkMat(2)} renderedResource={renderedResources.ammo} />
         </div>
         <div style={{flex:"3", ...colFlexStyle}}>
-          <ResourceWithDetail icon={mkMat(3)} renderedResource={renderedResources.steel} />
-          <ResourceWithDetail icon={mkMat(4)} renderedResource={renderedResources.bauxite} />
+          <ResourceWithDetail 
+              resourceName="steel"
+              icon={mkMat(3)} renderedResource={renderedResources.steel} />
+          <ResourceWithDetail 
+              resourceName="bauxite"
+              icon={mkMat(4)} renderedResource={renderedResources.bauxite} />
         </div>
         <div style={{flex:"2", ...colFlexStyle}}>
           <IconAndLabel 

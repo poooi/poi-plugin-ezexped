@@ -9,20 +9,21 @@ import { RequirementViewer } from './RequirementViewer'
 
 import {
   Panel,
- } from 'react-bootstrap'
+} from 'react-bootstrap'
 
 import * as storage from './storage'
 
 /*
-
    TODO
 
-   - landing craft-related calculation, on screen & on tooltip
    - in tooltip of fleet tab, list ships in that fleet
-   - Expedition Grid, give color to each of them, green when passing all checks (resupply check ignored)
+   - Expedition Grid, give color to each of them, green when passing all checks
+     (resupply check ignored)
+
+   TODO (non-urgent)
+
    - tab autoswitch
    - record last exped through KCAPI responses
-   - gs flag should be able to toggle between GS / normal calculation
    - utilize React PropTypes
 
  */
