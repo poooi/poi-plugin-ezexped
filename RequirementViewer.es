@@ -11,9 +11,10 @@ import {
   expedReqs, 
   expedGSReqs, 
   checkAllReq, 
-  renderReqData,
   collapseResults,
 } from './requirement'
+
+import * as estype from './estype'
 
 // a box for showing whether the fleet is ready
 // props:
@@ -36,8 +37,67 @@ class CheckResultBox extends Component {
       </Button>
     )}}
 
-// TODO: refine non-ShipTypeCount Req rendering method, remove renderReqData.
 // TODO: use tooltip for showing ShipTypeCount rendering in detail
+
+const renderRequirement = (req,ok) => {
+  if (Array.isArray(req)) {
+    // every object in this array should be of type "ShipTypeCount"
+    return (
+      <div style={{display: "flex"}}>
+        <div key="header">Fleet Composition:</div>
+        {req.map( ({data: {count, estype: estypeName}}, ind) => 
+          <div 
+              style={{marginLeft:"5px", color: ok[ind] ? "green" : "red" }}
+              key={`ce-${ind}`} >
+            {`${count}${estype.shortDesc(estypeName)}`}
+          </div> )}
+      </div>)
+  }
+
+  const renderSimpleText = text => (<div>{text}</div>)
+
+  if (req.data.type === "FSType") {
+    return renderSimpleText(`Flagship type: ${estype.longDesc(req.data.estype)}`)
+  }
+
+  if (req.data.type === "FSLevel") {
+    return renderSimpleText(`Flagship level ≥${req.data.level}`)
+  }
+
+  if (req.data.type === "ShipCount") {
+    return renderSimpleText(`Fleet contains ≥${req.data.count} ship(s)`)
+  }
+
+  if (req.data.type === "DrumCarrierCount") {
+    return renderSimpleText(`≥${req.data.count} ship(s) should carry \"ドラム缶(輸送用)\"`)
+  }
+
+  if (req.data.type === "DrumCount") {
+    return renderSimpleText(`Fleet carries ≥${req.data.count} \"ドラム缶(輸送用)\" in total`)
+  }
+
+  if (req.data.type === "LevelSum") {
+    return renderSimpleText(`Total level of this fleet should be at least ${req.data.sum}`)
+  }
+
+  if (req.data.type === "SparkledCount") {
+    return renderSimpleText(`≥${req.data.count} sparkled ship(s) for a great success rate boost`)
+  }
+
+  if (req.data.type === "RecommendSparkledCount") {
+    return renderSimpleText(`≥${req.data.count} sparkled ship(s) for a better great success rate`)
+  }
+
+  if (req.data.type === "Morale") {
+    return renderSimpleText(`All ships in this fleet should have morale ≥${req.data.morale}`)
+  }
+
+  if (req.data.type === "Resupply") {
+    return renderSimpleText(`All ships in this fleet should be fully resupplied`)
+  }
+
+  throw "Unhandled Req type: ${req.data.type}"
+}
 
 // props:
 // - req: either an Req object of non ShipTypeCount, or an array of ShipTypeCount Req objects
@@ -51,26 +111,13 @@ class RequirementListItem extends Component {
           ? "gold" : "green") 
       : (this.props.greatSuccess
           ? "grey" : "red")
-
-    const renderShipTypeCountArray = ar => 
-      <div style={{display: "flex"}}>
-        {ar.map( ({data: {count, estype}}, ind) => 
-          <div 
-              style={{marginRight:"5px", color: this.props.ok[ind] ? "green" : "red" }}
-              key={`ce-${ind}`} >
-            {`${count}${estype}`}
-          </div> )}
-      </div>
     return (
       <ListGroupItem 
           style={{padding: "10px", display: "flex"}}>
         <FontAwesome
             style={{marginRight: "5px", color: checkBoxColor }}
             name={allOk ? "check-square-o" : "square-o"} />
-        { Array.isArray(this.props.req) 
-            ? renderShipTypeCountArray(this.props.req)
-            : renderReqData(this.props.req.data)
-        }
+        { renderRequirement(this.props.req, this.props.ok) }
       </ListGroupItem>)}}
 
 // props:

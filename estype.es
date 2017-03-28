@@ -58,15 +58,15 @@ const shortDesc = estypeName =>
   : estypeName
 
 const longDesc = estypeName =>
-    estypeName === "DD" ? "Destroyer"
-  : estypeName === "CL" ? "Light Cruiser"
+    estypeName === "DD" ? "Destroyer (DD)"
+  : estypeName === "CL" ? "Light Cruiser (CL)"
   : estypeName === "CVLike" ? "Aircraft Carriers (CV/CVL/AV/CVB)"
   : estypeName === "SSLike" ? "Submarines (SS/SSV)"
-  : estypeName === "CA" ? "Heavy Cruiser"
-  : estypeName === "BBV" ? "Aviation Battleship"
-  : estypeName === "AS" ? "Submarine Tender"
-  : estypeName === "CT" ? "Training Cruiser"
-  : estypeName === "AV" ? "Seaplane Tender"
+  : estypeName === "CA" ? "Heavy Cruiser (CA)"
+  : estypeName === "BBV" ? "Aviation Battleship (BBV)"
+  : estypeName === "AS" ? "Submarine Tender (AS)"
+  : estypeName === "CT" ? "Training Cruiser (CT)"
+  : estypeName === "AV" ? "Seaplane Tender (AV)"
   : throwWith (`unknown estype: ${estypeName}`)
 
 // check fleet requirement against an array of ship types
