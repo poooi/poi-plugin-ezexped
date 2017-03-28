@@ -14,9 +14,6 @@ import {
 import * as storage from './storage'
 
 /*
-   TODO
-
-   - in tooltip of fleet tab, list ships in that fleet
 
    TODO (non-urgent)
 
@@ -42,6 +39,7 @@ class EZExpedMain extends Component {
     return (
       <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
         <FleetPicker
+            fleets={this.props.fleets}
             fleetId={this.state.fleetId}
             onSelectFleet={(x) => this.setState({fleetId: x})} />
         <ExpeditionViewer

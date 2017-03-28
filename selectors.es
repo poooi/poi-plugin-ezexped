@@ -19,6 +19,7 @@ const mkFleetInfo = fleetId => (shipsData, equipsData) =>
        [shipInst.api_fuel, $ship.api_fuel_max]]
     return {
       mstId: $ship.api_id,
+      name: $ship.api_name,
       equips,
       level: shipInst.api_lv,
       morale: shipInst.api_cond,
