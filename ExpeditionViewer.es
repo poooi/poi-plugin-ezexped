@@ -94,10 +94,6 @@ const translateKey = {
   "netIncomeText": "Net Income",
 }
 
-// TODO: better tooltip rendering
-// - larger font?
-// - try not to use line wrap while keeping content inside tooltip...
-
 // props:
 // - resourceName
 // - icon
@@ -115,11 +111,9 @@ class ResourceWithDetail extends Component {
      .map( k => `${translateKey[k]}: ${this.props.renderedResource[k]}`)
     const tooltip = (
       <Tooltip 
-      style={{display:"flex"}}
+          style={{display:"flex"}}
           id={`tooltip-${this.props.resourceName}`}>
-      <div>
-        {tooltipTexts.map( (x,ind) => <div style={{flex: "1"}}  key={ind}>{x}</div> )}
-      </div>
+          {tooltipTexts.map( (x,ind) => <div style={{flex: "1"}} key={ind}>{x}</div> )}
       </Tooltip>
     )
 
