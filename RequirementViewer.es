@@ -36,29 +36,36 @@ const collapseResults = xs =>
     : xs
 
 // TODO: refine non-ShipTypeCount Req rendering method, remove renderReqData.
-// TODO: allow each ShipTypeCount to have separated colors
 // TODO: use tooltip for showing ShipTypeCount rendering in detail
 
 // props:
 // - req: either an Req object of non ShipTypeCount, or an array of ShipTypeCount Req objects
-// - ok: whether this requirement is met
+// - ok:  a boolean or an array of boolean (for ShipTypeCount array)
 // - greatSuccess: whether this is required by GS
 class RequirementListItem extends Component {
   render() {
-    const checkBoxColor = this.props.ok
+    const allOk = collapseResults( this.props.ok )
+    const checkBoxColor = allOk
       ? (this.props.greatSuccess 
           ? "gold" : "green") 
       : (this.props.greatSuccess
           ? "grey" : "red")
 
     const renderShipTypeCountArray = ar => 
-      ar.map( ({data: {count, estype}}) => `${count}${estype}`).join(" ")
+      <div style={{display: "flex"}}>
+        {ar.map( ({data: {count, estype}}, ind) => 
+          <div 
+              style={{marginRight:"5px", color: this.props.ok[ind] ? "green" : "red" }}
+              key={`ce-${ind}`} >
+            {`${count}${estype}`}
+          </div> )}
+      </div>
     return (
       <ListGroupItem 
-          style={{padding: "10px"}}>
+          style={{padding: "10px", display: "flex"}}>
         <FontAwesome
             style={{marginRight: "5px", color: checkBoxColor }}
-            name={this.props.ok ? "check-square-o" : "square-o"} />
+            name={allOk ? "check-square-o" : "square-o"} />
         { Array.isArray(this.props.req) 
             ? renderShipTypeCountArray(this.props.req)
             : renderReqData(this.props.req.data)
@@ -95,14 +102,14 @@ class RequirementViewer extends Component {
               <RequirementListItem
                   key={`norm-${ind}`}
                   req={req}
-                  ok={collapseResults(res)}
+                  ok={res}
                   greatSuccess={false} />)}
           { this.props.greatSuccess &&
             gsPairedObj.map( ([req,res],ind) =>
               <RequirementListItem
                   key={`gs-${ind}`}
                   req={req}
-                  ok={collapseResults(res)}
+                  ok={res}
                   greatSuccess={true}
               />) }
         </ListGroup>
