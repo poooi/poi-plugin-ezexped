@@ -18,7 +18,6 @@ import * as storage from './storage'
    TODO
 
    - landing craft-related calculation, on screen & on tooltip
-   - consumption estimation
    - in tooltip of fleet tab, list ships in that fleet
    - Expedition Grid, give color to each of them, green when passing all checks (resupply check ignored)
    - tab autoswitch

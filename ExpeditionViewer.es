@@ -4,7 +4,7 @@ import { expedInfo } from './exped-info'
 import { throwWith } from './utils'
 import { daihatsu, fleetResupplyCost } from './income-calc'
 
-import { Button } from 'react-bootstrap'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 import { resolveTime } from 'views/utils/tools'
@@ -83,6 +83,25 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
   }
 }
 
+const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
+
+// TODO: tooltip not working yet
+// props:
+// - icon
+// - one of "renderedResources"'s value in "ExpeditionViewer"
+class ResourceWithDetail extends Component {
+  render() {
+    const tooltip = (
+      <Tooltip id="tooltip"><strong>Holy guacamole!</strong> Check this info.</Tooltip>
+    )
+    return (
+      <OverlayTrigger 
+        placement="bottom" overlay={tooltip}>
+        <IconAndLabel 
+          icon={this.props.icon} 
+          label={this.props.renderedResource.finalIncome} />
+      </OverlayTrigger>)}}
+
 // props:
 // - expedId: expedition id
 // - greatSuccess: bool
@@ -112,7 +131,6 @@ class ExpeditionViewer extends Component {
         resupply)
     })
 
-    const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
     const mkMatFromName = name => mkMat(itemNameToMaterialId( name ))
     const colFlexStyle = {
       display:"flex",
@@ -137,27 +155,27 @@ class ExpeditionViewer extends Component {
             <IconAndLabel
                 icon={mkMat(2)} label={`${info.cost.ammoPercent}%`} />
           </div>
-      </div>
-      <div style={{flex: "3", ...colFlexStyle}}>
-        <IconAndLabel icon={mkMat(1)} label={renderedResources.fuel.finalIncome} />
-        <IconAndLabel icon={mkMat(2)} label={renderedResources.ammo.finalIncome} />
-      </div>
-      <div style={{flex:"3", ...colFlexStyle}}>
-        <IconAndLabel icon={mkMat(3)} label={renderedResources.steel.finalIncome} />
-        <IconAndLabel icon={mkMat(4)} label={renderedResources.bauxite.finalIncome} />
-      </div>
-      <div style={{flex:"2", ...colFlexStyle}}>
-        <IconAndLabel 
-            icon={hasNormalItem ? mkMatFromName(info.itemNormal.itemId) : "-"} 
-            label={hasNormalItem ? prettyRange(0,info.itemNormal.itemMaxCount) : "-"} />
-        <IconAndLabel 
-            icon={hasGreatSuccessItem ? mkMatFromName(info.itemGreatSuccess.itemId) : "-"} 
-            label={hasGreatSuccessItem ? prettyRange(1,info.itemGreatSuccess.itemMaxCount) : "-"} />
-      </div>
-      <Button style={{flex: "1"}} onClick={this.props.onClickGS}>
-        <FontAwesome name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
-        GS
-      </Button>
+        </div>
+        <div style={{flex: "3", ...colFlexStyle}}>
+          <ResourceWithDetail icon={mkMat(1)} renderedResource={renderedResources.fuel} />
+          <ResourceWithDetail icon={mkMat(2)} renderedResource={renderedResources.ammo} />
+        </div>
+        <div style={{flex:"3", ...colFlexStyle}}>
+          <ResourceWithDetail icon={mkMat(3)} renderedResource={renderedResources.steel} />
+          <ResourceWithDetail icon={mkMat(4)} renderedResource={renderedResources.bauxite} />
+        </div>
+        <div style={{flex:"2", ...colFlexStyle}}>
+          <IconAndLabel 
+              icon={hasNormalItem ? mkMatFromName(info.itemNormal.itemId) : "-"} 
+              label={hasNormalItem ? prettyRange(0,info.itemNormal.itemMaxCount) : "-"} />
+          <IconAndLabel 
+              icon={hasGreatSuccessItem ? mkMatFromName(info.itemGreatSuccess.itemId) : "-"} 
+              label={hasGreatSuccessItem ? prettyRange(1,info.itemGreatSuccess.itemMaxCount) : "-"} />
+        </div>
+        <Button style={{flex: "1"}} onClick={this.props.onClickGS}>
+          <FontAwesome name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
+          GS
+        </Button>
       </div>
     )
   }
