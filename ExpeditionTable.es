@@ -55,12 +55,14 @@ class ExpeditionTable extends Component {
     return (
       <div style={{display: "flex"}} >
         {enumFromTo(1,5).map(world =>
-          <div key={world}
+          <div key={`world-${world}`}
                style={{flex: "1", display: "flex", marginRight: "5px", flexDirection: "column"}}>
             { enumFromTo(1+8*(world-1), 8*world).map(expedId =>
-              <OverlayTrigger placement="bottom" overlay={mkTooltip(expedId)}>
+              <OverlayTrigger 
+                  key={`ot-${expedId}`}
+                  placement="bottom" overlay={mkTooltip(expedId)}>
                 <Button
-                    key={expedId}
+                    key={`expedId-${expedId}`}
                     style={ {flex: "1", marginBottom: "2px"} }
                     active={this.props.expedId === expedId}
                     onClick={() => this.props.onSelectExped(expedId)}>

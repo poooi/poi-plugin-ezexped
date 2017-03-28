@@ -40,13 +40,12 @@ const collapseResults = xs =>
 // TODO: use tooltip for showing ShipTypeCount rendering in detail
 
 // props:
-// - key
 // - req: either an Req object of non ShipTypeCount, or an array of ShipTypeCount Req objects
 // - ok: whether this requirement is met
 // - greatSuccess: whether this is required by GS
 class RequirementListItem extends Component {
   render() {
-    const checkBoxColor = this.props.ok 
+    const checkBoxColor = this.props.ok
       ? (this.props.greatSuccess 
           ? "gold" : "green") 
       : (this.props.greatSuccess
@@ -56,7 +55,7 @@ class RequirementListItem extends Component {
       ar.map( ({data: {count, estype}}) => `${count}${estype}`).join(" ")
     return (
       <ListGroupItem 
-          key={this.props.key} style={{padding: "10px"}}>
+          style={{padding: "10px"}}>
         <FontAwesome
             style={{marginRight: "5px", color: checkBoxColor }}
             name={this.props.ok ? "check-square-o" : "square-o"} />
