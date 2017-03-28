@@ -40,6 +40,7 @@ class EZExpedMain extends Component {
   render() {
     const expedId = this.state.config.selectedExpeds[this.state.fleetId]
     const gsFlag = this.state.config.gsFlags[expedId]
+    const fleet = this.props.fleets[ this.state.fleetId ]
     return (
       <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
         <FleetPicker
@@ -47,6 +48,7 @@ class EZExpedMain extends Component {
             onSelectFleet={(x) => this.setState({fleetId: x})} />
         <ExpeditionViewer
             expedId={expedId}
+            fleet={fleet}
             greatSuccess={gsFlag}
             onClickExped={() => 
               this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
@@ -61,7 +63,7 @@ class EZExpedMain extends Component {
                   expedGridExpanded: false}) } />
         </Panel>
         <RequirementViewer
-            fleet={this.props.fleets[ this.state.fleetId ]}
+            fleet={fleet}
             expedId={expedId}
             greatSuccess={gsFlag}
         />

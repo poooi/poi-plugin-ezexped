@@ -77,14 +77,10 @@ class RequirementViewer extends Component {
     const normResultObj = checkAllReq(normReqObj)(fleet)
     const normCheckResult = collapseResults( normResultObj )
     const normPairedObj = _.zip(normReqObj,normResultObj)
-
-    // const unmetReqs = collectUnmetReqs(normReqObj,normResultObj).map( x => renderReqData(x.data) )
     const gsReqObj = expedGSReqs[ this.props.expedId ]
     const gsResultObj = checkAllReq(gsReqObj)(fleet)
     const gsCheckResult = normCheckResult && collapseResults( gsResultObj )
     const gsPairedObj = _.zip(gsReqObj,gsResultObj)
-
-    // const unmetReqsGS = collectUnmetReqs(gsReqObj,gsResultObj).map(x => "GS:"+ renderReqData(x.data))
     return (
       <div>
         <div style={{display: "flex", justifyContent: "space-between"}}>
