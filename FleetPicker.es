@@ -9,6 +9,7 @@ import {
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
+// - fleetsExtra: array of fleet extra info
 // - onSelectFleet: callback when a new fleet is selected
 //   this callback should accept a fleet id
 class FleetPicker extends Component {
@@ -38,10 +39,11 @@ class FleetPicker extends Component {
                 key={x}
                 placement="top" overlay={mkTooltip(x)}>           
               <Button
+                  bsStyle={this.props.fleetsExtra[x].available?"success":"primary"}
                   style={{marginRight: "5px", flex: "1"}}
                   active={this.props.fleetId === x}
                   onClick={() => this.props.onSelectFleet(x)}>
-                Fleet {x+1}
+                {this.props.fleetsExtra[x].name}
               </Button>
             </OverlayTrigger>
            )}

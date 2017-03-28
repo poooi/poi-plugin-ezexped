@@ -17,14 +17,6 @@ import * as storage from './storage'
 
 /*
 
-   TODO
-
-   - fleet name in picker tooltip (might require update selector)
-   - consistent fleet button color:
-   
-       - available: green
-       - expedition: blue
-
    TODO (non-urgent)
 
    - tab autoswitch
@@ -52,6 +44,7 @@ class EZExpedMain extends Component {
         <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
           <FleetPicker
               fleets={this.props.fleets}
+              fleetsExtra={this.props.fleetsExtra}
               fleetId={this.state.fleetId}
               onSelectFleet={(x) => this.setState({fleetId: x})} />
           <ExpeditionViewer
@@ -84,8 +77,14 @@ class EZExpedMain extends Component {
 
 export const reactClass = connect(
   (state, props) => {
-    return {
-      fleets: [0,1,2,3].map( fleetId =>
-        mkFleetInfoSelector(fleetId)(state)),
-    }
+    const fleets = []
+    const fleetsExtra = [];
+
+    [0,1,2,3].map( fleetId => {
+      const {fleet,fleetExtra} = mkFleetInfoSelector(fleetId)(state)
+      fleets[fleetId] = fleet
+      fleetsExtra[fleetId] = fleetExtra
+    })
+
+    return { fleets, fleetsExtra }
   })(EZExpedMain)
