@@ -11,6 +11,7 @@
 
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
+import { throwWith } from './utils'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
@@ -51,6 +52,23 @@ const isESType = (() => {
   }
 })()
 
+const shortDesc = estypeName =>
+    estypeName === "CVLike" ? "CV*"
+  : estypeName === "SSLike" ? "SS*"
+  : estypeName
+
+const longDesc = estypeName =>
+    estypeName === "DD" ? "Destroyer"
+  : estypeName === "CL" ? "Light Cruiser"
+  : estypeName === "CVLike" ? "Aircraft Carriers (CV/CVL/AV/CVB)"
+  : estypeName === "SSLike" ? "Submarines (SS/SSV)"
+  : estypeName === "CA" ? "Heavy Cruiser"
+  : estypeName === "BBV" ? "Aviation Battleship"
+  : estypeName === "AS" ? "Submarine Tender"
+  : estypeName === "CT" ? "Training Cruiser"
+  : estypeName === "AV" ? "Seaplane Tender"
+  : throwWith (`unknown estype: ${estypeName}`)
+
 // check fleet requirement against an array of ship types
 // returns "true" if the requirement is met
 // otherwise returns a structured description of the requirement itself
@@ -66,4 +84,7 @@ export {
   stype,
   isESType,
   checkFleetSTypes,
+
+  shortDesc,
+  longDesc,
 }
