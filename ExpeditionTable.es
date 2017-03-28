@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import { enumFromTo } from './utils'
+import { expedReqs, checkAllReq, collapseResults } from './requirement'
 
 import {
   Button,
@@ -11,9 +12,17 @@ import {
 
 import { expedInfo } from './exped-info'
 
+const checkWithoutResupply = (fleet, expedId) => {
+  const req = expedReqs[expedId]
+    .filter( req => Array.isArray(req) || req.data.type !== "Resupply" )
+  const result = checkAllReq( req )(fleet)
+  return collapseResults(result)
+}
+
 // props:
 // - expedId: current active expedition
 // - onSelectExped: when one expedition is selected
+// - fleet: fleet representation
 class ExpeditionTable extends Component {
   render() {
     const mkTooltip = expedId => {
@@ -63,6 +72,7 @@ class ExpeditionTable extends Component {
                   placement="bottom" overlay={mkTooltip(expedId)}>
                 <Button
                     key={`expedId-${expedId}`}
+                    bsStyle={checkWithoutResupply(this.props.fleet,expedId) ? "primary" : "default"}
                     style={ {flex: "1", marginBottom: "2px"} }
                     active={this.props.expedId === expedId}
                     onClick={() => this.props.onSelectExped(expedId)}>

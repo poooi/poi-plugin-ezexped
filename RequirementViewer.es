@@ -7,7 +7,13 @@ import {
   ListGroup, ListGroupItem,
 } from 'react-bootstrap'
 
-import { expedReqs, expedGSReqs, checkAllReq, renderReqData } from './requirement'
+import { 
+  expedReqs, 
+  expedGSReqs, 
+  checkAllReq, 
+  renderReqData,
+  collapseResults,
+} from './requirement'
 
 // a box for showing whether the fleet is ready
 // props:
@@ -29,11 +35,6 @@ class CheckResultBox extends Component {
         <div>{this.props.content}</div>
       </Button>
     )}}
-
-const collapseResults = xs =>
-  Array.isArray(xs)
-    ? xs.every( collapseResults )
-    : xs
 
 // TODO: refine non-ShipTypeCount Req rendering method, remove renderReqData.
 // TODO: use tooltip for showing ShipTypeCount rendering in detail

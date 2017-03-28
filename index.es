@@ -17,8 +17,6 @@ import * as storage from './storage'
    TODO
 
    - in tooltip of fleet tab, list ships in that fleet
-   - Expedition Grid, give color to each of them, green when passing all checks
-     (resupply check ignored)
 
    TODO (non-urgent)
 
@@ -56,6 +54,7 @@ class EZExpedMain extends Component {
               this.setState({config: storage.modifyGSFlag(expedId, x => !x)})}/>
         <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
           <ExpeditionTable
+              fleet={fleet}
               expedId={expedId}
               onSelectExped={ (newExpedId) =>                
                 this.setState({

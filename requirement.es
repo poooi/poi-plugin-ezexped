@@ -475,9 +475,17 @@ const expedGSReqs = (() => {
   return ret
 })()
 
+// traverse a structure and perform "&&" on it
+// the structure must be an array or a single boolean value
+const collapseResults = xs =>
+  Array.isArray(xs)
+    ? xs.every( collapseResults )
+    : xs
+
 export {
   expedReqs,
   expedGSReqs,
   checkAllReq,
+  collapseResults,
   collectUnmetReqs,
   renderReqData }
