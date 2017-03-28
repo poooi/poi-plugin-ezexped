@@ -17,6 +17,14 @@ import * as storage from './storage'
 
 /*
 
+   TODO
+
+   - fleet name in picker tooltip (might require update selector)
+   - consistent fleet button color:
+   
+       - available: green
+       - expedition: blue
+
    TODO (non-urgent)
 
    - tab autoswitch

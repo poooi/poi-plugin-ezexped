@@ -38,8 +38,6 @@ class CheckResultBox extends Component {
       </Button>
     )}}
 
-// TODO: use tooltip for showing ShipTypeCount rendering in detail
-
 const renderRequirement = (req,ok) => {
   if (Array.isArray(req)) {
     const tooltip = (<Tooltip className="ezexped-pop">
