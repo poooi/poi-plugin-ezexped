@@ -23,7 +23,6 @@
  */
 
 const { _ } = window
-import * as dbg from './debug'
 
 // some heuristic to determine which fleet we are changing.
 // returns a number: 0,1,2,3 to indicate the changing fleet
@@ -31,8 +30,12 @@ import * as dbg from './debug'
 const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
   // transform the whole array of fleet representation
   // so that we only test equality based on info that we are interested in
+
+  // we use roster id instead of master id + level approach
+  // otherwise even a levelup would trigger fleet focus change
+  // upon returning
   const transformFleets = fleets => fleets.map( fleet => fleet.map( 
-    ({equips,level,mstId}) => ({equips,level,mstId}) ))
+    ({equips,rstId}) => ({equips,rstId}) ))
 
   const curFleets = transformFleets( curFleetsFull )
   const nextFleets = transformFleets( nextFleetsFull )
