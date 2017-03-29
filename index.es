@@ -52,17 +52,20 @@ class EZExpedMain extends Component {
         nextProps.fleets)
 
       if (changingFleetInd !== false) {
-        this.props.onChangeFleet( changingFleetInd )
+        this.props.onChangeFleet(
+          changingFleetInd, 
+          "detected changing fleet")
       }
 
       if (isSendingFleetToExped(
         this.props.fleetsExtra,
         nextProps.fleetsExtra,
         nextProps.combinedFlag)) {
-        this.props.onChangeFleet( 
+        this.props.onChangeFleet(
           findNextAvailableFleet(
             nextProps.fleetsExtra,
-            nextProps.combinedFlag))
+            nextProps.combinedFlag),
+         "detected that we are sending a fleet out, switching to next one")
       }
     }
   }
@@ -90,7 +93,7 @@ class EZExpedMain extends Component {
         const nxt = findNextAvailableFleet(
           this.props.fleetsExtra,
           this.props.combinedFlag)
-        this.props.onChangeFleet( nxt )
+        this.props.onChangeFleet(nxt, "User is at expedition screen")
       }
     }
   }

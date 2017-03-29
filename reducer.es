@@ -1,6 +1,8 @@
 import * as storage from './storage'
 import { expedNameToId } from './exped-info'
 
+import * as dbg from './debug'
+
 const loadState = () => ({
   config: storage.load(),
   fleetId: 0,
@@ -13,8 +15,9 @@ const reducer = (state = loadState(), action) => {
       config: storage.modifyStorage(action.modifier),
     }
   }
-
   if (action.type === "@poi-plugin-ezexped@ChangeFleet") {
+    if (action.reason)
+      dbg.log(`Changing focus to fleet #${action.fleetId} because: ${action.reason}`)
     return {
       ...state,
       fleetId: action.fleetId,
@@ -45,9 +48,10 @@ const mapDispatchToProps = dispatch => ({
     type: "@poi-plugin-ezexped@UpdateConfig",
     modifier,
   }),
-  onChangeFleet: fleetId => dispatch({
+  onChangeFleet: (fleetId,reason=null) => dispatch({
     type: "@poi-plugin-ezexped@ChangeFleet",
     fleetId,
+    reason,
   }),
 })
 
