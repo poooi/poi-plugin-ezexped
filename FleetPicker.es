@@ -22,7 +22,7 @@ class FleetPicker extends Component {
   render() {
     const mkTooltip = fleetId => { 
       const fleet = this.props.fleets[fleetId]
-      return (<Tooltip>
+      return (<Tooltip id={`fpfleet-${fleetId}`}>
         <div style={{display: "flex", flexDirection: "column"}}>
           {fleet.map((ship,ind) =>
             <div key={ind}>
