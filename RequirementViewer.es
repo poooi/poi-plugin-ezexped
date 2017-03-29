@@ -28,13 +28,13 @@ class CheckResultBox extends Component {
       <Button bsStyle={this.props.ready ? "success" : "danger"}
               disabled={true}
               style={{
-                flex: "1", opacity: "1", margin: "10px 20px 10px 20px", 
+                flex: "1", opacity: "1", margin: "10px 20px 10px 0", 
                 borderRadius: "10px", display: "flex",
                 visibility: this.props.visible ? "visible" : "hidden"}}>
         <FontAwesome
             style={{marginRight: "5px", marginTop: "2px"}}
             name={this.props.ready ? "check-square-o" : "square-o"} />
-        <div>{this.props.content}</div>
+        <div style={{width: "165px"}}>{this.props.content}</div>
       </Button>
     )}}
 
