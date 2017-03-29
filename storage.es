@@ -8,7 +8,7 @@
      indicating the selected expedition for this fleetId
    - gsFlags: a mapping from expedition id (1..40) to a boolean,
      indicating whether the user is expecting great success
-   
+
  */
 
 const PLUGIN_KEY = "plugin-ezexped"
@@ -22,8 +22,8 @@ const defConfig = (() => {
 })()
 
 const load = () =>
-  typeof localStorage[PLUGIN_KEY] === 'undefined' 
-    ? defConfig 
+  typeof localStorage[PLUGIN_KEY] === 'undefined'
+    ? defConfig
     : JSON.parse( localStorage[PLUGIN_KEY] )
 
 // take a config modifier to modify the config stored on localStorage.
@@ -36,42 +36,7 @@ const modifyStorage = modifier => {
   return newConfig
 }
 
-// copy a config object
-const cloneConfig = config => ({
-  selectedExpeds: [...config.selectedExpeds],
-  gsFlags: [...config.gsFlags],
-  autoSwitch: config.autoSwitch,
-})
-
-const modifySelectedExped = (fleetId,modifier) =>
-  modifyStorage( config => {
-    const newConfig = cloneConfig( config )
-    newConfig.selectedExpeds[fleetId] = modifier( config.selectedExpeds[fleetId] )
-    return newConfig })
-
-const modifyGSFlag = (expedId,modifier) =>
-  modifyStorage( config => {
-    const newConfig = cloneConfig( config )
-    newConfig.gsFlags[expedId] = modifier( config.gsFlags[expedId] )
-    return newConfig })
-
-// modify selectedExped of the specified fleet,
-// return full config structure after modification
-const setSelectedExped = (fleetId, newVal) =>
-  modifySelectedExped(fleetId, () => newVal)
-
-// modify gsFlag of the specified expedition,
-// return full config structure after modification
-const setGSFlag = (expedId, newVal) =>
-  modifyGSFlag(expedId, () => newVal)
-
-export { 
+export {
   load,
   modifyStorage,
-
-  modifySelectedExped,
-  setSelectedExped,
-
-  modifyGSFlag,
-  setGSFlag,
 }

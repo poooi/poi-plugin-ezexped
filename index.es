@@ -33,7 +33,6 @@ import { reducer, mapDispatchToProps } from './reducer'
 
    TODO (non-urgent)
 
-   - record last exped through KCAPI responses
    - utilize React PropTypes
 
  */

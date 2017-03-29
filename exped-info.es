@@ -43,7 +43,15 @@ const expedInfo = (() => {
       itemGreatSuccess: mkItem( data.api_win_item2 ),
     }
   })
+
   return ret
 })()
 
-export { expedInfo }
+const expedNameToId = expedName =>
+  (expedInfo.find( e => e && e.name === expedName )
+  || throwWith `unknown exped name: ${expedName}`).id
+
+export { 
+  expedInfo,
+  expedNameToId,
+}
