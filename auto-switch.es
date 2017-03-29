@@ -23,11 +23,20 @@
  */
 
 const { _ } = window
+import * as dbg from './debug'
 
 // some heuristic to determine which fleet we are changing.
 // returns a number: 0,1,2,3 to indicate the changing fleet
 // otherwise "false" if there is no change or we cannot determine this
-const findChangingFleet = (curFleets, nextFleets) => {
+const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
+  // transform the whole array of fleet representation
+  // so that we only test equality based on info that we are interested in
+  const transformFleets = fleets => fleets.map( fleet => fleet.map( 
+    ({equips,level,mstId}) => ({equips,level,mstId}) ))
+
+  const curFleets = transformFleets( curFleetsFull )
+  const nextFleets = transformFleets( nextFleetsFull )
+
   // compare fleet one-by-one, and determine which one is the one
   // that we are operating:
   // if there's only one changing fleet, that should be it.
