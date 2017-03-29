@@ -6,7 +6,6 @@ import { join } from 'path-extra'
 import { 
   mkFleetInfoSelector,
   combinedFlagSelector,
-  reduxSelector,
 } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
@@ -18,10 +17,6 @@ import {
 } from 'react-bootstrap'
 
 import * as storage from './storage'
-
-import { reducer, mapDispatchToProps } from './reducer'
-
-
 
 /*
 
@@ -47,21 +42,7 @@ class EZExpedMain extends Component {
     }
   }
 
-  componentDidMount() {
-	console.log("did mount")
-    this.props.onRegisterSetFleet( (fleetId) =>
-      this.setState( {fleetId} ) )
-	console.log("reg")
-  }
-
-  componentWillUnmount() {
-    console.log("unmount")
-    this.props.onRegisterSetFleet( null )
-    console.log("unreg")
-  }
-
   render() {
-    console.log("hello")
     const expedId = this.state.config.selectedExpeds[this.state.fleetId]
     const gsFlag = this.state.config.gsFlags[expedId]
     const fleet = this.props.fleets[ this.state.fleetId ]
@@ -75,8 +56,11 @@ class EZExpedMain extends Component {
               fleetId={this.state.fleetId}
               config={this.state.config}
               combinedFlag={this.props.combinedFlag}
-              redux={this.props.redux}
-              onToggleAutoSwitch={this.props.onToggleAutoSwitch}
+              autoSwitch={this.state.config.autoSwitch}
+              onToggleAutoSwitch={ () => this.setState({
+                config: storage.modifyStorage( config => (
+                  { ... config, autoSwitch: !config.autoSwitch }
+                ))})}
               onSelectFleet={(x) => this.setState({fleetId: x})} />
           <ExpeditionViewer
               expedId={expedId}
@@ -117,12 +101,9 @@ const reactClass = connect(
       fleets[fleetId] = fleet
       fleetsExtra[fleetId] = fleetExtra
     })
-    const redux = reduxSelector(state)
-    return { fleets, fleetsExtra, combinedFlag, redux }
-  },
-  mapDispatchToProps)(EZExpedMain)
+    return { fleets, fleetsExtra, combinedFlag }
+  })(EZExpedMain)
 
 export { 
   reactClass,
-  reducer,
 }

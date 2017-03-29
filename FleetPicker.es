@@ -95,7 +95,7 @@ class FleetPicker extends Component {
             key="auto-fleet">
           <FontAwesome
               style={{marginRight: "5px", marginTop: "2px"}}
-              name={this.props.redux.autoSwitch? "check-square-o" : "square-o"} />
+              name={this.props.autoSwitch? "check-square-o" : "square-o"} />
           Auto
         </Button>
         </div>)}}

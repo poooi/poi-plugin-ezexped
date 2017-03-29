@@ -17,7 +17,8 @@ const PLUGIN_KEY = "plugin-ezexped"
 const defConfig = (() => {
   const selectedExpeds = new Array(4).fill(1)
   const gsFlags = new Array(40+1).fill(false)
-  return { selectedExpeds, gsFlags }
+  const autoSwitch = true
+  return { selectedExpeds, gsFlags, autoSwitch }
 })()
 
 const load = () =>
@@ -39,6 +40,7 @@ const modifyStorage = modifier => {
 const cloneConfig = config => ({
   selectedExpeds: [...config.selectedExpeds],
   gsFlags: [...config.gsFlags],
+  autoSwitch: config.autoSwitch,
 })
 
 const modifySelectedExped = (fleetId,modifier) =>
@@ -53,7 +55,7 @@ const modifyGSFlag = (expedId,modifier) =>
     newConfig.gsFlags[expedId] = modifier( config.gsFlags[expedId] )
     return newConfig })
 
-// modify selectedExped of the specified fleet, 
+// modify selectedExped of the specified fleet,
 // return full config structure after modification
 const setSelectedExped = (fleetId, newVal) =>
   modifySelectedExped(fleetId, () => newVal)
