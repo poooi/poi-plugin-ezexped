@@ -1,8 +1,13 @@
 const { dbg } = window
 
+// set this to false on production
+const debug = true
+
 const dbgHandler = dbg.extra('pluginEZExped')
 
 const assert = function () {
+  if (!debug) return
+
   if (!dbgHandler.isEnabled())
     dbgHandler.enable()
   
@@ -10,6 +15,8 @@ const assert = function () {
 }
 
 const log = function () {
+  if (!debug) return
+
   if (!dbgHandler.isEnabled())
     dbgHandler.enable()
   
