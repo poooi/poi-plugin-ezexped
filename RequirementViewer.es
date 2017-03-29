@@ -16,6 +16,8 @@ import {
 } from './requirement'
 
 import * as estype from './estype'
+import { __ } from './tr'
+import * as dbg from './debug'
 
 // a box for showing whether the fleet is ready
 // props:
@@ -59,7 +61,7 @@ const renderRequirement = (req,ok) => {
       <OverlayTrigger
         placement="bottom" overlay={tooltip}>
       <div style={{display: "flex"}}>
-        <div key="header">Fleet Composition:</div>
+        <div key="header">{__("Fleet Composition")}:</div>
         {req.map( ({data: {count, estype: estypeName}}, ind) => 
           <div 
               style={{marginLeft:"5px", color: ok[ind] ? "green" : "red" }}
@@ -70,44 +72,48 @@ const renderRequirement = (req,ok) => {
     </OverlayTrigger>)
   }
 
+  const fmt = function () {
+    return __(`RequirementExplain.${req.data.type}`, ...arguments)
+  }
+
   if (req.data.type === "FSType") {
-    return `Flagship type: ${estype.longDesc(req.data.estype)}`
+    return fmt(estype.longDesc(req.data.estype))
   }
 
   if (req.data.type === "FSLevel") {
-    return `Flagship level ≥${req.data.level}`
+    return fmt(req.data.level)
   }
 
   if (req.data.type === "ShipCount") {
-    return `Fleet contains ≥${req.data.count} ship(s)`
+    return fmt(req.data.count)
   }
 
   if (req.data.type === "DrumCarrierCount") {
-    return `≥${req.data.count} ship(s) should carry \"ドラム缶(輸送用)\"`
+    return fmt(req.data.count)
   }
 
   if (req.data.type === "DrumCount") {
-    return `Fleet carries ≥${req.data.count} \"ドラム缶(輸送用)\" in total`
+    return fmt(req.data.count)
   }
 
   if (req.data.type === "LevelSum") {
-    return `Total level of this fleet should be at least ${req.data.sum}`
+    return fmt(req.data.sum)
   }
 
   if (req.data.type === "SparkledCount") {
-    return `≥${req.data.count} sparkled ship(s) for a great success rate boost`
+    return fmt(req.data.count)
   }
 
   if (req.data.type === "RecommendSparkledCount") {
-    return `≥${req.data.count} sparkled ship(s) for a better great success rate`
+    return fmt(req.data.count)
   }
 
   if (req.data.type === "Morale") {
-    return `All ships in this fleet should have morale ≥${req.data.morale}`
+    return fmt(req.data.morale)
   }
 
   if (req.data.type === "Resupply") {
-    return `All ships in this fleet should be fully resupplied`
+    return fmt()
   }
 
   throw "Unhandled Req type: ${req.data.type}"
@@ -149,15 +155,16 @@ class RequirementViewer extends Component {
     const gsResultObj = checkAllReq(gsReqObj)(fleet)
     const gsCheckResult = normCheckResult && collapseResults( gsResultObj )
     const gsPairedObj = _.zip(gsReqObj,gsResultObj)
+    const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
     return (
       <div>
         <div style={{display: "flex", justifyContent: "space-between"}}>
           <CheckResultBox
               ready={normCheckResult} visible={true}
-              content={`Normal: ${normCheckResult? "Ready" : "Not Ready"}`} />
+              content={`${__("CondNormal")}: ${readyOrNot(normCheckResult)}`} />
           <CheckResultBox
               ready={gsCheckResult} visible={this.props.greatSuccess}
-              content={`Great Success: ${gsCheckResult? "Ready" : "Not Ready"}`} />
+              content={`${__("CondGreatSuccess")}: ${readyOrNot(gsCheckResult)}`} />
         </div>
         <ListGroup>
           { normPairedObj.map( ([req,res],ind) =>

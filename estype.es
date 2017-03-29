@@ -15,6 +15,7 @@ import { throwWith } from './utils'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
+import { __ } from './tr'
 
 const throwWithMsg = msg => {
   throw msg
@@ -57,17 +58,13 @@ const shortDesc = estypeName =>
   : estypeName === "SSLike" ? "SS*"
   : estypeName
 
-const longDesc = estypeName =>
-    estypeName === "DD" ? "Destroyer (DD)"
-  : estypeName === "CL" ? "Light Cruiser (CL)"
-  : estypeName === "CVLike" ? "Aircraft Carriers (CV/CVL/AV/CVB)"
-  : estypeName === "SSLike" ? "Submarines (SS/SSV)"
-  : estypeName === "CA" ? "Heavy Cruiser (CA)"
-  : estypeName === "BBV" ? "Aviation Battleship (BBV)"
-  : estypeName === "AS" ? "Submarine Tender (AS)"
-  : estypeName === "CT" ? "Training Cruiser (CT)"
-  : estypeName === "AV" ? "Seaplane Tender (AV)"
-  : throwWith (`unknown estype: ${estypeName}`)
+const longDesc = estypeName => {
+  const text = `ShipTypeNameLong.${estypeName}`
+  const translated = __(text)
+  if (text === translated)
+    throw `unknown estype or missing translation: ${estypeName}`
+  return translated
+}
 
 // check fleet requirement against an array of ship types
 // returns "true" if the requirement is met

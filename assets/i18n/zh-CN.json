@@ -1,0 +1,46 @@
+{
+  "EZ Exped": "易可赛艇",
+  "Auto": "自动",
+  "AutoTooltip": "根据游戏内动作自动切换舰队",
+
+  "Cost": "消耗",
+  "GS": "大成功",
+  "CondNormal": "常规检查",
+  "CondGreatSuccess": "大成功检查",
+  "CondNotReady": "未通过",
+  "CondReady": "通过",
+  "ShipTypeNameLong": {
+    "DD": "驱逐舰 (DD)",
+    "CL": "轻巡洋舰 (CL)",
+    "CVLike": "空母系 (CV/CVL/AV/CVB)",
+    "SSLike": "潜艇系 (SS/SSV)",
+    "CA": "重巡洋舰 (CA)",
+    "BBV": "航空战舰 (BBV)",
+    "AS": "潜水母舰 (AS)",
+    "CT": "练习巡洋舰 (CT)",
+    "AV": "水上机母舰 (AV)"
+  },
+  "IncomeExplain": {
+    "basicIncome": "基础收入",
+    "aveImp": "大发系平均改修",
+    "dhtBonus": "大发系额外收入",
+    "tokuBonus": "特大发额外收入",
+    "totalIncome": "总收入",
+    "netIncome": "净收入"
+  },
+  "RequirementExplain": {
+    "FSType": "旗舰舰种为%s",
+    "FSLevel": "旗舰等级至少为%s",
+    "ShipCount": "舰娘数至少为%s",
+    "DrumCarrierCount": "需要携带了“ドラム缶(輸送用)”的舰娘%s名",
+    "DrumCount": "舰队携带的“ドラム缶(輸送用)”总量至少为%s",
+    "LevelSum": "舰娘等级合计至少为%s",
+    "SparkledCount": "携带至少%s名处于“战意高昂”状态的舰娘可极大提高大成功概率",
+    "RecommendSparkledCount": "推荐携带至少%s名“战意高昂”状态的舰娘以提高大成功概率",
+    "Morale": "舰娘疲劳度至少为%s",
+    "Resupply": "舰队补给"
+  },
+  "Expedition made easy": "远征条件检查与精确收入预测",
+  "Required Time (mins)": "所需时间(分钟)",
+  "Fleet Composition": "舰队构成"
+}

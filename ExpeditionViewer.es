@@ -10,6 +10,7 @@ import { MaterialIcon } from 'views/components/etc/icon'
 import { resolveTime } from 'views/utils/tools'
 
 const { FontAwesome } = window
+import { __ } from './tr'
 
 const formatTime = mins => {
   const str = resolveTime(mins * 60)
@@ -85,21 +86,15 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
 
 const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
 
-const translateKey = {
-  "basicIncomeText": "Basic Income",
-  "aveImpText": "Ave. Improvement",
-  "dhtBonusText": "Daihatsu-class Bonus",
-  "tokuBonusText": "Toku Daihatsu Bonus",
-  "totalIncomeText": "Total Income",
-  "netIncomeText": "Net Income",
-}
-
 // props:
 // - resourceName
 // - icon
 // - one of "renderedResources"'s value in "ExpeditionViewer"
 class ResourceWithDetail extends Component {
   render() {
+    // "123Text" => "123"
+    const rmText = t => t.slice(0,t.length-4)
+    const translateKey = keyName => __(`IncomeExplain.${rmText(keyName)}`)
     const tooltipTexts = [
       "basicIncomeText",
       "aveImpText",
@@ -108,7 +103,7 @@ class ResourceWithDetail extends Component {
       "totalIncomeText",
       "netIncomeText",
     ].filter( k => this.props.renderedResource[k] )
-     .map( k => `${translateKey[k]}: ${this.props.renderedResource[k]}`)
+     .map( k => `${translateKey(k)}: ${this.props.renderedResource[k]}`)
     const tooltip = (
       <Tooltip
           className="ezexped-pop"
@@ -173,9 +168,9 @@ class ExpeditionViewer extends Component {
           <Button onClick={this.props.onClickExped}>
             {this.props.expedId} {info.name}
           </Button>
-          <div>Required Time (mins): {formatTime(info.timeInMin)}</div>
+          <div>{__("Required Time (mins)")}: {formatTime(info.timeInMin)}</div>
           <div style={{display: "flex"}}>
-            <div style={{marginRight: "2px"}}>Cost:</div>
+            <div style={{marginRight: "2px"}}>{__("Cost")}:</div>
             <IconAndLabel
                 icon={mkMat(1)} label={`${info.cost.fuelPercent}%`} />
             <IconAndLabel
@@ -208,7 +203,7 @@ class ExpeditionViewer extends Component {
         </div>
         <Button style={{flex: "1"}} onClick={this.props.onClickGS}>
           <FontAwesome name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
-          GS
+          {__("GS")}
         </Button>
       </div>
     )

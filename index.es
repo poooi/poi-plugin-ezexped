@@ -27,10 +27,6 @@ import { reducer, mapDispatchToProps } from './reducer'
 
 /*
 
-   TODO
-
-   - i18n
-
    TODO (non-urgent)
 
    - utilize React PropTypes

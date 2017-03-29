@@ -9,6 +9,8 @@ import {
 import { expedReqs, expedGSReqs, checkAllReq, collapseResults } from './requirement'
 const { FontAwesome } = window
 
+import { __ } from './tr'
+
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
@@ -83,6 +85,8 @@ class FleetPicker extends Component {
         </div>
       </Button>)
     }
+
+    const tooltipAutoSwitch = (<Tooltip>{__("AutoTooltip")}</Tooltip>)
     return (
       <div style={{ 
         display: "flex",
@@ -98,14 +102,17 @@ class FleetPicker extends Component {
             </OverlayTrigger>
            )}
         </ButtonGroup>
-        <Button 
-            onClick={this.props.onToggleAutoSwitch}
-            key="auto-fleet">
-          <FontAwesome
-              style={{marginRight: "5px", marginTop: "2px"}}
-              name={this.props.autoSwitch? "check-square-o" : "square-o"} />
-          Auto
-        </Button>
-        </div>)}}
+            <OverlayTrigger
+                key="auto-fleet"
+                placement="left" overlay={tooltipAutoSwitch}> 
+              <Button 
+                onClick={this.props.onToggleAutoSwitch}>
+                <FontAwesome
+                  style={{marginRight: "5px", marginTop: "2px"}}
+                  name={this.props.autoSwitch? "check-square-o" : "square-o"} />
+                {__("Auto")}
+             </Button>
+        </OverlayTrigger>
+      </div>)}}
 
 export { FleetPicker }
