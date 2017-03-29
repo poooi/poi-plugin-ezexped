@@ -71,10 +71,16 @@ class FleetPicker extends Component {
 
       return (<Button
           bsStyle={bsStyle}
-          style={{marginRight: "5px", flex: "1", opacity: focused ? "1" : "0.5"}}
+          style={{
+            marginRight: "5px", flex: "1", 
+            opacity: focused ? "1" : "0.5",
+            whiteSpace: "nowrap",
+            width: "75px", overflow: "hidden"}}
           active={focused}
           onClick={() => this.props.onSelectFleet(fleetId)}>
-        {fleetExtra.name}
+        <div style={{textOverflow: "ellipsis", overflow:"hidden"}} >
+          {fleetExtra.name}
+        </div>
       </Button>)
     }
     return (
