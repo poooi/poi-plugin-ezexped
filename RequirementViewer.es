@@ -40,7 +40,7 @@ class CheckResultBox extends Component {
 
 const renderRequirement = (req,ok) => {
   if (Array.isArray(req)) {
-    const tooltip = (<Tooltip className="ezexped-pop">
+    const tooltip = (<Tooltip id="eq-stc-req-tooltip" className="ezexped-pop">
       <div style={{display: "flex", flexDirection: "column"}}>
         {req.map( ({data},ind) =>
           <div key={ind} style={{flex: "1", display: "flex"}}>

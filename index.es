@@ -78,7 +78,8 @@ class EZExpedMain extends Component {
     if (typeof this.__eventListener !== "undefined") {
       window.removeEventListener(
         'game.response',
-        this.handleGameResponse.bind(this))
+        this.__eventListener)
+      delete this.__eventListener
     }
   }
 
