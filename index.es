@@ -6,6 +6,7 @@ import { join } from 'path-extra'
 import { 
   mkFleetInfoSelector,
   combinedFlagSelector,
+  reduxSelector,
 } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
@@ -16,9 +17,13 @@ import {
   Panel,
 } from 'react-bootstrap'
 
-import { findChangingFleet } from './auto-switch'
+import {
+  findChangingFleet,
+  findNextAvailableFleet,
+  isSendingFleetToExped,
+} from './auto-switch'
 
-import * as storage from './storage'
+import { reducer, mapDispatchToProps } from './reducer'
 
 /*
 
@@ -28,7 +33,6 @@ import * as storage from './storage'
 
    TODO (non-urgent)
 
-   - tab autoswitch
    - record last exped through KCAPI responses
    - utilize React PropTypes
 
@@ -38,48 +42,65 @@ class EZExpedMain extends Component {
   constructor() {
     super()
     this.state = {
-      fleetId: 0,
       expedGridExpanded: false,
-      config: storage.load(),
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.config.autoSwitch) {
+    if (nextProps.redux.config.autoSwitch) {
       const changingFleetInd = findChangingFleet(
         this.props.fleets,
         nextProps.fleets)
 
       if (changingFleetInd !== false) {
-        this.setState({fleetId: changingFleetInd})
+        this.props.onChangeFleet( changingFleetInd )
       }
-            
-      /*
-         TODO: this is better handled by monitoring network
-         because there are cases that network won't cause a state change.
 
-      // auto switch when expeditions are sent
-      // first let's make sure this is not a change about combined fleet state
-      if (! _.isEqual(this.props.fleetsExtra,nextProps.fleetsExtra)
-          &&  this.props.combinedFlag === nextProps.combinedFlag) {
-        const beginFleet = this.props.combinedFlag === 0 ? 1 : 2
-
-        for (let i = beginFleet; i<nextProps.fleetsExtra.length; ++i) {
-          if (nextProps.fleetsExtra[i].available) {
-            this.setState({fleetId: i})
-            break
-          }
-        }
+      if (isSendingFleetToExped(
+        this.props.fleetsExtra,
+        nextProps.fleetsExtra,
+        nextProps.combinedFlag)) {
+        this.props.onChangeFleet( 
+          findNextAvailableFleet(
+            nextProps.fleetsExtra,
+            nextProps.combinedFlag))
       }
-      */
-      
     }
   }
 
+  componentDidMount() {
+    this.__eventListener = this.handleGameResponse.bind(this)
+    window.addEventListener(
+      'game.response', 
+      this.__eventListener)
+  }
+
+  componentWillUnmount() {
+    if (typeof this.__eventListener !== "undefined") {
+      window.removeEventListener(
+        'game.response',
+        this.handleGameResponse.bind(this))
+    }
+  }
+
+  handleGameResponse(e) {
+    const path = e.detail.path
+    if (this.props.redux.config.autoSwitch) {
+      if (path === "/kcsapi/api_get_member/mission") {
+        const nxt = findNextAvailableFleet(
+          this.props.fleetsExtra,
+          this.props.combinedFlag)
+        this.props.onChangeFleet( nxt )
+      }
+    }
+  }
+  
   render() {
-    const expedId = this.state.config.selectedExpeds[this.state.fleetId]
-    const gsFlag = this.state.config.gsFlags[expedId]
-    const fleet = this.props.fleets[ this.state.fleetId ]
+    const config = this.props.redux.config
+    const fleetId = this.props.redux.fleetId
+    const expedId = config.selectedExpeds[fleetId]
+    const gsFlag = config.gsFlags[expedId]
+    const fleet = this.props.fleets[ fleetId ]
     return (
       <div className="poi-plugin-ezexped">
         <link rel="stylesheet" href={join(__dirname, 'assets', 'ezexped.css')} />
@@ -87,31 +108,41 @@ class EZExpedMain extends Component {
           <FleetPicker
               fleets={this.props.fleets}
               fleetsExtra={this.props.fleetsExtra}
-              fleetId={this.state.fleetId}
-              config={this.state.config}
+              fleetId={fleetId}
+              config={config}
               combinedFlag={this.props.combinedFlag}
-              autoSwitch={this.state.config.autoSwitch}
-              onToggleAutoSwitch={ () => this.setState({
-                config: storage.modifyStorage( config => (
-                  { ... config, autoSwitch: !config.autoSwitch }
-                ))})}
-              onSelectFleet={(x) => this.setState({fleetId: x})} />
+              autoSwitch={config.autoSwitch}
+              onToggleAutoSwitch={() =>
+                this.props.onModifyConfig( config => ({
+                  ...config,
+                  autoSwitch: !config.autoSwitch,
+                }))}
+              onSelectFleet={this.props.onChangeFleet} />
           <ExpeditionViewer
               expedId={expedId}
               fleet={fleet}
               greatSuccess={gsFlag}
               onClickExped={() => 
                 this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
-              onClickGS={() =>               
-                this.setState({config: storage.modifyGSFlag(expedId, x => !x)})}/>
+              onClickGS={() =>
+                this.props.onModifyConfig( config => {
+                  const newConfig = { ... config }
+                  newConfig.gsFlags = [ ... config.gsFlags ]
+                  newConfig.gsFlags[expedId] = !config.gsFlags[expedId]
+                  return newConfig
+                })} />
           <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
             <ExpeditionTable
                 fleet={fleet}
                 expedId={expedId}
-                onSelectExped={ (newExpedId) =>                
-                  this.setState({
-                    config: storage.setSelectedExped(this.state.fleetId, newExpedId),
-                    expedGridExpanded: false}) } />
+                onSelectExped={newExpedId => {
+                  this.setState({ expedGridExpanded: false })
+                  this.props.onModifyConfig( config => {
+                    const newConfig = { ... config }
+                    newConfig.selectedExpeds = [ ... config.selectedExpeds ]
+                    newConfig.selectedExpeds[fleetId] = newExpedId
+                    return newConfig
+                  })}} />
           </Panel>
           <RequirementViewer
               fleet={fleet}
@@ -135,9 +166,13 @@ const reactClass = connect(
       fleets[fleetId] = fleet
       fleetsExtra[fleetId] = fleetExtra
     })
-    return { fleets, fleetsExtra, combinedFlag }
-  })(EZExpedMain)
+
+    const redux = reduxSelector(state)
+    return { fleets, fleetsExtra, combinedFlag, redux }
+  },
+  mapDispatchToProps)(EZExpedMain)
 
 export { 
   reactClass,
+  reducer,
 }

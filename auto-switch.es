@@ -1,3 +1,27 @@
+/*
+
+   auto-switch related mechanism
+
+   - auto-switch is an attempt of trying to switch between fleets automatically
+     depending on user in-game actions, this minimizes user interaction while
+     keeps the most related info on plugin panel
+
+   - when changing fleet composition or equipments, auto-switch tries to focus
+     on fleet that we are working on
+
+   - when user switch to "expedition" page in game,
+     we pick the first available one and focus on it
+
+   - after a fleet is send, auto-switch further checks whether there are more fleets to
+     send and switch focus to it.
+
+   - when all fleets are sent, auto-switch moves back to first fleet
+     (I admit there is not really a very good reason for doing this,
+      but if all fleets are sent, we only have main fleet to play with,
+      so let's focus on it)
+
+ */
+
 const { _ } = window
 
 // some heuristic to determine which fleet we are changing.
@@ -28,8 +52,9 @@ const findChangingFleet = (curFleets, nextFleets) => {
   if (changingCount === 0)
     return false
 
-  if (changingCount === 1)
+  if (changingCount === 1) {
     return compared.indexOf(false)
+  }
   
   // changingCount > 1
 
@@ -47,6 +72,32 @@ const findChangingFleet = (curFleets, nextFleets) => {
   return false
 }
 
+// finds next available fleet to send for expeditions
+// returns 0 if all fleets are sent
+const findNextAvailableFleet = (fleetsExtra, combinedFlag) => {
+  const beginInd = combinedFlag === 0 ? 1 : 2
+  for (let i=beginInd; i<fleetsExtra.length; ++i)
+    if (fleetsExtra[i].available)
+      return i
+  // move back to first fleet after all expeditions are sent
+  return 0
+}
+
+// detect whether we are sending a fleet
+const isSendingFleetToExped = (curFleetsExtra, nextFleetsExtra, combinedFlag) => {
+  const curFleetsAva = curFleetsExtra.map( x => x.available )
+  const nextFleetsAva = nextFleetsExtra.map( x => x.available )
+
+  // find a place "i" where an available fleet becoming unavailable next moment
+  const beginInd = combinedFlag === 0 ? 1 : 2
+  for (let i = beginInd; i<curFleetsAva.length; ++i)
+    if (curFleetsAva[i] && !nextFleetsAva[i])
+      return true
+  return false
+}
+
 export {
   findChangingFleet,
+  findNextAvailableFleet,
+  isSendingFleetToExped,
 }
