@@ -67,10 +67,12 @@ class FleetPicker extends Component {
         : normReadyFlagWOResupply && gsReadyFlag ? "warning"
         : "danger"
 
+      const focused = this.props.fleetId === fleetId
+
       return (<Button
           bsStyle={bsStyle}
-          style={{marginRight: "5px", flex: "1"}}
-          active={this.props.fleetId === fleetId}
+          style={{marginRight: "5px", flex: "1", opacity: focused ? "1" : "0.5"}}
+          active={focused}
           onClick={() => this.props.onSelectFleet(fleetId)}>
         {fleetExtra.name}
       </Button>)
