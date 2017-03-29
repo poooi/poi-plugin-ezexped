@@ -3,7 +3,11 @@ import React, { Component } from 'react'
 
 import { join } from 'path-extra'
 
-import { mkFleetInfoSelector, combinedFlagSelector } from './selectors'
+import { 
+  mkFleetInfoSelector,
+  combinedFlagSelector,
+  reduxSelector,
+} from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
 import { ExpeditionTable } from './ExpeditionTable'
@@ -15,8 +19,16 @@ import {
 
 import * as storage from './storage'
 
+import { reducer, mapDispatchToProps } from './reducer'
+
+
+
 /*
-   
+
+   TODO
+
+   - i18n
+
    TODO (non-urgent)
 
    - tab autoswitch
@@ -34,7 +46,22 @@ class EZExpedMain extends Component {
       config: storage.load(),
     }
   }
+
+  componentDidMount() {
+	console.log("did mount")
+    this.props.onRegisterSetFleet( (fleetId) =>
+      this.setState( {fleetId} ) )
+	console.log("reg")
+  }
+
+  componentWillUnmount() {
+    console.log("unmount")
+    this.props.onRegisterSetFleet( null )
+    console.log("unreg")
+  }
+
   render() {
+    console.log("hello")
     const expedId = this.state.config.selectedExpeds[this.state.fleetId]
     const gsFlag = this.state.config.gsFlags[expedId]
     const fleet = this.props.fleets[ this.state.fleetId ]
@@ -48,6 +75,8 @@ class EZExpedMain extends Component {
               fleetId={this.state.fleetId}
               config={this.state.config}
               combinedFlag={this.props.combinedFlag}
+              redux={this.props.redux}
+              onToggleAutoSwitch={this.props.onToggleAutoSwitch}
               onSelectFleet={(x) => this.setState({fleetId: x})} />
           <ExpeditionViewer
               expedId={expedId}
@@ -77,7 +106,7 @@ class EZExpedMain extends Component {
   }
 }
 
-export const reactClass = connect(
+const reactClass = connect(
   (state, props) => {
     const combinedFlag = combinedFlagSelector(state)
     const fleets = []
@@ -88,6 +117,12 @@ export const reactClass = connect(
       fleets[fleetId] = fleet
       fleetsExtra[fleetId] = fleetExtra
     })
+    const redux = reduxSelector(state)
+    return { fleets, fleetsExtra, combinedFlag, redux }
+  },
+  mapDispatchToProps)(EZExpedMain)
 
-    return { fleets, fleetsExtra, combinedFlag }
-  })(EZExpedMain)
+export { 
+  reactClass,
+  reducer,
+}

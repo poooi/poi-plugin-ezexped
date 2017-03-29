@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap'
 
 import { expedReqs, expedGSReqs, checkAllReq, collapseResults } from './requirement'
+const { FontAwesome } = window
 
 // props:
 // - fleetId: current selected fleet id
@@ -15,6 +16,8 @@ import { expedReqs, expedGSReqs, checkAllReq, collapseResults } from './requirem
 // - config: for looking up fleetId => expedId => greatSuccess
 // - onSelectFleet: callback when a new fleet is selected
 //   this callback should accept a fleet id
+// - autoSwitch
+// - onToggleAutoSwitch
 class FleetPicker extends Component {
   render() {
     const mkTooltip = fleetId => { 
@@ -72,7 +75,6 @@ class FleetPicker extends Component {
         {fleetExtra.name}
       </Button>)
     }
-    
     return (
       <div style={{ 
         display: "flex",
@@ -89,11 +91,13 @@ class FleetPicker extends Component {
            )}
         </ButtonGroup>
         <Button 
-            key="auto-fleet"
-            disabled={true}
-            active={false}>
+            onClick={this.props.onToggleAutoSwitch}
+            key="auto-fleet">
+          <FontAwesome
+              style={{marginRight: "5px", marginTop: "2px"}}
+              name={this.props.redux.autoSwitch? "check-square-o" : "square-o"} />
           Auto
         </Button>
-      </div>)}}
+        </div>)}}
 
 export { FleetPicker }

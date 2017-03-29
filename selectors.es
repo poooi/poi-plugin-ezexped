@@ -3,6 +3,7 @@ import {
   fleetShipsDataSelectorFactory,
   fleetShipsEquipDataSelectorFactory,
   fleetSelectorFactory,
+  extensionSelectorFactory,
 } from 'views/utils/selectors'
 
 // reorganize data, sharp it to form the basic input structure
@@ -48,7 +49,11 @@ const mkFleetInfoSelector = fleetId =>
 const combinedFlagSelector = 
   store => store.sortie.combinedFlag
 
+const reduxSelector =
+  extensionSelectorFactory('poi-plugin-ezexped')
+
 export {
   mkFleetInfoSelector,
   combinedFlagSelector,
+  reduxSelector,
 }
