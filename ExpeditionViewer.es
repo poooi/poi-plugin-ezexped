@@ -34,9 +34,9 @@ const itemNameToMaterialId = x =>
     x === "Bucket" ? 6
   : x === "Flamethrower" ? 5
   : x === "DevMat" ? 7
-  : x === "FCoinSmall" ? 9
-  : x === "FCoinMedium" ? 10
-  : x === "FCoinLarge" ? 11
+  : x === "FCoinSmall" ? 10
+  : x === "FCoinMedium" ? 11
+  : x === "FCoinLarge" ? 12
   : throwWith(`unknown item name: ${x}`)
 
 // pretty-printing a floating number
