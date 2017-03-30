@@ -86,7 +86,7 @@ class FleetPicker extends Component {
       </Button>)
     }
 
-    const tooltipAutoSwitch = (<Tooltip>{__("AutoTooltip")}</Tooltip>)
+    const tooltipAutoSwitch = (<Tooltip id="tt-auto-btn">{__("AutoTooltip")}</Tooltip>)
     return (
       <div style={{ 
         display: "flex",
