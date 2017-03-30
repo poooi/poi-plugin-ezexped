@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Javran/poi-plugin-ezexped.git"
+    "url": "git+https://github.com/poooi/poi-plugin-ezexped.git"
   },
   "keywords": [
     "kancolle", "poi"
@@ -19,9 +19,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Javran/poi-plugin-ezexped/issues"
+    "url": "https://github.com/poooi/poi-plugin-ezexped/issues"
   },
-  "homepage": "https://github.com/Javran/poi-plugin-ezexped#readme",
+  "homepage": "https://github.com/poooi/poi-plugin-ezexped#readme",
   "poiPlugin": {
     "title": "EZ Exped",
     "priority": 5,
