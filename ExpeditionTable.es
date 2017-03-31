@@ -11,6 +11,7 @@ import {
 
 import { expedInfo } from './exped-info'
 import * as dbg from './debug'
+const { _ } = window
 
 const checkWithoutResupply = (fleet, expedId) => {
   const req = expedReqs[expedId]
@@ -18,7 +19,6 @@ const checkWithoutResupply = (fleet, expedId) => {
   const result = checkAllReq( req )(fleet)
   return collapseResults(result)
 }
-
 
 const mkExpedTooltip = expedId => {
   const info = expedInfo[expedId]
@@ -61,6 +61,11 @@ const ExpeditionButton = props => {
 // - onSelectExped: when one expedition is selected
 // - fleet: fleet representation
 class ExpeditionTable extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.expedId !== nextProps.expedId ||
+      ! _.isEqual(this.props.fleet,nextProps.fleet)
+  }
+
   render() {
     const isReadyArr = new Array(40+1)
     enumFromTo(1,40)

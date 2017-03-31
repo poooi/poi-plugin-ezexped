@@ -93,6 +93,17 @@ class EZExpedMain extends Component {
       }
     }
   }
+
+  onSelectExped(newExpedId) {
+    const fleetId = this.props.redux.fleetId
+    this.setState({ expedGridExpanded: false })
+    this.props.onModifyConfig( config => {
+      const newConfig = { ... config }
+      newConfig.selectedExpeds = [ ... config.selectedExpeds ]
+      newConfig.selectedExpeds[fleetId] = newExpedId
+      return newConfig
+    })
+  }
   
   render() {
     const config = this.props.redux.config
@@ -134,14 +145,7 @@ class EZExpedMain extends Component {
             <ExpeditionTable
                 fleet={fleet}
                 expedId={expedId}
-                onSelectExped={newExpedId => {
-                  this.setState({ expedGridExpanded: false })
-                  this.props.onModifyConfig( config => {
-                    const newConfig = { ... config }
-                    newConfig.selectedExpeds = [ ... config.selectedExpeds ]
-                    newConfig.selectedExpeds[fleetId] = newExpedId
-                    return newConfig
-                  })}} />
+                onSelectExped={this.onSelectExped.bind(this)} />
           </Panel>
           <RequirementViewer
               fleet={fleet}
