@@ -1,8 +1,6 @@
 import * as storage from './storage'
 import { expedNameToId } from './exped-info'
 
-import * as dbg from './debug'
-
 const loadState = () => ({
   config: storage.load(),
   fleetId: 0,
@@ -16,8 +14,6 @@ const reducer = (state = loadState(), action) => {
     }
   }
   if (action.type === "@poi-plugin-ezexped@ChangeFleet") {
-    if (action.reason)
-      dbg.log(`Changing focus to fleet #${action.fleetId} because: ${action.reason}`)
     return {
       ...state,
       fleetId: action.fleetId,
