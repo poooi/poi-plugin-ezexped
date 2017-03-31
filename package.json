@@ -1,6 +1,6 @@
 {
   "name": "poi-plugin-ezexped",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Expedition made easy",
   "main": "index.es",
   "scripts": {
@@ -11,7 +11,8 @@
     "url": "git+https://github.com/poooi/poi-plugin-ezexped.git"
   },
   "keywords": [
-    "kancolle", "poi"
+    "kancolle",
+    "poi"
   ],
   "author": {
     "name": "Javran",
