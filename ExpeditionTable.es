@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap'
 
 import { expedInfo } from './exped-info'
+import * as dbg from './debug'
 
 const checkWithoutResupply = (fleet, expedId) => {
   const req = expedReqs[expedId]
@@ -18,7 +19,8 @@ const checkWithoutResupply = (fleet, expedId) => {
   return collapseResults(result)
 }
 
-const mkTooltip = expedId => {
+
+const mkExpedTooltip = expedId => {
   const info = expedInfo[expedId]
   return (
     <Tooltip id={`tooltip-${expedId}`} style={{display: "flex", flexDirection: "column"}}>
@@ -27,25 +29,32 @@ const mkTooltip = expedId => {
     </Tooltip>)
 }
 
+// const ExpedTooltip = props => mkExpedTooltip(props.expedId)
 
 // every expedition button inside the table
 // props:
 // - ready: boolean for telling if this expedition is ready
 // - active: if this component should appear like it's the selected exped
 // - expedId: the expedition id this button is representing for
-// - onClick
-const ExpeditionButton = props => (
-  <OverlayTrigger 
-      placement="bottom" 
-      overlay={mkTooltip(props.expedId)}>
-    <Button
-        bsStyle={props.ready ? "primary" : "default"}
-        style={ {flex: "1", marginBottom: "2px"} }
-        active={props.active}
-        onClick={props.onClick}>
-      {props.expedId}
-    </Button>
-  </OverlayTrigger>)
+// - onSelectedExped
+const ExpeditionButton = props => {
+  const expedId = props.expedId
+  const tooltip = mkExpedTooltip(expedId)
+  // I don't know why but the following one isn't working:
+  // const tooltip = (<ExpedTooltip expedId={expedId} />)
+  return (
+    <OverlayTrigger 
+        placement="bottom" 
+        overlay={tooltip}>
+      <Button
+          bsStyle={props.ready ? "primary" : "default"}
+          style={{width: "100%", marginBottom: "2px"}}
+          active={props.active}
+          onClick={() => props.onSelectExped(expedId)}>
+        {props.expedId}
+      </Button>
+    </OverlayTrigger>)
+}
 
 // props:
 // - expedId: current active expedition
@@ -68,7 +77,7 @@ class ExpeditionTable extends Component {
                   ready={isReadyArr[expedId]}
                   active={this.props.expedId === expedId} 
                   expedId={expedId}
-                  onClick={() => this.props.onSelectExped(expedId)} />)
+                  onSelectExped={this.props.onSelectExped} />)
             }
           </div>)}
       </div>)}}
