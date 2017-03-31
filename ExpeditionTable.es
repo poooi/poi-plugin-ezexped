@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap'
 
 import { expedInfo } from './exped-info'
-import * as dbg from './debug'
 const { _ } = window
 
 const checkWithoutResupply = (fleet, expedId) => {

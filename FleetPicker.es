@@ -11,6 +11,10 @@ const { FontAwesome } = window
 
 import { __ } from './tr'
 
+// TODO: too much pure logic part embeded in rendering logic
+// might consider just extracting them out.
+// I'm suspecting this also lead to some wasted rendering.
+
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
