@@ -7,7 +7,6 @@ import {
   Button,
   OverlayTrigger,
   Tooltip,
-  ProgressBar,
 } from 'react-bootstrap'
 
 import { expedInfo } from './exped-info'
@@ -27,38 +26,11 @@ class ExpeditionTable extends Component {
   render() {
     const mkTooltip = expedId => {
       const info = expedInfo[expedId]
-      const resourceSum = 
-        Object.keys(info.resource)
-              .map( k => info.resource[k])
-              .reduce((x,y)=>x+y,0)
 
-      const progressBar = (
-        <ProgressBar min={0} max={resourceSum}>
-          <ProgressBar
-              min={0} max={resourceSum}
-              bsStyle="success"
-              now={info.resource.fuel} key={1} />
-          <ProgressBar
-              min={0} max={resourceSum}
-              bsStyle="danger"
-              now={info.resource.ammo} key={2} />
-          <ProgressBar
-              min={0} max={resourceSum}
-              bsStyle="info"
-              now={info.resource.steel} key={3} />
-          <ProgressBar
-              min={0} max={resourceSum}
-              bsStyle="warning"
-              now={info.resource.bauxite} key={4} />
-        </ProgressBar>
-      )
       return (
         <Tooltip id={`tooltip-${expedId}`} style={{display: "flex", flexDirection: "column" /*, width: "150px" */}}>
           <div>{info.name}</div>
           <div>{["fuel","ammo","steel","bauxite"].map(k => info.resource[k]).join(", ")}</div>
-          { false
-            /* perhaps don't do this for now... */
-            && resourceSum > 0 && progressBar }
         </Tooltip>)
     }
     return (
