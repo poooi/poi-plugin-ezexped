@@ -36,23 +36,32 @@ const mkExpedTooltip = expedId => {
 // - active: if this component should appear like it's the selected exped
 // - expedId: the expedition id this button is representing for
 // - onSelectedExped
-const ExpeditionButton = props => {
-  const expedId = props.expedId
-  const tooltip = mkExpedTooltip(expedId)
-  // I don't know why but the following one isn't working:
-  // const tooltip = (<ExpedTooltip expedId={expedId} />)
-  return (
-    <OverlayTrigger 
-        placement="bottom" 
-        overlay={tooltip}>
-      <Button
-          bsStyle={props.ready ? "primary" : "default"}
-          style={{width: "100%", marginBottom: "2px"}}
-          active={props.active}
-          onClick={() => props.onSelectExped(expedId)}>
-        {props.expedId}
-      </Button>
-    </OverlayTrigger>)
+class ExpeditionButton extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.ready !== nextProps.ready ||
+      this.props.active !== nextProps.active ||
+      this.props.expedId !== nextProps.expedId
+  }
+
+  render () {
+    const props = this.props
+    const expedId = props.expedId
+    const tooltip = mkExpedTooltip(expedId)
+    // I don't know why but the following one isn't working:
+    // const tooltip = (<ExpedTooltip expedId={expedId} />)
+    return (
+      <OverlayTrigger 
+          placement="bottom" 
+          overlay={tooltip}>
+        <Button
+            bsStyle={props.ready ? "primary" : "default"}
+            style={{width: "100%", marginBottom: "2px"}}
+            active={props.active}
+            onClick={() => props.onSelectExped(expedId)}>
+          {props.expedId}
+        </Button>
+      </OverlayTrigger>)
+  }
 }
 
 // props:

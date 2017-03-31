@@ -145,6 +145,12 @@ class RequirementListItem extends Component {
 // expedId: target expedition id
 // greatSuccess: whether aimming at great success
 class RequirementViewer extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.expedId !== nextProps.expedId ||
+      this.props.greatSuccess !== nextProps.greatSuccess ||
+      ! _.isEqual(this.props.fleet, nextProps.fleet)
+  }
+
   render() {
     const fleet = this.props.fleet
     const normReqObj = expedReqs[ this.props.expedId ]
