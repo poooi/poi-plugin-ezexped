@@ -94,7 +94,7 @@ class EZExpedMain extends Component {
     }
   }
 
-  onSelectExped(newExpedId) {
+  selectExped = newExpedId => {
     const fleetId = this.props.redux.fleetId
     this.setState({ expedGridExpanded: false })
     this.props.onModifyConfig( config => {
@@ -145,7 +145,7 @@ class EZExpedMain extends Component {
             <ExpeditionTable
                 fleet={fleet}
                 expedId={expedId}
-                onSelectExped={this.onSelectExped.bind(this)} />
+                onSelectExped={this.selectExped} />
           </Panel>
           <RequirementViewer
               fleet={fleet}

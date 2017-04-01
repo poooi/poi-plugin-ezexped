@@ -2,10 +2,21 @@
 
    Expedition Requirement
 
+   - Terms:
+
+       - Requirement (see below)
+
+       - ReqObj: basically a nested structure whose leaves are all Requirements
+
+           - the nested structure can either be an array or an object
+           - if it's an object, using "checkFleet" and "data" as key is forbidden.
+             so that we can quickly test whether we have reached a Requirement
+
  */
 
 import * as et from './estype'
-import { throwWith, enumFromTo } from './utils'
+import { enumFromTo } from './utils'
+const { _ } = window
 
 // NOTE: certainly if we allow "checkFleet" to return more info
 // and allow any rendering method to have access to that info,
@@ -19,6 +30,8 @@ import { throwWith, enumFromTo } from './utils'
 // checkFleet: Fleet -> Bool
 // data: type and parameter regarding this requirement,
 //   type should be the same string that indexed the requirement in Req.
+// also a structural equality on ".data" part should entail that the whole Requirement
+// being equal.
 const Req = {}
 
 const onNonEmpty = callback => fleet =>
@@ -95,29 +108,15 @@ Req.Resupply = {
   data: {type: "Resupply"},
 }
 
-const renderReqData = data =>
-    data.type === "FSLevel" ? `Flagship Level: ${data.level}`
-  : data.type === "FSType" ? `Flagship Type: ${data.estype}`
-  : data.type === "ShipCount" ? `Ship Count: ${data.count}`
-  : data.type === "DrumCarrierCount" ? `Drum Carrier Count: ${data.count}`
-  : data.type === "DrumCount" ? `Drum Count: ${data.count}`
-  : data.type === "LevelSum" ? `Level Sum: ${data.sum}`
-  : data.type === "SparkledCount" ? `Sparkled Ships: ${data.count}`
-  : data.type === "RecommendSparkledCount" ? 
-      `Recommended to have at least ${data.count} sparked ships`
-  : data.type === "ShipTypeCount" ?
-      `Fleet should contain ${data.count} ships of type ${data.estype}`
-  : data.type === "Morale" ? `Morale: >=${data.morale}`
-  : data.type === "Resupply" ? `Fleet Needs Resupply`
-  : throwWith (`Req of unknown type ${data.type}, full dump: ${JSON.stringify(data)}`)
+const isRequirement = obj => typeof obj.checkFleet !== "undefined"
 
 // check a nested structure of requirements against a single fleet
-// a requirement object is recognized by testing whether "checkFleet" exists
+// a requirement object is recognized by "isRequirement"
 const checkAllReq = obj => fleet => {
   if (Array.isArray( obj ))
     return obj.map( x => checkAllReq(x)(fleet) )
 
-  if (obj.checkFleet)
+  if (isRequirement(obj))
     return obj.checkFleet(fleet)
 
   const ret = {}
@@ -131,7 +130,7 @@ const collectUnmetReqs = (obj,result) => {
     return [].concat(
       ...obj.map( (x,ind) => collectUnmetReqs(x,result[ind]) ))
 
-  if (obj.checkFleet) {
+  if (isRequirement(obj)) {
     return result ? [] : [obj]
   }
 
@@ -140,6 +139,51 @@ const collectUnmetReqs = (obj,result) => {
     ret.push( collectUnmetReqs(obj[k],result[k]) )
   return [].concat(... ret)
 }
+
+const isEqualReqObj = (o1,o2) => {
+  if (o1 === o2)
+    return true
+
+  if (typeof o1 !== typeof o2)
+    return false
+
+  // actually we should check this a bit earlier so that
+  // more invalid usage can be captured, but for now
+  // we don't really need that much power.
+  if (typeof o1 !== "object")
+    throw "Expecting ReqObj to be an object or an array"
+
+  // at this point both are objects
+  if (Array.isArray(o1) !== Array.isArray(o2))
+    return false
+
+  if (Array.isArray(o1)) {
+    // both are arrays
+    return o1.length === o2.length &&
+      o1.every( (e1,ind) => isEqualReqObj(e1,o2[ind]) )
+  } else {
+    // both are objects
+    if (isRequirement(o1) !== isRequirement(o2))
+      return false
+
+    if (isRequirement(o1))
+      return _.isEqual(o1.data,o2.data)
+
+    const keys1 = Object.keys(o1)
+    const keys2 = Object.keys(o2)
+    return keys1.length === keys2.length &&
+      keys1.every( k => 
+        keys2.indexOf(k) !== -1 && 
+          isEqualReqObj(o1[k],o2[k]))
+  }
+}
+
+// traverse a structure and perform "&&" on it
+// the structure must be an array or a single boolean value
+const collapseResults = xs =>
+  Array.isArray(xs)
+    ? xs.every( collapseResults )
+    : xs
 
 const mkSTypeReqs = function () {
   if (arguments.length % 2 === 1)
@@ -475,17 +519,11 @@ const expedGSReqs = (() => {
   return ret
 })()
 
-// traverse a structure and perform "&&" on it
-// the structure must be an array or a single boolean value
-const collapseResults = xs =>
-  Array.isArray(xs)
-    ? xs.every( collapseResults )
-    : xs
-
 export {
   expedReqs,
   expedGSReqs,
   checkAllReq,
   collapseResults,
   collectUnmetReqs,
-  renderReqData }
+  isEqualReqObj,
+}

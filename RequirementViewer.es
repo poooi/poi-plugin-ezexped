@@ -13,6 +13,7 @@ import {
   expedGSReqs, 
   checkAllReq, 
   collapseResults,
+  isEqualReqObj,
 } from './requirement'
 
 import * as estype from './estype'
@@ -124,6 +125,12 @@ const renderRequirement = (req,ok) => {
 // - ok:  a boolean or an array of boolean (for ShipTypeCount array)
 // - greatSuccess: whether this is required by GS
 class RequirementListItem extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.ok !== nextProps.ok ||
+      this.props.greatSuccess !== nextProps.greatSuccess ||
+      ! isEqualReqObj(this.props.req, nextProps.req)
+  }
+
   render() {
     const allOk = collapseResults( this.props.ok )
     const checkBoxColor = allOk

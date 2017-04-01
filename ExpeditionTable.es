@@ -43,6 +43,9 @@ class ExpeditionButton extends Component {
       this.props.expedId !== nextProps.expedId
   }
 
+  selectExped = () =>
+    this.props.onSelectExped(this.props.expedId)
+
   render () {
     const props = this.props
     const expedId = props.expedId
@@ -57,7 +60,7 @@ class ExpeditionButton extends Component {
             bsStyle={props.ready ? "primary" : "default"}
             style={{width: "100%", marginBottom: "2px"}}
             active={props.active}
-            onClick={() => props.onSelectExped(expedId)}>
+            onClick={this.selectExped}>
           {props.expedId}
         </Button>
       </OverlayTrigger>)
