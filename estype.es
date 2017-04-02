@@ -17,10 +17,6 @@ const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
 import { __ } from './tr'
 
-const throwWithMsg = msg => {
-  throw msg
-}
-
 // for reverse lookup
 const stypeRev = (() => {
   const arr = new Array(allSTypes.length + 1)
@@ -30,10 +26,10 @@ const stypeRev = (() => {
 })()
 
 const nameToId = n =>
-  stype [n] || throwWithMsg(`invalid stype name: ${n}`)
+  stype [n] || throwWith(`invalid stype name: ${n}`)
 
 const idToName = i =>
-  stypeRev[i] || throwWithMsg(`invalid stype id: ${i}`)
+  stypeRev[i] || throwWith(`invalid stype id: ${i}`)
 
 const isESType = (() => {
   const eq = x => y => x === y
@@ -66,21 +62,12 @@ const longDesc = estypeName => {
   return translated
 }
 
-// check fleet requirement against an array of ship types
-// returns "true" if the requirement is met
-// otherwise returns a structured description of the requirement itself
-const checkFleetSTypes = (count, estypeName) => stypes =>
-  (stypes.filter( isESType[estypeName] ).length >= count)
-    ? true
-    : {type: "ShipType", estype: estypeName, count: count}
-
 export {
   allSTypes,
   nameToId,
   idToName,
   stype,
   isESType,
-  checkFleetSTypes,
 
   shortDesc,
   longDesc,

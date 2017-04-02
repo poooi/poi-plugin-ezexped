@@ -22,24 +22,4 @@ describe('estype', () => {
       assert( ! estype.isESType.SSLike( ty.AV ) )
     })})
 
-  describe('checkFleetSTypes', () => {
-    spec('tests', () => {
-      assert.deepStrictEqual(
-        estype.checkFleetSTypes(1,"DD")([ty.DD,ty.DD]),
-        true)
-      assert.deepStrictEqual(
-        estype.checkFleetSTypes(2,"DD")([ty.DD,ty.DD]),
-        true)
-      assert.deepStrictEqual(
-        estype.checkFleetSTypes(3,"DD")([ty.DD,ty.DD]),
-        { type: "ShipType", estype: "DD", count: 3 })
-
-      assert.deepStrictEqual(
-        estype.checkFleetSTypes(2,"CVLike")([ty.DD,ty.DD]),
-        { type: "ShipType", estype: "CVLike", count: 2 })
-
-      assert.deepStrictEqual(
-        estype.checkFleetSTypes(2,"CVLike")([ty.CV,ty.AV]),
-        true)
-    })})
 })
