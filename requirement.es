@@ -42,7 +42,6 @@ Req.FSLevel = level => ({
   data: {type: "FSLevel", level},
 })
 
-
 Req.FSType = estypeName => ({
   checkFleet: onNonEmpty( fleet =>
     et.isESType[estypeName](fleet[0].stype)),
@@ -519,7 +518,16 @@ const expedGSReqs = (() => {
   return ret
 })()
 
+const getExpedReqs = (expedId, greatSuccess, resupply) => ({
+  norm: expedReqs[expedId].filter( obj => 
+    Array.isArray(obj) || obj.data.type !== "Resupply" ),
+  gs: expedGSReqs[expedId],
+  resupply: Req.Resupply,
+})
+
 export {
+  getExpedReqs,
+
   expedReqs,
   expedGSReqs,
   checkAllReq,
