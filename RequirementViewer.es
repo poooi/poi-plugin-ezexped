@@ -49,7 +49,7 @@ const renderRequirement = (req,ok) => {
               style={{marginRight: "5px", marginTop: "2px"}}
               name={ok[ind] ? "check-square-o" : "square-o"} />
             <div style={{flex:"1", whiteSpace: "nowrap"}}>
-              {`${estype.longDesc(data.estype)} x ${data.count}`}
+              {`${estype.longDesc(__)(data.estype)} x ${data.count}`}
             </div>
           </div>)}
       </div>
@@ -76,7 +76,7 @@ const renderRequirement = (req,ok) => {
   }
 
   if (req.data.type === "FSType") {
-    return fmt(estype.longDesc(req.data.estype))
+    return fmt(estype.longDesc(__)(req.data.estype))
   }
 
   if (req.data.type === "FSLevel") {

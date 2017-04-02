@@ -15,7 +15,7 @@ import { throwWith } from './utils'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
-import { __ } from './tr'
+// import { __ } from './tr'
 
 // for reverse lookup
 const stypeRev = (() => {
@@ -54,7 +54,9 @@ const shortDesc = estypeName =>
   : estypeName === "SSLike" ? "SS*"
   : estypeName
 
-const longDesc = estypeName => {
+// note: in order to keep this module pure for testing,
+// one has to provide a translating function, which for now is "__" from "tr.es"
+const longDesc = __ => estypeName => {
   const text = `ShipTypeNameLong.${estypeName}`
   const translated = __(text)
   if (text === translated)
