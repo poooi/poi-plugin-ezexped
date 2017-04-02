@@ -14,6 +14,7 @@ const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
       .filter(x => x)
       .map( ([equipInst, $equip]) => ({
         mstId: $equip.api_id,
+        rstId: equipInst.api_id,
         level: equipInst.api_level,
       }))
     const [[curAmmo, maxAmmo], [curFuel,maxFuel]] =

@@ -53,31 +53,35 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
 
   const changingCount = compared.filter(x => !x).length
   
-  const isIncreasing = (beforeFleet,afterFleet) => {
+  // the detection was based on "increasing", which is less accurate (see issue #2)
+  const isNotDecreasing = (beforeFleet,afterFleet) => {
     if (beforeFleet.length !== afterFleet.length)
       return beforeFleet.length < afterFleet.length
     const eqListBefore = [].concat( ... beforeFleet.map(s => s.equips))
     const eqListAfter = [].concat( ... afterFleet.map(s => s.equips))
-    return eqListBefore.length < eqListAfter.length
+    return eqListBefore.length <= eqListAfter.length
   }
 
   if (changingCount === 0)
     return false
-
-  if (changingCount === 1) {
-    return compared.indexOf(false)
-  }
   
-  // changingCount > 1
-
-  // multiple fleets are updated
+  // changingCount >= 1
+  // one or more fleets are updated
+  // no matter how many fleet configurations have been changed,
+  // we always pick those that appear different
+  // and choose the first one that is "not-decreasing".
+  // if we know:
+  // - one fleet has somehow been changed
+  // - the number of ships and the total number of equipments
+  //   are not decreasing
+  // then this is the changing fleet that we are looking for.
   for (let i=0; i<compared.length;++i) {
     if (compared[i])
       continue
       
     const fleet = curFleets[i]
     const nextFleet = nextFleets[i]
-    if (isIncreasing(fleet,nextFleet))
+    if (isNotDecreasing(fleet,nextFleet))
       return i
   }
 
