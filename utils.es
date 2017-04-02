@@ -13,4 +13,10 @@ const throwWith = data => {
   throw data
 }
 
-export { enumFromTo, throwWith }
+const valMap = obj => f => {
+  const ret = {}
+  Object.keys(obj).map( k => ret[k] = f(obj[k]) )
+  return ret
+}
+
+export { enumFromTo, throwWith, valMap }

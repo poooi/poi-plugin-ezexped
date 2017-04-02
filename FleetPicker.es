@@ -52,16 +52,13 @@ class FleetPicker extends Component {
       const fleetExtra = this.props.fleetsExtra[fleetId]
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
-
+      
       const eR = getExpedReqs(expedId,true,true)
-      const normReqs = [...eR.norm]
-      normReqs.push( eR.resupply )
 
-      const normReqsWOResupply = eR.norm
+      const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet)
+      // without resupply
       const normReadyFlag = 
-        collapseResults( checkAllReq( normReqs )(fleet) )
-      const normReadyFlagWOResupply = 
-        collapseResults( checkAllReq( normReqsWOResupply )(fleet) )
+        collapseResults( checkAllReq( eR.norm )(fleet) )
 
       const gsReadyFlag = 
         !greatSuccess ||
@@ -71,8 +68,8 @@ class FleetPicker extends Component {
           fleetId === 0 ? "success"
         : this.props.combinedFlag !== 0 && fleetId === 1 ? "success"
         : !fleetExtra.available ? "primary"
-        : normReadyFlag && gsReadyFlag ? "success"
-        : normReadyFlagWOResupply && gsReadyFlag ? "warning"
+        : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
+        : normReadyFlag && gsReadyFlag ? "warning"
         : "danger"
 
       const focused = this.props.fleetId === fleetId

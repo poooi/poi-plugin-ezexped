@@ -12,10 +12,16 @@
            - if it's an object, using "checkFleet" and "data" as key is forbidden.
              so that we can quickly test whether we have reached a Requirement
 
+       - ReqObjRep: ReqObj with some additional requirements:
+
+           - must be an array
+           - every element of it should be either a Req object, or an array.
+           - if one element is an array, then all elements of it should be ShipTypeCount
+           - every element of the list is of a unique type
  */
 
 import * as et from './estype'
-import { enumFromTo } from './utils'
+import { enumFromTo, valMap } from './utils'
 const _ = require('lodash')
 
 // NOTE: certainly if we allow "checkFleet" to return more info
@@ -124,21 +130,6 @@ const checkAllReq = obj => fleet => {
   return ret
 }
 
-const collectUnmetReqs = (obj,result) => {
-  if (Array.isArray( obj ))
-    return [].concat(
-      ...obj.map( (x,ind) => collectUnmetReqs(x,result[ind]) ))
-
-  if (isRequirement(obj)) {
-    return result ? [] : [obj]
-  }
-
-  const ret = []
-  for (const k in obj)
-    ret.push( collectUnmetReqs(obj[k],result[k]) )
-  return [].concat(... ret)
-}
-
 const isEqualReqObj = (o1,o2) => {
   if (o1 === o2)
     return true
@@ -203,12 +194,7 @@ const mkSTypeReqs = function () {
   return ret
 }
 
-// INVARIANT: for requirement of each expedition:
-// - top-level is guaranteed to be an array
-// - ShipTypeCount requirement is always grouped by a nested array
-// - every object should be either a Req object, or an array.
-//   if it is an array, then all elements of it should be ShipTypeCount
-// - every element of the list is of a unique type
+// every element is a ReqObjRep
 const expedReqs = (() => {
   const ret = new Array(40+1)
 
@@ -441,6 +427,7 @@ const expedReqs = (() => {
   return ret
 })()
 
+// every element is a ReqObjRep
 const expedGSReqs = (() => {
   const ret = new Array(40+1)
 
@@ -477,6 +464,17 @@ const expedGSReqs = (() => {
   return ret
 })()
 
+/*
+  returns the following structure:
+  
+  { norm: ReqObjRep,
+    // exists only if greatSuccess is true
+    gs: ReqObjRep,
+    // exists only if resupply is true
+    resupply: <must be Req.Resupply>,
+  }
+  
+*/
 const getExpedReqs = (expedId, greatSuccess, resupply) => {
   const ret = {
     norm: expedReqs[expedId],
@@ -490,10 +488,26 @@ const getExpedReqs = (expedId, greatSuccess, resupply) => {
   return ret
 }
 
+const checkExpedReqs = (...args) => fleet =>
+  collapseResults( 
+    checkAllReq( getExpedReqs(...args) )(fleet) )
+
+const checkReqObjRep = ror => fleet =>
+  _.zip(ror, checkAllReq(ror)(fleet))
+
+const checkExpedDetail = (...args) => fleet =>
+  valMap( getExpedReqs(...args) )( obj =>
+    Array.isArray(obj) 
+    ? /* obj is ReqObjRep */
+      checkReqObjRep(obj)(fleet)
+      /* obj is Req.Resupply */
+    : [obj, obj.checkFleet(fleet)])
+
 export {
   getExpedReqs,
+  checkExpedReqs,
+  checkExpedDetail,
   checkAllReq,
   collapseResults,
-  collectUnmetReqs,
   isEqualReqObj,
 }
