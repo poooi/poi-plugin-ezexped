@@ -141,7 +141,7 @@ const shipResupplyCost = ship => {
 
 // "fleetResupplyCost(ship)(fuelCostFactor,ammoCostFactor)"
 // is the same as "shipResupplyCost" 
-// but for fleet representation (an array of ship representation)
+// but for an array of ship representation
 const fleetResupplyCost = fleet => {
   const ks = fleet.map( shipResupplyCost )
   const mergeCost = (x,y) => ({

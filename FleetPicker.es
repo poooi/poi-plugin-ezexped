@@ -18,7 +18,6 @@ import { __ } from './tr'
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
-// - fleetsExtra: array of fleet extra info
 // - config: for looking up fleetId => expedId => greatSuccess
 // - onSelectFleet: callback when a new fleet is selected
 //   this callback should accept a fleet id
@@ -30,7 +29,7 @@ class FleetPicker extends Component {
       const fleet = this.props.fleets[fleetId]
       return (<Tooltip id={`fpfleet-${fleetId}`}>
         <div style={{display: "flex", flexDirection: "column"}}>
-          {fleet.map((ship,ind) =>
+          {fleet.ships.map((ship,ind) =>
             <div key={ind}>
               {`${ship.name} (Lv. ${ship.level})`}
             </div>
@@ -49,25 +48,24 @@ class FleetPicker extends Component {
     // - not available: always blue
     const mkButton = fleetId => {
       const fleet = this.props.fleets[fleetId]
-      const fleetExtra = this.props.fleetsExtra[fleetId]
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
       
       const eR = getExpedReqs(expedId,true,true)
 
-      const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet)
+      const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet.ships)
       // without resupply
       const normReadyFlag = 
-        collapseResults( checkAllReq( eR.norm )(fleet) )
+        collapseResults( checkAllReq( eR.norm )(fleet.ships) )
 
       const gsReadyFlag = 
         !greatSuccess ||
-        (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet) ))
+        (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
       const bsStyle =
           fleetId === 0 ? "success"
         : this.props.combinedFlag !== 0 && fleetId === 1 ? "success"
-        : !fleetExtra.available ? "primary"
+        : !fleet.available ? "primary"
         : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
         : normReadyFlag && gsReadyFlag ? "warning"
         : "danger"
@@ -84,7 +82,7 @@ class FleetPicker extends Component {
           active={focused}
           onClick={() => this.props.onSelectFleet(fleetId)}>
         <div style={{textOverflow: "ellipsis", overflow:"hidden"}} >
-          {fleetExtra.name}
+          {fleet.name}
         </div>
       </Button>)
     }

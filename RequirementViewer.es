@@ -156,7 +156,7 @@ class RequirementViewer extends Component {
   }
 
   render() {
-    const resultDetail = checkExpedDetail(this.props.expedId,true,true)(this.props.fleet)
+    const resultDetail = checkExpedDetail(this.props.expedId,true,true)(this.props.fleet.ships)
     const normCheckResult = collapseResults( resultDetail.norm.map( ([req,res]) => res) )
     const resupplyCheckResult = resultDetail.resupply[1]
     const gsCheckResult = collapseResults( resultDetail.gs.map( ([req,res]) => res ) )

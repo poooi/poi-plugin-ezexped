@@ -28,7 +28,7 @@ const { _ } = window
 // returns a number: 0,1,2,3 to indicate the changing fleet
 // otherwise "false" if there is no change or we cannot determine this
 const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
-  // transform the whole array of fleet representation
+  // transform the whole array of fleet ship representation
   // so that we only test equality based on info that we are interested in
 
   // we use roster id instead of master id + level approach

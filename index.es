@@ -44,8 +44,8 @@ class EZExpedMain extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.redux.config.autoSwitch) {
       const changingFleetInd = findChangingFleet(
-        this.props.fleets,
-        nextProps.fleets)
+        this.props.fleets.map(x => x.ships),
+        nextProps.fleets.map(x => x.ships))
 
       if (changingFleetInd !== false) {
         this.props.onChangeFleet(
@@ -54,12 +54,12 @@ class EZExpedMain extends Component {
       }
 
       if (isSendingFleetToExped(
-        this.props.fleetsExtra,
-        nextProps.fleetsExtra,
+        this.props.fleets,
+        nextProps.fleets,
         nextProps.combinedFlag)) {
         this.props.onChangeFleet(
           findNextAvailableFleet(
-            nextProps.fleetsExtra,
+            nextProps.fleets,
             nextProps.combinedFlag),
          "detected that we are sending a fleet out, switching to next one")
       }
@@ -87,7 +87,7 @@ class EZExpedMain extends Component {
     if (this.props.redux.config.autoSwitch) {
       if (path === "/kcsapi/api_get_member/mission") {
         const nxt = findNextAvailableFleet(
-          this.props.fleetsExtra,
+          this.props.fleets,
           this.props.combinedFlag)
         this.props.onChangeFleet(nxt, "User is at expedition screen")
       }
@@ -117,7 +117,6 @@ class EZExpedMain extends Component {
         <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
           <FleetPicker
               fleets={this.props.fleets}
-              fleetsExtra={this.props.fleetsExtra}
               fleetId={fleetId}
               config={config}
               combinedFlag={this.props.combinedFlag}
@@ -161,17 +160,14 @@ class EZExpedMain extends Component {
 const reactClass = connect(
   (state, props) => {
     const combinedFlag = combinedFlagSelector(state)
-    const fleets = []
-    const fleetsExtra = [];
+    const fleets = [];
 
     [0,1,2,3].map( fleetId => {
-      const {fleet,fleetExtra} = mkFleetInfoSelector(fleetId)(state)
-      fleets[fleetId] = fleet
-      fleetsExtra[fleetId] = fleetExtra
+      fleets[fleetId] = mkFleetInfoSelector(fleetId)(state)
     })
 
     const redux = reduxSelector(state)
-    return { fleets, fleetsExtra, combinedFlag, redux }
+    return { fleets, combinedFlag, redux }
   },
   mapDispatchToProps)(EZExpedMain)
 

@@ -75,7 +75,7 @@ class ExpeditionTable extends Component {
     enumFromTo(1,40)
       .map( expedId => 
         isReadyArr[expedId] =
-          checkExpedReqs(expedId,false,false)(this.props.fleet))
+          checkExpedReqs(expedId,false,false)(this.props.fleet.ships))
     return (
       <div style={{display: "flex"}} >
         {enumFromTo(1,5).map(world =>

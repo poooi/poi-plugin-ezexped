@@ -133,10 +133,10 @@ class ExpeditionViewer extends Component {
   render() {
     const info = expedInfo[ this.props.expedId ]
     const resupplyCost = 
-      fleetResupplyCost(this.props.fleet)(
+      fleetResupplyCost(this.props.fleet.ships)(
         info.cost.fuelPercent / 100, info.cost.ammoPercent / 100)
     const daihatsuBonus =
-      daihatsu.computeBonus( this.props.fleet )
+      daihatsu.computeBonus( this.props.fleet.ships )
 
     // have to apply a semicolon otherwise parser won't recognize this properly
     const renderedResources = {};
