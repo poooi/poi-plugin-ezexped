@@ -208,7 +208,6 @@ const mkSTypeReqs = function () {
 const expedReqs = (() => {
   const ret = new Array(40+1)
 
-  const basicReqs = [ Req.Resupply ]
   const flagshipLevelAndShipCount = (fsl,sc) =>
     [Req.FSLevel(fsl), Req.ShipCount(sc)]
 
@@ -219,98 +218,78 @@ const expedReqs = (() => {
 
   ret[1] = [
     ...flagshipLevelAndShipCount(1,2),
-    ...basicReqs,
     Req.Morale(28),
   ]
 
   ret[2] = [
     ...flagshipLevelAndShipCount(2,4),
-    ...basicReqs,
     Req.Morale(13),
   ]
 
   ret[3] = [
     ...flagshipLevelAndShipCount(3,3),
-    ...basicReqs,
     Req.Morale(22),
   ]
 
   ret[4] = [
     ...flagshipLevelAndShipCount(3,3),
     mkSTypeReqs(1,"CL", 2,"DD"),
-    ...basicReqs,
   ]
 
   ret[5] = [
     ...flagshipLevelAndShipCount(3,4),
     mkSTypeReqs(1,"CL", 2,"DD"),
-    ...basicReqs,
   ]
 
   ret[6] = [
     ...flagshipLevelAndShipCount(4,4),
-    ...basicReqs,
     Req.Morale(1),
   ]
 
-  ret[7] = [
-    ...flagshipLevelAndShipCount(5,6),
-    ...basicReqs,
-  ]
+  ret[7] = flagshipLevelAndShipCount(5,6)
 
-  ret[8] = [
-    ...flagshipLevelAndShipCount(6,6),
-    ...basicReqs,
-  ]
+  ret[8] = flagshipLevelAndShipCount(6,6)
 
   // world 2
 
   ret[9] = [
     ...flagshipLevelAndShipCount(3,4),
     mkSTypeReqs(1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[10] = [
     ...flagshipLevelAndShipCount(3,3),
     mkSTypeReqs(2,"CL"),
-    ...basicReqs,
   ]
 
   ret[11] = [
     ...flagshipLevelAndShipCount(6,4),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[12] = [
     ...flagshipLevelAndShipCount(4,4),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[13] = [
     ...flagshipLevelAndShipCount(5,6),
     mkSTypeReqs(1,"CL",4,"DD"),
-    ...basicReqs,
   ]
 
   ret[14] = [
     ...flagshipLevelAndShipCount(6,6),
     mkSTypeReqs(1,"CL",3,"DD"),
-    ...basicReqs,
   ]
 
   ret[15] = [
     ...flagshipLevelAndShipCount(9,6),
     mkSTypeReqs(2,"CVLike",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[16] = [
     ...flagshipLevelAndShipCount(11,6),
     mkSTypeReqs(1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   // world 3
@@ -318,25 +297,21 @@ const expedReqs = (() => {
   ret[17] = [
     ...flagshipLevelAndShipCount(20,6),
     mkSTypeReqs(1,"CL",3,"DD"),
-    ...basicReqs,
   ]
 
   ret[18] = [
     ...flagshipLevelAndShipCount(15,6),
     mkSTypeReqs(3,"CVLike",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[19] = [
     ...flagshipLevelAndShipCount(20,6),
     mkSTypeReqs(2,"BBV",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[20] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(1,"SSLike",1,"CL"),
-    ...basicReqs,
   ]
 
   ret[21] = [
@@ -344,21 +319,18 @@ const expedReqs = (() => {
     Req.LevelSum(30),
     mkSTypeReqs(1,"CL",4,"DD"),
     Req.DrumCarrierCount(3),
-    ...basicReqs,
   ]
 
   ret[22] = [
     ...flagshipLevelAndShipCount(30,6),
     Req.LevelSum(45),
     mkSTypeReqs(1,"CA",1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[23] = [
     ...flagshipLevelAndShipCount(50,6),
     Req.LevelSum(200),
     mkSTypeReqs(2,"BBV",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[24] = [
@@ -366,7 +338,6 @@ const expedReqs = (() => {
     Req.LevelSum(200),
     mkSTypeReqs(1,"CL",4,"DD"),
     Req.FSType("CL"),
-    ...basicReqs,
   ]
 
   // world 4
@@ -374,51 +345,43 @@ const expedReqs = (() => {
   ret[25] = [
     ...flagshipLevelAndShipCount(25,4),
     mkSTypeReqs(2,"CA",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[26] = [
     ...flagshipLevelAndShipCount(30,4),
     mkSTypeReqs(1,"CVLike",1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[27] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(2,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[28] = [
     ...flagshipLevelAndShipCount(30,3),
     mkSTypeReqs(3,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[29] = [
     ...flagshipLevelAndShipCount(50,3),
     mkSTypeReqs(3,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[30] = [
     ...flagshipLevelAndShipCount(55,4),
     mkSTypeReqs(4,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[31] = [
     ...flagshipLevelAndShipCount(60,4),
     Req.LevelSum(200),
     mkSTypeReqs(4,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[32] = [
     ...flagshipLevelAndShipCount(5,3),
     mkSTypeReqs(1,"CT",2,"DD"),
     Req.FSType("CT"),
-    ...basicReqs,
   ]
 
   // world 5
@@ -426,25 +389,21 @@ const expedReqs = (() => {
   ret[33] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[34] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[35] = [
     ...flagshipLevelAndShipCount(40,6),
     mkSTypeReqs(2,"CVLike",1,"CA",1,"DD"),
-    ...basicReqs,
   ]
 
   ret[36] = [
     ...flagshipLevelAndShipCount(30,6),
     mkSTypeReqs(2,"AV",1,"CL",1,"DD"),
-    ...basicReqs,
   ]
 
   ret[37] = [
@@ -452,7 +411,6 @@ const expedReqs = (() => {
     Req.LevelSum(200),
     mkSTypeReqs(1,"CL",5,"DD"),
     Req.DrumCarrierCount(4),
-    ...basicReqs,
   ]
 
   ret[38] = [
@@ -461,14 +419,12 @@ const expedReqs = (() => {
     mkSTypeReqs(5,"DD"),
     Req.DrumCarrierCount(4),
     Req.DrumCount(8),
-    ...basicReqs,
   ]
 
   ret[39] = [
     ...flagshipLevelAndShipCount(3,5),
     Req.LevelSum(180),
     mkSTypeReqs(1,"AS",4,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[40] = [
@@ -476,7 +432,6 @@ const expedReqs = (() => {
     Req.LevelSum(150),
     mkSTypeReqs(1,"CL",2,"AV",2,"DD"),
     Req.FSType("CL"),
-    ...basicReqs,
   ]
 
   return ret
@@ -520,8 +475,7 @@ const expedGSReqs = (() => {
 
 const getExpedReqs = (expedId, greatSuccess, resupply) => {
   const ret = {
-    norm: expedReqs[expedId].filter( obj =>
-      Array.isArray(obj) || obj.data.type !== "Resupply" ),
+    norm: expedReqs[expedId],
   }
 
   if (greatSuccess)
