@@ -16,7 +16,7 @@
 
 import * as et from './estype'
 import { enumFromTo } from './utils'
-const { _ } = window
+const _ = require('lodash')
 
 // NOTE: certainly if we allow "checkFleet" to return more info
 // and allow any rendering method to have access to that info,
@@ -178,11 +178,15 @@ const isEqualReqObj = (o1,o2) => {
 }
 
 // traverse a structure and perform "&&" on it
-// the structure must be an array or a single boolean value
+// the structure must be one of:
+// - a nested structure of array / object, whose "leaves" are all boolean values 
+// - a single boolean value
 const collapseResults = xs =>
   Array.isArray(xs)
     ? xs.every( collapseResults )
-    : xs
+    : typeof xs === "object" 
+      ? Object.keys(xs).every( k => collapseResults(xs[k]) )
+      : xs
 
 const mkSTypeReqs = function () {
   if (arguments.length % 2 === 1)
