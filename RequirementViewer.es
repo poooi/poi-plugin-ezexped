@@ -9,8 +9,7 @@ import {
 } from 'react-bootstrap'
 
 import { 
-  expedReqs, 
-  expedGSReqs, 
+  getExpedReqs,
   checkAllReq, 
   collapseResults,
   isEqualReqObj,
@@ -18,7 +17,6 @@ import {
 
 import * as estype from './estype'
 import { __ } from './tr'
-import * as dbg from './debug'
 
 // a box for showing whether the fleet is ready
 // props:
@@ -160,11 +158,16 @@ class RequirementViewer extends Component {
 
   render() {
     const fleet = this.props.fleet
-    const normReqObj = expedReqs[ this.props.expedId ]
+
+    const eR = getExpedReqs(this.props.expedId,true,true)
+
+    const normReqObj = [...eR.norm]
+    normReqObj.push( eR.resupply )
+
     const normResultObj = checkAllReq(normReqObj)(fleet)
     const normCheckResult = collapseResults( normResultObj )
     const normPairedObj = _.zip(normReqObj,normResultObj)
-    const gsReqObj = expedGSReqs[ this.props.expedId ]
+    const gsReqObj = eR.gs
     const gsResultObj = checkAllReq(gsReqObj)(fleet)
     const gsCheckResult = normCheckResult && collapseResults( gsResultObj )
     const gsPairedObj = _.zip(gsReqObj,gsResultObj)

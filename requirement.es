@@ -518,18 +518,22 @@ const expedGSReqs = (() => {
   return ret
 })()
 
-const getExpedReqs = (expedId, greatSuccess, resupply) => ({
-  norm: expedReqs[expedId].filter( obj => 
-    Array.isArray(obj) || obj.data.type !== "Resupply" ),
-  gs: expedGSReqs[expedId],
-  resupply: Req.Resupply,
-})
+const getExpedReqs = (expedId, greatSuccess, resupply) => {
+  const ret = {
+    norm: expedReqs[expedId].filter( obj =>
+      Array.isArray(obj) || obj.data.type !== "Resupply" ),
+  }
+
+  if (greatSuccess)
+    ret.gs = expedGSReqs[expedId]
+
+  if (resupply)
+    ret.resupply = Req.Resupply
+  return ret
+}
 
 export {
   getExpedReqs,
-
-  expedReqs,
-  expedGSReqs,
   checkAllReq,
   collapseResults,
   collectUnmetReqs,

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import { enumFromTo } from './utils'
-import { expedReqs, checkAllReq, collapseResults } from './requirement'
+import { getExpedReqs, checkAllReq, collapseResults } from './requirement'
 
 import {
   Button,
@@ -13,8 +13,7 @@ import { expedInfo } from './exped-info'
 const { _ } = window
 
 const checkWithoutResupply = (fleet, expedId) => {
-  const req = expedReqs[expedId]
-    .filter( req => Array.isArray(req) || req.data.type !== "Resupply" )
+  const req = getExpedReqs(expedId,false,false).norm
   const result = checkAllReq( req )(fleet)
   return collapseResults(result)
 }

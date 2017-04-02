@@ -6,7 +6,7 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { expedReqs, expedGSReqs, checkAllReq, collapseResults } from './requirement'
+import { getExpedReqs, checkAllReq, collapseResults } from './requirement'
 const { FontAwesome } = window
 
 import { __ } from './tr'
@@ -53,9 +53,11 @@ class FleetPicker extends Component {
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
 
-      const normReqs = expedReqs[expedId]
-      const normReqsWOResupply = normReqs
-        .filter( r => Array.isArray(r) || r.data.type !== "Resupply" )
+      const eR = getExpedReqs(expedId,true,true)
+      const normReqs = [...eR.norm]
+      normReqs.push( eR.resupply )
+
+      const normReqsWOResupply = eR.norm
       const normReadyFlag = 
         collapseResults( checkAllReq( normReqs )(fleet) )
       const normReadyFlagWOResupply = 
@@ -63,7 +65,7 @@ class FleetPicker extends Component {
 
       const gsReadyFlag = 
         !greatSuccess ||
-        (greatSuccess && collapseResults( checkAllReq( expedGSReqs[expedId ] )(fleet) ))
+        (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet) ))
 
       const bsStyle =
           fleetId === 0 ? "success"

@@ -15,7 +15,7 @@ is to take a look at unmet requirements and adjust your fleet & equipments accor
 ### Accurate Resource Income Estimation
 
 Great Success, all kinds of Daihatsu Landing Craft, their improvement levels
-and resuply cost, all taken into account.
+and resupply cost, all taken into account.
 
 ![](docs/income1.jpg)
 
