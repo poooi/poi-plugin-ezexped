@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import { enumFromTo } from './utils'
-import { expedReqs, checkAllReq, collapseResults } from './requirement'
+import { checkExpedReqs } from './requirement'
 
 import {
   Button,
@@ -11,13 +11,6 @@ import {
 
 import { expedInfo } from './exped-info'
 const { _ } = window
-
-const checkWithoutResupply = (fleet, expedId) => {
-  const req = expedReqs[expedId]
-    .filter( req => Array.isArray(req) || req.data.type !== "Resupply" )
-  const result = checkAllReq( req )(fleet)
-  return collapseResults(result)
-}
 
 const mkExpedTooltip = expedId => {
   const info = expedInfo[expedId]
@@ -81,7 +74,8 @@ class ExpeditionTable extends Component {
     const isReadyArr = new Array(40+1)
     enumFromTo(1,40)
       .map( expedId => 
-        isReadyArr[expedId] = checkWithoutResupply(this.props.fleet,expedId) )
+        isReadyArr[expedId] =
+          checkExpedReqs(expedId,false,false)(this.props.fleet))
     return (
       <div style={{display: "flex"}} >
         {enumFromTo(1,5).map(world =>

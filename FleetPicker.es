@@ -6,7 +6,7 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { expedReqs, expedGSReqs, checkAllReq, collapseResults } from './requirement'
+import { getExpedReqs, checkAllReq, collapseResults } from './requirement'
 const { FontAwesome } = window
 
 import { __ } from './tr'
@@ -52,25 +52,24 @@ class FleetPicker extends Component {
       const fleetExtra = this.props.fleetsExtra[fleetId]
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
+      
+      const eR = getExpedReqs(expedId,true,true)
 
-      const normReqs = expedReqs[expedId]
-      const normReqsWOResupply = normReqs
-        .filter( r => Array.isArray(r) || r.data.type !== "Resupply" )
+      const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet)
+      // without resupply
       const normReadyFlag = 
-        collapseResults( checkAllReq( normReqs )(fleet) )
-      const normReadyFlagWOResupply = 
-        collapseResults( checkAllReq( normReqsWOResupply )(fleet) )
+        collapseResults( checkAllReq( eR.norm )(fleet) )
 
       const gsReadyFlag = 
         !greatSuccess ||
-        (greatSuccess && collapseResults( checkAllReq( expedGSReqs[expedId ] )(fleet) ))
+        (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet) ))
 
       const bsStyle =
           fleetId === 0 ? "success"
         : this.props.combinedFlag !== 0 && fleetId === 1 ? "success"
         : !fleetExtra.available ? "primary"
-        : normReadyFlag && gsReadyFlag ? "success"
-        : normReadyFlagWOResupply && gsReadyFlag ? "warning"
+        : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
+        : normReadyFlag && gsReadyFlag ? "warning"
         : "danger"
 
       const focused = this.props.fleetId === fleetId

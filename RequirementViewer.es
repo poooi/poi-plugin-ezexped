@@ -9,16 +9,13 @@ import {
 } from 'react-bootstrap'
 
 import { 
-  expedReqs, 
-  expedGSReqs, 
-  checkAllReq, 
+  checkExpedDetail,
   collapseResults,
   isEqualReqObj,
 } from './requirement'
 
 import * as estype from './estype'
 import { __ } from './tr'
-import * as dbg from './debug'
 
 // a box for showing whether the fleet is ready
 // props:
@@ -51,7 +48,7 @@ const renderRequirement = (req,ok) => {
               style={{marginRight: "5px", marginTop: "2px"}}
               name={ok[ind] ? "check-square-o" : "square-o"} />
             <div style={{flex:"1", whiteSpace: "nowrap"}}>
-              {`${estype.longDesc(data.estype)} x ${data.count}`}
+              {`${estype.longDesc(__)(data.estype)} x ${data.count}`}
             </div>
           </div>)}
       </div>
@@ -78,7 +75,7 @@ const renderRequirement = (req,ok) => {
   }
 
   if (req.data.type === "FSType") {
-    return fmt(estype.longDesc(req.data.estype))
+    return fmt(estype.longDesc(__)(req.data.estype))
   }
 
   if (req.data.type === "FSLevel") {
@@ -159,41 +156,46 @@ class RequirementViewer extends Component {
   }
 
   render() {
-    const fleet = this.props.fleet
-    const normReqObj = expedReqs[ this.props.expedId ]
-    const normResultObj = checkAllReq(normReqObj)(fleet)
-    const normCheckResult = collapseResults( normResultObj )
-    const normPairedObj = _.zip(normReqObj,normResultObj)
-    const gsReqObj = expedGSReqs[ this.props.expedId ]
-    const gsResultObj = checkAllReq(gsReqObj)(fleet)
-    const gsCheckResult = normCheckResult && collapseResults( gsResultObj )
-    const gsPairedObj = _.zip(gsReqObj,gsResultObj)
+    const resultDetail = checkExpedDetail(this.props.expedId,true,true)(this.props.fleet)
+    const normCheckResult = collapseResults( resultDetail.norm.map( ([req,res]) => res) )
+    const resupplyCheckResult = resultDetail.resupply[1]
+    const gsCheckResult = collapseResults( resultDetail.gs.map( ([req,res]) => res ) )
+
+    const normFlg = normCheckResult && resupplyCheckResult
+    const gsFlg = normFlg && gsCheckResult
+
     const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
     return (
       <div>
         <div style={{display: "flex", justifyContent: "space-between"}}>
           <CheckResultBox
-              ready={normCheckResult} visible={true}
+              ready={normFlg} visible={true}
               content={`${__("CondNormal")}: ${readyOrNot(normCheckResult)}`} />
           <CheckResultBox
-              ready={gsCheckResult} visible={this.props.greatSuccess}
+              ready={gsFlg} visible={this.props.greatSuccess}
               content={`${__("CondGreatSuccess")}: ${readyOrNot(gsCheckResult)}`} />
         </div>
         <ListGroup>
-          { normPairedObj.map( ([req,res],ind) =>
+          { resultDetail.norm.map( ([req,res],ind) =>
               <RequirementListItem
                   key={`norm-${ind}`}
                   req={req}
                   ok={res}
                   greatSuccess={false} />)}
+          <RequirementListItem
+              key="resupply"
+              req={resultDetail.resupply[0]}
+              ok={resultDetail.resupply[1]}
+              greatSuccess={false} />
           { this.props.greatSuccess &&
-            gsPairedObj.map( ([req,res],ind) =>
+            resultDetail.gs.map( ([req,res],ind) =>
               <RequirementListItem
                   key={`gs-${ind}`}
                   req={req}
                   ok={res}
                   greatSuccess={true}
               />) }
+
         </ListGroup>
       </div>
     )

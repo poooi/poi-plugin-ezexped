@@ -12,11 +12,17 @@
            - if it's an object, using "checkFleet" and "data" as key is forbidden.
              so that we can quickly test whether we have reached a Requirement
 
+       - ReqObjRep: ReqObj with some additional requirements:
+
+           - must be an array
+           - every element of it should be either a Req object, or an array.
+           - if one element is an array, then all elements of it should be ShipTypeCount
+           - every element of the list is of a unique type
  */
 
 import * as et from './estype'
-import { enumFromTo } from './utils'
-const { _ } = window
+import { enumFromTo, valMap } from './utils'
+const _ = require('lodash')
 
 // NOTE: certainly if we allow "checkFleet" to return more info
 // and allow any rendering method to have access to that info,
@@ -41,7 +47,6 @@ Req.FSLevel = level => ({
   checkFleet: onNonEmpty( fleet => fleet[0].level >= level ),
   data: {type: "FSLevel", level},
 })
-
 
 Req.FSType = estypeName => ({
   checkFleet: onNonEmpty( fleet =>
@@ -125,21 +130,6 @@ const checkAllReq = obj => fleet => {
   return ret
 }
 
-const collectUnmetReqs = (obj,result) => {
-  if (Array.isArray( obj ))
-    return [].concat(
-      ...obj.map( (x,ind) => collectUnmetReqs(x,result[ind]) ))
-
-  if (isRequirement(obj)) {
-    return result ? [] : [obj]
-  }
-
-  const ret = []
-  for (const k in obj)
-    ret.push( collectUnmetReqs(obj[k],result[k]) )
-  return [].concat(... ret)
-}
-
 const isEqualReqObj = (o1,o2) => {
   if (o1 === o2)
     return true
@@ -179,11 +169,15 @@ const isEqualReqObj = (o1,o2) => {
 }
 
 // traverse a structure and perform "&&" on it
-// the structure must be an array or a single boolean value
+// the structure must be one of:
+// - a nested structure of array / object, whose "leaves" are all boolean values 
+// - a single boolean value
 const collapseResults = xs =>
   Array.isArray(xs)
     ? xs.every( collapseResults )
-    : xs
+    : typeof xs === "object" 
+      ? Object.keys(xs).every( k => collapseResults(xs[k]) )
+      : xs
 
 const mkSTypeReqs = function () {
   if (arguments.length % 2 === 1)
@@ -200,16 +194,10 @@ const mkSTypeReqs = function () {
   return ret
 }
 
-// INVARIANT: for requirement of each expedition:
-// - top-level is guaranteed to be an array
-// - ShipTypeCount requirement is always grouped by a nested array
-// - every object should be either a Req object, or an array.
-//   if it is an array, then all elements of it should be ShipTypeCount
-// - every element of the list is of a unique type
+// every element is a ReqObjRep
 const expedReqs = (() => {
   const ret = new Array(40+1)
 
-  const basicReqs = [ Req.Resupply ]
   const flagshipLevelAndShipCount = (fsl,sc) =>
     [Req.FSLevel(fsl), Req.ShipCount(sc)]
 
@@ -220,98 +208,78 @@ const expedReqs = (() => {
 
   ret[1] = [
     ...flagshipLevelAndShipCount(1,2),
-    ...basicReqs,
     Req.Morale(28),
   ]
 
   ret[2] = [
     ...flagshipLevelAndShipCount(2,4),
-    ...basicReqs,
     Req.Morale(13),
   ]
 
   ret[3] = [
     ...flagshipLevelAndShipCount(3,3),
-    ...basicReqs,
     Req.Morale(22),
   ]
 
   ret[4] = [
     ...flagshipLevelAndShipCount(3,3),
     mkSTypeReqs(1,"CL", 2,"DD"),
-    ...basicReqs,
   ]
 
   ret[5] = [
     ...flagshipLevelAndShipCount(3,4),
     mkSTypeReqs(1,"CL", 2,"DD"),
-    ...basicReqs,
   ]
 
   ret[6] = [
     ...flagshipLevelAndShipCount(4,4),
-    ...basicReqs,
     Req.Morale(1),
   ]
 
-  ret[7] = [
-    ...flagshipLevelAndShipCount(5,6),
-    ...basicReqs,
-  ]
+  ret[7] = flagshipLevelAndShipCount(5,6)
 
-  ret[8] = [
-    ...flagshipLevelAndShipCount(6,6),
-    ...basicReqs,
-  ]
+  ret[8] = flagshipLevelAndShipCount(6,6)
 
   // world 2
 
   ret[9] = [
     ...flagshipLevelAndShipCount(3,4),
     mkSTypeReqs(1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[10] = [
     ...flagshipLevelAndShipCount(3,3),
     mkSTypeReqs(2,"CL"),
-    ...basicReqs,
   ]
 
   ret[11] = [
     ...flagshipLevelAndShipCount(6,4),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[12] = [
     ...flagshipLevelAndShipCount(4,4),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[13] = [
     ...flagshipLevelAndShipCount(5,6),
     mkSTypeReqs(1,"CL",4,"DD"),
-    ...basicReqs,
   ]
 
   ret[14] = [
     ...flagshipLevelAndShipCount(6,6),
     mkSTypeReqs(1,"CL",3,"DD"),
-    ...basicReqs,
   ]
 
   ret[15] = [
     ...flagshipLevelAndShipCount(9,6),
     mkSTypeReqs(2,"CVLike",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[16] = [
     ...flagshipLevelAndShipCount(11,6),
     mkSTypeReqs(1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   // world 3
@@ -319,25 +287,21 @@ const expedReqs = (() => {
   ret[17] = [
     ...flagshipLevelAndShipCount(20,6),
     mkSTypeReqs(1,"CL",3,"DD"),
-    ...basicReqs,
   ]
 
   ret[18] = [
     ...flagshipLevelAndShipCount(15,6),
     mkSTypeReqs(3,"CVLike",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[19] = [
     ...flagshipLevelAndShipCount(20,6),
     mkSTypeReqs(2,"BBV",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[20] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(1,"SSLike",1,"CL"),
-    ...basicReqs,
   ]
 
   ret[21] = [
@@ -345,21 +309,18 @@ const expedReqs = (() => {
     Req.LevelSum(30),
     mkSTypeReqs(1,"CL",4,"DD"),
     Req.DrumCarrierCount(3),
-    ...basicReqs,
   ]
 
   ret[22] = [
     ...flagshipLevelAndShipCount(30,6),
     Req.LevelSum(45),
     mkSTypeReqs(1,"CA",1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[23] = [
     ...flagshipLevelAndShipCount(50,6),
     Req.LevelSum(200),
     mkSTypeReqs(2,"BBV",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[24] = [
@@ -367,7 +328,6 @@ const expedReqs = (() => {
     Req.LevelSum(200),
     mkSTypeReqs(1,"CL",4,"DD"),
     Req.FSType("CL"),
-    ...basicReqs,
   ]
 
   // world 4
@@ -375,51 +335,43 @@ const expedReqs = (() => {
   ret[25] = [
     ...flagshipLevelAndShipCount(25,4),
     mkSTypeReqs(2,"CA",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[26] = [
     ...flagshipLevelAndShipCount(30,4),
     mkSTypeReqs(1,"CVLike",1,"CL",2,"DD"),
-    ...basicReqs,
   ]
 
   ret[27] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(2,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[28] = [
     ...flagshipLevelAndShipCount(30,3),
     mkSTypeReqs(3,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[29] = [
     ...flagshipLevelAndShipCount(50,3),
     mkSTypeReqs(3,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[30] = [
     ...flagshipLevelAndShipCount(55,4),
     mkSTypeReqs(4,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[31] = [
     ...flagshipLevelAndShipCount(60,4),
     Req.LevelSum(200),
     mkSTypeReqs(4,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[32] = [
     ...flagshipLevelAndShipCount(5,3),
     mkSTypeReqs(1,"CT",2,"DD"),
     Req.FSType("CT"),
-    ...basicReqs,
   ]
 
   // world 5
@@ -427,25 +379,21 @@ const expedReqs = (() => {
   ret[33] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[34] = [
     ...flagshipLevelAndShipCount(1,2),
     mkSTypeReqs(2,"DD"),
-    ...basicReqs,
   ]
 
   ret[35] = [
     ...flagshipLevelAndShipCount(40,6),
     mkSTypeReqs(2,"CVLike",1,"CA",1,"DD"),
-    ...basicReqs,
   ]
 
   ret[36] = [
     ...flagshipLevelAndShipCount(30,6),
     mkSTypeReqs(2,"AV",1,"CL",1,"DD"),
-    ...basicReqs,
   ]
 
   ret[37] = [
@@ -453,7 +401,6 @@ const expedReqs = (() => {
     Req.LevelSum(200),
     mkSTypeReqs(1,"CL",5,"DD"),
     Req.DrumCarrierCount(4),
-    ...basicReqs,
   ]
 
   ret[38] = [
@@ -462,14 +409,12 @@ const expedReqs = (() => {
     mkSTypeReqs(5,"DD"),
     Req.DrumCarrierCount(4),
     Req.DrumCount(8),
-    ...basicReqs,
   ]
 
   ret[39] = [
     ...flagshipLevelAndShipCount(3,5),
     Req.LevelSum(180),
     mkSTypeReqs(1,"AS",4,"SSLike"),
-    ...basicReqs,
   ]
 
   ret[40] = [
@@ -477,12 +422,12 @@ const expedReqs = (() => {
     Req.LevelSum(150),
     mkSTypeReqs(1,"CL",2,"AV",2,"DD"),
     Req.FSType("CL"),
-    ...basicReqs,
   ]
 
   return ret
 })()
 
+// every element is a ReqObjRep
 const expedGSReqs = (() => {
   const ret = new Array(40+1)
 
@@ -519,11 +464,50 @@ const expedGSReqs = (() => {
   return ret
 })()
 
+/*
+  returns the following structure:
+  
+  { norm: ReqObjRep,
+    // exists only if greatSuccess is true
+    gs: ReqObjRep,
+    // exists only if resupply is true
+    resupply: <must be Req.Resupply>,
+  }
+  
+*/
+const getExpedReqs = (expedId, greatSuccess, resupply) => {
+  const ret = {
+    norm: expedReqs[expedId],
+  }
+
+  if (greatSuccess)
+    ret.gs = expedGSReqs[expedId]
+
+  if (resupply)
+    ret.resupply = Req.Resupply
+  return ret
+}
+
+const checkExpedReqs = (...args) => fleet =>
+  collapseResults( 
+    checkAllReq( getExpedReqs(...args) )(fleet) )
+
+const checkReqObjRep = ror => fleet =>
+  _.zip(ror, checkAllReq(ror)(fleet))
+
+const checkExpedDetail = (...args) => fleet =>
+  valMap( getExpedReqs(...args) )( obj =>
+    Array.isArray(obj) 
+    ? /* obj is ReqObjRep */
+      checkReqObjRep(obj)(fleet)
+      /* obj is Req.Resupply */
+    : [obj, obj.checkFleet(fleet)])
+
 export {
-  expedReqs,
-  expedGSReqs,
+  getExpedReqs,
+  checkExpedReqs,
+  checkExpedDetail,
   checkAllReq,
   collapseResults,
-  collectUnmetReqs,
   isEqualReqObj,
 }
