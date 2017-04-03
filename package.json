@@ -1,6 +1,6 @@
 {
   "name": "poi-plugin-ezexped",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Expedition made easy",
   "main": "index.es",
   "scripts": {
