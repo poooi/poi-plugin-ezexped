@@ -28,13 +28,17 @@ class CheckResultBox extends Component {
       <Button bsStyle={this.props.ready ? "success" : "danger"}
               disabled={true}
               style={{
-                flex: "1", opacity: "1", margin: "10px 20px 10px 0", 
+                width: "48%",
+                opacity: "1", margin: "10px 0 10px 0", 
                 borderRadius: "10px", display: "flex",
                 visibility: this.props.visible ? "visible" : "hidden"}}>
         <FontAwesome
             style={{marginRight: "5px", marginTop: "2px"}}
             name={this.props.ready ? "check-square-o" : "square-o"} />
-        <div style={{width: "165px"}}>{this.props.content}</div>
+        <div style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis"}}>
+          {this.props.content}</div>
       </Button>
     )}}
 
@@ -167,7 +171,10 @@ class RequirementViewer extends Component {
     const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
     return (
       <div>
-        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <div style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between"}}>
           <CheckResultBox
               ready={normFlg} visible={true}
               content={`${__("CondNormal")}: ${readyOrNot(normCheckResult)}`} />
