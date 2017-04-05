@@ -396,11 +396,17 @@ const expedReqs = (() => {
     mkSTypeReqs(2,"AV",1,"CL",1,"DD"),
   ]
 
+  // requirement for exped 37 updated, it now just requires 3 drum carriers
+  // and still require 4 drums for a successful run.
+  // reference as of Apr 5th, 2017:
+  // - http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
+  // - http://kancolle.wikia.com/wiki/Expedition
   ret[37] = [
     ...flagshipLevelAndShipCount(50,6),
     Req.LevelSum(200),
     mkSTypeReqs(1,"CL",5,"DD"),
-    Req.DrumCarrierCount(4),
+    Req.DrumCarrierCount(3),
+    Req.DrumCount(4),
   ]
 
   ret[38] = [
