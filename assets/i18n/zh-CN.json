@@ -4,7 +4,7 @@
   "AutoTooltip": "根据游戏内动作自动切换舰队",
 
   "Cost": "消耗",
-  "GS": "大成功",
+  "Great Success": "大成功",
   "CondNormal": "常规检查",
   "CondGreatSuccess": "大成功检查",
   "CondNotReady": "未通过",
