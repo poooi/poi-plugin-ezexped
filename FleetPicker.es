@@ -98,7 +98,7 @@ class FleetPicker extends Component {
           {[0,1,2,3].map((x) =>
             <OverlayTrigger
                 key={x}
-                placement="top" overlay={mkTooltip(x)}> 
+                placement="bottom" overlay={mkTooltip(x)}> 
               {mkButton(x)}
             </OverlayTrigger>
            )}
@@ -107,11 +107,15 @@ class FleetPicker extends Component {
                 key="auto-fleet"
                 placement="left" overlay={tooltipAutoSwitch}> 
               <Button 
+                style={{display:"flex", minWidth: "40px"}}
                 onClick={this.props.onToggleAutoSwitch}>
                 <FontAwesome
                   style={{marginRight: "5px", marginTop: "2px"}}
                   name={this.props.autoSwitch? "check-square-o" : "square-o"} />
-                {__("Auto")}
+                <div style={{
+                  flex: "1",
+                  textOverflow: "ellipsis",
+                  overflow:"hidden"}} >{__("Auto")}</div>
              </Button>
         </OverlayTrigger>
       </div>)}}
