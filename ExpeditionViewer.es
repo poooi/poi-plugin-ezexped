@@ -7,18 +7,9 @@ import { daihatsu, fleetResupplyCost } from './income-calc'
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { MaterialIcon } from 'views/components/etc/icon'
-import { resolveTime } from 'views/utils/tools'
 
 const { FontAwesome } = window
-import { __ } from './tr'
-
-const formatTime = mins => {
-  const str = resolveTime(mins * 60)
-  const matchResult = str.match(/^(.*):\d{2}$/)
-  if (!matchResult)
-    throw `failed while trying to truncate seconds from ${str}`
-  return matchResult[1]
-}
+import { __, fmtTime } from './tr'
 
 class IconAndLabel extends Component {
   render() {
@@ -168,9 +159,10 @@ class ExpeditionViewer extends Component {
           <Button onClick={this.props.onClickExped}>
             {this.props.expedId} {info.name}
           </Button>
-          <div>{__("Required Time (mins)")}: {formatTime(info.timeInMin)}</div>
-          <div style={{display: "flex"}}>
-            <div style={{marginRight: "2px"}}>{__("Cost")}:</div>
+          <div style={{textAlign: "center"}}>{fmtTime(info.timeInMin)}</div>
+          <div
+              title={__("Cost")}
+              style={{display: "flex", justifyContent: "center"}}>
             <IconAndLabel
                 icon={mkMat(1)} label={`${info.cost.fuelPercent}%`} />
             <IconAndLabel

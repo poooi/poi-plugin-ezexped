@@ -20,6 +20,10 @@
     "CT": "練習巡洋艦 (CT)",
     "AV": "水上機母艦 (AV)"
   },
+  "RequiredTime": {
+    "hour": "%s 小時",
+    "minute": "%s 分鐘"
+  },
   "IncomeExplain": {
     "basicIncome": "基礎收入",
     "aveImp": "大發系平均改修",
