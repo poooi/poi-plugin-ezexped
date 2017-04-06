@@ -17,6 +17,8 @@ import {
 import * as estype from './estype'
 import { __ } from './tr'
 
+import { error } from './utils'
+
 // a box for showing whether the fleet is ready
 // props:
 // - content
@@ -118,7 +120,7 @@ const renderRequirement = (req,ok) => {
     return fmt()
   }
 
-  throw "Unhandled Req type: ${req.data.type}"
+  return error("Unhandled Req type: ${req.data.type}")
 }
 
 // props:

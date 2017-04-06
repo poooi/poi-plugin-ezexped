@@ -11,11 +11,10 @@
 
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
-import { throwWith } from './utils'
+import { error } from './utils'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
-// import { __ } from './tr'
 
 // for reverse lookup
 const stypeRev = (() => {
@@ -26,10 +25,10 @@ const stypeRev = (() => {
 })()
 
 const nameToId = n =>
-  stype [n] || throwWith(`invalid stype name: ${n}`)
+  stype [n] || error(`invalid stype name: ${n}`)
 
 const idToName = i =>
-  stypeRev[i] || throwWith(`invalid stype id: ${i}`)
+  stypeRev[i] || error(`invalid stype id: ${i}`)
 
 const isESType = (() => {
   const eq = x => y => x === y

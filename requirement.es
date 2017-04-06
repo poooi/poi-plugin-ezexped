@@ -21,7 +21,7 @@
  */
 
 import * as et from './estype'
-import { enumFromTo, valMap } from './utils'
+import { enumFromTo, valMap, error } from './utils'
 const _ = require('lodash')
 
 // NOTE: certainly if we allow "checkFleet" to return more info
@@ -141,7 +141,7 @@ const isEqualReqObj = (o1,o2) => {
   // more invalid usage can be captured, but for now
   // we don't really need that much power.
   if (typeof o1 !== "object")
-    throw "Expecting ReqObj to be an object or an array"
+    return error("Expecting ReqObj to be an object or an array")
 
   // at this point both are objects
   if (Array.isArray(o1) !== Array.isArray(o2))
@@ -181,14 +181,14 @@ const collapseResults = xs =>
 
 const mkSTypeReqs = function () {
   if (arguments.length % 2 === 1)
-    throw "expecting even number of args"
+    return error("expecting even number of args")
 
   const ret = []
   for (let ind = 0; ind < arguments.length; ind += 2) {
     const count = arguments[ind]
     const etName = arguments[ind+1]
     if (! Number.isInteger( count ))
-      throw `expecting an int on arg list (offset ${ind})`
+      return error(`expecting an int on arg list (offset ${ind})`)
     ret.push( Req.ShipTypeCount(count,etName) )
   }
   return ret

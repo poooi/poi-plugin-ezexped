@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { expedInfo } from './exped-info'
-import { throwWith } from './utils'
+import { error } from './utils'
 import { daihatsu, fleetResupplyCost } from './income-calc'
 
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
@@ -29,7 +29,7 @@ const itemNameToMaterialId = x =>
   : x === "FCoinSmall" ? 10
   : x === "FCoinMedium" ? 11
   : x === "FCoinLarge" ? 12
-  : throwWith(`unknown item name: ${x}`)
+  : error(`unknown item name: ${x}`)
 
 // pretty-printing a floating number
 const pprFloat = (v,digits=2) => v.toFixed(digits)

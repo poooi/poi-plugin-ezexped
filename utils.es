@@ -7,10 +7,12 @@ const enumFromTo = (frm,to,succ=(x => x+1)) => {
   return arr
 }
 
-// to same effect of "throw" statement.
-// useful in situations where an expression is expected.
-const throwWith = data => {
-  throw data
+const warn = function () {
+  return console.warn.apply(this, arguments)
+}
+
+const error = function () {
+  return console.error.apply(this, arguments)
 }
 
 const valMap = obj => f => {
@@ -19,4 +21,10 @@ const valMap = obj => f => {
   return ret
 }
 
-export { enumFromTo, throwWith, valMap }
+export {
+  enumFromTo,
+  valMap,
+
+  warn,
+  error,
+}
