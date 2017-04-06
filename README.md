@@ -3,6 +3,12 @@
 EZ Exped is a [poi](https://github.com/poooi/poi) plugin that helps you
 check expedition requirements and estimate expedition income accurately.
 
+## Changelog
+
+### 0.2.2
+
+- Fix errors caused by missing translations
+
 ## Features
 
 ### Expedition Requirement Checker
