@@ -60,7 +60,8 @@ const longDesc = __ => estypeName => {
   const text = `ShipTypeNameLong.${estypeName}`
   const translated = __(text)
   if (text === translated)
-    throw `unknown estype or missing translation: ${estypeName}`
+    console.warn(`unknown estype or missing translation: ${estypeName}`)
+
   return translated
 }
 
