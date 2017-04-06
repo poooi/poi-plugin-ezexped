@@ -1,0 +1,45 @@
+{
+  "EZ Exped": "イージー遠征",
+  "Auto": "Auto",
+  "AutoTooltip": "Switching between fleets automatically depending on your in-game actions.",
+  "CondNormal": "Normal",
+  "CondGreatSuccess": "Great Success",
+  "CondNotReady": "Not Ready",
+  "CondReady": "Ready",
+  "ShipTypeNameLong": {
+    "DD": "Destroyer (DD)",
+    "CL": "Light Cruiser (CL)",
+    "CVLike": "Aircraft Carriers (CV/CVL/AV/CVB)",
+    "SSLike": "Submarines (SS/SSV)",
+    "CA": "Heavy Cruiser (CA)",
+    "BBV": "Aviation Battleship (BBV)",
+    "AS": "Submarine Tender (AS)",
+    "CT": "Training Cruiser (CT)",
+    "AV": "Seaplane Tender (AV)"
+  },
+  "RequiredTime": {
+    "hour": "%s hr",
+    "minute": "%s min"
+  },
+  "IncomeExplain": {
+    "basicIncome": "Basic Income",
+    "aveImp": "Daihatsu-class Ave. Improvement",
+    "dhtBonus": "Daihatsu-class Bonus",
+    "tokuBonus": "Toku Daihatsu Bonus",
+    "totalIncome": "Total Income",
+    "netIncome": "Net Income"
+  },
+  "RequirementExplain": {
+    "FSType": "Flagship type: %s",
+    "FSLevel": "Flagship level ≥%s",
+    "ShipCount": "Fleet contains ≥%s ship(s)",
+    "DrumCarrierCount": "≥%s ship(s) should carry \"ドラム缶(輸送用)\"",
+    "DrumCount": "Fleet carries ≥%s \"ドラム缶(輸送用)\" in total",
+    "LevelSum": "Total level of this fleet should be at least %s",
+    "SparkledCount": "≥%s sparkled ship(s) for a great success rate boost",
+    "RecommendSparkledCount": "≥%s sparkled ship(s) for a better great success rate",
+    "Morale": "All ships in this fleet should have morale ≥%s",
+    "Resupply": "All ships in this fleet should be fully resupplied"
+  },
+  "Expedition made easy": "遠征報酬早見表"
+}
