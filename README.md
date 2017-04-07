@@ -5,6 +5,10 @@ check expedition requirements and estimate expedition income accurately.
 
 ## Changelog
 
+### 0.2.x
+
+- Fix errors when not all fleets are unlocked in game
+
 ### 0.2.2
 
 - Fix errors caused by missing translations

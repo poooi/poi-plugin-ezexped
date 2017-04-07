@@ -6,9 +6,27 @@ import {
   extensionSelectorFactory,
 } from 'views/utils/selectors'
 
-// reorganize data, sharp it to form the basic input structure
-// of other functions
+/* 
+
+reorganize data, sharp it to form the basic input structure
+of other functions.
+
+CONTRACT:
+ - shipsData is either an array or undefined
+ - equipsData is either an array or undefined
+ - fleetData is either an object or undefined
+ for all inputs above, undefined is used only when the fleet in question
+ is not yet unlocked in game.
+
+*/
 const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
+  shipsData = shipsData || []
+  equipsData = equipsData || []
+  fleetData = fleetData || 
+    { 
+      api_name: "-", 
+      api_mission: [1 /* anything other than 0 */],
+    }
   const ships = shipsData.map( ([shipInst, $ship], ind) => {
     const equips = equipsData[ind]
       .filter(x => x)
