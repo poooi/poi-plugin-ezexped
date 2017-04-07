@@ -24,6 +24,7 @@ import {
 } from './auto-switch'
 
 import { reducer, mapDispatchToProps } from './reducer'
+import { settingsClass } from './Settings'
 
 /*
 
@@ -171,7 +172,8 @@ const reactClass = connect(
   },
   mapDispatchToProps)(EZExpedMain)
 
-export { 
+export {
   reactClass,
   reducer,
+  settingsClass,
 }
