@@ -8,8 +8,6 @@ import { get } from 'lodash'
 const { config } = window
 
 // TODO
-// - parametrize requirement.es
-// - perhaps consider keeping an instance as prop
 // - i18n
 
 const confPath = "plugin.poi-plugin-ezexped."
@@ -51,5 +49,6 @@ const settingsClass = connect (() => {
   }})
 
 export {
+  keyRecommendedSparkled,
   settingsClass,
 }

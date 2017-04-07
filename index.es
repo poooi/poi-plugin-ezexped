@@ -17,6 +17,8 @@ import {
   Panel,
 } from 'react-bootstrap'
 
+import { get } from 'lodash'
+
 import {
   findChangingFleet,
   findNextAvailableFleet,
@@ -24,7 +26,10 @@ import {
 } from './auto-switch'
 
 import { reducer, mapDispatchToProps } from './reducer'
-import { settingsClass } from './Settings'
+import { 
+  keyRecommendedSparkled, 
+  settingsClass,
+} from './Settings'
 
 /*
 
@@ -122,6 +127,7 @@ class EZExpedMain extends Component {
               config={config}
               combinedFlag={this.props.combinedFlag}
               autoSwitch={config.autoSwitch}
+              recommendedSparkled={this.props.recommendedSparkled}
               onToggleAutoSwitch={() =>
                 this.props.onModifyConfig( config => ({
                   ...config,
@@ -151,6 +157,7 @@ class EZExpedMain extends Component {
               fleet={fleet}
               expedId={expedId}
               greatSuccess={gsFlag}
+              recommendedSparkled={this.props.recommendedSparkled}
           />
         </div>
       </div>
@@ -167,8 +174,15 @@ const reactClass = connect(
       fleets[fleetId] = mkFleetInfoSelector(fleetId)(state)
     })
 
+    const recommendedSparkled = get(state.config, keyRecommendedSparkled )
+
     const redux = reduxSelector(state)
-    return { fleets, combinedFlag, redux }
+    return {
+      fleets, 
+      combinedFlag, 
+      redux,
+      recommendedSparkled,
+    }
   },
   mapDispatchToProps)(EZExpedMain)
 
