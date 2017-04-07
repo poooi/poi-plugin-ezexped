@@ -493,6 +493,9 @@ const modifyRSC = recommendedSparkledCount => reqObjRep =>
   if "recommendedSparkledCount" is set, it's value overwrites
   whatever argument previously set to "RecommendSparkledCount".
 
+  NOTE: since this recommendation exists only in "gs" field,
+  we don't have to pass it when "greatSuccess" is set to false.
+
 */
 const getExpedReqs = (expedId, greatSuccess, resupply, 
     recommendedSparkledCount) => {

@@ -151,18 +151,23 @@ class RequirementListItem extends Component {
       </ListGroupItem>)}}
 
 // props:
-// fleet: fleet representation
-// expedId: target expedition id
-// greatSuccess: whether aimming at great success
+// - fleet: fleet representation
+// - expedId: target expedition id
+// - greatSuccess: whether aimming at great success
+// - recommendedSparkled
 class RequirementViewer extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.expedId !== nextProps.expedId ||
       this.props.greatSuccess !== nextProps.greatSuccess ||
+      this.props.recommendedSparkled !== nextProps.recommendedSparkled ||
       ! _.isEqual(this.props.fleet, nextProps.fleet)
   }
 
   render() {
-    const resultDetail = checkExpedDetail(this.props.expedId,true,true)(this.props.fleet.ships)
+    const resultDetail =
+      checkExpedDetail(
+        this.props.expedId,true,true,
+        this.props.recommendedSparkled)(this.props.fleet.ships)
     const normCheckResult = collapseResults( resultDetail.norm.map( ([req,res]) => res) )
     const resupplyCheckResult = resultDetail.resupply[1]
     const gsCheckResult = collapseResults( resultDetail.gs.map( ([req,res]) => res ) )
