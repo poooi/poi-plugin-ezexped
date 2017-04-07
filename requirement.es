@@ -470,6 +470,16 @@ const expedGSReqs = (() => {
   return ret
 })()
 
+// RSC: short for recommended sparked count
+const modifyRSC = recommendedSparkledCount => reqObjRep =>
+  reqObjRep.map( req => {
+    if (Array.isArray(req))
+      return req
+    if (req.data.type === "RecommendSparkledCount")
+      return Req.RecommendSparkledCount(recommendedSparkledCount)
+    return req
+  })
+
 /*
   returns the following structure:
   
@@ -479,15 +489,22 @@ const expedGSReqs = (() => {
     // exists only if resupply is true
     resupply: <must be Req.Resupply>,
   }
-  
+
+  if "recommendedSparkledCount" is set, it's value overwrites
+  whatever argument previously set to "RecommendSparkledCount".
+
 */
-const getExpedReqs = (expedId, greatSuccess, resupply) => {
+const getExpedReqs = (expedId, greatSuccess, resupply, 
+    recommendedSparkledCount) => {
   const ret = {
     norm: expedReqs[expedId],
   }
 
-  if (greatSuccess)
+  if (greatSuccess) {
     ret.gs = expedGSReqs[expedId]
+    if (typeof recommendedSparkledCount !== "undefined")
+      ret.gs = modifyRSC(recommendedSparkledCount)(ret.gs)
+  }
 
   if (resupply)
     ret.resupply = Req.Resupply
