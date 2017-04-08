@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { 
+import {
   FormControl,
 } from 'react-bootstrap'
 
@@ -14,7 +14,7 @@ const keyRecommendSparkled = confPath + "recommendSparkledCount"
 const settingsClass = connect (() => {
   return (state, props) => ({
     recommendSparkledCount: get(
-      state.config, 
+      state.config,
       keyRecommendSparkled, 4),
   })
 })(class EZExpedSettings extends Component {
@@ -27,13 +27,13 @@ const settingsClass = connect (() => {
   render() {
     return (
       <div style={{
-        display: "flex", 
+        display: "flex",
         justifyContent: "space-between"}}>
         <div style={{flex: "4", alignSelf: "center"}}>
           {`${__("CustomRecommendSparkledCount")}:`}
         </div>
         <FormControl
-            style={{flex: "1"}} 
+            style={{flex: "1"}}
             value={this.props.recommendSparkledCount}
             onChange={this.changeRecommendSparkledCount}
             componentClass="select">
@@ -44,7 +44,7 @@ const settingsClass = connect (() => {
               </option>
             )
           }
-        </FormControl>        
+        </FormControl>
       </div>)
   }})
 

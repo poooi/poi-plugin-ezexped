@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { 
-  Button, 
+import {
+  Button,
   ButtonGroup,
   OverlayTrigger,
   Tooltip,
@@ -26,7 +26,7 @@ import { __ } from './tr'
 // - recommendSparkled
 class FleetPicker extends Component {
   render() {
-    const mkTooltip = fleetId => { 
+    const mkTooltip = fleetId => {
       const fleet = this.props.fleets[fleetId]
       return (<Tooltip id={`fpfleet-${fleetId}`}>
         <div style={{display: "flex", flexDirection: "column"}}>
@@ -41,7 +41,7 @@ class FleetPicker extends Component {
 
     // Button color:
     // - available:
-    //   - first fleet always green 
+    //   - first fleet always green
     //     (for combined fleet, second fleet is always green too)
     //   - if everything is satisfied: green
     //   - if just needs resupply: yellow
@@ -51,15 +51,15 @@ class FleetPicker extends Component {
       const fleet = this.props.fleets[fleetId]
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
-      
+
       const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
 
       const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet.ships)
       // without resupply
-      const normReadyFlag = 
+      const normReadyFlag =
         collapseResults( checkAllReq( eR.norm )(fleet.ships) )
 
-      const gsReadyFlag = 
+      const gsReadyFlag =
         !greatSuccess ||
         (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
@@ -76,7 +76,7 @@ class FleetPicker extends Component {
       return (<Button
           bsStyle={bsStyle}
           style={{
-            marginRight: "5px", flex: "1", 
+            marginRight: "5px", flex: "1",
             opacity: focused ? "1" : "0.5",
             whiteSpace: "nowrap",
             width: "75px", overflow: "hidden"}}
@@ -90,7 +90,7 @@ class FleetPicker extends Component {
 
     const tooltipAutoSwitch = (<Tooltip id="tt-auto-btn">{__("AutoTooltip")}</Tooltip>)
     return (
-      <div style={{ 
+      <div style={{
         display: "flex",
         justifyContent: "space-between",
         marginBottom: "5px",
@@ -99,15 +99,15 @@ class FleetPicker extends Component {
           {[0,1,2,3].map((x) =>
             <OverlayTrigger
                 key={x}
-                placement="bottom" overlay={mkTooltip(x)}> 
+                placement="bottom" overlay={mkTooltip(x)}>
               {mkButton(x)}
             </OverlayTrigger>
            )}
         </ButtonGroup>
             <OverlayTrigger
                 key="auto-fleet"
-                placement="left" overlay={tooltipAutoSwitch}> 
-              <Button 
+                placement="left" overlay={tooltipAutoSwitch}>
+              <Button
                 style={{display:"flex", minWidth: "40px"}}
                 onClick={this.props.onToggleAutoSwitch}>
                 <FontAwesome

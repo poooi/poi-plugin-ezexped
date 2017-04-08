@@ -46,8 +46,8 @@ class ExpeditionButton extends Component {
     // I don't know why but the following one isn't working:
     // const tooltip = (<ExpedTooltip expedId={expedId} />)
     return (
-      <OverlayTrigger 
-          placement="bottom" 
+      <OverlayTrigger
+          placement="bottom"
           overlay={tooltip}>
         <Button
             bsStyle={props.ready ? "primary" : "default"}
@@ -73,7 +73,7 @@ class ExpeditionTable extends Component {
   render() {
     const isReadyArr = new Array(40+1)
     enumFromTo(1,40)
-      .map( expedId => 
+      .map( expedId =>
         isReadyArr[expedId] =
           checkExpedReqs(expedId,false,false)(this.props.fleet.ships))
     return (
@@ -85,7 +85,7 @@ class ExpeditionTable extends Component {
               <ExpeditionButton
                   key={expedId}
                   ready={isReadyArr[expedId]}
-                  active={this.props.expedId === expedId} 
+                  active={this.props.expedId === expedId}
                   expedId={expedId}
                   onSelectExped={this.props.onSelectExped} />)
             }

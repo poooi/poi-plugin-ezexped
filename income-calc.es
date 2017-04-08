@@ -11,7 +11,7 @@
 
        When there are inconsistencies between two sources (this happens when
        there are at least 3 Toku Daihatsus), wikiwiki source takes precedence
-       as it seems to be more complete than the other 
+       as it seems to be more complete than the other
        (for the Toku Daihatsu-Normal Daihatsu interaction on caps)
 
    - Consumption regarding marriage
@@ -31,14 +31,14 @@
        improvement level count of daihatsu-class equipments
    , dhtCount:
        # of daihatsu-class equipments
-   , normalBonus: 
+   , normalBonus:
        bonus granted by all Daihatsu-class equipments and Kinu K2
        without taking into account improvements
        referred to as "B_1" by wikia
    , normalBonusStar:
        bouns granted by improvement levels and normalBonus,
        referred to as "B_star" by wikia
-   , tokuBonus: 
+   , tokuBonus:
        extra bonus factor granted by Toku Daihatsus.
        referred to as "B_2 + ?" part by wikia
        (however this part is computed according to wikiwiki
@@ -52,7 +52,7 @@ const computeBonus = fleet => {
     if (tokuCount <= 2)
       return 0.02 * tokuCount
     if (tokuCount === 3) {
-      return normalCount <= 1 ? 0.05 
+      return normalCount <= 1 ? 0.05
         : normalCount === 2 ? 0.052
         : /* normalCount > 2 */ 0.054
     }
@@ -103,8 +103,8 @@ const computeBonus = fleet => {
 
   const dhtCount = normalCount + t89Count + t2Count + tokuCount
   const aveImp = dhtCount === 0 ? 0 : impLvlCount / dhtCount
-  const b1BeforeCap = 
-    0.05 * (normalCount + tokuCount + spShipCount) + 
+  const b1BeforeCap =
+    0.05 * (normalCount + tokuCount + spShipCount) +
     0.02 * t89Count + 0.01 * t2Count
   const b1 = Math.min(0.2, b1BeforeCap)
   const bStar = b1 * aveImp / 100
@@ -125,14 +125,14 @@ const shipResupplyCost = ship => {
   // "after marriage modifier":
   // - if there's no consumption before marriage, no consumption applied after marriage either.
   // - consumption is applied with 0.85 and then floor is taken, with a minimum cost of 1
-  const applyAfterMarriage = 
+  const applyAfterMarriage =
     v => (v === 0) ? 0 : Math.max(1, Math.floor(v*0.85))
   const modifier = ship.level >= 100 ? applyAfterMarriage : (x => x)
 
   return (fuelCostFactor, ammoCostFactor) => {
     const fuelCost = Math.floor( ship.maxFuel * fuelCostFactor )
     const ammoCost = Math.floor( ship.maxAmmo * ammoCostFactor )
-    return { 
+    return {
       fuelCost: modifier(fuelCost),
       ammoCost: modifier(ammoCost),
     }
@@ -140,7 +140,7 @@ const shipResupplyCost = ship => {
 }
 
 // "fleetResupplyCost(ship)(fuelCostFactor,ammoCostFactor)"
-// is the same as "shipResupplyCost" 
+// is the same as "shipResupplyCost"
 // but for an array of ship representation
 const fleetResupplyCost = fleet => {
   const ks = fleet.map( shipResupplyCost )
@@ -148,7 +148,7 @@ const fleetResupplyCost = fleet => {
     fuelCost: x.fuelCost + y.fuelCost,
     ammoCost: x.ammoCost + y.ammoCost,
   })
-  return (fFactor,aFactor) => 
+  return (fFactor,aFactor) =>
     ks.map( x => x(fFactor,aFactor) )
       .reduce(mergeCost, {fuelCost:0, ammoCost:0})
 }

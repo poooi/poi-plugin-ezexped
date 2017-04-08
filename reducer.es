@@ -19,7 +19,7 @@ const reducer = (state = loadState(), action) => {
       fleetId: action.fleetId,
     }
   }
-  
+
   // only record successful expeditions
   if (action.type === "@@Response/kcsapi/api_req_mission/result"
       && action.body.api_clear_result !== 0) {

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import { join } from 'path-extra'
 
-import { 
+import {
   mkFleetInfoSelector,
   combinedFlagSelector,
   reduxSelector,
@@ -26,8 +26,8 @@ import {
 } from './auto-switch'
 
 import { reducer, mapDispatchToProps } from './reducer'
-import { 
-  keyRecommendSparkled, 
+import {
+  keyRecommendSparkled,
   settingsClass,
 } from './Settings'
 
@@ -55,7 +55,7 @@ class EZExpedMain extends Component {
 
       if (changingFleetInd !== false) {
         this.props.onChangeFleet(
-          changingFleetInd, 
+          changingFleetInd,
           "detected changing fleet")
       }
 
@@ -75,7 +75,7 @@ class EZExpedMain extends Component {
   componentDidMount() {
     this.__eventListener = this.handleGameResponse.bind(this)
     window.addEventListener(
-      'game.response', 
+      'game.response',
       this.__eventListener)
   }
 
@@ -110,7 +110,7 @@ class EZExpedMain extends Component {
       return newConfig
     })
   }
-  
+
   render() {
     const config = this.props.redux.config
     const fleetId = this.props.redux.fleetId
@@ -138,7 +138,7 @@ class EZExpedMain extends Component {
               expedId={expedId}
               fleet={fleet}
               greatSuccess={gsFlag}
-              onClickExped={() => 
+              onClickExped={() =>
                 this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
               onClickGS={() =>
                 this.props.onModifyConfig( config => {
@@ -178,8 +178,8 @@ const reactClass = connect(
 
     const redux = reduxSelector(state)
     return {
-      fleets, 
-      combinedFlag, 
+      fleets,
+      combinedFlag,
       redux,
       recommendSparkled,
     }

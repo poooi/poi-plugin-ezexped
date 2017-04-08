@@ -162,20 +162,20 @@ const isEqualReqObj = (o1,o2) => {
     const keys1 = Object.keys(o1)
     const keys2 = Object.keys(o2)
     return keys1.length === keys2.length &&
-      keys1.every( k => 
-        keys2.indexOf(k) !== -1 && 
+      keys1.every( k =>
+        keys2.indexOf(k) !== -1 &&
           isEqualReqObj(o1[k],o2[k]))
   }
 }
 
 // traverse a structure and perform "&&" on it
 // the structure must be one of:
-// - a nested structure of array / object, whose "leaves" are all boolean values 
+// - a nested structure of array / object, whose "leaves" are all boolean values
 // - a single boolean value
 const collapseResults = xs =>
   Array.isArray(xs)
     ? xs.every( collapseResults )
-    : typeof xs === "object" 
+    : typeof xs === "object"
       ? Object.keys(xs).every( k => collapseResults(xs[k]) )
       : xs
 
@@ -482,7 +482,7 @@ const modifyRSC = recommendSparkledCount => reqObjRep =>
 
 /*
   returns the following structure:
-  
+
   { norm: ReqObjRep,
     // exists only if greatSuccess is true
     gs: ReqObjRep,
@@ -497,7 +497,7 @@ const modifyRSC = recommendSparkledCount => reqObjRep =>
   we don't have to pass it when "greatSuccess" is set to false.
 
 */
-const getExpedReqs = (expedId, greatSuccess, resupply, 
+const getExpedReqs = (expedId, greatSuccess, resupply,
     recommendSparkledCount) => {
   const ret = {
     norm: expedReqs[expedId],
@@ -515,7 +515,7 @@ const getExpedReqs = (expedId, greatSuccess, resupply,
 }
 
 const checkExpedReqs = (...args) => fleet =>
-  collapseResults( 
+  collapseResults(
     checkAllReq( getExpedReqs(...args) )(fleet) )
 
 const checkReqObjRep = ror => fleet =>
@@ -523,7 +523,7 @@ const checkReqObjRep = ror => fleet =>
 
 const checkExpedDetail = (...args) => fleet =>
   valMap( getExpedReqs(...args) )( obj =>
-    Array.isArray(obj) 
+    Array.isArray(obj)
     ? /* obj is ReqObjRep */
       checkReqObjRep(obj)(fleet)
       /* obj is Req.Resupply */

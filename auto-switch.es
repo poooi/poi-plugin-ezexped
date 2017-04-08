@@ -34,7 +34,7 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
   // we use roster id instead of master id + level approach
   // otherwise even a levelup would trigger fleet focus change
   // upon returning
-  const transformFleets = fleets => fleets.map( fleet => fleet.map( 
+  const transformFleets = fleets => fleets.map( fleet => fleet.map(
     ({equips,rstId}) => ({equips,rstId}) ))
 
   const curFleets = transformFleets( curFleetsFull )
@@ -52,7 +52,7 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
   })
 
   const changingCount = compared.filter(x => !x).length
-  
+
   // the detection was based on "increasing", which is less accurate (see issue #2)
   const isNotDecreasing = (beforeFleet,afterFleet) => {
     if (beforeFleet.length !== afterFleet.length)
@@ -64,7 +64,7 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
 
   if (changingCount === 0)
     return false
-  
+
   // changingCount >= 1
   // one or more fleets are updated
   // no matter how many fleet configurations have been changed,
@@ -78,7 +78,7 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
   for (let i=0; i<compared.length;++i) {
     if (compared[i])
       continue
-      
+
     const fleet = curFleets[i]
     const nextFleet = nextFleets[i]
     if (isNotDecreasing(fleet,nextFleet))
