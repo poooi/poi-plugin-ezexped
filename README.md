@@ -8,6 +8,10 @@ check expedition requirements and estimate expedition income accurately.
 ### Current
 
 - Allow customizing the number of sparkled ships for great success on non-overdruming expeditions
+- Now user can opt-in plugin auto-switch feature.
+
+    This feature is turned off by default. When enabled, poi switches to this plugin automatically
+    when user goes to the in-game expedition screen.
 
 ### 0.2.3
 

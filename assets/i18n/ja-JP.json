@@ -3,6 +3,7 @@
   "Auto": "Auto",
   "AutoTooltip": "Switching between fleets automatically depending on your in-game actions.",
   "CustomRecommendSparkledCount": "Custom the number of sparkled ships for a better Great Success rate",
+  "AllowPluginAutoSwitch": "Allow switching to this plugin automatically",
   "CondNormal": "Normal",
   "CondGreatSuccess": "Great Success",
   "CondNotReady": "Not Ready",

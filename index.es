@@ -28,8 +28,11 @@ import {
 import { reducer, mapDispatchToProps } from './reducer'
 import {
   keyRecommendSparkled,
+  keyAllowSwitch,
   settingsClass,
 } from './Settings'
+
+const { getStore } = window
 
 /*
 
@@ -186,8 +189,16 @@ const reactClass = connect(
   },
   mapDispatchToProps)(EZExpedMain)
 
+const switchPluginPath = [
+  {
+    path: "/kcsapi/api_get_member/mission",
+    valid: () => getStore( "config." + keyAllowSwitch ),
+  },
+]
+
 export {
   reactClass,
   reducer,
   settingsClass,
+  switchPluginPath,
 }
