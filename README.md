@@ -5,7 +5,11 @@ check expedition requirements and estimate expedition income accurately.
 
 ## Changelog
 
-### 0.2.x
+### Current
+
+- Allow customizing the number of sparkled ships for great success on non-overdruming expeditions
+
+### 0.2.3
 
 - Fix errors when not all fleets are unlocked in game
 
