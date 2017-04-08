@@ -49,7 +49,7 @@ class RecommendSparkledCountSetting extends Component {
 }
 
 // props:
-// - allowPluginAutoSwitch
+// - value
 class AllowPluginAutoSwitchSetting extends Component {
   handleChange = () => {
     config.set(keyAllowSwitch, !this.props.value)

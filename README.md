@@ -5,6 +5,8 @@ check expedition requirements and estimate expedition income accurately.
 
 ## Changelog
 
+[![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
+
 ### Current
 
 - Allow customizing the number of sparkled ships for great success on non-overdruming expeditions
