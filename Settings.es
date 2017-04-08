@@ -6,9 +6,10 @@ import {
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 const { config } = window
+import { __ } from './tr'
 
 // TODO
-// - i18n
+// - rename "Recommend{,ed}Sparkle{,d}" and stuff like that.
 
 const confPath = "plugin.poi-plugin-ezexped."
 const keyRecommendedSparkled = confPath + "recommendedSparkledCount"
@@ -31,7 +32,9 @@ const settingsClass = connect (() => {
       <div style={{
         display: "flex", 
         justifyContent: "space-between"}}>
-        <div style={{flex: "4", alignSelf: "center"}}>Recommended number of sparkled ships:</div>
+        <div style={{flex: "4", alignSelf: "center"}}>
+          {`${__("CustomRecommendSparkledCount")}:`}
+        </div>
         <FormControl
             style={{flex: "1"}} 
             value={this.props.recommendedSparkledCount}
