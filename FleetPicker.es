@@ -23,7 +23,7 @@ import { __ } from './tr'
 //   this callback should accept a fleet id
 // - autoSwitch
 // - onToggleAutoSwitch
-// - recommendedSparkled
+// - recommendSparkled
 class FleetPicker extends Component {
   render() {
     const mkTooltip = fleetId => { 
@@ -52,7 +52,7 @@ class FleetPicker extends Component {
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
       
-      const eR = getExpedReqs(expedId,true,true,this.props.recommendedSparkled)
+      const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
 
       const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet.ships)
       // without resupply

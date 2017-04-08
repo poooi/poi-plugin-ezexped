@@ -8,24 +8,21 @@ import { get } from 'lodash'
 const { config } = window
 import { __ } from './tr'
 
-// TODO
-// - rename "Recommend{,ed}Sparkle{,d}" and stuff like that.
-
 const confPath = "plugin.poi-plugin-ezexped."
-const keyRecommendedSparkled = confPath + "recommendedSparkledCount"
+const keyRecommendSparkled = confPath + "recommendSparkledCount"
 
 const settingsClass = connect (() => {
   return (state, props) => ({
-    recommendedSparkledCount: get(
+    recommendSparkledCount: get(
       state.config, 
-      keyRecommendedSparkled, 4),
+      keyRecommendSparkled, 4),
   })
 })(class EZExpedSettings extends Component {
-  changeRecommendedSparkledCount = (e) => {
+  changeRecommendSparkledCount = (e) => {
     // seems like e.target.value somehow gets coerced to a string,
     // so we need to convert it back.
     const v = parseInt(e.target.value, 10)
-    config.set(keyRecommendedSparkled, v)
+    config.set(keyRecommendSparkled, v)
   }
   render() {
     return (
@@ -37,8 +34,8 @@ const settingsClass = connect (() => {
         </div>
         <FormControl
             style={{flex: "1"}} 
-            value={this.props.recommendedSparkledCount}
-            onChange={this.changeRecommendedSparkledCount}
+            value={this.props.recommendSparkledCount}
+            onChange={this.changeRecommendSparkledCount}
             componentClass="select">
           {
             [4,5,6].map((num, ind) =>
@@ -52,6 +49,6 @@ const settingsClass = connect (() => {
   }})
 
 export {
-  keyRecommendedSparkled,
+  keyRecommendSparkled,
   settingsClass,
 }
