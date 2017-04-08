@@ -9,7 +9,6 @@ const fmtTime = timeInMins => {
   const hrText = __("RequiredTime.hour",hours)
   const minText = __("RequiredTime.minute",minutes)
 
-
   const buf = []
   if (hours>0)
     buf.push( hrText )
