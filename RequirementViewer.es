@@ -8,7 +8,7 @@ import {
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
-import { 
+import {
   checkExpedDetail,
   collapseResults,
   isEqualReqObj,
@@ -31,7 +31,7 @@ class CheckResultBox extends Component {
               disabled={true}
               style={{
                 width: "48%",
-                opacity: "1", margin: "10px 0 10px 0", 
+                opacity: "1", margin: "10px 0 10px 0",
                 borderRadius: "10px", display: "flex",
                 visibility: this.props.visible ? "visible" : "hidden"}}>
         <FontAwesome
@@ -66,8 +66,8 @@ const renderRequirement = (req,ok) => {
         placement="bottom" overlay={tooltip}>
       <div style={{display: "flex"}}>
         <div key="header">{__("Fleet Composition")}:</div>
-        {req.map( ({data: {count, estype: estypeName}}, ind) => 
-          <div 
+        {req.map( ({data: {count, estype: estypeName}}, ind) =>
+          <div
               style={{marginLeft:"5px", color: ok[ind] ? "green" : "red" }}
               key={`ce-${ind}`} >
             {`${count}${estype.shortDesc(estypeName)}`}
@@ -137,12 +137,12 @@ class RequirementListItem extends Component {
   render() {
     const allOk = collapseResults( this.props.ok )
     const checkBoxColor = allOk
-      ? (this.props.greatSuccess 
-          ? "gold" : "green") 
+      ? (this.props.greatSuccess
+          ? "gold" : "green")
       : (this.props.greatSuccess
           ? "grey" : "red")
     return (
-      <ListGroupItem 
+      <ListGroupItem
           style={{padding: "10px", display: "flex"}}>
         <FontAwesome
             style={{marginRight: "5px", marginTop: "2px", color: checkBoxColor }}

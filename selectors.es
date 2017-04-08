@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect'
-import { 
+import {
   fleetShipsDataSelectorFactory,
   fleetShipsEquipDataSelectorFactory,
   fleetSelectorFactory,
   extensionSelectorFactory,
 } from 'views/utils/selectors'
 
-/* 
+/*
 
 reorganize data, sharp it to form the basic input structure
 of other functions.
@@ -22,9 +22,9 @@ CONTRACT:
 const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
   shipsData = shipsData || []
   equipsData = equipsData || []
-  fleetData = fleetData || 
-    { 
-      api_name: "-", 
+  fleetData = fleetData ||
+    {
+      api_name: "-",
       api_mission: [1 /* anything other than 0 */],
     }
   const ships = shipsData.map( ([shipInst, $ship], ind) => {
@@ -51,7 +51,7 @@ const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
       stype: $ship.api_stype,
     }
   })
-  return { 
+  return {
     name: fleetData.api_name,
     available: fleetData.api_mission[0] === 0,
     ships,
@@ -67,7 +67,7 @@ const mkFleetInfoSelector = fleetId =>
     store => store.sortie.combinedFlag,
     mkFleetInfo(fleetId))
 
-const combinedFlagSelector = 
+const combinedFlagSelector =
   store => store.sortie.combinedFlag
 
 const reduxSelector =

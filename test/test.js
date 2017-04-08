@@ -10,7 +10,7 @@ describe('estype', () => {
       estype.allSTypes.map( n => {
         assert.equal(n, estype.idToName(estype.nameToId(n)))
       })})})
-  
+
   const ty = estype.stype
   describe('isESType', () => {
     spec('tests', () => {

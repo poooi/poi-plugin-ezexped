@@ -19,9 +19,9 @@ const expedInfo = (() => {
       : x === 11 ? "FCoinMedium"
       : x === 12 ? "FCoinLarge"
       : error(`unknown item id: ${x}`)
-      
+
     const mkItem = itemData =>
-      itemData[0] === 0 
+      itemData[0] === 0
         ? null
         : { itemId: itemIdToName(itemData[0]), itemMaxCount: itemData[1] }
 
@@ -37,7 +37,7 @@ const expedInfo = (() => {
         fuel: data.resource[0],
         ammo: data.resource[1],
         steel: data.resource[2],
-        bauxite: data.resource[3],        
+        bauxite: data.resource[3],
       },
       itemNormal: mkItem( data.api_win_item1 ),
       itemGreatSuccess: mkItem( data.api_win_item2 ),
@@ -51,7 +51,7 @@ const expedNameToId = expedName =>
   (expedInfo.find( e => e && e.name === expedName )
   || error(`unknown exped name: ${expedName}`)).id
 
-export { 
+export {
   expedInfo,
   expedNameToId,
 }
