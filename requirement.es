@@ -470,13 +470,13 @@ const expedGSReqs = (() => {
   return ret
 })()
 
-// RSC: short for recommended sparked count
-const modifyRSC = recommendedSparkledCount => reqObjRep =>
+// RSC: short for "recommend sparked count"
+const modifyRSC = recommendSparkledCount => reqObjRep =>
   reqObjRep.map( req => {
     if (Array.isArray(req))
       return req
     if (req.data.type === "RecommendSparkledCount")
-      return Req.RecommendSparkledCount(recommendedSparkledCount)
+      return Req.RecommendSparkledCount(recommendSparkledCount)
     return req
   })
 
@@ -490,7 +490,7 @@ const modifyRSC = recommendedSparkledCount => reqObjRep =>
     resupply: <must be Req.Resupply>,
   }
 
-  if "recommendedSparkledCount" is set, it's value overwrites
+  if "recommendSparkledCount" is set, it's value overwrites
   whatever argument previously set to "RecommendSparkledCount".
 
   NOTE: since this recommendation exists only in "gs" field,
@@ -498,15 +498,15 @@ const modifyRSC = recommendedSparkledCount => reqObjRep =>
 
 */
 const getExpedReqs = (expedId, greatSuccess, resupply, 
-    recommendedSparkledCount) => {
+    recommendSparkledCount) => {
   const ret = {
     norm: expedReqs[expedId],
   }
 
   if (greatSuccess) {
     ret.gs = expedGSReqs[expedId]
-    if (typeof recommendedSparkledCount !== "undefined")
-      ret.gs = modifyRSC(recommendedSparkledCount)(ret.gs)
+    if (typeof recommendSparkledCount !== "undefined")
+      ret.gs = modifyRSC(recommendSparkledCount)(ret.gs)
   }
 
   if (resupply)
