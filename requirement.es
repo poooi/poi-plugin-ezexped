@@ -113,6 +113,8 @@ Req.Resupply = {
   data: {type: "Resupply"},
 }
 
+// for having a chance of GS, it's actually a requirement to have all ships
+// in fleet sparkled. see #8
 Req.AllSparkled = {
   checkFleet: fleet => fleet.every( ship => ship.morale >= 50 ),
   data: {type: "AllSparkled"},
