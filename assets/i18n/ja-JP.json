@@ -41,7 +41,8 @@
     "SparkledCount": "≥%s sparkled ship(s) for a great success rate boost",
     "RecommendSparkledCount": "≥%s sparkled ship(s) for a better great success rate",
     "Morale": "All ships in this fleet should have morale ≥%s",
-    "Resupply": "All ships in this fleet should be fully resupplied"
+    "Resupply": "All ships in this fleet should be fully resupplied",
+    "AllSparkled": "All ships need to be sparkled."
   },
   "Expedition made easy": "遠征報酬早見表"
 }

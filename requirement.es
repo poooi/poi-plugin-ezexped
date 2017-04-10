@@ -113,6 +113,11 @@ Req.Resupply = {
   data: {type: "Resupply"},
 }
 
+Req.AllSparkled = {
+  checkFleet: fleet => fleet.every( ship => ship.morale >= 50 ),
+  data: {type: "AllSparkled"},
+}
+
 const isRequirement = obj => typeof obj.checkFleet !== "undefined"
 
 // check a nested structure of requirements against a single fleet
@@ -464,7 +469,7 @@ const expedGSReqs = (() => {
 
   enumFromTo(1,40).map( expedId => {
     if (!ret[expedId])
-      ret[expedId] = [Req.RecommendSparkledCount(4)]
+      ret[expedId] = [Req.RecommendSparkledCount(4), Req.AllSparkled]
   })
 
   return ret

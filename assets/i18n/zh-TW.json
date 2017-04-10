@@ -43,7 +43,8 @@
     "SparkledCount": "攜帶至少%s名處於“戰意高昂”狀態的艦娘可極大提高大成功概率",
     "RecommendSparkledCount": "推薦攜帶至少%s名“戰意高昂”狀態的艦娘以提高大成功概率",
     "Morale": "艦娘疲勞度至少爲%s",
-    "Resupply": "艦隊補給"
+    "Resupply": "艦隊補給",
+    "AllSparkled": "艦隊全體艦娘都需處於“戰意高昂”狀態"
   },
   "Expedition made easy": "遠征條件檢查與精確收入預測",
   "Required Time (mins)": "所需時間(分鐘)",

@@ -120,6 +120,10 @@ const renderRequirement = (req,ok) => {
     return fmt()
   }
 
+  if (req.data.type === "AllSparkled") {
+    return fmt()
+  }
+
   return error("Unhandled Req type: ${req.data.type}")
 }
 

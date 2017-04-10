@@ -177,7 +177,7 @@ const reactClass = connect(
       fleets[fleetId] = mkFleetInfoSelector(fleetId)(state)
     })
 
-    const recommendSparkled = get(state.config, keyRecommendSparkled )
+    const recommendSparkled = get(state.config, keyRecommendSparkled)
 
     const redux = reduxSelector(state)
     return {
