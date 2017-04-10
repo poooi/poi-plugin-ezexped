@@ -37,7 +37,7 @@ class RecommendSparkledCountSetting extends Component {
             onChange={this.handleChange}
             componentClass="select">
           {
-            [4,5,6].map((num, ind) =>
+            [3,4,5,6].map((num, ind) =>
               <option key={ind} value={num}>
                 {num}
               </option>
