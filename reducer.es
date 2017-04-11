@@ -3,7 +3,7 @@ import { expedNameToId } from './exped-info'
 
 const loadState = () => ({
   config: storage.load(),
-  fleetId: 0,
+  fleetId: null,
 })
 
 const reducer = (state = loadState(), action) => {
@@ -44,11 +44,16 @@ const mapDispatchToProps = dispatch => ({
     type: "@poi-plugin-ezexped@UpdateConfig",
     modifier,
   }),
-  onChangeFleet: (fleetId,reason=null) => dispatch({
-    type: "@poi-plugin-ezexped@ChangeFleet",
-    fleetId,
-    reason,
-  }),
+  onChangeFleet: (fleetId,reason=null) => {
+    // TODO: not sure whether this should be specially dealt with.
+    if (fleetId === null)
+      return
+    dispatch({
+      type: "@poi-plugin-ezexped@ChangeFleet",
+      fleetId,
+      reason,
+    })
+  },
 })
 
 export { reducer, mapDispatchToProps }

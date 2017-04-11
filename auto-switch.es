@@ -82,7 +82,7 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
     const fleet = curFleets[i]
     const nextFleet = nextFleets[i]
     if (isNotDecreasing(fleet,nextFleet))
-      return i
+      return fleet.index
   }
 
   return false
@@ -90,13 +90,14 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
 
 // finds next available fleet to send for expeditions
 // returns 0 if all fleets are sent
-const findNextAvailableFleet = (fleetsExtra, combinedFlag) => {
+const findNextAvailableFleet = (fleetsExtra, combinedFlag, hideMainFleet) => {
   const beginInd = combinedFlag === 0 ? 1 : 2
   for (let i=beginInd; i<fleetsExtra.length; ++i)
     if (fleetsExtra[i].available)
       return i
   // move back to first fleet after all expeditions are sent
-  return 0
+  // or do nothing at all if we are not supposed to keep track of main fleet
+  return hideMainFleet ? null : 0
 }
 
 // detect whether we are sending a fleet

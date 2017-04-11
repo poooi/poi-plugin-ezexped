@@ -26,9 +26,8 @@ import { __ } from './tr'
 // - recommendSparkled
 class FleetPicker extends Component {
   render() {
-    const mkTooltip = fleetId => {
-      const fleet = this.props.fleets[fleetId]
-      return (<Tooltip id={`fpfleet-${fleetId}`}>
+    const mkTooltip = fleet => {
+      return (<Tooltip id={`fpfleet-${fleet.index}`}>
         <div style={{display: "flex", flexDirection: "column"}}>
           {fleet.ships.map((ship,ind) =>
             <div key={ind}>
@@ -47,8 +46,8 @@ class FleetPicker extends Component {
     //   - if just needs resupply: yellow
     //   - otherwise red
     // - not available: always blue
-    const mkButton = fleetId => {
-      const fleet = this.props.fleets[fleetId]
+    const mkButton = fleet => {
+      const fleetId = fleet.index
       const expedId = this.props.config.selectedExpeds[fleetId]
       const greatSuccess = this.props.config.gsFlags[expedId]
 
@@ -96,11 +95,11 @@ class FleetPicker extends Component {
         marginBottom: "5px",
       }}>
         <ButtonGroup style={{display: "flex", width: "80%"}}>
-          {[0,1,2,3].map((x) =>
+          {this.props.fleets.map(fleet =>
             <OverlayTrigger
-                key={x}
-                placement="bottom" overlay={mkTooltip(x)}>
-              {mkButton(x)}
+                key={fleet.index}
+                placement="bottom" overlay={mkTooltip(fleet)}>
+              {mkButton(fleet)}
             </OverlayTrigger>
            )}
         </ButtonGroup>
