@@ -27,7 +27,9 @@ const { _ } = window
 // some heuristic to determine which fleet we are changing.
 // returns a number: 0,1,2,3 to indicate the changing fleet
 // otherwise "false" if there is no change or we cannot determine this
-const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
+const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
+  const curFleetsFull = curFleetsRep.map( x => x.ships )
+  const nextFleetsFull = nextFleetsRep.map( x => x.ships )
   // transform the whole array of fleet ship representation
   // so that we only test equality based on info that we are interested in
 
@@ -81,8 +83,9 @@ const findChangingFleet = (curFleetsFull, nextFleetsFull) => {
 
     const fleet = curFleets[i]
     const nextFleet = nextFleets[i]
-    if (isNotDecreasing(fleet,nextFleet))
-      return fleet.index
+    if (isNotDecreasing(fleet,nextFleet)) {
+      return curFleetsRep[i].index
+    }
   }
 
   return false
@@ -94,7 +97,7 @@ const findNextAvailableFleet = (fleetsExtra, combinedFlag, hideMainFleet) => {
   const beginInd = combinedFlag === 0 ? 1 : 2
   for (let i=beginInd; i<fleetsExtra.length; ++i)
     if (fleetsExtra[i].available)
-      return i
+      return fleetsExtra[i].index
   // move back to first fleet after all expeditions are sent
   // or do nothing at all if we are not supposed to keep track of main fleet
   return hideMainFleet ? null : 0

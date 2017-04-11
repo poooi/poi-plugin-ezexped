@@ -69,9 +69,8 @@ class EZExpedMain extends Component {
     if (nextProps.redux.config.autoSwitch
         && this.props.fleets.length === nextProps.fleets.length) {
       const changingFleetInd = findChangingFleet(
-        this.props.fleets.map(x => x.ships),
-        nextProps.fleets.map(x => x.ships))
-
+        this.props.fleets,
+        nextProps.fleets)
       if (changingFleetInd !== false) {
         onChangeFleet(
           changingFleetInd,
