@@ -12,6 +12,7 @@ import { __ } from './tr'
 const confPath = "plugin.poi-plugin-ezexped."
 const keyRecommendSparkled = confPath + "recommendSparkledCount"
 const keyAllowSwitch = confPath + "allowPluginAutoSwitch"
+const keyHideMainFleet = confPath + "hideMainFleet"
 
 // props:
 // - value: current value of this setting
@@ -72,6 +73,27 @@ class AllowPluginAutoSwitchSetting extends Component {
   }
 }
 
+class HideMainFleetSetting extends Component {
+  handleChange = () => {
+    config.set(keyHideMainFleet, !this.props.value)
+  }
+  render () {
+    return (
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between"}}>
+        <div style={{flex: "4", alignSelf: "center"}}>
+          {`${__("HideMainFleet")}:`}
+        </div>
+        <Checkbox
+            style={{flex: "1", marginLeft: "5px"}}
+            checked={this.props.value}
+            onChange={this.handleChange}>
+        </Checkbox>
+      </div>)
+  }
+}
+
 const settingsClass = connect (() => {
   return (state, props) => ({
     recommendSparkledCount: get(
@@ -80,6 +102,9 @@ const settingsClass = connect (() => {
     allowPluginAutoSwitch: get(
       state.config,
       keyAllowSwitch, false),
+    hideMainFleet: get(
+      state.config,
+      keyHideMainFleet, false),
   })
 })(class EZExpedSettings extends Component {
   render() {
@@ -89,11 +114,14 @@ const settingsClass = connect (() => {
             value={this.props.recommendSparkledCount} />
         <AllowPluginAutoSwitchSetting
             value={this.props.allowPluginAutoSwitch} />
+        <HideMainFleetSetting
+            value={this.props.hideMainFleet} />
       </div>)
   }})
 
 export {
   keyRecommendSparkled,
   keyAllowSwitch,
+  keyHideMainFleet,
   settingsClass,
 }

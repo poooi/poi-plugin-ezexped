@@ -18,15 +18,13 @@ CONTRACT:
  for all inputs above, undefined is used only when the fleet in question
  is not yet unlocked in game.
 
+returns a fleet representation when the fleet can be found, "null" otherwise.
+
 */
 const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
-  shipsData = shipsData || []
-  equipsData = equipsData || []
-  fleetData = fleetData ||
-    {
-      api_name: "-",
-      api_mission: [1 /* anything other than 0 */],
-    }
+  if (! shipsData || ! equipsData || !fleetData)
+    return null
+
   const ships = shipsData.map( ([shipInst, $ship], ind) => {
     const equips = equipsData[ind]
       .filter(x => x)
@@ -52,6 +50,7 @@ const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
     }
   })
   return {
+    index: fleetId,
     name: fleetData.api_name,
     available: fleetData.api_mission[0] === 0,
     ships,

@@ -29,6 +29,7 @@ import { reducer, mapDispatchToProps } from './reducer'
 import {
   keyRecommendSparkled,
   keyAllowSwitch,
+  keyHideMainFleet,
   settingsClass,
 } from './Settings'
 
@@ -51,13 +52,28 @@ class EZExpedMain extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.redux.config.autoSwitch) {
+    const { onChangeFleet } = nextProps
+    const nextCurrentFleet = nextProps.redux.fleetId !== null
+      && nextProps.fleets.find( fleet => fleet.index === nextProps.redux.fleetId )
+
+    if (!nextCurrentFleet) {
+      // current focus is null, we need to find a new focus
+      if (nextProps.fleets.length > 0) {
+        onChangeFleet(
+          nextProps.fleets[0].index,
+          "initializing fleet focus")
+      }
+      return
+    }
+
+    if (nextProps.redux.config.autoSwitch
+        && this.props.fleets.length === nextProps.fleets.length) {
       const changingFleetInd = findChangingFleet(
         this.props.fleets.map(x => x.ships),
         nextProps.fleets.map(x => x.ships))
 
       if (changingFleetInd !== false) {
-        this.props.onChangeFleet(
+        onChangeFleet(
           changingFleetInd,
           "detected changing fleet")
       }
@@ -66,10 +82,11 @@ class EZExpedMain extends Component {
         this.props.fleets,
         nextProps.fleets,
         nextProps.combinedFlag)) {
-        this.props.onChangeFleet(
+        onChangeFleet(
           findNextAvailableFleet(
             nextProps.fleets,
-            nextProps.combinedFlag),
+            nextProps.combinedFlag,
+            nextProps.hideMainFleet),
          "detected that we are sending a fleet out, switching to next one")
       }
     }
@@ -97,7 +114,8 @@ class EZExpedMain extends Component {
       if (path === "/kcsapi/api_get_member/mission") {
         const nxt = findNextAvailableFleet(
           this.props.fleets,
-          this.props.combinedFlag)
+          this.props.combinedFlag,
+          this.props.hideMainFleet)
         this.props.onChangeFleet(nxt, "User is at expedition screen")
       }
     }
@@ -119,7 +137,7 @@ class EZExpedMain extends Component {
     const fleetId = this.props.redux.fleetId
     const expedId = config.selectedExpeds[fleetId]
     const gsFlag = config.gsFlags[expedId]
-    const fleet = this.props.fleets[ fleetId ]
+    const fleet = this.props.fleets.find( fleet => fleet.index === fleetId ) || null
     return (
       <div className="poi-plugin-ezexped">
         <link rel="stylesheet" href={join(__dirname, 'assets', 'ezexped.css')} />
@@ -137,6 +155,7 @@ class EZExpedMain extends Component {
                   autoSwitch: !config.autoSwitch,
                 }))}
               onSelectFleet={this.props.onChangeFleet} />
+          { fleet !== null &&
           <ExpeditionViewer
               expedId={expedId}
               fleet={fleet}
@@ -149,19 +168,21 @@ class EZExpedMain extends Component {
                   newConfig.gsFlags = [ ... config.gsFlags ]
                   newConfig.gsFlags[expedId] = !config.gsFlags[expedId]
                   return newConfig
-                })} />
+                })} /> }
+          { fleet !== null &&
           <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
             <ExpeditionTable
                 fleet={fleet}
                 expedId={expedId}
                 onSelectExped={this.selectExped} />
-          </Panel>
+          </Panel>}
+          { fleet !== null &&
           <RequirementViewer
               fleet={fleet}
               expedId={expedId}
               greatSuccess={gsFlag}
               recommendSparkled={this.props.recommendSparkled}
-          />
+          />}
         </div>
       </div>
     )
@@ -170,14 +191,20 @@ class EZExpedMain extends Component {
 
 const reactClass = connect(
   (state, props) => {
-    const combinedFlag = combinedFlagSelector(state)
-    const fleets = [];
-
-    [0,1,2,3].map( fleetId => {
-      fleets[fleetId] = mkFleetInfoSelector(fleetId)(state)
-    })
-
     const recommendSparkled = get(state.config, keyRecommendSparkled)
+    const hideMainFleet = get(state.config, keyHideMainFleet)
+    const combinedFlag = combinedFlagSelector(state)
+    const fleets = []
+
+    const beginInd = hideMainFleet
+      ? (combinedFlag === 0 ? 1 : 2)
+      : 0
+
+    for (let fleetId=beginInd; fleetId<4; ++fleetId) {
+      const fleetRep = mkFleetInfoSelector(fleetId)(state)
+      if (fleetRep !== null)
+        fleets.push( fleetRep )
+    }
 
     const redux = reduxSelector(state)
     return {
@@ -185,6 +212,7 @@ const reactClass = connect(
       combinedFlag,
       redux,
       recommendSparkled,
+      hideMainFleet,
     }
   },
   mapDispatchToProps)(EZExpedMain)
