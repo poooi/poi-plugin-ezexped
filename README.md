@@ -14,6 +14,8 @@ check expedition requirements and estimate expedition income accurately.
     "Main fleet" is usually your first fleet. But when you have a combined fleet,
     your second fleet is also considered part of it.
 
+- Allow hiding satisfied requirements.
+
 ### 0.3.1
 
 - Adding "All ships need to be sparkled" requirement for great success expeditions

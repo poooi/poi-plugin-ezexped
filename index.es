@@ -30,6 +30,7 @@ import {
   keyRecommendSparkled,
   keyAllowSwitch,
   keyHideMainFleet,
+  keyHideSatReqs,
   settingsClass,
 } from './Settings'
 
@@ -181,6 +182,7 @@ class EZExpedMain extends Component {
                   expedId={expedId}
                   greatSuccess={gsFlag}
                   recommendSparkled={this.props.recommendSparkled}
+                  hideSatReqs={this.props.hideSatReqs}
               />)}
         </div>
       </div>
@@ -192,6 +194,7 @@ const reactClass = connect(
   (state, props) => {
     const recommendSparkled = get(state.config, keyRecommendSparkled)
     const hideMainFleet = get(state.config, keyHideMainFleet)
+    const hideSatReqs = get(state.config, keyHideSatReqs)
     const combinedFlag = combinedFlagSelector(state)
     const fleets = []
 
@@ -212,6 +215,7 @@ const reactClass = connect(
       redux,
       recommendSparkled,
       hideMainFleet,
+      hideSatReqs,
     }
   },
   mapDispatchToProps)(EZExpedMain)

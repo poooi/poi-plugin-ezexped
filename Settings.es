@@ -13,6 +13,7 @@ const confPath = "plugin.poi-plugin-ezexped."
 const keyRecommendSparkled = confPath + "recommendSparkledCount"
 const keyAllowSwitch = confPath + "allowPluginAutoSwitch"
 const keyHideMainFleet = confPath + "hideMainFleet"
+const keyHideSatReqs = confPath + "hideSatReqs"
 
 // props:
 // - value: current value of this setting
@@ -94,6 +95,30 @@ class HideMainFleetSetting extends Component {
   }
 }
 
+// TODO: remove duplication
+// TODO: consistent setting layout
+// TODO: pad bottom a bit
+class HideSatReqs extends Component {
+  handleChange = () => {
+    config.set(keyHideSatReqs, !this.props.value)
+  }
+  render () {
+    return (
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between"}}>
+        <div style={{flex: "4", alignSelf: "center"}}>
+          {`${__("HideSatRequirements")}:`}
+        </div>
+        <Checkbox
+            style={{flex: "1", marginLeft: "5px"}}
+            checked={this.props.value}
+            onChange={this.handleChange}>
+        </Checkbox>
+      </div>)
+  }
+}
+
 const settingsClass = connect (() => {
   return (state, props) => ({
     recommendSparkledCount: get(
@@ -105,6 +130,9 @@ const settingsClass = connect (() => {
     hideMainFleet: get(
       state.config,
       keyHideMainFleet, false),
+    hideSatReqs: get(
+      state.config,
+      keyHideSatReqs, false),
   })
 })(class EZExpedSettings extends Component {
   render() {
@@ -116,6 +144,8 @@ const settingsClass = connect (() => {
             value={this.props.allowPluginAutoSwitch} />
         <HideMainFleetSetting
             value={this.props.hideMainFleet} />
+        <HideSatReqs
+            value={this.props.hideSatReqs} />
       </div>)
   }})
 
@@ -123,5 +153,6 @@ export {
   keyRecommendSparkled,
   keyAllowSwitch,
   keyHideMainFleet,
+  keyHideSatReqs,
   settingsClass,
 }

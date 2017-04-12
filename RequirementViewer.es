@@ -131,15 +131,20 @@ const renderRequirement = (req,ok) => {
 // - req: either an Req object of non ShipTypeCount, or an array of ShipTypeCount Req objects
 // - ok:  a boolean or an array of boolean (for ShipTypeCount array)
 // - greatSuccess: whether this is required by GS
+// - hideSatReqs
 class RequirementListItem extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.ok !== nextProps.ok ||
       this.props.greatSuccess !== nextProps.greatSuccess ||
+      this.props.hideSatReqs !== nextProps.hideSatReqs ||
       ! isEqualReqObj(this.props.req, nextProps.req)
   }
 
   render() {
     const allOk = collapseResults( this.props.ok )
+    if (allOk && this.props.hideSatReqs)
+      return null
+
     const checkBoxColor = allOk
       ? (this.props.greatSuccess
           ? "gold" : "green")
@@ -159,11 +164,13 @@ class RequirementListItem extends Component {
 // - expedId: target expedition id
 // - greatSuccess: whether aimming at great success
 // - recommendSparkled
+// - hideSatReqs
 class RequirementViewer extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.expedId !== nextProps.expedId ||
       this.props.greatSuccess !== nextProps.greatSuccess ||
       this.props.recommendSparkled !== nextProps.recommendSparkled ||
+      this.props.hideSatReqs !== nextProps.hideSatReqs ||
       ! _.isEqual(this.props.fleet, nextProps.fleet)
   }
 
@@ -178,7 +185,6 @@ class RequirementViewer extends Component {
 
     const normFlg = normCheckResult && resupplyCheckResult
     const gsFlg = normFlg && gsCheckResult
-
     const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
     return (
       <div>
@@ -197,11 +203,13 @@ class RequirementViewer extends Component {
           { resultDetail.norm.map( ([req,res],ind) =>
               <RequirementListItem
                   key={`norm-${ind}`}
+                  hideSatReqs={this.props.hideSatReqs}
                   req={req}
                   ok={res}
                   greatSuccess={false} />)}
           <RequirementListItem
               key="resupply"
+              hideSatReqs={this.props.hideSatReqs}
               req={resultDetail.resupply[0]}
               ok={resultDetail.resupply[1]}
               greatSuccess={false} />
@@ -209,6 +217,7 @@ class RequirementViewer extends Component {
             resultDetail.gs.map( ([req,res],ind) =>
               <RequirementListItem
                   key={`gs-${ind}`}
+                  hideSatReqs={this.props.hideSatReqs}
                   req={req}
                   ok={res}
                   greatSuccess={true}
