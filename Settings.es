@@ -51,68 +51,32 @@ class RecommendSparkledCountSetting extends Component {
 }
 
 // props:
-// - value
-class AllowPluginAutoSwitchSetting extends Component {
-  handleChange = () => {
-    config.set(keyAllowSwitch, !this.props.value)
+// - label
+// - path
+// - (optional) defVal
+class CheckboxSetting extends Component {
+  constructor(props) {
+    super(props)
+    const { path, defVal } = this.props
+    this.state = {value: config.get(path,defVal)}
   }
-
+  handleChange = () => {
+    const newVal = !this.state.value
+    config.set(this.props.path, newVal)
+    this.setState({value: newVal})
+  }
   render() {
+    const { label } = this.props
     return (
       <div style={{
         display: "flex",
         justifyContent: "space-between"}}>
         <div style={{flex: "4", alignSelf: "center"}}>
-          {`${__("AllowPluginAutoSwitch")}:`}
+          {`${label}:`}
         </div>
         <Checkbox
             style={{flex: "1", marginLeft: "5px"}}
-            checked={this.props.value}
-            onChange={this.handleChange}>
-        </Checkbox>
-      </div>)
-  }
-}
-
-class HideMainFleetSetting extends Component {
-  handleChange = () => {
-    config.set(keyHideMainFleet, !this.props.value)
-  }
-  render () {
-    return (
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between"}}>
-        <div style={{flex: "4", alignSelf: "center"}}>
-          {`${__("HideMainFleet")}:`}
-        </div>
-        <Checkbox
-            style={{flex: "1", marginLeft: "5px"}}
-            checked={this.props.value}
-            onChange={this.handleChange}>
-        </Checkbox>
-      </div>)
-  }
-}
-
-// TODO: remove duplication
-// TODO: consistent setting layout
-// TODO: pad bottom a bit
-class HideSatReqs extends Component {
-  handleChange = () => {
-    config.set(keyHideSatReqs, !this.props.value)
-  }
-  render () {
-    return (
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between"}}>
-        <div style={{flex: "4", alignSelf: "center"}}>
-          {`${__("HideSatRequirements")}:`}
-        </div>
-        <Checkbox
-            style={{flex: "1", marginLeft: "5px"}}
-            checked={this.props.value}
+            checked={this.state.value}
             onChange={this.handleChange}>
         </Checkbox>
       </div>)
@@ -124,28 +88,35 @@ const settingsClass = connect (() => {
     recommendSparkledCount: get(
       state.config,
       keyRecommendSparkled, 4),
-    allowPluginAutoSwitch: get(
-      state.config,
-      keyAllowSwitch, false),
-    hideMainFleet: get(
-      state.config,
-      keyHideMainFleet, false),
-    hideSatReqs: get(
-      state.config,
-      keyHideSatReqs, false),
   })
 })(class EZExpedSettings extends Component {
+  handleConfigChange = (path, defVal=false) => () => {
+    const old = config.get(path,defVal)
+    config.set(path, !old)
+  }
   render() {
     return (
-      <div style={{display:"flex", flexDirection:"column"}}>
+      <div style={{
+        display:"flex",
+        flexDirection:"column",
+        marginBottom: "20px"}}>
         <RecommendSparkledCountSetting
             value={this.props.recommendSparkledCount} />
-        <AllowPluginAutoSwitchSetting
-            value={this.props.allowPluginAutoSwitch} />
-        <HideMainFleetSetting
-            value={this.props.hideMainFleet} />
-        <HideSatReqs
-            value={this.props.hideSatReqs} />
+        <CheckboxSetting
+            label={__("AllowPluginAutoSwitch")}
+            defVal={false}
+            path={keyAllowSwitch}
+        />
+        <CheckboxSetting
+            label={__("HideMainFleet")}
+            defVal={false}
+            path={keyHideMainFleet}
+        />
+        <CheckboxSetting
+            label={__("HideSatReqs")}
+            defVal={false}
+            path={keyHideSatReqs}
+        />
       </div>)
   }})
 
