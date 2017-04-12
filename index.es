@@ -154,34 +154,34 @@ class EZExpedMain extends Component {
                   autoSwitch: !config.autoSwitch,
                 }))}
               onSelectFleet={this.props.onChangeFleet} />
-          { fleet !== null &&
-          <ExpeditionViewer
-              expedId={expedId}
-              fleet={fleet}
-              greatSuccess={gsFlag}
-              onClickExped={() =>
-                this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
-              onClickGS={() =>
-                this.props.onModifyConfig( config => {
-                  const newConfig = { ... config }
-                  newConfig.gsFlags = [ ... config.gsFlags ]
-                  newConfig.gsFlags[expedId] = !config.gsFlags[expedId]
-                  return newConfig
-                })} /> }
-          { fleet !== null &&
-          <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
-            <ExpeditionTable
-                fleet={fleet}
-                expedId={expedId}
-                onSelectExped={this.selectExped} />
-          </Panel>}
-          { fleet !== null &&
-          <RequirementViewer
-              fleet={fleet}
-              expedId={expedId}
-              greatSuccess={gsFlag}
-              recommendSparkled={this.props.recommendSparkled}
-          />}
+          { fleet !== null && (
+              <ExpeditionViewer
+                  expedId={expedId}
+                  fleet={fleet}
+                  greatSuccess={gsFlag}
+                  onClickExped={() =>
+                    this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
+                  onClickGS={() =>
+                    this.props.onModifyConfig( config => {
+                      const newConfig = { ... config }
+                      newConfig.gsFlags = [ ... config.gsFlags ]
+                      newConfig.gsFlags[expedId] = !config.gsFlags[expedId]
+                      return newConfig
+                    })} />) }
+          { fleet !== null && (
+              <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
+                <ExpeditionTable
+                    fleet={fleet}
+                    expedId={expedId}
+                    onSelectExped={this.selectExped} />
+              </Panel>)}
+          { fleet !== null && (
+              <RequirementViewer
+                  fleet={fleet}
+                  expedId={expedId}
+                  greatSuccess={gsFlag}
+                  recommendSparkled={this.props.recommendSparkled}
+              />)}
         </div>
       </div>
     )
