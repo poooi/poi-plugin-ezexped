@@ -7,7 +7,7 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### current
+### 0.4.0
 
 - Allow hiding main fleet from tab, disabled by default.
 
