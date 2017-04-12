@@ -22,14 +22,12 @@
 
  */
 
-const { _ } = window
+const _ = require('lodash')
 
 // some heuristic to determine which fleet we are changing.
 // returns a number: 0,1,2,3 to indicate the changing fleet
 // otherwise "false" if there is no change or we cannot determine this
-const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
-  const curFleetsFull = curFleetsRep.map( x => x.ships )
-  const nextFleetsFull = nextFleetsRep.map( x => x.ships )
+const findChangingFleet = (curFleets, nextFleets) => {
   // transform the whole array of fleet ship representation
   // so that we only test equality based on info that we are interested in
 
@@ -39,8 +37,8 @@ const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
   const transformFleets = fleets => fleets.map( fleet => fleet.map(
     ({equips,rstId}) => ({equips,rstId}) ))
 
-  const curFleets = transformFleets( curFleetsFull )
-  const nextFleets = transformFleets( nextFleetsFull )
+  const curFleetsSimple = transformFleets( curFleets.map( x => x.ships ) )
+  const nextFleetsSimple = transformFleets( nextFleets.map( x => x.ships ) )
 
   // compare fleet one-by-one, and determine which one is the one
   // that we are operating:
@@ -48,8 +46,8 @@ const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
   // otherwise, if there is more than one changing fleet,
   // take the first one that "increases" somehow: either it has an increasing number
   // of ships or has an increasing number of equipments.
-  const compared = curFleets.map( (fleet,ind) => {
-    const nextFleet = nextFleets[ind]
+  const compared = curFleetsSimple.map( (fleet,ind) => {
+    const nextFleet = nextFleetsSimple[ind]
     return _.isEqual(fleet,nextFleet)
   })
 
@@ -83,8 +81,8 @@ const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
 
     const fleet = curFleets[i]
     const nextFleet = nextFleets[i]
-    if (isNotDecreasing(fleet,nextFleet)) {
-      return curFleetsRep[i].index
+    if (isNotDecreasing(fleet.ships,nextFleet.ships)) {
+      return curFleets[i].index
     }
   }
 
@@ -93,8 +91,8 @@ const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
 
 // finds next available fleet to send for expeditions
 // returns `null` if all fleets are sent
-const findNextAvailableFleet = (fleetsExtra, combinedFlag) => {
-  const beginInd = combinedFlag === 0 ? 1 : 2
+const findNextAvailableFleet = (fleetsExtra, isFleetCombined) => {
+  const beginInd = !isFleetCombined ? 1 : 2
   for (let i=beginInd; i<fleetsExtra.length; ++i)
     if (fleetsExtra[i].available)
       return fleetsExtra[i].index
@@ -104,12 +102,12 @@ const findNextAvailableFleet = (fleetsExtra, combinedFlag) => {
 }
 
 // detect whether we are sending a fleet
-const isSendingFleetToExped = (curFleetsExtra, nextFleetsExtra, combinedFlag) => {
-  const curFleetsAva = curFleetsExtra.map( x => x.available )
-  const nextFleetsAva = nextFleetsExtra.map( x => x.available )
+const isSendingFleetToExped = (curFleets, nextFleets, isFleetCombined) => {
+  const curFleetsAva = curFleets.map( x => x.available )
+  const nextFleetsAva = nextFleets.map( x => x.available )
 
   // find a place "i" where an available fleet becoming unavailable next moment
-  const beginInd = combinedFlag === 0 ? 1 : 2
+  const beginInd = !isFleetCombined ? 1 : 2
   for (let i = beginInd; i<curFleetsAva.length; ++i)
     if (curFleetsAva[i] && !nextFleetsAva[i])
       return true

@@ -4,7 +4,18 @@ import {
   fleetShipsEquipDataSelectorFactory,
   fleetSelectorFactory,
   extensionSelectorFactory,
+  sortieSelector,
+  configSelector,
 } from 'views/utils/selectors'
+
+
+import {
+  keyRecommendSparkled,
+  keyHideMainFleet,
+  keyHideSatReqs,
+} from './Settings'
+
+import { get } from 'lodash'
 
 /*
 
@@ -22,7 +33,7 @@ returns a fleet representation when the fleet can be found, "null" otherwise.
 
 */
 const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
-  if (! shipsData || ! equipsData || !fleetData)
+  if (!shipsData || !equipsData || !fleetData)
     return null
 
   const ships = shipsData.map( ([shipInst, $ship], ind) => {
@@ -63,17 +74,28 @@ const mkFleetInfoSelector = fleetId =>
     fleetShipsDataSelectorFactory(fleetId),
     fleetShipsEquipDataSelectorFactory(fleetId),
     fleetSelectorFactory(fleetId),
-    store => store.sortie.combinedFlag,
     mkFleetInfo(fleetId))
 
-const combinedFlagSelector =
-  store => store.sortie.combinedFlag
+const isFleetCombinedSelector =
+  createSelector(
+    sortieSelector,
+    sortie => sortie.combinedFlag !== 0)
 
 const reduxSelector =
   extensionSelectorFactory('poi-plugin-ezexped')
 
+const panelConfigSelector =
+  createSelector(
+    configSelector,
+    config => ({
+      recommendSparkled: get(config,keyRecommendSparkled),
+      hideMainFleet: get(config,keyHideMainFleet),
+      hideSatReqs: get(config,keyHideSatReqs),
+    }))
+
 export {
   mkFleetInfoSelector,
-  combinedFlagSelector,
+  isFleetCombinedSelector,
+  panelConfigSelector,
   reduxSelector,
 }

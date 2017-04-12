@@ -11,10 +11,6 @@ const { FontAwesome } = window
 
 import { __ } from './tr'
 
-// TODO: too much pure logic part embeded in rendering logic
-// might consider just extracting them out.
-// I'm suspecting this also lead to some wasted rendering.
-
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
@@ -64,7 +60,7 @@ class FleetPicker extends Component {
 
       const bsStyle =
           fleetId === 0 ? "success"
-        : this.props.combinedFlag !== 0 && fleetId === 1 ? "success"
+        : this.props.isFleetCombined && fleetId === 1 ? "success"
         : !fleet.available ? "primary"
         : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
         : normReadyFlag && gsReadyFlag ? "warning"

@@ -5,8 +5,9 @@ import { join } from 'path-extra'
 
 import {
   mkFleetInfoSelector,
-  combinedFlagSelector,
+  isFleetCombinedSelector,
   reduxSelector,
+  panelConfigSelector,
 } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
@@ -27,10 +28,7 @@ import {
 
 import { reducer, mapDispatchToProps } from './reducer'
 import {
-  keyRecommendSparkled,
   keyAllowSwitch,
-  keyHideMainFleet,
-  keyHideSatReqs,
   settingsClass,
 } from './Settings'
 
@@ -81,10 +79,10 @@ class EZExpedMain extends Component {
       if (isSendingFleetToExped(
         this.props.fleets,
         nextProps.fleets,
-        nextProps.combinedFlag)) {
+        nextProps.isFleetCombined)) {
         const nxt = findNextAvailableFleet(
           nextProps.fleets,
-          nextProps.combinedFlag)
+          nextProps.isFleetCombined)
 
         if (nxt !== null) {
           onChangeFleet(
@@ -103,7 +101,7 @@ class EZExpedMain extends Component {
   }
 
   componentDidMount() {
-    this.__eventListener = this.handleGameResponse.bind(this)
+    this.__eventListener = this.handleGameResponse
     window.addEventListener(
       'game.response',
       this.__eventListener)
@@ -118,13 +116,13 @@ class EZExpedMain extends Component {
     }
   }
 
-  handleGameResponse(e) {
+  handleGameResponse = e => {
     const path = e.detail.path
     if (this.props.redux.config.autoSwitch) {
       if (path === "/kcsapi/api_get_member/mission") {
         const nxt = findNextAvailableFleet(
           this.props.fleets,
-          this.props.combinedFlag,
+          this.props.isFleetCombined,
           this.props.hideMainFleet)
         if (nxt !== null) {
           this.props.onChangeFleet(nxt, "User is at expedition screen")
@@ -152,8 +150,7 @@ class EZExpedMain extends Component {
   }
 
   render() {
-    const config = this.props.redux.config
-    const fleetId = this.props.redux.fleetId
+    const { config, fleetId } = this.props.redux
     const expedId = config.selectedExpeds[fleetId]
     const gsFlag = config.gsFlags[expedId]
     const fleet = this.props.fleets.find( fleet => fleet.index === fleetId ) || null
@@ -165,7 +162,7 @@ class EZExpedMain extends Component {
               fleets={this.props.fleets}
               fleetId={fleetId}
               config={config}
-              combinedFlag={this.props.combinedFlag}
+              isFleetCombined={this.props.isFleetCombined}
               autoSwitch={config.autoSwitch}
               recommendSparkled={this.props.recommendSparkled}
               onToggleAutoSwitch={() =>
@@ -211,14 +208,16 @@ class EZExpedMain extends Component {
 
 const reactClass = connect(
   (state, props) => {
-    const recommendSparkled = get(state.config, keyRecommendSparkled)
-    const hideMainFleet = get(state.config, keyHideMainFleet)
-    const hideSatReqs = get(state.config, keyHideSatReqs)
-    const combinedFlag = combinedFlagSelector(state)
+    const {
+      recommendSparkled,
+      hideMainFleet,
+      hideSatReqs,
+    } = panelConfigSelector(state)
+    const isFleetCombined = isFleetCombinedSelector(state)
     const fleets = []
 
     const beginInd = hideMainFleet
-      ? (combinedFlag === 0 ? 1 : 2)
+      ? (!isFleetCombined ? 1 : 2)
       : 0
 
     for (let fleetId=beginInd; fleetId<4; ++fleetId) {
@@ -230,7 +229,7 @@ const reactClass = connect(
     const redux = reduxSelector(state)
     return {
       fleets,
-      combinedFlag,
+      isFleetCombined,
       redux,
       recommendSparkled,
       hideMainFleet,
