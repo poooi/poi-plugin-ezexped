@@ -92,15 +92,15 @@ const findChangingFleet = (curFleetsRep, nextFleetsRep) => {
 }
 
 // finds next available fleet to send for expeditions
-// returns 0 if all fleets are sent
-const findNextAvailableFleet = (fleetsExtra, combinedFlag, hideMainFleet) => {
+// returns `null` if all fleets are sent
+const findNextAvailableFleet = (fleetsExtra, combinedFlag) => {
   const beginInd = combinedFlag === 0 ? 1 : 2
   for (let i=beginInd; i<fleetsExtra.length; ++i)
     if (fleetsExtra[i].available)
       return fleetsExtra[i].index
   // move back to first fleet after all expeditions are sent
   // or do nothing at all if we are not supposed to keep track of main fleet
-  return hideMainFleet ? null : 0
+  return null
 }
 
 // detect whether we are sending a fleet

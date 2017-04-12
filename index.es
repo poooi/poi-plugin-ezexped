@@ -82,12 +82,22 @@ class EZExpedMain extends Component {
         this.props.fleets,
         nextProps.fleets,
         nextProps.combinedFlag)) {
-        onChangeFleet(
-          findNextAvailableFleet(
-            nextProps.fleets,
-            nextProps.combinedFlag,
-            nextProps.hideMainFleet),
-         "detected that we are sending a fleet out, switching to next one")
+        const nxt = findNextAvailableFleet(
+          nextProps.fleets,
+          nextProps.combinedFlag)
+
+        if (nxt !== null) {
+          onChangeFleet(
+            nxt,
+            "detected that we are sending a fleet out, switching to next one")
+        } else {
+          // nxt === null
+          if (! nextProps.hideMainFleet && nextProps.fleets.length > 0) {
+            onChangeFleet(
+              nextProps.fleets[0].index,
+              "all fleets are sent, switching to main fleet")
+          }
+        }
       }
     }
   }
@@ -116,7 +126,16 @@ class EZExpedMain extends Component {
           this.props.fleets,
           this.props.combinedFlag,
           this.props.hideMainFleet)
-        this.props.onChangeFleet(nxt, "User is at expedition screen")
+        if (nxt !== null) {
+          this.props.onChangeFleet(nxt, "User is at expedition screen")
+        } else {
+          // nxt === null
+          if (! this.props.hideMainFleet && this.props.fleets.length > 0) {
+            this.props.onChangeFleet(
+              this.props.fleets[0].index,
+              "at exped screen, no fleet available, switching to main")
+          }
+        }
       }
     }
   }

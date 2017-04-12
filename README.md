@@ -16,6 +16,11 @@ check expedition requirements and estimate expedition income accurately.
 
 - Allow hiding satisfied requirements.
 
+- Auto Switch interacts with "Hide Main Fleet" setting.
+
+    - If all possible fleets are sent out, with "Hide Main Fleet" on, Auto Switch won't try
+      to focus your main fleet.
+
 ### 0.3.1
 
 - Adding "All ships need to be sparkled" requirement for great success expeditions
@@ -65,6 +70,10 @@ Always show you the most related fleet depending on your in-game action:
 
 - Automatically switch to the fleet you are working on (changing fleet composition or ship equipments)
 - Automatically switch to the fleet you are about to send out for expedition, allows a last minute confirmation.
+
+Note that when all of your fleets are sent out, by default Auto Switch will try to focus your main fleet,
+this is intended behavior as your main fleet becomes the only fleet which you can change its composition.
+However, this behavior is disabled when "Hide Main Fleet" option is on.
 
 ### Colorful Fleet Indicator
 

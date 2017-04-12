@@ -3,6 +3,8 @@ import { expedNameToId } from './exped-info'
 
 const loadState = () => ({
   config: storage.load(),
+  // value is initialized to "null",
+  // but main UI should have enough info to figure this out
   fleetId: null,
 })
 
@@ -45,9 +47,12 @@ const mapDispatchToProps = dispatch => ({
     modifier,
   }),
   onChangeFleet: (fleetId,reason=null) => {
-    // TODO: not sure whether this should be specially dealt with.
-    if (fleetId === null)
+    if (fleetId === null) {
+      // we assume "onChangeFleet" is always called with a valid
+      // fleet index
+      console.error("fleetId should not be null")
       return
+    }
     dispatch({
       type: "@poi-plugin-ezexped@ChangeFleet",
       fleetId,
