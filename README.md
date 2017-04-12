@@ -7,6 +7,13 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### current
+
+- Allow hiding main fleet from tab, disabled by default.
+
+    "Main fleet" is usually your first fleet. But when you have a combined fleet,
+    your second fleet is also considered part of it.
+
 ### 0.3.1
 
 - Adding "All ships need to be sparkled" requirement for great success expeditions
