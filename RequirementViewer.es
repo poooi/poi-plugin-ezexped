@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 const { _, FontAwesome } = window
 
@@ -161,11 +161,16 @@ class RequirementListItem extends Component {
 
 // props:
 // - fleet: fleet representation
-// - expedId: target expedition id
-// - greatSuccess: whether aimming at great success
-// - recommendSparkled
-// - hideSatReqs
 class RequirementViewer extends Component {
+  static propTypes = {
+    // - target expedition id
+    expedId: PropTypes.number.isRequired,
+    // whether aimming at great success
+    greatSuccess: PropTypes.bool.isRequired,
+    hideSatReqs: PropTypes.bool.isRequired,
+    recommendSparkled: PropTypes.number.isRequired,
+    fleet: PropTypes.object.isRequired,
+  }
   shouldComponentUpdate(nextProps) {
     return this.props.expedId !== nextProps.expedId ||
       this.props.greatSuccess !== nextProps.greatSuccess ||
@@ -222,7 +227,6 @@ class RequirementViewer extends Component {
                   ok={res}
                   greatSuccess={true}
               />) }
-
         </ListGroup>
       </div>
     )
