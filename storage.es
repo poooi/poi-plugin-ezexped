@@ -36,6 +36,12 @@ const modifyStorage = modifier => {
   return newConfig
 }
 
+// moving settings in localStorage to config
+const doMigration = () => {
+  // TODO
+  
+}
+
 export {
   load,
   modifyStorage,

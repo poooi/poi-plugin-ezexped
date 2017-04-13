@@ -21,9 +21,15 @@ const valMap = obj => f => {
   return ret
 }
 
+// "const" function that simply ignores
+// its second list of arguments and returns the first argument.
+// the funny spell is due to the fact that "const" is a keyword.
+const konst = x => (...args) => x
+
 export {
   enumFromTo,
   valMap,
+  konst,
 
   warn,
   error,
