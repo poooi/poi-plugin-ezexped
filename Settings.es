@@ -1,28 +1,27 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import {
+  panelConfigSelector,
+} from './selectors'
 import {
   FormControl,
   Checkbox,
 } from 'react-bootstrap'
 
-import { ezconfigs } from './ezconfig'
+import { ezconfigs, ConfigDef } from './ezconfig'
 import { __ } from './tr'
 
-// props:
-// - value: current value of this setting
 class RecommendSparkledCountSetting extends Component {
   constructor(props) {
     super(props)
     this.configDef = ezconfigs.recommendSparkledCount
-    this.state = { value: this.configDef.value }
   }
   handleChange = (e) => {
     // seems like e.target.value somehow gets coerced to a string,
     // so we need to convert it back.
     const v = parseInt(e.target.value, 10)
-    const newVal = this.configDef.setValue(v)
-    this.setState( { value: newVal } )
+    this.configDef.setValue(v)
   }
-
   render() {
     return (
       <div style={{
@@ -33,7 +32,7 @@ class RecommendSparkledCountSetting extends Component {
         </div>
         <FormControl
             style={{flex: "1", marginLeft: "5px"}}
-            value={this.state.value}
+            value={this.configDef.getValue()}
             onChange={this.handleChange}
             componentClass="select">
           {
@@ -52,14 +51,14 @@ class RecommendSparkledCountSetting extends Component {
 // - label
 // - configDef
 class CheckboxSetting extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {value: this.props.configDef.getValue()}
+  static propTypes = {
+    label: PropTypes.node,
+    configDef: PropTypes.instanceOf(ConfigDef),
   }
-  handleChange = () => {
-    const newVal = this.props.configDef.modifyValue(x => !x)
-    this.setState({value: newVal})
-  }
+
+  handleChange = () =>
+    this.props.configDef.modifyValue(x => !x)
+
   render() {
     const { label } = this.props
     return (
@@ -71,14 +70,21 @@ class CheckboxSetting extends Component {
         </div>
         <Checkbox
             style={{flex: "1", marginLeft: "5px"}}
-            checked={this.state.value}
+            checked={this.props.configDef.getValue()}
             onChange={this.handleChange}>
         </Checkbox>
       </div>)
   }
 }
 
-const settingsClass = class EZExpedSettings extends Component {
+class EZExpedSettings extends Component {
+  static propTypes = {
+    recommendSparkled: PropTypes.number.isRequired,
+    allowPluginAutoSwitch: PropTypes.bool.isRequired,
+    hideMainFleet: PropTypes.bool.isRequired,
+    hideSatReqs: PropTypes.bool.isRequired,
+  }
+
   render() {
     return (
       <div style={{
@@ -101,6 +107,10 @@ const settingsClass = class EZExpedSettings extends Component {
       </div>)
   }
 }
+
+const settingsClass = connect(
+  panelConfigSelector
+)(EZExpedSettings)
 
 export {
   settingsClass,
