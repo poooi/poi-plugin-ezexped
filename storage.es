@@ -13,12 +13,13 @@
 
 const PLUGIN_KEY = "plugin-ezexped"
 
+import { ezconfigs } from './ezconfig'
+
 // generate a config with default values
 const defConfig = (() => {
   const selectedExpeds = new Array(4).fill(1)
   const gsFlags = new Array(40+1).fill(false)
-  const autoSwitch = true
-  return { selectedExpeds, gsFlags, autoSwitch }
+  return { selectedExpeds, gsFlags }
 })()
 
 const load = () =>
@@ -38,9 +39,23 @@ const modifyStorage = modifier => {
 
 // moving settings in localStorage to config
 const doMigration = () => {
+  const confRaw = localStorage[PLUGIN_KEY]
+  if (typeof confRaw === 'undefined')
+    return
+
+  const conf = JSON.parse( confRaw )
+
+  if (typeof conf.autoSwitch !== 'undefined') {
+    ezconfigs.fleetAutoSwitch.setValue(conf.autoSwitch)
+  }
+
   // TODO
-  
+
+  // delete localStorage[PLUGIN_KEY]
 }
+
+// want this to happen as soon as it loads
+doMigration()
 
 export {
   load,

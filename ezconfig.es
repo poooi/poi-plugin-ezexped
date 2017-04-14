@@ -84,6 +84,7 @@ defineConfig(
 defineBoolConfig("allowPluginAutoSwitch", false)
 defineBoolConfig("hideMainFleet", false)
 defineBoolConfig("hideSatReqs", false)
+defineBoolConfig("fleetAutoSwitch", true)
 
 const ezconfigs = Object.freeze( configs )
 

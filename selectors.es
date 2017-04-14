@@ -84,6 +84,7 @@ const panelConfigSelector =
       recommendSparkled: ezconfigs.recommendSparkledCount.getValue(),
       hideMainFleet: ezconfigs.hideMainFleet.getValue(),
       hideSatReqs: ezconfigs.hideSatReqs.getValue(),
+      fleetAutoSwitch: ezconfigs.fleetAutoSwitch.getValue(),
     }))
 
 export {
