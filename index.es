@@ -19,6 +19,7 @@ import {
 } from 'react-bootstrap'
 
 import { get } from 'lodash'
+import * as ezconfig from './ezconfig'
 
 import {
   findChangingFleet,
