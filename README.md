@@ -7,6 +7,12 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### current
+
+- User data migration from localStorage to poi config.
+
+    Nothing should have been changed on the surface.
+
 ### 0.4.0
 
 - Allow hiding main fleet from tab, disabled by default.

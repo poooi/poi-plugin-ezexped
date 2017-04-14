@@ -77,8 +77,8 @@ const isFleetCombinedSelector =
 const reduxSelector =
   extensionSelectorFactory('poi-plugin-ezexped')
 
-// TODO: will be just "configSelector" after things in localStorage are migrated
-const panelConfigSelector =
+
+const ezconfigSelector =
   createSelector(
     configSelector,
     config => ({
@@ -87,11 +87,13 @@ const panelConfigSelector =
       hideMainFleet: ezconfigs.hideMainFleet.getValue(),
       hideSatReqs: ezconfigs.hideSatReqs.getValue(),
       fleetAutoSwitch: ezconfigs.fleetAutoSwitch.getValue(),
+      selectedExpeds: ezconfigs.selectedExpeds.getValue(),
+      gsFlags: ezconfigs.gsFlags.getValue(),
     }))
 
 export {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
-  panelConfigSelector,
+  ezconfigSelector,
   reduxSelector,
 }

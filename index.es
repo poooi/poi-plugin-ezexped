@@ -7,7 +7,7 @@ import {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
   reduxSelector,
-  panelConfigSelector,
+  ezconfigSelector,
 } from './selectors'
 import { FleetPicker } from './FleetPicker'
 import { ExpeditionViewer } from './ExpeditionViewer'
@@ -31,13 +31,10 @@ import {
   settingsClass,
 } from './Settings'
 
-/*
+import { modifyArray, not, konst } from './utils'
 
-   TODO (non-urgent)
-
-   - utilize React PropTypes
-
- */
+import { nop } from './storage'
+nop()
 
 class EZExpedMain extends Component {
   constructor() {
@@ -138,18 +135,15 @@ class EZExpedMain extends Component {
   selectExped = newExpedId => {
     const fleetId = this.props.redux.fleetId
     this.setState({ expedGridExpanded: false })
-    this.props.onModifyConfig( config => {
-      const newConfig = { ... config }
-      newConfig.selectedExpeds = [ ... config.selectedExpeds ]
-      newConfig.selectedExpeds[fleetId] = newExpedId
-      return newConfig
-    })
+    ezconfigs.selectedExpeds.modifyValue(
+      modifyArray(fleetId,konst(newExpedId)))
   }
 
   render() {
-    const { config, fleetId } = this.props.redux
-    const expedId = config.selectedExpeds[fleetId]
-    const gsFlag = config.gsFlags[expedId]
+    const { fleetId } = this.props.redux
+    const { selectedExpeds, gsFlags } = this.props
+    const expedId = selectedExpeds[fleetId]
+    const gsFlag = gsFlags[expedId]
     const fleet = this.props.fleets.find( fleet => fleet.index === fleetId ) || null
     return (
       <div className="poi-plugin-ezexped">
@@ -158,12 +152,13 @@ class EZExpedMain extends Component {
           <FleetPicker
               fleets={this.props.fleets}
               fleetId={fleetId}
-              config={config}
+              selectedExpeds={selectedExpeds}
+              gsFlags={gsFlags}
               isFleetCombined={this.props.isFleetCombined}
               autoSwitch={this.props.fleetAutoSwitch}
               recommendSparkled={this.props.recommendSparkled}
               onToggleAutoSwitch={() =>
-                ezconfigs.fleetAutoSwitch.modifyValue(x => !x)}
+                ezconfigs.fleetAutoSwitch.modifyValue(not)}
               onSelectFleet={this.props.onChangeFleet} />
           { fleet !== null && (
               <ExpeditionViewer
@@ -173,12 +168,8 @@ class EZExpedMain extends Component {
                   onClickExped={() =>
                     this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
                   onClickGS={() =>
-                    this.props.onModifyConfig( config => {
-                      const newConfig = { ... config }
-                      newConfig.gsFlags = [ ... config.gsFlags ]
-                      newConfig.gsFlags[expedId] = !config.gsFlags[expedId]
-                      return newConfig
-                    })} />) }
+                    ezconfigs.gsFlags.modifyValue(
+                      modifyArray(expedId,not))} />) }
           { fleet !== null && (
               <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
                 <ExpeditionTable
@@ -202,12 +193,8 @@ class EZExpedMain extends Component {
 
 const reactClass = connect(
   (state, props) => {
-    const {
-      recommendSparkled,
-      hideMainFleet,
-      hideSatReqs,
-      fleetAutoSwitch,
-    } = panelConfigSelector(state)
+    const config = ezconfigSelector(state)
+    const { hideMainFleet } = config
     const isFleetCombined = isFleetCombinedSelector(state)
     const fleets = []
 
@@ -226,10 +213,7 @@ const reactClass = connect(
       fleets,
       isFleetCombined,
       redux,
-      recommendSparkled,
-      hideMainFleet,
-      hideSatReqs,
-      fleetAutoSwitch,
+      ... config,
     }
   },
   mapDispatchToProps)(EZExpedMain)
