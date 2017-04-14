@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {
-  panelConfigSelector,
+  ezconfigSelector,
 } from './selectors'
 import {
   FormControl,
@@ -10,6 +10,7 @@ import {
 
 import { ezconfigs, ConfigDef } from './ezconfig'
 import { __ } from './tr'
+import { not } from './utils'
 
 class RecommendSparkledCountSetting extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class CheckboxSetting extends Component {
   }
 
   handleChange = () =>
-    this.props.configDef.modifyValue(x => !x)
+    this.props.configDef.modifyValue(not)
 
   render() {
     const { label } = this.props
@@ -108,9 +109,7 @@ class EZExpedSettings extends Component {
   }
 }
 
-const settingsClass = connect(
-  panelConfigSelector
-)(EZExpedSettings)
+const settingsClass = connect(ezconfigSelector)(EZExpedSettings)
 
 export {
   settingsClass,

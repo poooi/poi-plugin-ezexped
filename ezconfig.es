@@ -28,7 +28,10 @@ class ConfigDef {
   }
 
   getValue() {
-    return config.get(this.path,this.getDefault())
+    const ret = config.get(this.path)
+    return typeof ret === "undefined"
+      ? this.getDefault()
+      : ret
   }
 
   // it seems "config.set" is asynchronous. so please
@@ -85,6 +88,14 @@ defineBoolConfig("allowPluginAutoSwitch", false)
 defineBoolConfig("hideMainFleet", false)
 defineBoolConfig("hideSatReqs", false)
 defineBoolConfig("fleetAutoSwitch", true)
+
+defineConfig(
+  "selectedExpeds",
+  Object.freeze(new Array(4).fill(1)))
+
+defineConfig(
+  "gsFlags",
+  Object.freeze(new Array(40+1).fill(false)))
 
 const ezconfigs = Object.freeze( configs )
 

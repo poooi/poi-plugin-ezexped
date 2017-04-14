@@ -14,7 +14,8 @@ import { __ } from './tr'
 // props:
 // - fleetId: current selected fleet id
 // - fleets: array of fleet representation
-// - config: for looking up fleetId => expedId => greatSuccess
+// - selectedExpeds
+// - gsFlags
 // - onSelectFleet: callback when a new fleet is selected
 //   this callback should accept a fleet id
 // - autoSwitch
@@ -44,8 +45,8 @@ class FleetPicker extends Component {
     // - not available: always blue
     const mkButton = fleet => {
       const fleetId = fleet.index
-      const expedId = this.props.config.selectedExpeds[fleetId]
-      const greatSuccess = this.props.config.gsFlags[expedId]
+      const expedId = this.props.selectedExpeds[fleetId]
+      const greatSuccess = this.props.gsFlags[expedId]
 
       const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
 

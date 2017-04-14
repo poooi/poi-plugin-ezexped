@@ -15,28 +15,7 @@ const PLUGIN_KEY = "plugin-ezexped"
 
 import { ezconfigs } from './ezconfig'
 
-// generate a config with default values
-const defConfig = (() => {
-  const selectedExpeds = new Array(4).fill(1)
-  const gsFlags = new Array(40+1).fill(false)
-  return { selectedExpeds, gsFlags }
-})()
-
-const load = () =>
-  typeof localStorage[PLUGIN_KEY] === 'undefined'
-    ? defConfig
-    : JSON.parse( localStorage[PLUGIN_KEY] )
-
-// take a config modifier to modify the config stored on localStorage.
-// returns the new config.
-// note that the modifier should return a new config different than
-// what's passed to it as an argument.
-const modifyStorage = modifier => {
-  const newConfig = modifier( load() )
-  localStorage[PLUGIN_KEY] = JSON.stringify( newConfig )
-  return newConfig
-}
-
+// TODO: remove migration code after few releases
 // moving settings in localStorage to config
 const doMigration = () => {
   const confRaw = localStorage[PLUGIN_KEY]
@@ -45,19 +24,17 @@ const doMigration = () => {
 
   const conf = JSON.parse( confRaw )
 
-  if (typeof conf.autoSwitch !== 'undefined') {
-    ezconfigs.fleetAutoSwitch.setValue(conf.autoSwitch)
-  }
+  ezconfigs.fleetAutoSwitch.setValue(conf.autoSwitch)
 
-  // TODO
+  ezconfigs.selectedExpeds.setValue(conf.selectedExpeds)
+  ezconfigs.gsFlags.setValue(conf.gsFlags)
 
-  // delete localStorage[PLUGIN_KEY]
+  delete localStorage[PLUGIN_KEY]
 }
 
 // want this to happen as soon as it loads
 doMigration()
 
-export {
-  load,
-  modifyStorage,
-}
+// for keeping export list not empty,
+// just in case that dead code elimination thinks itself is smart
+export const nop = () => null
