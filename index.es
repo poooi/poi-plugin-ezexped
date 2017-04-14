@@ -18,8 +18,7 @@ import {
   Panel,
 } from 'react-bootstrap'
 
-import { get } from 'lodash'
-import * as ezconfig from './ezconfig'
+import { ezconfigs } from './ezconfig'
 
 import {
   findChangingFleet,
@@ -29,11 +28,8 @@ import {
 
 import { reducer, mapDispatchToProps } from './reducer'
 import {
-  keyAllowSwitch,
   settingsClass,
 } from './Settings'
-
-const { getStore } = window
 
 /*
 
@@ -242,7 +238,8 @@ const reactClass = connect(
 const switchPluginPath = [
   {
     path: "/kcsapi/api_get_member/mission",
-    valid: () => getStore( "config." + keyAllowSwitch ),
+    valid: () =>
+      ezconfigs.allowPluginAutoSwitch.getValue(),
   },
 ]
 

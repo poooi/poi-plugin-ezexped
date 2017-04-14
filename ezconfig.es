@@ -7,7 +7,7 @@ const prodFlag = env.NODE_ENV === "production"
 // path relative to store.config
 const confPath = "plugin.poi-plugin-ezexped"
 
-const configDefs = {}
+const configs = {}
 
 // invokes the real validator only when it's not production mode
 const configDefDoValidate = inst =>
@@ -24,28 +24,29 @@ class ConfigDef {
     this.getDefault = getDefault
     this.validate = validate
     this.doValidate = configDefDoValidate(this)
+    this.path = [confPath,this.name].join(".")
   }
 
-  get path() {
-    return [confPath,this.name].join(".")
-  }
-
-  get value() {
+  getValue() {
     return config.get(this.path,this.getDefault())
   }
 
-  set value(newVal) {
+  // it seems "config.set" is asynchronous. so please
+  // use whatever returns from setValue(?), which is the new value
+  // instead of trying to call "getValue()"
+  setValue(newVal) {
     const vResult = this.doValidate(newVal)
     if (vResult !== null) {
       console.error(vResult)
       return
     }
-    return config.set(this.path,newVal)
+    config.set(this.path,newVal)
+    return newVal
   }
 
   modifyValue(f) {
-    const v = this.value
-    this.value = f(v)
+    const newV = f(this.getValue())
+    return this.setValue(newV)
   }
 }
 
@@ -60,7 +61,7 @@ const defineConfig = (name, defValueOrFunc, validate = konst(null)) => {
       ? defValueOrFunc
       : konst(defValueOrFunc),
     validate)
-  configDefs[name] = configDef
+  configs[name] = configDef
 }
 
 const defineBoolConfig = (name, defValue) =>
@@ -84,9 +85,9 @@ defineBoolConfig("allowPluginAutoSwitch", false)
 defineBoolConfig("hideMainFleet", false)
 defineBoolConfig("hideSatReqs", false)
 
-// TODO
-// - wrap around "config", replace all use sites of it
+const ezconfigs = Object.freeze( configs )
 
 export {
-  confPath,
+  ezconfigs,
+  ConfigDef,
 }

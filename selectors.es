@@ -8,14 +8,7 @@ import {
   configSelector,
 } from 'views/utils/selectors'
 
-
-import {
-  keyRecommendSparkled,
-  keyHideMainFleet,
-  keyHideSatReqs,
-} from './Settings'
-
-import { get } from 'lodash'
+import { ezconfigs } from './ezconfig'
 
 /*
 
@@ -88,9 +81,9 @@ const panelConfigSelector =
   createSelector(
     configSelector,
     config => ({
-      recommendSparkled: get(config,keyRecommendSparkled),
-      hideMainFleet: get(config,keyHideMainFleet),
-      hideSatReqs: get(config,keyHideSatReqs),
+      recommendSparkled: ezconfigs.recommendSparkledCount.getValue(),
+      hideMainFleet: ezconfigs.hideMainFleet.getValue(),
+      hideSatReqs: ezconfigs.hideSatReqs.getValue(),
     }))
 
 export {
