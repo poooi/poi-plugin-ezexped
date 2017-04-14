@@ -4,25 +4,23 @@ import {
   Checkbox,
 } from 'react-bootstrap'
 
-import { connect } from 'react-redux'
-import { get } from 'lodash'
-const { config } = window
+import { ezconfigs } from './ezconfig'
 import { __ } from './tr'
-
-const confPath = "plugin.poi-plugin-ezexped."
-const keyRecommendSparkled = confPath + "recommendSparkledCount"
-const keyAllowSwitch = confPath + "allowPluginAutoSwitch"
-const keyHideMainFleet = confPath + "hideMainFleet"
-const keyHideSatReqs = confPath + "hideSatReqs"
 
 // props:
 // - value: current value of this setting
 class RecommendSparkledCountSetting extends Component {
+  constructor(props) {
+    super(props)
+    this.configDef = ezconfigs.recommendSparkledCount
+    this.state = { value: this.configDef.value }
+  }
   handleChange = (e) => {
     // seems like e.target.value somehow gets coerced to a string,
     // so we need to convert it back.
     const v = parseInt(e.target.value, 10)
-    config.set(keyRecommendSparkled, v)
+    const newVal = this.configDef.setValue(v)
+    this.setState( { value: newVal } )
   }
 
   render() {
@@ -35,7 +33,7 @@ class RecommendSparkledCountSetting extends Component {
         </div>
         <FormControl
             style={{flex: "1", marginLeft: "5px"}}
-            value={this.props.value}
+            value={this.state.value}
             onChange={this.handleChange}
             componentClass="select">
           {
@@ -52,17 +50,14 @@ class RecommendSparkledCountSetting extends Component {
 
 // props:
 // - label
-// - path
-// - (optional) defVal
+// - configDef
 class CheckboxSetting extends Component {
   constructor(props) {
     super(props)
-    const { path, defVal } = this.props
-    this.state = {value: config.get(path,defVal)}
+    this.state = {value: this.props.configDef.getValue()}
   }
   handleChange = () => {
-    const newVal = !this.state.value
-    config.set(this.props.path, newVal)
+    const newVal = this.props.configDef.modifyValue(x => !x)
     this.setState({value: newVal})
   }
   render() {
@@ -83,47 +78,30 @@ class CheckboxSetting extends Component {
   }
 }
 
-const settingsClass = connect (() => {
-  return (state, props) => ({
-    recommendSparkledCount: get(
-      state.config,
-      keyRecommendSparkled, 4),
-  })
-})(class EZExpedSettings extends Component {
-  handleConfigChange = (path, defVal=false) => () => {
-    const old = config.get(path,defVal)
-    config.set(path, !old)
-  }
+const settingsClass = class EZExpedSettings extends Component {
   render() {
     return (
       <div style={{
         display:"flex",
         flexDirection:"column",
         marginBottom: "20px"}}>
-        <RecommendSparkledCountSetting
-            value={this.props.recommendSparkledCount} />
+        <RecommendSparkledCountSetting />
         <CheckboxSetting
             label={__("AllowPluginAutoSwitch")}
-            defVal={false}
-            path={keyAllowSwitch}
+            configDef={ezconfigs.allowPluginAutoSwitch}
         />
         <CheckboxSetting
             label={__("HideMainFleet")}
-            defVal={false}
-            path={keyHideMainFleet}
+            configDef={ezconfigs.hideMainFleet}
         />
         <CheckboxSetting
             label={__("HideSatReqs")}
-            defVal={false}
-            path={keyHideSatReqs}
+            configDef={ezconfigs.hideSatReqs}
         />
       </div>)
-  }})
+  }
+}
 
 export {
-  keyRecommendSparkled,
-  keyAllowSwitch,
-  keyHideMainFleet,
-  keyHideSatReqs,
   settingsClass,
 }
