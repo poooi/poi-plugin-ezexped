@@ -31,9 +31,9 @@ const konst = x => (...args) => x
 // if "index" is out of range, "xs" itself is returned.
 const modifyArray = (index, f) => {
   if (typeof index !== "number")
-    console.error("index is not a number")
+    error("index is not a number")
   if (typeof f !== "function")
-    console.error("modifier is not a function")
+    error("modifier is not a function")
   return xs => {
     if (index < 0 || index >= xs.length)
       return xs
