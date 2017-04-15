@@ -7,11 +7,15 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### current
+### 0.4.1
 
 - User data migration from localStorage to poi config.
 
     Nothing should have been changed on the surface.
+
+- Improved fleet Auto Switch logic
+
+    Removing equipments from a fleet member triggers auto switch.
 
 ### 0.4.0
 

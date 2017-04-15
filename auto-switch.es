@@ -41,6 +41,12 @@ const findChangingFleet = (curFleets, nextFleets) => {
   // but two fleets are changing, which is impossible to detect when only master id
   // is taken into account (we will mistakenly think it's only one changing fleet)
 
+  // note that there's still one missing case:
+  // we cannot distingush between removing an equipment from a fleet member
+  // and depriving an equipment from a fleet member to a ship which is not in any fleet.
+  // but I don't think we need to fix this, as a non-fleet member ship cannot be tracked
+  // in our plugin anyways
+
   // so the whole algorithm looks like so:
   // - first we transform both array of fleet representations,
   //   leaving only ships' roster ids and those of their equipments'
