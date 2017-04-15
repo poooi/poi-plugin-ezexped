@@ -26,34 +26,73 @@ const _ = require('lodash')
 
 // some heuristic to determine which fleet we are changing.
 // returns a number: 0,1,2,3 to indicate the changing fleet
-// otherwise "false" if there is no change or we cannot determine this
+// otherwise "null" if there is no change or we cannot determine this
+// note that here we don't need to pass "isFleetCombined", nor "hideMainFleet",
+// as we are just dealing the list of fleets visible to use
+// (main fleets become invisible to this plugin when "hideMainFleet" is set)
+// also note that "curFleets" and "nextFleet" should be of the same length
 const findChangingFleet = (curFleets, nextFleets) => {
-  // transform the whole array of fleet ship representation
-  // so that we only test equality based on info that we are interested in
+  // first of all, the fleet changing detection should only take into account
+  // rosterId of ships and equipments, this avoids all problems dealing with
+  // ship / equipment levelup.
+  // and this also solves the problem mentioned in #2: first, it's impossible
+  // to replace one equipment with itself. second, taking into account rosterIds
+  // allows us to have a better picture of fleet statuses: it's not just one fleet,
+  // but two fleets are changing, which is impossible to detect when only master id
+  // is taken into account (we will mistakenly think it's only one changing fleet)
 
-  // we use roster id instead of master id + level approach
-  // otherwise even a levelup would trigger fleet focus change
-  // upon returning
-  const transformFleets = fleets => fleets.map( fleet => fleet.map(
-    ({equips,rstId}) => ({equips,rstId}) ))
+  // so the whole algorithm looks like so:
+  // - first we transform both array of fleet representations,
+  //   leaving only ships' roster ids and those of their equipments'
+  // - count # of changing fleets (i.e. "changingCount")
+  //   - changingCount === 0: no change at all
+  //   - changingCount === 1: pick the changing one
+  //   - changingCount > 1
+  //     - now that multiple fleets are changing, the chances are
+  //       - we are depriving an equipment from one fleet to another
+  //       - we are applying a preset composition, which moves ships from
+  //         other fleets to the current one we are working on.
+  //         (despite that this one sounds reasonable, the current game mechanism
+  //         does not allow you to "deprive" ships from another fleets to the current one,
+  //         but it doesn't hurt taking this into account)
+  //     - in this case we take the first "non-decreasing" fleet as the changing fleet.
+  //       - "non-decreasing" means a fleet does not decrease in terms of # of ships,
+  //         nor does it decrease in terms of # of equipments
+  //       - we are intentionally not using the concept of "increasing",
+  //         that does not detect swapping equipments nor depriving equipments.
 
-  const curFleetsSimple = transformFleets( curFleets.map( x => x.ships ) )
-  const nextFleetsSimple = transformFleets( nextFleets.map( x => x.ships ) )
+  const transformFleetRep = fleet =>
+    fleet.ships.map( ship => {
+      const { rstId, equips } = ship
+      const simpleEquips = equips.map(({rstId}) => ({rstId}))
+      return { rstId, equips: simpleEquips }
+    })
 
-  // compare fleet one-by-one, and determine which one is the one
-  // that we are operating:
-  // if there's only one changing fleet, that should be it.
-  // otherwise, if there is more than one changing fleet,
-  // take the first one that "increases" somehow: either it has an increasing number
-  // of ships or has an increasing number of equipments.
-  const compared = curFleetsSimple.map( (fleet,ind) => {
-    const nextFleet = nextFleetsSimple[ind]
+  // "simplifies" the array of fleet representation to show
+  // only things the algorithm is interested in
+  const curShips = curFleets.map(transformFleetRep)
+  const nextShips = nextFleets.map(transformFleetRep)
+
+  // one-by-one comparison, "sameFleet[i]" shows
+  // whether "curShips[i]" and "nextShips[i]" are considered equal
+  const sameFleet = curShips.map( (fleet,ind) => {
+    const nextFleet = nextShips[ind]
     return _.isEqual(fleet,nextFleet)
   })
 
-  const changingCount = compared.filter(x => !x).length
+  const changingCount = sameFleet.filter(x => !x).length
 
-  // the detection was based on "increasing", which is less accurate (see issue #2)
+  if (changingCount === 0)
+    return null
+
+  // at this point: changingCount > 0
+  if (changingCount === 1) {
+    for (let i=0; i<sameFleet.length; ++i)
+      if (! sameFleet[i])
+        return curFleets[i].index
+  }
+
+  // at this point: changingCount > 1
   const isNotDecreasing = (beforeFleet,afterFleet) => {
     if (beforeFleet.length !== afterFleet.length)
       return beforeFleet.length < afterFleet.length
@@ -62,10 +101,6 @@ const findChangingFleet = (curFleets, nextFleets) => {
     return eqListBefore.length <= eqListAfter.length
   }
 
-  if (changingCount === 0)
-    return false
-
-  // changingCount >= 1
   // one or more fleets are updated
   // no matter how many fleet configurations have been changed,
   // we always pick those that appear different
@@ -75,42 +110,54 @@ const findChangingFleet = (curFleets, nextFleets) => {
   // - the number of ships and the total number of equipments
   //   are not decreasing
   // then this is the changing fleet that we are looking for.
-  for (let i=0; i<compared.length;++i) {
-    if (compared[i])
+  for (let i=0; i<sameFleet.length;++i) {
+    if (sameFleet[i])
       continue
 
-    const fleet = curFleets[i]
-    const nextFleet = nextFleets[i]
-    if (isNotDecreasing(fleet.ships,nextFleet.ships)) {
+    const fleet = curShips[i]
+    const nextFleet = nextShips[i]
+    if (isNotDecreasing(fleet,nextFleet)) {
       return curFleets[i].index
     }
   }
 
-  return false
+  return null
 }
 
 // finds next available fleet to send for expeditions
 // returns `null` if all fleets are sent
+// Note: main fleets are always skipped: they cannot be send to expeditions.
+// because of this reason, we still need to check "beginFleetIndex"
+// regardless of "hideMainFleet" setting
 const findNextAvailableFleet = (fleetsExtra, isFleetCombined) => {
-  const beginInd = !isFleetCombined ? 1 : 2
-  for (let i=beginInd; i<fleetsExtra.length; ++i)
-    if (fleetsExtra[i].available)
-      return fleetsExtra[i].index
+  const beginFleetIndex = !isFleetCombined ? 1 : 2
+  for (let i=0; i<fleetsExtra.length; ++i) {
+    const fleet = fleetsExtra[i]
+    if (fleet.index < beginFleetIndex)
+      continue
+    if (fleet.available)
+      return fleet.index
+  }
   // move back to first fleet after all expeditions are sent
   // or do nothing at all if we are not supposed to keep track of main fleet
   return null
 }
 
 // detect whether we are sending a fleet
+// see "Note" of "findNextAvailableFleet"
+// also note that curFleets and nextFleets should be of the same length
 const isSendingFleetToExped = (curFleets, nextFleets, isFleetCombined) => {
-  const curFleetsAva = curFleets.map( x => x.available )
-  const nextFleetsAva = nextFleets.map( x => x.available )
-
   // find a place "i" where an available fleet becoming unavailable next moment
-  const beginInd = !isFleetCombined ? 1 : 2
-  for (let i = beginInd; i<curFleetsAva.length; ++i)
-    if (curFleetsAva[i] && !nextFleetsAva[i])
+  const beginFleetIndex = !isFleetCombined ? 1 : 2
+  for (let i = 0; i<curFleets.length; ++i) {
+    const curFleet = curFleets[i]
+    if (curFleet.index < beginFleetIndex)
+      continue
+
+    const nextFleet = nextFleets[i]
+    if (curFleet.available && !nextFleet.available)
       return true
+  }
   return false
 }
 

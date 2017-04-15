@@ -64,7 +64,7 @@ class EZExpedMain extends Component {
       const changingFleetInd = findChangingFleet(
         this.props.fleets,
         nextProps.fleets)
-      if (changingFleetInd !== false) {
+      if (changingFleetInd !== null) {
         onChangeFleet(
           changingFleetInd,
           "detected changing fleet")
