@@ -7,6 +7,17 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### Current
+
+- Remove data migration code.
+
+    - If you are updating from 0.4.1 or 0.4.2, nothing should have been changed
+    - Otherwise some settings might be reset to their detaults.
+
+### 0.4.2
+
+- Compatibility, no behavior change.
+
 ### 0.4.1
 
 - User data migration from localStorage to poi config.

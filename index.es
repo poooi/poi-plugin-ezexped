@@ -33,9 +33,6 @@ import {
 
 import { modifyArray, not, konst } from './utils'
 
-import { nop } from './storage'
-nop()
-
 class EZExpedMain extends Component {
   constructor() {
     super()
