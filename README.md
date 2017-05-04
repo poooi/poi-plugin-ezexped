@@ -9,6 +9,8 @@ check expedition requirements and estimate expedition income accurately.
 
 ### Current
 
+- Right clicking on a fleet button will cause main UI to switch to that particular fleet.
+
 - Remove data migration code.
 
     - If you are updating from 0.4.1 or 0.4.2, nothing should have been changed

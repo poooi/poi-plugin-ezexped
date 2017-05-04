@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap'
 
 import { getExpedReqs, checkAllReq, collapseResults } from './requirement'
-const { FontAwesome } = window
+const { FontAwesome, dispatch } = window
 
 import { __ } from './tr'
 
@@ -68,6 +68,15 @@ class FleetPicker extends Component {
         : "danger"
 
       const focused = this.props.fleetId === fleetId
+      const handleFocusFleetInMainUI = () => {
+        dispatch({
+          type: '@@TabSwitch',
+          tabInfo: {
+            activeMainTab: 'shipView',
+            activeFleetId: fleetId,
+          },
+        })
+      }
 
       return (<Button
           bsStyle={bsStyle}
@@ -77,6 +86,7 @@ class FleetPicker extends Component {
             whiteSpace: "nowrap",
             width: "75px", overflow: "hidden"}}
           active={focused}
+          onContextMenu={handleFocusFleetInMainUI}
           onClick={() => this.props.onSelectFleet(fleetId)}>
         <div style={{textOverflow: "ellipsis", overflow:"hidden"}} >
           {fleet.name}
