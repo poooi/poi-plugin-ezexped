@@ -7,7 +7,7 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### Current
+### 0.5.0
 
 - Remove "Allow switching to this plugin automatically"
 
