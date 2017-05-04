@@ -9,10 +9,10 @@ import {
   reduxSelector,
   ezconfigSelector,
 } from './selectors'
-import { FleetPicker } from './FleetPicker'
-import { ExpeditionViewer } from './ExpeditionViewer'
-import { ExpeditionTable } from './ExpeditionTable'
-import { RequirementViewer } from './RequirementViewer'
+import { FleetPicker } from './fleet-picker'
+import { ExpeditionViewer } from './expedition-viewer'
+import { ExpeditionTable } from './expedition-table'
+import { RequirementViewer } from './requirement-viewer'
 
 import {
   Panel,
@@ -29,7 +29,7 @@ import {
 import { reducer, mapDispatchToProps } from './reducer'
 import {
   settingsClass,
-} from './Settings'
+} from './settings'
 
 import { modifyArray, not, konst } from './utils'
 
