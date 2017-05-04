@@ -221,6 +221,11 @@ const switchPluginPath = [
     valid: () =>
       ezconfigs.allowPluginAutoSwitch.getValue(),
   },
+  {
+    path: "/kcsapi/api_req_mission/result",
+    valid: () =>
+      ezconfigs.allowPluginAutoSwitch.getValue(),
+  },
 ]
 
 export {

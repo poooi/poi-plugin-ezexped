@@ -9,6 +9,11 @@ check expedition requirements and estimate expedition income accurately.
 
 ### Current
 
+- Handle expedition result screen action
+
+    - Switch to this plugin when user is on expedition result screen
+    - Also focus the related fleet tab if fleet auto-switch is on
+
 - Right clicking on a fleet button will cause main UI to switch to that particular fleet.
 
 - Remove data migration code.

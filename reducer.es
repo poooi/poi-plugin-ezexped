@@ -17,15 +17,26 @@ const reducer = (state = initState, action) => {
   }
 
   // only record successful expeditions
-  if (action.type === "@@Response/kcsapi/api_req_mission/result"
-      && action.body.api_clear_result !== 0) {
+  if (action.type === "@@Response/kcsapi/api_req_mission/result") {
     const expedId = expedNameToId( action.body.api_quest_name )
     const fleetId = parseInt(action.postBody.api_deck_id, 10)-1
-    ezconfigs.selectedExpeds.modifyValue(
-      modifyArray(fleetId,konst(expedId)))
+
+    if (action.body.api_clear_result !== 0) {
+      ezconfigs.selectedExpeds.modifyValue(
+        modifyArray(fleetId,konst(expedId)))
+    }
+
+    // switch to the corresponding fleet on expedition result screen
+    // if "fleetAutoSwitch" is on
+    if (ezconfigs.fleetAutoSwitch.getValue()) {
+      return {
+        ...state,
+        fleetId,
+      }
+    }
+
     return state
   }
-
   return state
 }
 
