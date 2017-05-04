@@ -26,6 +26,10 @@ const valMap = obj => f => {
 // the funny spell is due to the fact that "const" is a keyword.
 const konst = x => (...args) => x
 
+// usage: "ignore(a,b,c)" to fool eslint to believe that "a", "b" and "c"
+// are somehow being used, it serves as an explicit annotation to say that they actually don't
+const ignore = konst
+
 // "modifyArray(index,f)(xs)" keeps "xs" intact and returns a new array
 // whose element on "index" is modified by feeding original value to "f".
 // if "index" is out of range, "xs" itself is returned.
@@ -50,6 +54,7 @@ export {
   enumFromTo,
   valMap,
   konst,
+  ignore,
   not,
   modifyArray,
 

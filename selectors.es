@@ -83,7 +83,6 @@ const ezconfigSelector =
     configSelector,
     config => ({
       recommendSparkled: ezconfigs.recommendSparkledCount.getValue(),
-      allowPluginAutoSwitch: ezconfigs.allowPluginAutoSwitch.getValue(),
       hideMainFleet: ezconfigs.hideMainFleet.getValue(),
       hideSatReqs: ezconfigs.hideSatReqs.getValue(),
       fleetAutoSwitch: ezconfigs.fleetAutoSwitch.getValue(),

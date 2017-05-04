@@ -218,13 +218,11 @@ const reactClass = connect(
 const switchPluginPath = [
   {
     path: "/kcsapi/api_get_member/mission",
-    valid: () =>
-      ezconfigs.allowPluginAutoSwitch.getValue(),
+    valid: konst(true),
   },
   {
     path: "/kcsapi/api_req_mission/result",
-    valid: () =>
-      ezconfigs.allowPluginAutoSwitch.getValue(),
+    valid: konst(true),
   },
 ]
 

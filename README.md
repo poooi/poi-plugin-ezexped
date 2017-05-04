@@ -9,6 +9,10 @@ check expedition requirements and estimate expedition income accurately.
 
 ### Current
 
+- Remove "Allow switching to this plugin automatically"
+
+    - This setting is now handled by main program so we no longer need a redundant one for exactly same purpose.
+
 - Handle expedition result screen action
 
     - Switch to this plugin when user is on expedition result screen

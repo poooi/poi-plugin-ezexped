@@ -81,7 +81,6 @@ class CheckboxSetting extends Component {
 class EZExpedSettings extends Component {
   static propTypes = {
     recommendSparkled: PropTypes.number.isRequired,
-    allowPluginAutoSwitch: PropTypes.bool.isRequired,
     hideMainFleet: PropTypes.bool.isRequired,
     hideSatReqs: PropTypes.bool.isRequired,
   }
@@ -93,10 +92,6 @@ class EZExpedSettings extends Component {
         flexDirection:"column",
         marginBottom: "20px"}}>
         <RecommendSparkledCountSetting />
-        <CheckboxSetting
-            label={__("AllowPluginAutoSwitch")}
-            configDef={ezconfigs.allowPluginAutoSwitch}
-        />
         <CheckboxSetting
             label={__("HideMainFleet")}
             configDef={ezconfigs.hideMainFleet}
