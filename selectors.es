@@ -77,7 +77,6 @@ const isFleetCombinedSelector =
 const reduxSelector =
   extensionSelectorFactory('poi-plugin-ezexped')
 
-
 const ezconfigSelector =
   createSelector(
     configSelector,
