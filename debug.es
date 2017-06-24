@@ -5,22 +5,22 @@ const debug = true
 
 const dbgHandler = dbg.extra('pluginEZExped')
 
-const assert = function () {
+function assert(...args) {
   if (!debug) return
 
   if (!dbgHandler.isEnabled())
     dbgHandler.enable()
 
-  return dbgHandler.assert.apply(this, arguments)
+  return dbgHandler.assert.call(this, args)
 }
 
-const log = function () {
+function log(...args) {
   if (!debug) return
 
   if (!dbgHandler.isEnabled())
     dbgHandler.enable()
 
-  return dbgHandler.log.apply(this, arguments)
+  return dbgHandler.log.call(this, args)
 }
 
 export {

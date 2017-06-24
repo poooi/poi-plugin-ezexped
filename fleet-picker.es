@@ -7,9 +7,9 @@ import {
 } from 'react-bootstrap'
 
 import { getExpedReqs, checkAllReq, collapseResults } from './requirement'
-const { FontAwesome, dispatch } = window
-
 import { __ } from './tr'
+
+const { FontAwesome, dispatch } = window
 
 // props:
 // - fleetId: current selected fleet id

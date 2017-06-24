@@ -1,4 +1,5 @@
 import { konst, ignore } from './utils'
+
 const { config } = window
 const { env } = process
 
@@ -67,10 +68,10 @@ const defineConfig = (name, defValueOrFunc, validate = konst(null)) => {
   configs[name] = configDef
 }
 
+const validateBool = x => typeof x === "boolean" ? null : Error("not a bool")
+
 const defineBoolConfig = (name, defValue) =>
   defineConfig(name,defValue,validateBool)
-
-const validateBool = x => typeof x === "boolean" ? null : Error("not a bool")
 
 defineConfig(
   "recommendSparkledCount",
@@ -101,7 +102,7 @@ defineConfig(
     config.set(mainPath,effectiveSwitch)
 
     // then we can remove this particular plugin setting
-    const { allowPluginAutoSwitch, ... configs } = config.get(confPath)
+    const { allowPluginAutoSwitch, ...configs } = config.get(confPath)
     ignore(allowPluginAutoSwitch)
 
     config.set(confPath,configs)

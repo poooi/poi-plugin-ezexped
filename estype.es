@@ -19,13 +19,13 @@ const allSTypes = Object.keys( stype )
 // for reverse lookup
 const stypeRev = (() => {
   const arr = new Array(allSTypes.length + 1)
-  allSTypes.map( styp =>
-    arr[ stype[styp] ] = styp)
+  allSTypes.map(styp =>
+    arr[stype[styp]] = styp)
   return arr
 })()
 
 const nameToId = n =>
-  stype [n] || error(`invalid stype name: ${n}`)
+  stype[n] || error(`invalid stype name: ${n}`)
 
 const idToName = i =>
   stypeRev[i] || error(`invalid stype id: ${i}`)

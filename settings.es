@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {
-  ezconfigSelector,
-} from './selectors'
-import {
   FormControl,
   Checkbox,
 } from 'react-bootstrap'
+
+import {
+  ezconfigSelector,
+} from './selectors'
 
 import { ezconfigs, ConfigDef } from './ezconfig'
 import { __ } from './tr'
@@ -17,12 +18,14 @@ class RecommendSparkledCountSetting extends Component {
     super(props)
     this.configDef = ezconfigs.recommendSparkledCount
   }
-  handleChange = (e) => {
+
+  handleChange = e => {
     // seems like e.target.value somehow gets coerced to a string,
     // so we need to convert it back.
     const v = parseInt(e.target.value, 10)
     this.configDef.setValue(v)
   }
+
   render() {
     return (
       <div style={{
@@ -88,8 +91,8 @@ class EZExpedSettings extends Component {
   render() {
     return (
       <div style={{
-        display:"flex",
-        flexDirection:"column",
+        display: "flex",
+        flexDirection: "column",
         marginBottom: "20px"}}>
         <RecommendSparkledCountSetting />
         <CheckboxSetting
