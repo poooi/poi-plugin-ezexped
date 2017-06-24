@@ -83,7 +83,6 @@ class CheckboxSetting extends Component {
 
 class EZExpedSettings extends Component {
   static propTypes = {
-    recommendSparkled: PropTypes.number.isRequired,
     hideMainFleet: PropTypes.bool.isRequired,
     hideSatReqs: PropTypes.bool.isRequired,
   }

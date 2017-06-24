@@ -102,10 +102,10 @@ defineConfig(
     config.set(mainPath,effectiveSwitch)
 
     // then we can remove this particular plugin setting
-    const { allowPluginAutoSwitch, ...configs } = config.get(confPath)
+    const { allowPluginAutoSwitch, ...newConfigs } = config.get(confPath)
     ignore(allowPluginAutoSwitch)
 
-    config.set(confPath,configs)
+    config.set(confPath,newConfigs)
   }
 }
 
@@ -121,7 +121,7 @@ defineConfig(
   "gsFlags",
   Object.freeze(new Array(40+1).fill(false)))
 
-const ezconfigs = Object.freeze( configs )
+const ezconfigs = Object.freeze(configs)
 
 export {
   ezconfigs,

@@ -154,7 +154,7 @@ class EZExpedMain extends Component {
               gsFlags={gsFlags}
               isFleetCombined={this.props.isFleetCombined}
               autoSwitch={this.props.fleetAutoSwitch}
-              recommendSparkled={this.props.recommendSparkled}
+              recommendSparkled={this.props.recommendSparkledCount}
               onToggleAutoSwitch={() =>
                 ezconfigs.fleetAutoSwitch.modifyValue(not)}
               onSelectFleet={this.props.onChangeFleet} />
@@ -180,7 +180,7 @@ class EZExpedMain extends Component {
                   fleet={fleet}
                   expedId={expedId}
                   greatSuccess={gsFlag}
-                  recommendSparkled={this.props.recommendSparkled}
+                  recommendSparkled={this.props.recommendSparkledCount}
                   hideSatReqs={this.props.hideSatReqs}
               />)}
         </div>
