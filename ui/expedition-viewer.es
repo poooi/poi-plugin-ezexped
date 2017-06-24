@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 
-import { expedInfo } from './exped-info'
-import { error } from './utils'
-import { daihatsu, fleetResupplyCost } from './income-calc'
 
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
+import { expedInfo } from '../exped-info'
+import { error } from '../utils'
+import { daihatsu, fleetResupplyCost } from '../income-calc'
+
+import { __, fmtTime } from '../tr'
+
 const { FontAwesome } = window
-import { __, fmtTime } from './tr'
 
 class IconAndLabel extends Component {
   render() {

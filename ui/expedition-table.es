@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 import {
   Button,
@@ -6,10 +6,10 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { enumFromTo } from './utils'
-import { checkExpedReqs } from './requirement'
+import { enumFromTo } from '../utils'
+import { checkExpedReqs } from '../requirement'
 
-import { expedInfo } from './exped-info'
+import { expedInfo } from '../exped-info'
 
 const { _ } = window
 

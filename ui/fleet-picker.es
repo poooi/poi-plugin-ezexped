@@ -6,8 +6,8 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { getExpedReqs, checkAllReq, collapseResults } from './requirement'
-import { __ } from './tr'
+import { getExpedReqs, checkAllReq, collapseResults } from '../requirement'
+import { __ } from '../tr'
 
 const { FontAwesome, dispatch } = window
 
