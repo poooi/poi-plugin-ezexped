@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-const { _, FontAwesome } = window
-
 import {
   Button,
   ListGroup, ListGroupItem,
@@ -12,12 +10,14 @@ import {
   checkExpedDetail,
   collapseResults,
   isEqualReqObj,
-} from './requirement'
+} from '../requirement'
 
-import * as estype from './estype'
-import { __ } from './tr'
+import * as estype from '../estype'
+import { __ } from '../tr'
 
-import { error } from './utils'
+import { error } from '../utils'
+
+const { _, FontAwesome } = window
 
 // a box for showing whether the fleet is ready
 // props:
