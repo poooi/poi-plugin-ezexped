@@ -7,24 +7,26 @@ const enumFromTo = (frm,to,succ=(x => x+1)) => {
   return arr
 }
 
-const warn = function () {
-  return console.warn.apply(this, arguments)
+function warn(...args) {
+  return console.warn.apply(this, args)
 }
 
-const error = function () {
-  return console.error.apply(this, arguments)
+function error(...args) {
+  return console.error.apply(this, args)
 }
 
 const valMap = obj => f => {
   const ret = {}
-  Object.keys(obj).map( k => ret[k] = f(obj[k]) )
+  Object.keys(obj).map( k => {
+    ret[k] = f(obj[k])
+  })
   return ret
 }
 
 // "const" function that simply ignores
 // its second list of arguments and returns the first argument.
 // the funny spell is due to the fact that "const" is a keyword.
-const konst = x => (...args) => x
+const konst = x => (..._args) => x
 
 // usage: "ignore(a,b,c)" to fool eslint to believe that "a", "b" and "c"
 // are somehow being used, it serves as an explicit annotation to say that they actually don't

@@ -31,7 +31,6 @@ module.exports = {
     'no-underscore-dangle': ['error', { 'allow': ['__','__r'] }],
     'no-console': ['error', { 'allow': ['warn', 'error', 'info'] }],
     'no-continue': 'off',
-    'no-return-assign': 'off',
     'space-in-parens': 'off',
     'object-curly-spacing': 'off',
     'react/jsx-curly-spacing': 'off',
