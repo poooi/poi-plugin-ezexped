@@ -149,10 +149,14 @@ const fleetResupplyCost = fleet => {
     ammoCost: x.ammoCost + y.ammoCost,
   })
   return (fFactor,aFactor) =>
-    ks.map( x => x(fFactor,aFactor) )
+    ks.map(x => x(fFactor,aFactor))
       .reduce(mergeCost, {fuelCost: 0, ammoCost: 0})
 }
 
 const daihatsu = { computeBonus }
 
-export { daihatsu, shipResupplyCost, fleetResupplyCost }
+export {
+  daihatsu,
+  shipResupplyCost,
+  fleetResupplyCost,
+}
