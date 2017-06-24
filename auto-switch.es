@@ -70,6 +70,7 @@ const findChangingFleet = (curFleets, nextFleets) => {
   const transformFleetRep = fleet =>
     fleet.ships.map( ship => {
       const { rstId, equips } = ship
+      // eslint-disable-next-line no-shadow
       const simpleEquips = equips.map(({rstId}) => ({rstId}))
       return { rstId, equips: simpleEquips }
     })
@@ -102,8 +103,8 @@ const findChangingFleet = (curFleets, nextFleets) => {
   const isNotDecreasing = (beforeFleet,afterFleet) => {
     if (beforeFleet.length !== afterFleet.length)
       return beforeFleet.length < afterFleet.length
-    const eqListBefore = [].concat( ... beforeFleet.map(s => s.equips))
-    const eqListAfter = [].concat( ... afterFleet.map(s => s.equips))
+    const eqListBefore = [].concat( ...beforeFleet.map(s => s.equips))
+    const eqListAfter = [].concat( ...afterFleet.map(s => s.equips))
     return eqListBefore.length <= eqListAfter.length
   }
 
@@ -116,7 +117,7 @@ const findChangingFleet = (curFleets, nextFleets) => {
   // - the number of ships and the total number of equipments
   //   are not decreasing
   // then this is the changing fleet that we are looking for.
-  for (let i=0; i<sameFleet.length;++i) {
+  for (let i=0; i<sameFleet.length; ++i) {
     if (sameFleet[i])
       continue
 

@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 
-import { enumFromTo } from './utils'
-import { checkExpedReqs } from './requirement'
-
 import {
   Button,
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap'
 
+import { enumFromTo } from './utils'
+import { checkExpedReqs } from './requirement'
+
 import { expedInfo } from './exped-info'
+
 const { _ } = window
 
 const mkExpedTooltip = expedId => {

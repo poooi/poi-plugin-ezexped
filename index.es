@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 
+import {
+  Panel,
+} from 'react-bootstrap'
+
 import { join } from 'path-extra'
 
 import {
@@ -14,9 +18,6 @@ import { ExpeditionViewer } from './expedition-viewer'
 import { ExpeditionTable } from './expedition-table'
 import { RequirementViewer } from './requirement-viewer'
 
-import {
-  Panel,
-} from 'react-bootstrap'
 
 import { ezconfigs } from './ezconfig'
 
