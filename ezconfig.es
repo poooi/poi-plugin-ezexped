@@ -1,4 +1,4 @@
-import { konst, ignore } from './utils'
+import { ignore } from './utils'
 
 const { config } = window
 const { env } = process
@@ -12,7 +12,7 @@ const configs = {}
 
 // invokes the real validator only when it's not production mode
 const configDefDoValidate = inst =>
-  prodFlag ? konst(null) : inst.validate
+  prodFlag ? (() => null) : inst.validate
 
 // ConfigDef: config definition
 // - name: key name
@@ -58,12 +58,12 @@ class ConfigDef {
 // key: string of config name
 // defValueOrFunc: if it's a function, it's set to "getDefault",
 //   otherwise it's used as the default value (by reference) for that setting
-const defineConfig = (name, defValueOrFunc, validate = konst(null)) => {
+const defineConfig = (name, defValueOrFunc, validate = () => null) => {
   const configDef = new ConfigDef(
     name,
     typeof defValueOrFunc === "function"
       ? defValueOrFunc
-      : konst(defValueOrFunc),
+      : (() => defValueOrFunc),
     validate)
   configs[name] = configDef
 }

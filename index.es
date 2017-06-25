@@ -14,8 +14,6 @@ import {
 
 import { EZExpedMain } from './ui'
 
-import { konst } from './utils'
-
 const reactClass = connect(
   state => {
     const config = ezconfigSelector(state)
@@ -46,11 +44,11 @@ const reactClass = connect(
 const switchPluginPath = [
   {
     path: "/kcsapi/api_get_member/mission",
-    valid: konst(true),
+    valid: () => true,
   },
   {
     path: "/kcsapi/api_req_mission/result",
-    valid: konst(true),
+    valid: () => true,
   },
 ]
 

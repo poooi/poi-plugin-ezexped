@@ -1,6 +1,6 @@
 import { expedNameToId } from './exped-info'
 import { ezconfigs } from './ezconfig'
-import { modifyArray, konst } from './utils'
+import { modifyArray } from './utils'
 
 const initState = {
   // value is initialized to "null",
@@ -23,7 +23,7 @@ const reducer = (state = initState, action) => {
 
     if (action.body.api_clear_result !== 0) {
       ezconfigs.selectedExpeds.modifyValue(
-        modifyArray(fleetId,konst(expedId)))
+        modifyArray(fleetId,() => expedId))
     }
 
     // switch to the corresponding fleet on expedition result screen
