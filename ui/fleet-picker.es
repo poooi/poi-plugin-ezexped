@@ -8,6 +8,7 @@ import {
 
 import { getExpedReqs, checkAllReq, collapseResults } from '../requirement'
 import { __ } from '../tr'
+import { PTyp } from '../ptyp'
 
 const { FontAwesome, dispatch } = window
 
@@ -22,18 +23,38 @@ const { FontAwesome, dispatch } = window
 // - onToggleAutoSwitch
 // - recommendSparkled
 class FleetPicker extends Component {
+  static propTypes = {
+    fleetId: PTyp.number,
+    selectedExpeds: PTyp.arrayOf(PTyp.number).isRequired,
+    gsFlags: PTyp.arrayOf(PTyp.bool).isRequired,
+    isFleetCombined: PTyp.bool.isRequired,
+    recommendSparkled: PTyp.number.isRequired,
+    fleets: PTyp.array.isRequired,
+    autoSwitch: PTyp.bool.isRequired,
+
+    onSelectFleet: PTyp.func.isRequired,
+    onToggleAutoSwitch: PTyp.func.isRequired,
+  }
+
+  static defaultProps = {
+    fleetId: null,
+  }
+
   render() {
-    const mkTooltip = fleet => {
-      return (<Tooltip id={`fpfleet-${fleet.index}`}>
-        <div style={{display: "flex", flexDirection: "column"}}>
-          {fleet.ships.map((ship,ind) =>
-            <div key={ind}>
-              {`${ship.name} (Lv. ${ship.level})`}
-            </div>
-           )}
-        </div>
-      </Tooltip>)
-    }
+    const mkTooltip = fleet =>
+      (
+        <Tooltip id={`fpfleet-${fleet.index}`}>
+          <div style={{display: "flex", flexDirection: "column"}}>
+            {
+              fleet.ships.map(ship => (
+                <div key={ship.rstId}>
+                  {`${ship.name} (Lv. ${ship.level})`}
+                </div>
+              ))
+            }
+          </div>
+        </Tooltip>
+      )
 
     // Button color:
     // - available:
@@ -88,7 +109,7 @@ class FleetPicker extends Component {
           active={focused}
           onContextMenu={handleFocusFleetInMainUI}
           onClick={() => this.props.onSelectFleet(fleetId)}>
-        <div style={{textOverflow: "ellipsis", overflow:"hidden"}} >
+        <div style={{textOverflow: "ellipsis", overflow: "hidden"}} >
           {fleet.name}
         </div>
       </Button>)
@@ -102,29 +123,33 @@ class FleetPicker extends Component {
         marginBottom: "5px",
       }}>
         <ButtonGroup style={{display: "flex", width: "80%"}}>
-          {this.props.fleets.map(fleet =>
-            <OverlayTrigger
+          {
+            this.props.fleets.map(fleet => (
+              <OverlayTrigger
                 key={fleet.index}
                 placement="bottom" overlay={mkTooltip(fleet)}>
-              {mkButton(fleet)}
-            </OverlayTrigger>
-           )}
+                {mkButton(fleet)}
+              </OverlayTrigger>
+            ))
+          }
         </ButtonGroup>
-            <OverlayTrigger
-                key="auto-fleet"
-                placement="left" overlay={tooltipAutoSwitch}>
-              <Button
-                style={{display:"flex", minWidth: "40px"}}
-                onClick={this.props.onToggleAutoSwitch}>
-                <FontAwesome
-                  style={{marginRight: "5px", marginTop: "2px"}}
-                  name={this.props.autoSwitch? "check-square-o" : "square-o"} />
-                <div style={{
-                  flex: "1",
-                  textOverflow: "ellipsis",
-                  overflow:"hidden"}} >{__("Auto")}</div>
-             </Button>
+        <OverlayTrigger
+          key="auto-fleet"
+          placement="left" overlay={tooltipAutoSwitch}>
+          <Button
+            style={{display: "flex", minWidth: "40px"}}
+            onClick={this.props.onToggleAutoSwitch}>
+            <FontAwesome
+              style={{marginRight: "5px", marginTop: "2px"}}
+              name={this.props.autoSwitch ? "check-square-o" : "square-o"} />
+            <div style={{
+              flex: "1",
+              textOverflow: "ellipsis",
+              overflow: "hidden"}} >{__("Auto")}</div>
+          </Button>
         </OverlayTrigger>
-      </div>)}}
+      </div>)
+  }
+}
 
 export { FleetPicker }
