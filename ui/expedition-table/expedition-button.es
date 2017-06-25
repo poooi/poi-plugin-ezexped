@@ -6,8 +6,8 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { expedInfo } from '../exped-info'
-import { PTyp } from '../ptyp'
+import { expedInfo } from '../../exped-info'
+import { PTyp } from '../../ptyp'
 
 const mkExpedTooltip = expedId => {
   const info = expedInfo[expedId]
