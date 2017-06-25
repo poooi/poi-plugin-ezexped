@@ -72,14 +72,6 @@ describe('utils', () => {
     })
   })
 
-  describe('konst', () => {
-    spec('tests', () => {
-      assert.equal(utils.konst(10)(false), 10)
-      assert.equal(utils.konst(10)(), 10)
-      assert.equal(utils.konst(10)(undefined,undefined,undefined), 10)
-    })
-  })
-
   describe('modifyArray', () => {
     // for turning console.error calls into errors
     let consoleError
@@ -101,7 +93,7 @@ describe('utils', () => {
         [2,2,3,4,5])
 
       assert.deepEqual(
-        utils.modifyArray(4,utils.konst(false))(arr),
+        utils.modifyArray(4,() => false)(arr),
         [1,2,3,4,false])
 
       assert.throws( () => {
@@ -222,7 +214,7 @@ describe("autoSwitch", () => {
         newFleets[3] = modifyShips(
           utils.modifyArray(0, s => ({
             rstId: s.rstId,
-            equips: [... s.equips, equip],
+            equips: [...s.equips, equip],
           }))
         )(newFleets[3])
 
@@ -246,7 +238,7 @@ describe("autoSwitch", () => {
         newFleets[3] = modifyShips(
           utils.modifyArray(0, s => ({
             rstId: s.rstId,
-            equips: utils.modifyArray(0,utils.konst(equip))(s.equips),
+            equips: utils.modifyArray(0,() => equip)(s.equips),
           }))
         )(newFleets[3])
         assert.equal(

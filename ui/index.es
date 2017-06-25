@@ -31,7 +31,7 @@ import {
   settingsClass,
 } from '../settings'
 
-import { modifyArray, not, konst } from '../utils'
+import { modifyArray, not } from '../utils'
 
 class EZExpedMain extends Component {
   constructor() {
@@ -133,7 +133,7 @@ class EZExpedMain extends Component {
     const fleetId = this.props.redux.fleetId
     this.setState({ expedGridExpanded: false })
     ezconfigs.selectedExpeds.modifyValue(
-      modifyArray(fleetId,konst(newExpedId)))
+      modifyArray(fleetId,() => newExpedId))
   }
 
   render() {
