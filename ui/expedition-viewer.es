@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-
-
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
@@ -10,15 +9,24 @@ import { error } from '../utils'
 import { daihatsu, fleetResupplyCost } from '../income-calc'
 
 import { __, fmtTime } from '../tr'
-
-const { FontAwesome } = window
+import { PTyp } from '../ptyp'
 
 class IconAndLabel extends Component {
+  static propTypes = {
+    style: PTyp.object,
+    icon: PTyp.node.isRequired,
+    label: PTyp.node.isRequired,
+  }
+
+  static defaultProps = {
+    style: {},
+  }
+
   render() {
     return (
-      <div style={{... this.props.style, paddingLeft:"6px", display: "flex"}}>
+      <div style={{...this.props.style, paddingLeft: "6px", display: "flex"}}>
         <div>{this.props.icon}</div>
-        <div style={{flex:"1", marginLeft:"2px", marginRight:"2px"}} >{this.props.label}</div>
+        <div style={{flex: "1", marginLeft: "2px", marginRight: "2px"}} >{this.props.label}</div>
       </div>
     )
   }
@@ -84,6 +92,11 @@ const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon
 // - icon
 // - one of "renderedResources"'s value in "ExpeditionViewer"
 class ResourceWithDetail extends Component {
+  static propTypes = {
+    resourceName: PTyp.string.isRequired,
+    icon: PTyp.node.isRequired,
+    renderedResource: PTyp.object.isRequired,
+  }
   render() {
     // "123Text" => "123"
     const rmText = t => t.slice(0,t.length-4)
@@ -96,25 +109,35 @@ class ResourceWithDetail extends Component {
       "totalIncomeText",
       "netIncomeText",
     ].filter( k => this.props.renderedResource[k] )
-     .map( k => `${translateKey(k)}: ${this.props.renderedResource[k]}`)
+    // .map( k => `${translateKey(k)}: ${this.props.renderedResource[k]}`)
     const tooltip = (
       <Tooltip
           className="ezexped-pop"
-          style={{display:"flex"}}
+          style={{display: "flex"}}
           id={`tooltip-${this.props.resourceName}`}>
-          {tooltipTexts.map( (x,ind) => <div style={{flex: "1", textAlign: "left"}} key={ind}>{x}</div> )}
+        {
+          tooltipTexts.map(x => (
+            <div style={{flex: "1", textAlign: "left"}} key={x}>
+              {
+                `${translateKey(x)}: ${this.props.renderedResource[x]}`
+              }
+            </div>
+          ))
+        }
       </Tooltip>
     )
 
     return (
       <OverlayTrigger
         placement="bottom" overlay={tooltip}>
-      <div>
-        <IconAndLabel
-          icon={this.props.icon}
-          label={this.props.renderedResource.finalIncome} />
-      </div>
-      </OverlayTrigger>)}}
+        <div>
+          <IconAndLabel
+            icon={this.props.icon}
+            label={this.props.renderedResource.finalIncome} />
+        </div>
+      </OverlayTrigger>)
+  }
+}
 
 // props:
 // - expedId: expedition id
@@ -123,13 +146,21 @@ class ResourceWithDetail extends Component {
 // - onClickGS: when great success button is clicked
 // - fleet: fleet representation
 class ExpeditionViewer extends Component {
+  static propTypes = {
+    expedId: PTyp.number.isRequired,
+    greatSuccess: PTyp.bool.isRequired,
+    fleet: PTyp.object.isRequired,
+    onClickExped: PTyp.func.isRequired,
+    onClickGS: PTyp.func.isRequired,
+  }
+
   render() {
-    const info = expedInfo[ this.props.expedId ]
+    const info = expedInfo[this.props.expedId]
     const resupplyCost =
       fleetResupplyCost(this.props.fleet.ships)(
         info.cost.fuelPercent / 100, info.cost.ammoPercent / 100)
     const daihatsuBonus =
-      daihatsu.computeBonus( this.props.fleet.ships )
+      daihatsu.computeBonus(this.props.fleet.ships)
 
     // have to apply a semicolon otherwise parser won't recognize this properly
     const renderedResources = {};
@@ -147,7 +178,7 @@ class ExpeditionViewer extends Component {
 
     const mkMatFromName = name => mkMat(itemNameToMaterialId( name ))
     const colFlexStyle = {
-      display:"flex",
+      display: "flex",
       justifyContent: "space-around",
       flexDirection: "column",
       marginLeft: "10px",
@@ -157,12 +188,12 @@ class ExpeditionViewer extends Component {
     const prettyRange = (x,y) => x === y ? `${x}` : `${x}~${y}`
     return (
       <div style={{display: "flex", marginBottom: "5px"}}>
-        <div style={{flex: "1", maxWidth:"50%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+        <div style={{flex: "1", maxWidth: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
           <Button
               onClick={this.props.onClickExped}>
             <div style={{
-              textOverflow: "ellipsis", overflow:"hidden", whiteSpace: "nowrap"}} >
-              {this.props.expedId + " " + info.name}
+              textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}} >
+              {`${this.props.expedId} ${info.name}`}
             </div>
           </Button>
           <div style={{textAlign: "center"}}>{fmtTime(info.timeInMin)}</div>
@@ -186,7 +217,7 @@ class ExpeditionViewer extends Component {
             </div>
           </div>
         </div>
-        <div style={{display: "flex", maxWidth: "50%", flex: "1", flexDirection:"column"}}>
+        <div style={{display: "flex", maxWidth: "50%", flex: "1", flexDirection: "column"}}>
           <div style={{display: "flex", flex: "1"}}>
             <div style={{flex: "1", ...colFlexStyle}}>
               <ResourceWithDetail
@@ -196,7 +227,7 @@ class ExpeditionViewer extends Component {
                   resourceName="ammo"
                   icon={mkMat(2)} renderedResource={renderedResources.ammo} />
             </div>
-            <div style={{flex:"1", ...colFlexStyle}}>
+            <div style={{flex: "1", ...colFlexStyle}}>
               <ResourceWithDetail
                   resourceName="steel"
                   icon={mkMat(3)} renderedResource={renderedResources.steel} />
@@ -205,16 +236,16 @@ class ExpeditionViewer extends Component {
                   icon={mkMat(4)} renderedResource={renderedResources.bauxite} />
             </div>
           </div>
-        <Button
-            style={{display:"flex"}}
+          <Button
+            style={{display: "flex"}}
             onClick={this.props.onClickGS}>
-          <FontAwesome
+            <FontAwesome
               style={{marginRight: "5px", marginTop: "2px"}}
               name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
-          <div
-              style={{flex:"1", textOverflow: "ellipsis", overflow:"hidden", whiteSpace: "nowrap"}} >
-            {__("Great Success")}</div>
-        </Button>
+            <div
+              style={{flex: "1", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}} >
+              {__("Great Success")}</div>
+          </Button>
         </div>
       </div>
     )
