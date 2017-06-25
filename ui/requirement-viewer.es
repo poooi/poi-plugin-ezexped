@@ -18,7 +18,6 @@ import { __ } from '../tr'
 import { error } from '../utils'
 
 const { _, FontAwesome } = window
-
 // a box for showing whether the fleet is ready
 // props:
 // - content
@@ -27,22 +26,25 @@ const { _, FontAwesome } = window
 class CheckResultBox extends Component {
   render() {
     return (
-      <Button bsStyle={this.props.ready ? "success" : "danger"}
-              disabled={true}
-              style={{
-                width: "48%",
-                opacity: "1", margin: "10px 0 10px 0",
-                borderRadius: "10px", display: "flex",
-                visibility: this.props.visible ? "visible" : "hidden"}}>
+      <Button
+        bsStyle={this.props.ready ? "success" : "danger"}
+        disabled={true}
+        style={{
+          width: "48%",
+          opacity: "1", margin: "10px 0 10px 0",
+          borderRadius: "10px", display: "flex",
+          visibility: this.props.visible ? "visible" : "hidden"}}>
         <FontAwesome
-            style={{marginRight: "5px", marginTop: "2px"}}
-            name={this.props.ready ? "check-square-o" : "square-o"} />
+          style={{marginRight: "5px", marginTop: "2px"}}
+          name={this.props.ready ? "check-square-o" : "square-o"} />
         <div style={{
           overflow: "hidden",
           textOverflow: "ellipsis"}}>
           {this.props.content}</div>
       </Button>
-    )}}
+    )
+  }
+}
 
 const renderRequirement = (req,ok) => {
   if (Array.isArray(req)) {
