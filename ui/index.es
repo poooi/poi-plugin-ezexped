@@ -187,3 +187,7 @@ class EZExpedMain extends Component {
     )
   }
 }
+
+export {
+  EZExpedMain,
+}
