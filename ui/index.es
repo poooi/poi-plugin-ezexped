@@ -144,7 +144,7 @@ class EZExpedMain extends Component {
     const fleet = this.props.fleets.find( fleet => fleet.index === fleetId ) || null
     return (
       <div className="poi-plugin-ezexped">
-        <link rel="stylesheet" href={join(__dirname, 'assets', 'ezexped.css')} />
+        <link rel="stylesheet" href={join(__dirname, '..', 'assets', 'ezexped.css')} />
         <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
           <FleetPicker
               fleets={this.props.fleets}
