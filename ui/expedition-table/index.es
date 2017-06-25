@@ -1,9 +1,9 @@
 import { _ } from 'lodash'
 import React, { Component } from 'react'
 
-import { enumFromTo } from '../utils'
-import { checkExpedReqs } from '../requirement'
-import { PTyp } from '../ptyp'
+import { enumFromTo } from '../../utils'
+import { checkExpedReqs } from '../../requirement'
+import { PTyp } from '../../ptyp'
 import { ExpeditionButton } from './expedition-button'
 
 // props:
