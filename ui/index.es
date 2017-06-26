@@ -154,16 +154,19 @@ class EZExpedMain extends Component {
                 ezconfigs.fleetAutoSwitch.modifyValue(not)}
               onSelectFleet={this.props.onChangeFleet} />
           {
-          fleet && (
-          <ExpeditionViewer
-            expedId={expedId}
-            fleet={fleet}
-            greatSuccess={gsFlag}
-            onClickExped={() =>
-          this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
-            onClickGS={() =>
-          ezconfigs.gsFlags.modifyValue(
-          modifyArray(expedId,not))} />)
+            fleet && (
+              <ExpeditionViewer
+                expedId={expedId}
+                fleet={fleet}
+                greatSuccess={gsFlag}
+                onClickExped={() =>
+                  this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
+                onClickGS={() =>
+                  ezconfigs.gsFlags.modifyValue(
+                    modifyArray(expedId,not))
+                }
+              />
+            )
           }
           {
             fleet && (
@@ -175,7 +178,9 @@ class EZExpedMain extends Component {
                   fleet={fleet}
                   expedId={expedId}
                   onSelectExped={this.selectExped} />
-              </Panel>)}
+              </Panel>
+            )
+          }
           {
             fleet && (
               <RequirementViewer
@@ -184,7 +189,9 @@ class EZExpedMain extends Component {
                 greatSuccess={gsFlag}
                 recommendSparkled={this.props.recommendSparkledCount}
                 hideSatReqs={this.props.hideSatReqs}
-              />)}
+              />
+            )
+          }
         </div>
       </div>
     )
