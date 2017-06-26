@@ -1,5 +1,5 @@
 import { _ } from 'lodash'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {
   ListGroup,
 } from 'react-bootstrap'
@@ -10,6 +10,7 @@ import {
 } from '../../requirement'
 
 import { __ } from '../../tr'
+import { PTyp } from '../../ptyp'
 
 import { CheckResultBox } from './check-result-box'
 import { RequirementListItem } from './requirement-list-item'
@@ -19,12 +20,12 @@ import { RequirementListItem } from './requirement-list-item'
 class RequirementViewer extends Component {
   static propTypes = {
     // - target expedition id
-    expedId: PropTypes.number.isRequired,
+    expedId: PTyp.number.isRequired,
     // whether aimming at great success
-    greatSuccess: PropTypes.bool.isRequired,
-    hideSatReqs: PropTypes.bool.isRequired,
-    recommendSparkled: PropTypes.number.isRequired,
-    fleet: PropTypes.object.isRequired,
+    greatSuccess: PTyp.bool.isRequired,
+    hideSatReqs: PTyp.bool.isRequired,
+    recommendSparkled: PTyp.number.isRequired,
+    fleet: PTyp.object.isRequired,
   }
   shouldComponentUpdate(nextProps) {
     return this.props.expedId !== nextProps.expedId ||
