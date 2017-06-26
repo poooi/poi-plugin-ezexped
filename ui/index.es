@@ -1,4 +1,3 @@
-import { connect } from 'react-redux'
 import React, { Component } from 'react'
 
 import {
@@ -7,12 +6,6 @@ import {
 
 import { join } from 'path-extra'
 
-import {
-  mkFleetInfoSelector,
-  isFleetCombinedSelector,
-  reduxSelector,
-  ezconfigSelector,
-} from '../selectors'
 import { FleetPicker } from './fleet-picker'
 import { ExpeditionViewer } from './expedition-viewer'
 import { ExpeditionTable } from './expedition-table'
@@ -26,19 +19,34 @@ import {
   isSendingFleetToExped,
 } from '../auto-switch'
 
-import { reducer, mapDispatchToProps } from '../reducer'
-import {
-  settingsClass,
-} from '../settings'
-
 import { modifyArray, not } from '../utils'
+import { PTyp } from '../ptyp'
 
 class EZExpedMain extends Component {
+  static propTypes = {
+    redux: PTyp.shape({
+      fleetId: PTyp.number,
+    }).isRequired,
+    fleets: PTyp.array.isRequired,
+    fleetAutoSwitch: PTyp.bool.isRequired,
+    isFleetCombined: PTyp.bool.isRequired,
+    selectedExpeds: PTyp.arrayOf(PTyp.number).isRequired,
+    gsFlags: PTyp.arrayOf(PTyp.bool).isRequired,
+    hideMainFleet: PTyp.bool.isRequired,
+    recommendSparkledCount: PTyp.number.isRequired,
+    hideSatReqs: PTyp.bool.isRequired,
+    onChangeFleet: PTyp.func.isRequired,
+  }
+
   constructor() {
     super()
     this.state = {
       expedGridExpanded: false,
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener('game.response', this.handleGameResponse)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -91,20 +99,8 @@ class EZExpedMain extends Component {
     }
   }
 
-  componentDidMount() {
-    this.__eventListener = this.handleGameResponse
-    window.addEventListener(
-      'game.response',
-      this.__eventListener)
-  }
-
   componentWillUnmount() {
-    if (typeof this.__eventListener !== "undefined") {
-      window.removeEventListener(
-        'game.response',
-        this.__eventListener)
-      delete this.__eventListener
-    }
+    window.removeEventListener('game.response', this.handleGameResponse)
   }
 
   handleGameResponse = e => {
@@ -141,7 +137,7 @@ class EZExpedMain extends Component {
     const { selectedExpeds, gsFlags } = this.props
     const expedId = selectedExpeds[fleetId]
     const gsFlag = gsFlags[expedId]
-    const fleet = this.props.fleets.find( fleet => fleet.index === fleetId ) || null
+    const fleet = this.props.fleets.find(flt => flt.index === fleetId) || null
     return (
       <div className="poi-plugin-ezexped">
         <link rel="stylesheet" href={join(__dirname, '..', 'assets', 'ezexped.css')} />
@@ -157,30 +153,37 @@ class EZExpedMain extends Component {
               onToggleAutoSwitch={() =>
                 ezconfigs.fleetAutoSwitch.modifyValue(not)}
               onSelectFleet={this.props.onChangeFleet} />
-          { fleet !== null && (
-              <ExpeditionViewer
-                  expedId={expedId}
-                  fleet={fleet}
-                  greatSuccess={gsFlag}
-                  onClickExped={() =>
-                    this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
-                  onClickGS={() =>
-                    ezconfigs.gsFlags.modifyValue(
-                      modifyArray(expedId,not))} />) }
-          { fleet !== null && (
-              <Panel collapsible expanded={this.state.expedGridExpanded} style={{marginBottom: "5px"}} >
+          {
+          fleet && (
+          <ExpeditionViewer
+            expedId={expedId}
+            fleet={fleet}
+            greatSuccess={gsFlag}
+            onClickExped={() =>
+          this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
+            onClickGS={() =>
+          ezconfigs.gsFlags.modifyValue(
+          modifyArray(expedId,not))} />)
+          }
+          {
+            fleet && (
+              <Panel
+                collapsible
+                expanded={this.state.expedGridExpanded}
+                style={{marginBottom: "5px"}} >
                 <ExpeditionTable
-                    fleet={fleet}
-                    expedId={expedId}
-                    onSelectExped={this.selectExped} />
-              </Panel>)}
-          { fleet !== null && (
-              <RequirementViewer
                   fleet={fleet}
                   expedId={expedId}
-                  greatSuccess={gsFlag}
-                  recommendSparkled={this.props.recommendSparkledCount}
-                  hideSatReqs={this.props.hideSatReqs}
+                  onSelectExped={this.selectExped} />
+              </Panel>)}
+          {
+            fleet && (
+              <RequirementViewer
+                fleet={fleet}
+                expedId={expedId}
+                greatSuccess={gsFlag}
+                recommendSparkled={this.props.recommendSparkledCount}
+                hideSatReqs={this.props.hideSatReqs}
               />)}
         </div>
       </div>
