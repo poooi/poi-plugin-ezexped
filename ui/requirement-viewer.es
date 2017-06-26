@@ -1,5 +1,6 @@
+import FontAwesome from 'react-fontawesome'
+import { _ } from 'lodash'
 import React, { Component, PropTypes } from 'react'
-
 import {
   Button,
   ListGroup, ListGroupItem,
@@ -14,16 +15,21 @@ import {
 
 import * as estype from '../estype'
 import { __ } from '../tr'
-
 import { error } from '../utils'
+import { PTyp } from '../ptyp'
 
-const { _, FontAwesome } = window
 // a box for showing whether the fleet is ready
 // props:
 // - content
 // - ready: bool
 // - visible: bool
 class CheckResultBox extends Component {
+  static propTypes = {
+    ready: PTyp.bool.isRequired,
+    visible: PTyp.bool.isRequired,
+    content: PTyp.node.isRequired,
+  }
+
   render() {
     return (
       <Button
@@ -50,15 +56,16 @@ const renderRequirement = (req,ok) => {
   if (Array.isArray(req)) {
     const tooltip = (<Tooltip id="eq-stc-req-tooltip" className="ezexped-pop">
       <div style={{display: "flex", flexDirection: "column"}}>
-        {req.map( ({data},ind) =>
-          <div key={ind} style={{flex: "1", display: "flex"}}>
-            <FontAwesome
-              style={{marginRight: "5px", marginTop: "2px"}}
-              name={ok[ind] ? "check-square-o" : "square-o"} />
-            <div style={{flex:"1", whiteSpace: "nowrap"}}>
-              {`${estype.longDesc(__)(data.estype)} x ${data.count}`}
-            </div>
-          </div>)}
+        {
+          req.map( ({data},ind) => (
+            <div key={ind} style={{flex: "1", display: "flex"}}>
+              <FontAwesome
+                style={{marginRight: "5px", marginTop: "2px"}}
+                name={ok[ind] ? "check-square-o" : "square-o"} />
+              <div style={{flex: "1", whiteSpace: "nowrap"}}>
+                {`${estype.longDesc(__)(data.estype)} x ${data.count}`}
+              </div>
+            </div>))}
       </div>
     </Tooltip>)
 
@@ -66,21 +73,24 @@ const renderRequirement = (req,ok) => {
     return (
       <OverlayTrigger
         placement="bottom" overlay={tooltip}>
-      <div style={{display: "flex"}}>
-        <div key="header">{__("Fleet Composition")}:</div>
-        {req.map( ({data: {count, estype: estypeName}}, ind) =>
-          <div
-              style={{marginLeft:"5px", color: ok[ind] ? "green" : "red" }}
-              key={`ce-${ind}`} >
-            {`${count}${estype.shortDesc(estypeName)}`}
-          </div> )}
-      </div>
-    </OverlayTrigger>)
+        <div style={{display: "flex"}}>
+          <div key="header">{__("Fleet Composition")}:</div>
+          {
+            req.map( ({data: {count, estype: estypeName}}, ind) => (
+              <div
+                style={{marginLeft: "5px", color: ok[ind] ? "green" : "red" }}
+                key={`ce-${ind}`} >
+                {`${count}${estype.shortDesc(estypeName)}`}
+              </div>
+            ))
+          }
+        </div>
+      </OverlayTrigger>
+    )
   }
 
-  const fmt = function () {
-    return __(`RequirementExplain.${req.data.type}`, ...arguments)
-  }
+  const fmt = (...args) =>
+    __(`RequirementExplain.${req.data.type}`, ...args)
 
   if (req.data.type === "FSType") {
     return fmt(estype.longDesc(__)(req.data.estype))
@@ -126,7 +136,7 @@ const renderRequirement = (req,ok) => {
     return fmt()
   }
 
-  return error("Unhandled Req type: ${req.data.type}")
+  return error(`Unhandled Req type: ${req.data.type}`)
 }
 
 // props:
@@ -135,6 +145,19 @@ const renderRequirement = (req,ok) => {
 // - greatSuccess: whether this is required by GS
 // - hideSatReqs
 class RequirementListItem extends Component {
+  static propTypes = {
+    greatSuccess: PTyp.bool.isRequired,
+    ok: PTyp.oneOfType([
+      PTyp.bool,
+      PTyp.arrayOf(PTyp.bool),
+    ]).isRequired,
+    req: PTyp.oneOfType([
+      PTyp.object,
+      PTyp.arrayOf(PTyp.object),
+    ]).isRequired,
+    hideSatReqs: PTyp.bool.isRequired,
+  }
+
   shouldComponentUpdate(nextProps) {
     return this.props.ok !== nextProps.ok ||
       this.props.greatSuccess !== nextProps.greatSuccess ||
@@ -159,7 +182,10 @@ class RequirementListItem extends Component {
             style={{marginRight: "5px", marginTop: "2px", color: checkBoxColor }}
             name={allOk ? "check-square-o" : "square-o"} />
         { renderRequirement(this.props.req, this.props.ok) }
-      </ListGroupItem>)}}
+      </ListGroupItem>
+    )
+  }
+}
 
 // props:
 // - fleet: fleet representation
@@ -186,9 +212,9 @@ class RequirementViewer extends Component {
       checkExpedDetail(
         this.props.expedId,true,true,
         this.props.recommendSparkled)(this.props.fleet.ships)
-    const normCheckResult = collapseResults( resultDetail.norm.map( ([req,res]) => res) )
+    const normCheckResult = collapseResults( resultDetail.norm.map( ([_req,res]) => res) )
     const resupplyCheckResult = resultDetail.resupply[1]
-    const gsCheckResult = collapseResults( resultDetail.gs.map( ([req,res]) => res ) )
+    const gsCheckResult = collapseResults( resultDetail.gs.map( ([_req,res]) => res ) )
 
     const normFlg = normCheckResult && resupplyCheckResult
     const gsFlg = normFlg && gsCheckResult
@@ -207,28 +233,36 @@ class RequirementViewer extends Component {
               content={`${__("CondGreatSuccess")}: ${readyOrNot(gsCheckResult)}`} />
         </div>
         <ListGroup>
-          { resultDetail.norm.map( ([req,res],ind) =>
+          {
+            resultDetail.norm.map( ([req,res],ind) => (
               <RequirementListItem
-                  key={`norm-${ind}`}
-                  hideSatReqs={this.props.hideSatReqs}
-                  req={req}
-                  ok={res}
-                  greatSuccess={false} />)}
+                key={`norm-${ind}`}
+                hideSatReqs={this.props.hideSatReqs}
+                req={req}
+                ok={res}
+                greatSuccess={false} />
+            )
+            )
+          }
           <RequirementListItem
               key="resupply"
               hideSatReqs={this.props.hideSatReqs}
               req={resultDetail.resupply[0]}
               ok={resultDetail.resupply[1]}
               greatSuccess={false} />
-          { this.props.greatSuccess &&
-            resultDetail.gs.map( ([req,res],ind) =>
+          {
+
+            this.props.greatSuccess &&
+            resultDetail.gs.map( ([req,res],ind) => (
               <RequirementListItem
-                  key={`gs-${ind}`}
-                  hideSatReqs={this.props.hideSatReqs}
-                  req={req}
-                  ok={res}
-                  greatSuccess={true}
-              />) }
+                key={`gs-${ind}`}
+                hideSatReqs={this.props.hideSatReqs}
+                req={req}
+                ok={res}
+                greatSuccess={true}
+              />
+            ))
+          }
         </ListGroup>
       </div>
     )
