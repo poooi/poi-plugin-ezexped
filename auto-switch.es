@@ -22,7 +22,7 @@
 
  */
 
-const _ = require('lodash')
+import { _ } from 'lodash'
 
 // some heuristic to determine which fleet we are changing.
 // returns a number: 0,1,2,3 to indicate the changing fleet

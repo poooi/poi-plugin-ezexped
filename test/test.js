@@ -1,10 +1,11 @@
-const assert = require('assert')
-const spec = it
+import assert from 'assert'
 
 import * as estype from "../estype"
 import * as req from "../requirement"
 import * as utils from "../utils"
 import * as autoSwitch from "../auto-switch"
+
+const spec = it
 
 describe('estype', () => {
   describe('nameToId & idToName', () => {

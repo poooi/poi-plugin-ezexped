@@ -6,11 +6,13 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
+import FontAwesome from 'react-fontawesome'
+
 import { getExpedReqs, checkAllReq, collapseResults } from '../requirement'
 import { __ } from '../tr'
 import { PTyp } from '../ptyp'
 
-const { FontAwesome, dispatch } = window
+const { dispatch } = window
 
 // props:
 // - fleetId: current selected fleet id
