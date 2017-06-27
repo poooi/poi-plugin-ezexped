@@ -12,7 +12,9 @@ describe('estype', () => {
     spec('name -> id -> name', () => {
       estype.allSTypes.map( n => {
         assert.equal(n, estype.idToName(estype.nameToId(n)))
-      })})})
+      })
+    })
+  })
 
   const ty = estype.stype
   describe('isESType', () => {
@@ -24,7 +26,8 @@ describe('estype', () => {
       assert( estype.isESType.SSLike( ty.SS ) )
       assert( estype.isESType.SSLike( ty.SSV ) )
       assert( ! estype.isESType.SSLike( ty.AV ) )
-    })})
+    })
+  })
 })
 
 describe('requirement', () => {
@@ -36,16 +39,16 @@ describe('requirement', () => {
       aT( true )
       aF( false )
 
-      aT( [true, true, {x: true, y: true} ] )
-      aF( [true, true, {x: false, y: true} ] )
+      aT( [true, true, {x: true, y: true}] )
+      aF( [true, true, {x: false, y: true}] )
 
       aT( [[true,true],[],{}] )
       aF( [[true,true],[false],{}] )
 
       aT( {x: true, y: [{}, []], z: [true,true]} )
-      aF( {x: true, y: [{u:false}, []], z: [true,true]} )
-
-    })})
+      aF( {x: true, y: [{u: false}, []], z: [true,true]} )
+    })
+  })
 })
 
 describe('utils', () => {
@@ -54,22 +57,21 @@ describe('utils', () => {
       assert.deepEqual(utils.enumFromTo(1,4),[1,2,3,4])
       assert.deepEqual(utils.enumFromTo(10,4),[])
       assert.deepEqual(utils.enumFromTo(3,3),[3])
-      assert.deepEqual(utils.enumFromTo(10,100,x=>x+30),[10,40,70,100])
+      assert.deepEqual(utils.enumFromTo(10,100,x => x+30),[10,40,70,100])
     })
   })
 
   describe('valMap', () => {
     spec('tests', () => {
-      const testObj = {a: 1, b:10, c:30, d: null, e: false}
+      const testObj = {a: 1, b: 10, c: 30, d: null, e: false}
 
       assert.deepEqual(
         utils.valMap(testObj)(x => String(x)),
-        {a:"1", b:"10", c:"30", d:"null", e:"false"})
+        {a: "1", b: "10", c: "30", d: "null", e: "false"})
 
       assert.deepEqual(
         utils.valMap(testObj)(x => typeof x === "number" ? x : undefined),
-        {a:1, b:10, c:30, d: undefined, e: undefined})
-
+        {a: 1, b: 10, c: 30, d: undefined, e: undefined})
     })
   })
 
@@ -104,14 +106,11 @@ describe('utils', () => {
       assert.throws( () => {
         utils.modifyArray(x => !x,10)
       })
-
     })
   })
-
 })
 
 describe("autoSwitch", () => {
-
   describe("findChangingFleet", () => {
     spec("tests", () => {
       // simulate manager
@@ -315,7 +314,6 @@ describe("autoSwitch", () => {
         ],true),
         null,
         "show main, combined")
-
     })
   })
 
