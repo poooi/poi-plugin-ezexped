@@ -20,9 +20,10 @@
            - every element of the list is of a unique type
  */
 
+import { _ } from 'lodash'
+
 import * as et from './estype'
 import { enumFromTo, valMap, error } from './utils'
-const _ = require('lodash')
 
 // NOTE: certainly if we allow "checkFleet" to return more info
 // and allow any rendering method to have access to that info,
