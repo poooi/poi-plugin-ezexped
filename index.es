@@ -33,8 +33,8 @@ const reactClass = connect(
       ? (!isFleetCombined ? 1 : 2)
       : 0
 
-    for (let fleetId=beginInd; fleetId<4; ++fleetId) {
-      const fleetRep = mkFleetInfoSelector(fleetId)(state)
+    for (let fleetInd=beginInd; fleetInd<4; ++fleetInd) {
+      const fleetRep = mkFleetInfoSelector(fleetInd)(state)
       if (fleetRep !== null)
         fleets.push( fleetRep )
     }

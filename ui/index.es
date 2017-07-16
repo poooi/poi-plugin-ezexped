@@ -25,7 +25,7 @@ import { PTyp } from '../ptyp'
 class EZExpedMain extends Component {
   static propTypes = {
     redux: PTyp.shape({
-      fleetId: PTyp.number,
+      fleetInd: PTyp.number,
     }).isRequired,
     fleets: PTyp.array.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
@@ -51,8 +51,8 @@ class EZExpedMain extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { onChangeFleet } = nextProps
-    const nextCurrentFleet = nextProps.redux.fleetId !== null
-      && nextProps.fleets.find( fleet => fleet.index === nextProps.redux.fleetId )
+    const nextCurrentFleet = nextProps.redux.fleetInd !== null
+      && nextProps.fleets.find( fleet => fleet.index === nextProps.redux.fleetInd )
 
     if (!nextCurrentFleet) {
       // current focus is null, we need to find a new focus
@@ -126,25 +126,25 @@ class EZExpedMain extends Component {
   }
 
   selectExped = newExpedId => {
-    const fleetId = this.props.redux.fleetId
+    const fleetInd = this.props.redux.fleetInd
     this.setState({ expedGridExpanded: false })
     ezconfigs.selectedExpeds.modifyValue(
-      modifyArray(fleetId,() => newExpedId))
+      modifyArray(fleetInd,() => newExpedId))
   }
 
   render() {
-    const { fleetId } = this.props.redux
+    const { fleetInd } = this.props.redux
     const { selectedExpeds, gsFlags } = this.props
-    const expedId = selectedExpeds[fleetId]
+    const expedId = selectedExpeds[fleetInd]
     const gsFlag = gsFlags[expedId]
-    const fleet = this.props.fleets.find(flt => flt.index === fleetId) || null
+    const fleet = this.props.fleets.find(flt => flt.index === fleetInd) || null
     return (
       <div className="poi-plugin-ezexped">
         <link rel="stylesheet" href={join(__dirname, '..', 'assets', 'ezexped.css')} />
         <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
           <FleetPicker
               fleets={this.props.fleets}
-              fleetId={fleetId}
+              fleetInd={fleetInd}
               selectedExpeds={selectedExpeds}
               gsFlags={gsFlags}
               isFleetCombined={this.props.isFleetCombined}

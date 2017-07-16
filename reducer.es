@@ -5,25 +5,25 @@ import { modifyArray } from './utils'
 const initState = {
   // value is initialized to "null",
   // but main UI should have enough info to figure this out
-  fleetId: null,
+  fleetInd: null,
 }
 
 const reducer = (state = initState, action) => {
   if (action.type === "@poi-plugin-ezexped@ChangeFleet") {
     return {
       ...state,
-      fleetId: action.fleetId,
+      fleetInd: action.fleetInd,
     }
   }
 
   // only record successful expeditions
   if (action.type === "@@Response/kcsapi/api_req_mission/result") {
     const expedId = expedNameToId( action.body.api_quest_name )
-    const fleetId = parseInt(action.postBody.api_deck_id, 10)-1
+    const fleetInd = parseInt(action.postBody.api_deck_id, 10)-1
 
     if (action.body.api_clear_result !== 0) {
       ezconfigs.selectedExpeds.modifyValue(
-        modifyArray(fleetId,() => expedId))
+        modifyArray(fleetInd,() => expedId))
     }
 
     // switch to the corresponding fleet on expedition result screen
@@ -31,7 +31,7 @@ const reducer = (state = initState, action) => {
     if (ezconfigs.fleetAutoSwitch.getValue()) {
       return {
         ...state,
-        fleetId,
+        fleetInd,
       }
     }
 
@@ -41,16 +41,16 @@ const reducer = (state = initState, action) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onChangeFleet: (fleetId,reason=null) => {
-    if (fleetId === null) {
+  onChangeFleet: (fleetInd,reason=null) => {
+    if (fleetInd === null) {
       // we assume "onChangeFleet" is always called with a valid
       // fleet index
-      console.error("fleetId should not be null")
+      console.error("fleetInd should not be null")
       return
     }
     dispatch({
       type: "@poi-plugin-ezexped@ChangeFleet",
-      fleetId,
+      fleetInd,
       reason,
     })
   },

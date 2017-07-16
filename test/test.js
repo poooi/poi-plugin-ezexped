@@ -138,9 +138,9 @@ describe("autoSwitch", () => {
 
       // 5 ships for each fleet, 3 equips for each ship
       // so that we can test adding
-      const fleets = utils.enumFromTo(0,3).map( fleetId => (
+      const fleets = utils.enumFromTo(0,3).map( fleetInd => (
         {
-          index: fleetId,
+          index: fleetInd,
           ships: utils.enumFromTo(0,4).map(newShip),
         }))
 

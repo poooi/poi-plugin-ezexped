@@ -39,7 +39,7 @@ CONTRACT:
 returns a fleet representation when the fleet can be found, "null" otherwise.
 
 */
-const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
+const mkFleetInfo = fleetInd => (shipsData, equipsData, fleetData) => {
   arrayOrUndef(shipsData)
   arrayOrUndef(equipsData)
   objOrUndef(fleetData)
@@ -71,20 +71,20 @@ const mkFleetInfo = fleetId => (shipsData, equipsData, fleetData) => {
     }
   })
   return {
-    index: fleetId,
+    index: fleetInd,
     name: fleetData.api_name,
     available: fleetData.api_mission[0] === 0,
     ships,
   }
 }
 
-// 0 <= fleetId <= 3
-const mkFleetInfoSelector = fleetId =>
+// 0 <= fleetInd <= 3
+const mkFleetInfoSelector = fleetInd =>
   createSelector(
-    fleetShipsDataSelectorFactory(fleetId),
-    fleetShipsEquipDataSelectorFactory(fleetId),
-    fleetSelectorFactory(fleetId),
-    mkFleetInfo(fleetId))
+    fleetShipsDataSelectorFactory(fleetInd),
+    fleetShipsEquipDataSelectorFactory(fleetInd),
+    fleetSelectorFactory(fleetInd),
+    mkFleetInfo(fleetInd))
 
 const isFleetCombinedSelector =
   createSelector(
