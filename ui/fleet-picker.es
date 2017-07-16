@@ -27,8 +27,8 @@ const { dispatch } = window
 class FleetPicker extends Component {
   static propTypes = {
     fleetInd: PTyp.number,
-    selectedExpeds: PTyp.arrayOf(PTyp.number).isRequired,
-    gsFlags: PTyp.arrayOf(PTyp.bool).isRequired,
+    selectedExpeds: PTyp.objectOf(PTyp.number).isRequired,
+    gsFlags: PTyp.objectOf(PTyp.bool).isRequired,
     isFleetCombined: PTyp.bool.isRequired,
     recommendSparkled: PTyp.number.isRequired,
     fleets: PTyp.array.isRequired,

@@ -4,15 +4,19 @@ import {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
   reduxSelector,
-  ezconfigSelector,
+  extConfigSelector,
 } from './selectors'
 
-import { reducer, mapDispatchToProps } from './reducer'
+import { reducer, mapDispatchToProps } from './store'
+
 import {
-  settingsClass,
-} from './settings'
+  Settings,
+} from './ui/settings'
 
 import { EZExpedMain } from './ui'
+
+const settingsClass = Settings
+
 
 /*
 
@@ -24,7 +28,8 @@ import { EZExpedMain } from './ui'
 
 const reactClass = connect(
   state => {
-    const config = ezconfigSelector(state)
+    const {config} = extConfigSelector(state)
+
     const { hideMainFleet } = config
     const isFleetCombined = isFleetCombinedSelector(state)
     const fleets = []
