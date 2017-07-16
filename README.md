@@ -7,6 +7,11 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### (TODO) 1.0.0
+
+- (TODO) Added Fleet composition requirements related to DE and CVE
+- (TODO) More tooltips
+
 ### 0.5.0
 
 - Remove "Allow switching to this plugin automatically"
