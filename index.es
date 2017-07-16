@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
-  reduxSelector,
+  fleetIndSelector,
   extConfigSelector,
 } from './selectors'
 
@@ -44,11 +44,11 @@ const reactClass = connect(
         fleets.push( fleetRep )
     }
 
-    const redux = reduxSelector(state)
+    const fleetInd = fleetIndSelector(state)
     return {
       fleets,
       isFleetCombined,
-      redux,
+      fleetInd,
       ...config,
     }
   },

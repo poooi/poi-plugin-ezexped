@@ -24,9 +24,7 @@ import { PTyp } from '../ptyp'
 
 class EZExpedMain extends Component {
   static propTypes = {
-    redux: PTyp.shape({
-      fleetInd: PTyp.number,
-    }).isRequired,
+    fleetInd: PTyp.number.isRequired,
     fleets: PTyp.array.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
     isFleetCombined: PTyp.bool.isRequired,
@@ -54,8 +52,8 @@ class EZExpedMain extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { changeFleet } = nextProps
-    const nextCurrentFleet = nextProps.redux.fleetInd !== null
-      && nextProps.fleets.find( fleet => fleet.index === nextProps.redux.fleetInd )
+    const nextCurrentFleet = nextProps.fleetInd !== null
+      && nextProps.fleets.find( fleet => fleet.index === nextProps.fleetInd )
 
     if (!nextCurrentFleet) {
       // current focus is null, we need to find a new focus
@@ -129,7 +127,7 @@ class EZExpedMain extends Component {
   }
 
   selectExped = newExpedId => {
-    const fleetInd = this.props.redux.fleetInd
+    const fleetInd = this.props.fleetInd
     this.setState({ expedGridExpanded: false })
     this.props.modifyState(
       modifyObject(
@@ -138,7 +136,7 @@ class EZExpedMain extends Component {
   }
 
   render() {
-    const { fleetInd } = this.props.redux
+    const { fleetInd } = this.props
     const { selectedExpeds, gsFlags } = this.props
     const expedId = selectedExpeds[fleetInd]
     const gsFlag = gsFlags[expedId]

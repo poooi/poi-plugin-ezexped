@@ -91,13 +91,14 @@ const isFleetCombinedSelector =
     sortieSelector,
     sortie => sortie.combinedFlag !== 0)
 
-const reduxSelector =
-  extensionSelectorFactory('poi-plugin-ezexped')
+const fleetIndSelector = createSelector(
+  extSelector,
+  ext => ext.fleetInd)
 
 export {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
-  reduxSelector,
+  fleetIndSelector,
 
   extSelector,
   extConfigSelector,
