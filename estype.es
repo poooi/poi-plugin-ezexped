@@ -8,7 +8,7 @@
    - ESType: ship type viewed from perspective of expeditions,
      one SType could belong to multiple ESTypes
  */
-
+import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 import { error } from './utils'
@@ -31,12 +31,15 @@ const nameToId = n =>
 const idToName = i =>
   stypeRev[i] || error(`invalid stype id: ${i}`)
 
+// TODO: for a consistent estype ordering, we need to export a list.
+
 const isESType = (() => {
   const eq = x => y => x === y
   const oneOf = xs => y => xs.indexOf(y) !== -1
   const t = stype
 
   return {
+    DE: eq(t.DE),
     DD: eq(t.DD),
     CL: eq(t.CL),
     CVLike: oneOf([t.CV,t.CVL,t.AV,t.CVB]),
@@ -46,8 +49,19 @@ const isESType = (() => {
     AS: eq(t.AS),
     CT: eq(t.CT),
     AV: eq(t.AV),
+    CVE: (styp, mstId) =>
+      styp === t.CVL && [521, 526, 380, 529].includes(mstId),
   }
 })()
+
+// countFleetCompo(<FleetCompo>)(<Array of Ship>) = FleetCompo
+const countFleetCompo = compo => ships =>
+  _.fromPairs(
+    Object.keys(compo).map(estype => {
+      const count = ships.filter(s =>
+        isESType[estype](s.stype, s.mstId)).length
+      return [estype, count]
+    }))
 
 const shortDesc = estypeName =>
     estypeName === "CVLike" ? "CV*"
@@ -74,4 +88,5 @@ export {
 
   shortDesc,
   longDesc,
+  countFleetCompo,
 }

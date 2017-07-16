@@ -8,3 +8,6 @@ node --version
 find . -type f -name '*.es' \
   -not \( -path ./.git -o -path ./node_modules \) \
   -exec ./node_modules/eslint/bin/eslint.js {} +
+
+echo 'Should not find any *.es files under ./test'
+find ./test -name '*.es'
