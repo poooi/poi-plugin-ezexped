@@ -11,7 +11,7 @@ import { ExpeditionViewer } from './expedition-viewer'
 import { ExpeditionTable } from './expedition-table'
 import { RequirementViewer } from './requirement-viewer'
 
-import { ezconfigs } from '../ezconfig'
+import { loadAndUpdateConfig } from '../config'
 
 import {
   findChangingFleet,
@@ -19,7 +19,7 @@ import {
   isSendingFleetToExped,
 } from '../auto-switch'
 
-import { modifyArray, not } from '../utils'
+import { modifyObject } from '../utils'
 import { PTyp } from '../ptyp'
 
 class EZExpedMain extends Component {
@@ -30,12 +30,14 @@ class EZExpedMain extends Component {
     fleets: PTyp.array.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
     isFleetCombined: PTyp.bool.isRequired,
-    selectedExpeds: PTyp.arrayOf(PTyp.number).isRequired,
-    gsFlags: PTyp.arrayOf(PTyp.bool).isRequired,
+    selectedExpeds: PTyp.objectOf(PTyp.number).isRequired,
+    gsFlags: PTyp.objectOf(PTyp.bool).isRequired,
     hideMainFleet: PTyp.bool.isRequired,
-    recommendSparkledCount: PTyp.number.isRequired,
+    sparkledCount: PTyp.number.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
-    onChangeFleet: PTyp.func.isRequired,
+    changeFleet: PTyp.func.isRequired,
+    configReady: PTyp.func.isRequired,
+    modifyState: PTyp.func.isRequired,
   }
 
   constructor() {
@@ -46,18 +48,19 @@ class EZExpedMain extends Component {
   }
 
   componentDidMount() {
+    setTimeout(() => loadAndUpdateConfig(this.props.configReady))
     window.addEventListener('game.response', this.handleGameResponse)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { onChangeFleet } = nextProps
+    const { changeFleet } = nextProps
     const nextCurrentFleet = nextProps.redux.fleetInd !== null
       && nextProps.fleets.find( fleet => fleet.index === nextProps.redux.fleetInd )
 
     if (!nextCurrentFleet) {
       // current focus is null, we need to find a new focus
       if (nextProps.fleets.length > 0) {
-        onChangeFleet(
+        changeFleet(
           nextProps.fleets[0].index,
           "initializing fleet focus")
       }
@@ -70,7 +73,7 @@ class EZExpedMain extends Component {
         this.props.fleets,
         nextProps.fleets)
       if (changingFleetInd !== null) {
-        onChangeFleet(
+        changeFleet(
           changingFleetInd,
           "detected changing fleet")
       }
@@ -84,13 +87,13 @@ class EZExpedMain extends Component {
           nextProps.isFleetCombined)
 
         if (nxt !== null) {
-          onChangeFleet(
+          changeFleet(
             nxt,
             "detected that we are sending a fleet out, switching to next one")
         } else {
           // nxt === null
           if (! nextProps.hideMainFleet && nextProps.fleets.length > 0) {
-            onChangeFleet(
+            changeFleet(
               nextProps.fleets[0].index,
               "all fleets are sent, switching to main fleet")
           }
@@ -112,11 +115,11 @@ class EZExpedMain extends Component {
           this.props.isFleetCombined,
           this.props.hideMainFleet)
         if (nxt !== null) {
-          this.props.onChangeFleet(nxt, "User is at expedition screen")
+          this.props.changeFleet(nxt, "User is at expedition screen")
         } else {
           // nxt === null
           if (! this.props.hideMainFleet && this.props.fleets.length > 0) {
-            this.props.onChangeFleet(
+            this.props.changeFleet(
               this.props.fleets[0].index,
               "at exped screen, no fleet available, switching to main")
           }
@@ -128,8 +131,10 @@ class EZExpedMain extends Component {
   selectExped = newExpedId => {
     const fleetInd = this.props.redux.fleetInd
     this.setState({ expedGridExpanded: false })
-    ezconfigs.selectedExpeds.modifyValue(
-      modifyArray(fleetInd,() => newExpedId))
+    this.props.modifyState(
+      modifyObject(
+        'selectedExpeds',
+        modifyObject(fleetInd, () => newExpedId)))
   }
 
   render() {
@@ -149,10 +154,14 @@ class EZExpedMain extends Component {
               gsFlags={gsFlags}
               isFleetCombined={this.props.isFleetCombined}
               autoSwitch={this.props.fleetAutoSwitch}
-              recommendSparkled={this.props.recommendSparkledCount}
+              recommendSparkled={this.props.sparkledCount}
               onToggleAutoSwitch={() =>
-                ezconfigs.fleetAutoSwitch.modifyValue(not)}
-              onSelectFleet={this.props.onChangeFleet} />
+                this.props.modifyState(
+                  modifyObject(
+                    'fleetAutoSwitch',
+                    x => !x))
+              }
+              onSelectFleet={this.props.changeFleet} />
           {
             fleet && (
               <ExpeditionViewer
@@ -162,8 +171,12 @@ class EZExpedMain extends Component {
                 onClickExped={() =>
                   this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
                 onClickGS={() =>
-                  ezconfigs.gsFlags.modifyValue(
-                    modifyArray(expedId,not))
+                  this.props.modifyState(
+                    modifyObject(
+                      'gsFlags',
+                      modifyObject(
+                        expedId,
+                        x => !x)))
                 }
               />
             )
@@ -187,7 +200,7 @@ class EZExpedMain extends Component {
                 fleet={fleet}
                 expedId={expedId}
                 greatSuccess={gsFlag}
-                recommendSparkled={this.props.recommendSparkledCount}
+                recommendSparkled={this.props.sparkledCount}
                 hideSatReqs={this.props.hideSatReqs}
               />
             )

@@ -15,9 +15,14 @@ const allRequired = shapeObj => {
   return ret
 }
 
+const FleetIndex = PropTypes.oneOf([0,1,2,3])
+const FleetId = PropTypes.oneOf([1,2,3,4])
+
 const PTyp = {
   ...PropTypes,
   allRequired,
+  FleetIndex,
+  FleetId,
 }
 
 export {

@@ -45,6 +45,26 @@ const modifyArray = (index, f) => {
   }
 }
 
+const modifyObject = (propName, f, removeUndefined = false) => {
+  if (typeof f !== 'function')
+    console.error('modifier is not a function')
+
+  return obj => {
+    const val = obj[propName]
+    const newVal = f(val)
+    if (typeof newVal === 'undefined' && removeUndefined) {
+      const newObj = {...obj}
+      delete newObj[propName]
+      return newObj
+    } else {
+      return ({
+        ...obj,
+        [propName]: newVal,
+      })
+    }
+  }
+}
+
 const not = x => !x
 
 export {
@@ -53,6 +73,7 @@ export {
   ignore,
   not,
   modifyArray,
+  modifyObject,
 
   warn,
   error,

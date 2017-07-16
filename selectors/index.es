@@ -7,11 +7,11 @@ import {
   fleetSelectorFactory,
   extensionSelectorFactory,
   sortieSelector,
-  configSelector,
 } from 'views/utils/selectors'
 
-import { ezconfigs } from './ezconfig'
-import { error } from './utils'
+import { error } from '../utils'
+
+import { extSelector, extConfigSelector } from './common'
 
 const arrayOrUndef = x =>
   (Array.isArray(x) || typeof x === 'undefined') ?
@@ -94,21 +94,11 @@ const isFleetCombinedSelector =
 const reduxSelector =
   extensionSelectorFactory('poi-plugin-ezexped')
 
-const ezconfigSelector = createSelector(
-  configSelector,
-  config => _.fromPairs(Object.entries(ezconfigs).map( ([confKey, conf]) => {
-    // get the current config value,
-    // or a function that generates a default config value
-    // we intentionally want to delay the creation of a default config value
-    // unless it's necessary
-    const valOrFunc = _.get(config,conf.path, conf.getDefault)
-    const val = valOrFunc === conf.getDefault ? valOrFunc() : valOrFunc
-    return [confKey, val]
-  })))
-
 export {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
-  ezconfigSelector,
   reduxSelector,
+
+  extSelector,
+  extConfigSelector,
 }
