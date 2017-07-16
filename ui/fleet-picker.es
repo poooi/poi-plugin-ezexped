@@ -15,7 +15,7 @@ import { PTyp } from '../ptyp'
 const { dispatch } = window
 
 // props:
-// - fleetId: current selected fleet id
+// - fleetInd: current selected fleet id
 // - fleets: array of fleet representation
 // - selectedExpeds
 // - gsFlags
@@ -26,7 +26,7 @@ const { dispatch } = window
 // - recommendSparkled
 class FleetPicker extends Component {
   static propTypes = {
-    fleetId: PTyp.number,
+    fleetInd: PTyp.number,
     selectedExpeds: PTyp.arrayOf(PTyp.number).isRequired,
     gsFlags: PTyp.arrayOf(PTyp.bool).isRequired,
     isFleetCombined: PTyp.bool.isRequired,
@@ -39,7 +39,7 @@ class FleetPicker extends Component {
   }
 
   static defaultProps = {
-    fleetId: null,
+    fleetInd: null,
   }
 
   render() {
@@ -67,8 +67,8 @@ class FleetPicker extends Component {
     //   - otherwise red
     // - not available: always blue
     const mkButton = fleet => {
-      const fleetId = fleet.index
-      const expedId = this.props.selectedExpeds[fleetId]
+      const fleetInd = fleet.index
+      const expedId = this.props.selectedExpeds[fleetInd]
       const greatSuccess = this.props.gsFlags[expedId]
 
       const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
@@ -83,20 +83,20 @@ class FleetPicker extends Component {
         (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
       const bsStyle =
-          fleetId === 0 ? "success"
-        : this.props.isFleetCombined && fleetId === 1 ? "success"
+          fleetInd === 0 ? "success"
+        : this.props.isFleetCombined && fleetInd === 1 ? "success"
         : !fleet.available ? "primary"
         : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
         : normReadyFlag && gsReadyFlag ? "warning"
         : "danger"
 
-      const focused = this.props.fleetId === fleetId
+      const focused = this.props.fleetInd === fleetInd
       const handleFocusFleetInMainUI = () => {
         dispatch({
           type: '@@TabSwitch',
           tabInfo: {
             activeMainTab: 'shipView',
-            activeFleetId: fleetId,
+            activeFleetId: fleetInd,
           },
         })
       }
@@ -110,7 +110,7 @@ class FleetPicker extends Component {
             width: "75px", overflow: "hidden"}}
           active={focused}
           onContextMenu={handleFocusFleetInMainUI}
-          onClick={() => this.props.onSelectFleet(fleetId)}>
+          onClick={() => this.props.onSelectFleet(fleetInd)}>
         <div style={{textOverflow: "ellipsis", overflow: "hidden"}} >
           {fleet.name}
         </div>
