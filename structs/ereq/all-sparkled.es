@@ -4,6 +4,8 @@ import {
 } from './common'
 
 class AllSparkled {
+  static make = () => {}
+
   static prepare = () => () =>
     onFleetShips(ships => {
       const nonSparkledShips = ships.filter(s => ! isShipSparkled(s))

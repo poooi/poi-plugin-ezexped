@@ -3,9 +3,12 @@ import {
   requireGreaterOrEqual,
   isEqpDrum,
   sum,
+  singObj,
 } from './common'
 
 class DrumCount {
+  static make = singObj('count')
+
   static prepare = ({count}) => () =>
     onFleetShips(ships =>
       requireGreaterOrEqual(

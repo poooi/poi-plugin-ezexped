@@ -1,8 +1,11 @@
 import {
   onFleetShips,
+  singObj,
 } from './common'
 
 class Morale {
+  static make = singObj('morale')
+
   static prepare = ({morale}) => () =>
     onFleetShips(ships => {
       const lowMoraleShips = ships.filter(s => s.morale < morale)
