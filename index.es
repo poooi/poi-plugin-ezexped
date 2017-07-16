@@ -14,6 +14,14 @@ import {
 
 import { EZExpedMain } from './ui'
 
+/*
+
+   - reduxify states and move some logic part into selectors
+   - redo requirement implementation, allow alternative fleet compo
+   - fleet tooltip redo, might include morale & related equips (DLC & drum)
+
+ */
+
 const reactClass = connect(
   state => {
     const config = ezconfigSelector(state)
