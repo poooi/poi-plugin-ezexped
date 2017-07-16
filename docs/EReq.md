@@ -69,7 +69,7 @@ An `EReq` is an Object guaranteed to have `type` property.
     ```
     {
       type: 'levelSum',
-      count: <number>,
+      level: <number>,
     }
     ```
 

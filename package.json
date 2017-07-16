@@ -4,7 +4,7 @@
   "description": "Expedition made easy",
   "main": "index.es",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "repository": {
     "type": "git",
