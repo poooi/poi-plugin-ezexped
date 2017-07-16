@@ -1,7 +1,9 @@
-import { onFleetShips } from './common'
+import { onFleetShips, singObj } from './common'
 import { countFleetCompo } from '../../estype'
 
 class FleetCompo {
+  static make = singObj('compo')
+
   static prepare = ({compo}) => () =>
     onFleetShips(ships => {
       const countedCompo = countFleetCompo(compo)(ships)

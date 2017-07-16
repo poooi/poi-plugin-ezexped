@@ -3,6 +3,8 @@ import {
 } from './common'
 
 class Resupply {
+  static make = () => {}
+
   static prepare = () => () =>
     onFleetShips(ships => {
       const needSupShips = ships.filter(s => s.needResupply)

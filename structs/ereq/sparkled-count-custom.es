@@ -5,6 +5,8 @@ import {
 } from './common'
 
 class SparkledCountCustom {
+  static make = () => {}
+
   static prepare = () => ({sparkledCount}) =>
     onFleetShips(ships =>
       requireGreaterOrEqual(

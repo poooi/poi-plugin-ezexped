@@ -1,145 +1,143 @@
 This document defines `EReq`, which is the interal representation for
 all kinds of expedition requirements.
 
-(TODO) impl
-
 # Data Structures
 
 ## `EReq` structure
 
 An `EReq` is an Object guaranteed to have `type` property.
 
-- when type is `fsLevel`
+- when type is `FSLevel`
 
     ```
     {
-      type: 'fsLevel',
+      type: 'FSLevel',
       level: <number>,
     }
     ```
 
     Flagship level requirement.
 
-- when type is `fsType`
+- when type is `FSType`
 
     ```
     {
-      type: 'fsType',
+      type: 'FSType',
       estype: <ESType>,
     }
     ```
 
     Flagship type requirement.
 
-- when type is `shipCount`
+- when type is `ShipCount`
 
     ```
     {
-      type: 'shipCount',
+      type: 'ShipCount',
       count: <number>,
     }
     ```
 
     Number of ships in the fleet.
 
-- when type is `drumCarrierCount`
+- when type is `DrumCarrierCount`
 
     ```
     {
-      type: 'drumCarrierCount',
+      type: 'DrumCarrierCount',
       count: <number>,
     }
     ```
 
     Number of ships carrying drums.
 
-- when type is `drumCount`
+- when type is `DrumCount`
 
     ```
     {
-      type: 'drumCount',
+      type: 'DrumCount',
       count: <number>,
     }
     ```
 
     Number of drums in fleet.
 
-- when type is `levelSum`
+- when type is `LevelSum`
 
     ```
     {
-      type: 'levelSum',
+      type: 'LevelSum',
       level: <number>,
     }
     ```
 
     Sum of levels of all ships in fleet.
 
-- when type is `sparkledCount`
+- when type is `SparkledCount`
 
     ```
     {
-      type: 'sparkledCount',
+      type: 'SparkledCount',
       count: <number>,
     }
     ```
 
     The number of sparkled ships in fleet should be at least `count`.
 
-- when type is `sparkledCountCustom`
+- when type is `SparkledCountCustom`
 
     ```
     {
-      type: 'sparkledCountCustom',
+      type: 'SparkledCountCustom',
     }
     ```
 
     Same as `sparkledCount`, but the number info is user-defined
     therefore is only available at runtime
 
-- when type is `morale`
+- when type is `Morale`
 
     ```
     {
-      type: 'morale',
+      type: 'Morale',
       morale: <number>,
     }
     ```
 
     Least morale requirement for fleet members
 
-- when type is `resupply`
+- when type is `Resupply`
 
     ```
     {
-      type: 'resupply',
+      type: 'Resupply',
     }
     ```
 
-- when type is `allSparkled`
+- when type is `AllSparkled`
 
     ```
     {
-      type: 'allSparkled',
+      type: 'AllSparkled',
     }
     ```
 
-- when type is `fleetCompo`
+- when type is `FleetCompo`
 
     ```
     {
-      type: 'fleetCompo',
+      type: 'FleetCompo',
       compo: <Compo>,
     }
     ```
 
     Fleet composition requirement.
 
-- when type is `anyFleetCompo`
+- when type is `AnyFleetCompo`
 
     ```
     {
-      type: 'anyFleetCompo',
+      type: 'AnyFleetCompo',
       compos: an Array of <Compo>,
     }
     ```

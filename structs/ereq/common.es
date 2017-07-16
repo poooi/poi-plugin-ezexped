@@ -26,6 +26,9 @@ const isShipSparkled = ship => ship.morale >= 50
 
 const {sum} = _
 
+// create singleton object
+const singObj = propName => v => ({[propName]: v})
+
 export {
   checkOk,
 
@@ -38,4 +41,5 @@ export {
   isShipSparkled,
 
   sum,
+  singObj,
 }

@@ -2,9 +2,12 @@ import {
   onFleetShips,
   wrapBool,
   sum,
+  singObj,
 } from './common'
 
 class LevelSum {
+  static make = singObj('level')
+
   static prepare = ({level}) => () =>
     onFleetShips(ships =>
       wrapBool(
