@@ -85,30 +85,6 @@ defineConfig(
     return null
   })
 
-// try removing "allowPluginAutoSwitch", which is now handled by main program
-// TODO: this part can be removed after several releases.
-{
-  const path = `${confPath}.allowPluginAutoSwitch`
-  const mainPath = 'poi.autoswitch.poi-plugin-ezexped'
-  const curValue = config.get(path)
-
-  if (typeof curValue !== 'undefined') {
-    let mainAutoSwitch = config.get(mainPath)
-    if (typeof mainAutoSwitch === 'undefined')
-      mainAutoSwitch = true
-    // the effective value of current auto-switch status:
-    // the auto-switch is on only when both are.
-    const effectiveSwitch = curValue && mainAutoSwitch
-    config.set(mainPath,effectiveSwitch)
-
-    // then we can remove this particular plugin setting
-    const { allowPluginAutoSwitch, ...newConfigs } = config.get(confPath)
-    ignore(allowPluginAutoSwitch)
-
-    config.set(confPath,newConfigs)
-  }
-}
-
 defineBoolConfig("hideMainFleet", false)
 defineBoolConfig("hideSatReqs", false)
 defineBoolConfig("fleetAutoSwitch", true)
