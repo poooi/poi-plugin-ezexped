@@ -7,31 +7,48 @@ import {
 
 import { initState } from '../store'
 
-const extSelector = createSelector(
-  extensionSelectorFactory('poi-plugin-ezexped'),
-  ext => _.isEmpty(ext) ? initState : ext)
-
 const isFleetCombinedSelector =
   createSelector(
     sortieSelector,
     sortie => sortie.combinedFlag !== 0)
 
-const fleetIdSelector = createSelector(
-  extSelector,
-  ext => ext.fleetId)
+const extSelector = createSelector(
+  extensionSelectorFactory('poi-plugin-ezexped'),
+  ext => _.isEmpty(ext) ? initState : ext)
 
-const hideMainFleetSelector = createSelector(
-  extSelector,
-  ext => ext.hideMainFleetSelector)
+// memoized in case we accidentally created a new one
+const mkExtPropSelector = _.memoize(
+  propName =>
+    createSelector(extSelector, ext => ext[propName]))
 
-const sparkledCountSelector = createSelector(
-  extSelector,
-  ext => ext.sparkledCount)
+const fleetAutoSwitchSelector =
+  mkExtPropSelector('fleetAutoSwitch')
+const hideMainFleetSelector =
+  mkExtPropSelector('hideMainFleet')
+const hideSatReqsSelector =
+  mkExtPropSelector('hideSatReqs')
+const sparkledCountSelector =
+  mkExtPropSelector('sparkledCount')
+const fleetIdSelector =
+  mkExtPropSelector('fleetId')
+const gsFlagsSelector =
+  mkExtPropSelector('gsFlags')
+const selectedExpedsSelector =
+  mkExtPropSelector('selectedExpeds')
+const readySelector =
+  mkExtPropSelector('ready')
 
 export {
-  extSelector,
   isFleetCombinedSelector,
-  fleetIdSelector,
+
+  extSelector,
+
+  fleetAutoSwitchSelector,
   hideMainFleetSelector,
+  hideSatReqsSelector,
   sparkledCountSelector,
+  fleetIdSelector,
+  gsFlagsSelector,
+  selectedExpedsSelector,
+  readySelector,
 }

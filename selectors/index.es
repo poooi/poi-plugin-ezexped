@@ -1,11 +1,8 @@
 import { createSelector } from 'reselect'
 import { _ } from 'lodash'
 import {
-  extSelector,
-  isFleetCombinedSelector,
-  fleetIdSelector,
   hideMainFleetSelector,
-  sparkledCountSelector,
+  isFleetCombinedSelector,
 } from './common'
 import {
   mkFleetInfoSelector,
@@ -35,13 +32,9 @@ const visibleFleetsInfoSelector = createSelector(
       fleetInfo && fleetInfo.id >= minId)
   })
 
-export {
-  extSelector,
-  isFleetCombinedSelector,
-  fleetIdSelector,
-  hideMainFleetSelector,
-  sparkledCountSelector,
+export * from './common'
 
+export {
   mkFleetInfoSelector,
   visibleFleetsInfoSelector,
 }

@@ -26,7 +26,7 @@ const { dispatch } = window
 // - recommendSparkled
 class FleetPicker extends Component {
   static propTypes = {
-    fleetId: PTyp.number,
+    fleetId: PTyp.number.isRequired,
     selectedExpeds: PTyp.objectOf(PTyp.number).isRequired,
     gsFlags: PTyp.objectOf(PTyp.bool).isRequired,
     isFleetCombined: PTyp.bool.isRequired,
@@ -36,10 +36,6 @@ class FleetPicker extends Component {
 
     onSelectFleet: PTyp.func.isRequired,
     onToggleAutoSwitch: PTyp.func.isRequired,
-  }
-
-  static defaultProps = {
-    fleetId: null,
   }
 
   render() {

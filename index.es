@@ -1,6 +1,15 @@
 import { connect } from 'react-redux'
+import {
+  createStructuredSelector,
+} from 'reselect'
 
 import {
+  fleetAutoSwitchSelector,
+  selectedExpedsSelector,
+  gsFlagsSelector,
+  hideMainFleetSelector,
+  sparkledCountSelector,
+  hideSatReqsSelector,
   isFleetCombinedSelector,
   visibleFleetsInfoSelector,
   fleetIdSelector,
@@ -9,7 +18,6 @@ import {
 import { reducer, mapDispatchToProps } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain } from './ui'
-import { extConfigSelector } from './selectors/config'
 
 /*
 
@@ -22,20 +30,20 @@ import { extConfigSelector } from './selectors/config'
 
  */
 
+const mainUISelector = createStructuredSelector({
+  fleets: visibleFleetsInfoSelector,
+  isFleetCombined: isFleetCombinedSelector,
+  fleetId: fleetIdSelector,
+  fleetAutoSwitch: fleetAutoSwitchSelector,
+  selectedExpeds: selectedExpedsSelector,
+  gsFlags: gsFlagsSelector,
+  hideMainFleet: hideMainFleetSelector,
+  sparkledCount: sparkledCountSelector,
+  hideSatReqs: hideSatReqsSelector,
+})
+
 const reactClass = connect(
-  state => {
-    // TODO: remove extConfigSelector
-    const {config} = extConfigSelector(state)
-    const isFleetCombined = isFleetCombinedSelector(state)
-    const fleets = visibleFleetsInfoSelector(state)
-    const fleetId = fleetIdSelector(state)
-    return {
-      fleets,
-      isFleetCombined,
-      fleetId,
-      ...config,
-    }
-  },
+  mainUISelector,
   mapDispatchToProps)(EZExpedMain)
 
 const switchPluginPath = [
