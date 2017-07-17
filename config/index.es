@@ -14,6 +14,6 @@ const stateToConfig = state =>
 export {
   defaultConfig,
   loadAndUpdateConfig,
-  stateToConfig,
   saveConfig,
- }
+  stateToConfig,
+}

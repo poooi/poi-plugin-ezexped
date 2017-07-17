@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect'
-import { extConfigSelector } from './common'
+import {
+  sparkledCountSelector,
+} from './common'
 import { expedReqs, mapExpedReq } from '../exped-reqs'
 import { EReq } from '../structs/ereq'
 
 // extracts slice of interest related to expedition requirements
-const minConfigSelector = createSelector(
-  extConfigSelector,
-  ({config}) => config.sparkledCount)
+const minConfigSelector = sparkledCountSelector
 
 const expedReqsStage2Selector = createSelector(
   minConfigSelector,
@@ -16,7 +16,6 @@ const expedReqsStage2Selector = createSelector(
     return expedReqs.map(expedReq => {
       if (! expedReq)
         return expedReq
-
       return mapExpedReq(EReq.performStage2(config))(expedReq)
     })
   })

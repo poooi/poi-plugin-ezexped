@@ -6,7 +6,7 @@ import {
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
-import { extConfigSelector } from '../../selectors'
+import { extConfigSelector } from '../../selectors/config'
 import { mapDispatchToProps } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'

@@ -2,9 +2,11 @@ import _ from 'lodash'
 import { observer, observe } from 'redux-observers'
 import { store } from 'views/create-store'
 
-import { extConfigSelector } from './selectors'
 import { shallowEqual } from './utils'
-import { saveConfig } from './config'
+import {
+  extConfigSelector,
+  saveConfig,
+} from './config'
 
 const debouncedSaveConfig = _.debounce(
   configData => setTimeout(() => saveConfig(configData)),

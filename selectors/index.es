@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect'
 import { _ } from 'lodash'
-
 import {
-  sortieSelector,
-} from 'views/utils/selectors'
-
-import { extSelector, extConfigSelector } from './common'
+  extSelector,
+  isFleetCombinedSelector,
+  fleetIdSelector,
+  hideMainFleetSelector,
+  sparkledCountSelector,
+} from './common'
 import {
   mkFleetInfoSelector,
   allFleetsInfoSelector,
@@ -13,21 +14,11 @@ import {
 
 import {} from './exped-reqs'
 
-const isFleetCombinedSelector =
-  createSelector(
-    sortieSelector,
-    sortie => sortie.combinedFlag !== 0)
-
-const fleetIdSelector = createSelector(
-  extSelector,
-  ext => ext.fleetId)
-
 const visibleFleetsInfoSelector = createSelector(
   allFleetsInfoSelector,
-  extConfigSelector,
+  hideMainFleetSelector,
   isFleetCombinedSelector,
-  (allFleetsInfo, {config}, isFleetCombined) => {
-    const { hideMainFleet } = config
+  (allFleetsInfo,hideMainFleet, isFleetCombined) => {
     const minId = hideMainFleet ?
       /*
          is hiding main fleet.
@@ -45,11 +36,12 @@ const visibleFleetsInfoSelector = createSelector(
   })
 
 export {
-  mkFleetInfoSelector,
+  extSelector,
   isFleetCombinedSelector,
   fleetIdSelector,
-  visibleFleetsInfoSelector,
+  hideMainFleetSelector,
+  sparkledCountSelector,
 
-  extSelector,
-  extConfigSelector,
+  mkFleetInfoSelector,
+  visibleFleetsInfoSelector,
 }
