@@ -8,31 +8,42 @@ import {
   fleetIdSelector,
 } from './common'
 import {
-  allFleetsInfoSelector,
+  allFleetIdsSelector,
+  indexedFleetsInfoSelector,
 } from './fleet-info'
 
 import {} from './exped-reqs'
 
-const visibleFleetsInfoSelector = createSelector(
-  allFleetsInfoSelector,
+const visibleFleetIdsSelector = createSelector(
+  allFleetIdsSelector,
   hideMainFleetSelector,
   isFleetCombinedSelector,
-  (allFleetsInfo,hideMainFleet, isFleetCombined) => {
-    const minId = hideMainFleet ?
-      /*
-         is hiding main fleet.
+  (allFleetIds, hideMainFleet, isFleetCombined) =>
+    allFleetIds.filter(fleetId => {
+      if (!hideMainFleet)
+        return true
 
-         - for combined fleets, we need to hide
-           both first (id=1) fleet and second (id=2) one
-         - otherwise just first (id=1) fleet
+      const isMainFleet = isFleetCombined ?
+        (
+          /*
+             for a combined fleet, both the first and the second fleets
+             should be considered main fleet
+           */
+          fleetId <= 2
+        ) :
+        (
+          // otherwise we just need to hide the first fleet
+          fleetId === 1
+        )
+      return !isMainFleet
+    }))
 
-       */
-      (isFleetCombined ? 3 : 2) :
-      1
-
-    return allFleetsInfo.filter(fleetInfo =>
-      fleetInfo && fleetInfo.id >= minId)
-  })
+const visibleFleetsInfoSelector = createSelector(
+  indexedFleetsInfoSelector,
+  visibleFleetIdsSelector,
+  (indexedFleetsInfo,visibleFleetIds) =>
+    visibleFleetIds.map(fleetId =>
+      indexedFleetsInfo[fleetId]))
 
 // TODO: cases where fleet is not available.
 
