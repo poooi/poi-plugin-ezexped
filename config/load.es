@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { enumFromTo } from '../utils'
 
 import { defaultConfig } from './common'
+import { saveConfig } from './save'
 
 // loads config from poi and perform config data update when it's necessary
 const loadAndUpdateConfig = onConfigReady => {
@@ -54,7 +55,16 @@ const loadAndUpdateConfig = onConfigReady => {
     }
   }
 
-  // TODO: remove old data (perhaps asynchronously)
+  // update poi config storage by wiping old data
+  // and setting new one
+  setTimeout(() => {
+    const enable = !! _.get(rawConfig,'enable')
+    // clear data
+    config.set('plugin.poi-plugin-ezexped',{enable})
+    // set new config
+    saveConfig(currentConfig)
+  })
+
   return onConfigReady(currentConfig)
 }
 
