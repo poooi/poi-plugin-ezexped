@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import {
-  mkFleetInfoSelector,
   isFleetCombinedSelector,
+  visibleFleetsInfoSelector,
   fleetIndSelector,
   extConfigSelector,
 } from './selectors'
@@ -29,21 +29,8 @@ const settingsClass = Settings
 const reactClass = connect(
   state => {
     const {config} = extConfigSelector(state)
-
-    const { hideMainFleet } = config
     const isFleetCombined = isFleetCombinedSelector(state)
-    const fleets = []
-
-    const beginInd = hideMainFleet
-      ? (!isFleetCombined ? 1 : 2)
-      : 0
-
-    for (let fleetInd=beginInd; fleetInd<4; ++fleetInd) {
-      const fleetRep = mkFleetInfoSelector(fleetInd)(state)
-      if (fleetRep !== null)
-        fleets.push( fleetRep )
-    }
-
+    const fleets = visibleFleetsInfoSelector(state)
     const fleetInd = fleetIndSelector(state)
     return {
       fleets,
