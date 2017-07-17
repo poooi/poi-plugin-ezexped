@@ -1,36 +1,18 @@
 import React, { Component } from 'react'
-import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
-import { expedInfo } from '../exped-info'
-import { error } from '../utils'
-import { daihatsu, fleetResupplyCost } from '../income-calc'
+import { expedInfo } from '../../exped-info'
+import { error } from '../../utils'
+import { daihatsu, fleetResupplyCost } from '../../income-calc'
 
-import { __, fmtTime } from '../tr'
-import { PTyp } from '../ptyp'
+import { __, fmtTime } from '../../tr'
+import { PTyp } from '../../ptyp'
 
-class IconAndLabel extends Component {
-  static propTypes = {
-    style: PTyp.object,
-    icon: PTyp.node.isRequired,
-    label: PTyp.node.isRequired,
-  }
-
-  static defaultProps = {
-    style: {},
-  }
-
-  render() {
-    return (
-      <div style={{...this.props.style, paddingLeft: "6px", display: "flex"}}>
-        <div>{this.props.icon}</div>
-        <div style={{flex: "1", marginLeft: "2px", marginRight: "2px"}} >{this.props.label}</div>
-      </div>
-    )
-  }
-}
+import { IconAndLabel } from './icon-and-label'
+import { ResourceWithDetail } from './resource-with-detail'
 
 const itemNameToMaterialId = x =>
     x === "Bucket" ? 6
@@ -86,58 +68,6 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
 }
 
 const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
-
-// props:
-// - resourceName
-// - icon
-// - one of "renderedResources"'s value in "ExpeditionViewer"
-class ResourceWithDetail extends Component {
-  static propTypes = {
-    resourceName: PTyp.string.isRequired,
-    icon: PTyp.node.isRequired,
-    renderedResource: PTyp.object.isRequired,
-  }
-  render() {
-    // "123Text" => "123"
-    const rmText = t => t.slice(0,t.length-4)
-    const translateKey = keyName => __(`IncomeExplain.${rmText(keyName)}`)
-    const tooltipTexts = [
-      "basicIncomeText",
-      "aveImpText",
-      "dhtBonusText",
-      "tokuBonusText",
-      "totalIncomeText",
-      "netIncomeText",
-    ].filter( k => this.props.renderedResource[k] )
-    // .map( k => `${translateKey(k)}: ${this.props.renderedResource[k]}`)
-    const tooltip = (
-      <Tooltip
-          className="ezexped-pop"
-          style={{display: "flex"}}
-          id={`tooltip-${this.props.resourceName}`}>
-        {
-          tooltipTexts.map(x => (
-            <div style={{flex: "1", textAlign: "left"}} key={x}>
-              {
-                `${translateKey(x)}: ${this.props.renderedResource[x]}`
-              }
-            </div>
-          ))
-        }
-      </Tooltip>
-    )
-
-    return (
-      <OverlayTrigger
-        placement="bottom" overlay={tooltip}>
-        <div>
-          <IconAndLabel
-            icon={this.props.icon}
-            label={this.props.renderedResource.finalIncome} />
-        </div>
-      </OverlayTrigger>)
-  }
-}
 
 // props:
 // - expedId: expedition id

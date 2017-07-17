@@ -3,7 +3,6 @@ import _ from 'lodash'
 
 import {
   basicSelector,
-  fleetsSelector,
   fleetShipsDataSelectorFactory,
   fleetShipsEquipDataSelectorFactory,
   fleetSelectorFactory,
