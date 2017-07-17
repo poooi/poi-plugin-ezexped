@@ -26,7 +26,7 @@ const reducer = (state = initState, action) => {
     return modifier(state)
   }
 
-  if (action.type === "@poi-plugin-ezexped@ChangeFleet") {
+  if (action.type === '@poi-plugin-ezexped@ChangeFleet') {
     return {
       ...state,
       fleetId: action.fleetId,
@@ -34,7 +34,7 @@ const reducer = (state = initState, action) => {
   }
 
   // only record successful expeditions
-  if (action.type === "@@Response/kcsapi/api_req_mission/result") {
+  if (action.type === '@@Response/kcsapi/api_req_mission/result') {
     const expedId = expedNameToId( action.body.api_quest_name )
     const fleetId = parseInt(action.postBody.api_deck_id, 10)
     let currentState = state
@@ -68,7 +68,7 @@ const mapDispatchToProps = dispatch => ({
     }),
   changeFleet: (fleetId,reason=null) =>
     dispatch({
-      type: "@poi-plugin-ezexped@ChangeFleet",
+      type: '@poi-plugin-ezexped@ChangeFleet',
       fleetId,
       reason,
     }),
