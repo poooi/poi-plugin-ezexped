@@ -2,12 +2,23 @@ import { createSelector } from 'reselect'
 import _ from 'lodash'
 
 import {
+  basicSelector,
+  fleetsSelector,
   fleetShipsDataSelectorFactory,
   fleetShipsEquipDataSelectorFactory,
   fleetSelectorFactory,
 } from 'views/utils/selectors'
 
-import { error } from '../utils'
+import { error, enumFromTo } from '../utils'
+
+const fleetNumberCountSelector = createSelector(
+  basicSelector,
+  basic => _.get(basic,'api_count_deck',4))
+
+// get the sorted array of all api_id of openned fleets
+const allFleetIdsSelector = createSelector(
+  fleetNumberCountSelector,
+  _.memoize(count => enumFromTo(1,count)))
 
 const arrayOrUndef = x =>
   (Array.isArray(x) || typeof x === 'undefined') ?
@@ -18,7 +29,6 @@ const objOrUndef = x =>
   ((x !== null && typeof x === 'object') || typeof x === 'undefined') ?
     _.noop() :
     error(`Expecting an Object or undefined value but get ${x}`)
-
 
 /*
 
@@ -91,6 +101,7 @@ const allFleetsInfoSelector = createSelector(
   (...fleets) => fleets)
 
 export {
+  allFleetIdsSelector,
   mkFleetInfoSelector,
   allFleetsInfoSelector,
 }
