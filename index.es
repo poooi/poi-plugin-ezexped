@@ -39,11 +39,11 @@ const reactClass = connect(
 
 const switchPluginPath = [
   {
-    path: "/kcsapi/api_get_member/mission",
+    path: '/kcsapi/api_get_member/mission',
     valid: () => true,
   },
   {
-    path: "/kcsapi/api_req_mission/result",
+    path: '/kcsapi/api_req_mission/result',
     valid: () => true,
   },
 ]
