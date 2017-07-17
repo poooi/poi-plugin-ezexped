@@ -85,6 +85,7 @@ const mkFleetInfoSelector = _.memoize(fleetId => {
     mkFleetInfo)
 })
 
+// TODO: avoid constants, use info from getStore().info.fleets
 const allFleetsInfoSelector = createSelector(
   [1,2,3,4].map(fleetId => mkFleetInfoSelector(fleetId)),
   (...fleets) => fleets)

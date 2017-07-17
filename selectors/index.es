@@ -3,6 +3,9 @@ import _ from 'lodash'
 import {
   hideMainFleetSelector,
   isFleetCombinedSelector,
+  selectedExpedsSelector,
+  gsFlagsSelector,
+  fleetIdSelector,
 } from './common'
 import {
   mkFleetInfoSelector,
@@ -32,9 +35,24 @@ const visibleFleetsInfoSelector = createSelector(
       fleetInfo && fleetInfo.id >= minId)
   })
 
+// TODO: cases where fleet is not available.
+
+// the expedition selected for current focusing fleet
+const expedIdSelector = createSelector(
+  selectedExpedsSelector,
+  fleetIdSelector,
+  (selectedExpeds,fleetId) => selectedExpeds[fleetId])
+
+const gsFlagSelector = createSelector(
+  gsFlagsSelector,
+  expedIdSelector,
+  (gsFlags,expedId) => gsFlags[expedId])
+
 export * from './common'
 
 export {
   mkFleetInfoSelector,
   visibleFleetsInfoSelector,
+  expedIdSelector,
+  gsFlagSelector,
 }

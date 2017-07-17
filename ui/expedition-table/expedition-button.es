@@ -31,16 +31,13 @@ class ExpeditionButton extends Component {
     ready: PTyp.bool.isRequired,
     active: PTyp.bool.isRequired,
     expedId: PTyp.number.isRequired,
-    onSelectExped: PTyp.func.isRequired,
+    onClick: PTyp.func.isRequired,
   }
   shouldComponentUpdate(nextProps) {
     return this.props.ready !== nextProps.ready ||
       this.props.active !== nextProps.active ||
       this.props.expedId !== nextProps.expedId
   }
-
-  selectExped = () =>
-    this.props.onSelectExped(this.props.expedId)
 
   render() {
     const props = this.props
@@ -56,7 +53,7 @@ class ExpeditionButton extends Component {
             bsStyle={props.ready ? "primary" : "default"}
             style={{width: "100%", marginBottom: "2px"}}
             active={props.active}
-            onClick={this.selectExped}>
+            onClick={this.props.onClick}>
           {props.expedId}
         </Button>
       </OverlayTrigger>)
