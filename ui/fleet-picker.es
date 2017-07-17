@@ -96,7 +96,7 @@ class FleetPicker extends Component {
           type: '@@TabSwitch',
           tabInfo: {
             activeMainTab: 'shipView',
-            activeFleetId: fleetId,
+            activeFleetId: fleetId-1,
           },
         })
       }

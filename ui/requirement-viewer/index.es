@@ -1,7 +1,8 @@
 import { _ } from 'lodash'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
-  ListGroup,
+  ListGroup, ListGroupItem,
 } from 'react-bootstrap'
 
 import {
@@ -14,10 +15,11 @@ import { PTyp } from '../../ptyp'
 
 import { CheckResultBox } from './check-result-box'
 import { RequirementListItem } from './requirement-list-item'
+import { mkFleetEReqResultObjectSelector } from './selectors'
 
 // props:
 // - fleet: fleet representation
-class RequirementViewer extends Component {
+class RequirementViewerImpl extends Component {
   static propTypes = {
     // - target expedition id
     expedId: PTyp.number.isRequired,
@@ -26,13 +28,25 @@ class RequirementViewer extends Component {
     hideSatReqs: PTyp.bool.isRequired,
     recommendSparkled: PTyp.number.isRequired,
     fleet: PTyp.object.isRequired,
+    fleetEReqResultObject: PTyp.object.isRequired,
   }
+
   shouldComponentUpdate(nextProps) {
     return this.props.expedId !== nextProps.expedId ||
       this.props.greatSuccess !== nextProps.greatSuccess ||
       this.props.recommendSparkled !== nextProps.recommendSparkled ||
       this.props.hideSatReqs !== nextProps.hideSatReqs ||
       ! _.isEqual(this.props.fleet, nextProps.fleet)
+  }
+
+  genTmpList = () => {
+    const {greatSuccess, fleetEReqResultObject} = this.props
+    const xs = [
+      ...fleetEReqResultObject.norm,
+      fleetEReqResultObject.resupply,
+      ...(greatSuccess ? fleetEReqResultObject.gs : []),
+    ]
+    return xs
   }
 
   render() {
@@ -91,10 +105,32 @@ class RequirementViewer extends Component {
               />
             ))
           }
+          {
+            this.genTmpList().map((data,ind) => (
+              <ListGroupItem key={ind}>
+                <div>
+                  <div>
+                    {JSON.stringify(data.ereq)}
+                  </div>
+                  <div>
+                    {JSON.stringify(data.result)}
+                  </div>
+                </div>
+              </ListGroupItem>
+            ))
+          }
         </ListGroup>
       </div>
     )
   }
 }
+
+const RequirementViewer = connect(
+  (state, props) => {
+    const {fleet} = props
+    const fleetEReqResultObject = mkFleetEReqResultObjectSelector(fleet.id)(state)
+    return {fleetEReqResultObject}
+  },
+)(RequirementViewerImpl)
 
 export { RequirementViewer }

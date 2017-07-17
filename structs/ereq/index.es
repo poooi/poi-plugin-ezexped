@@ -95,4 +95,16 @@ class EReq {
   static prepare = dispatchEReq('prepare')
 }
 
+/*
+
+   stages:
+
+   - ereq: raw object, serializable representation
+   - stage1: result of EReq.prepare(ereq)
+   - stage2: result of EReq.prepare(ereq)(config)
+   - result: return value of EReq.prepare(ereq)(config)(fleet), serializable,
+     for rendering on UIs
+
+ */
+
 export { EReq }
