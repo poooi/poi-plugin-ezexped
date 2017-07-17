@@ -18,9 +18,13 @@ class ExpeditionTableImpl extends Component {
     // current active expedition
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,
-    // fleet representation
-    fleet: PTyp.object.isRequired,
+    // fleet representation, note that the fleet could be null
+    fleet: PTyp.object,
     modifyState: PTyp.func.isRequired,
+  }
+
+  static defaultProps = {
+    fleet: null,
   }
 
   shouldComponentUpdate(nextProps) {
@@ -42,10 +46,12 @@ class ExpeditionTableImpl extends Component {
 
   render() {
     const isReadyArr = new Array(40+1)
+    const fleetShips =
+      _.isEmpty(this.props.fleet) ? [] : this.props.fleet.ships
     enumFromTo(1,40)
       .map( expedId => {
         isReadyArr[expedId] =
-          checkExpedReqs(expedId,false,false)(this.props.fleet.ships)
+          checkExpedReqs(expedId,false,false)(fleetShips)
       })
     return (
       <div style={{display: "flex"}} >
