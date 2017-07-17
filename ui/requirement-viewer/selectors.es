@@ -5,6 +5,7 @@ import { extSelector, mkFleetInfoSelector } from '../../selectors'
 import { mapExpedReq } from '../../exped-reqs'
 
 import { expedReqsStage2Selector } from '../../selectors/exped-reqs'
+import { EReq } from '../../structs/ereq'
 
 const selectedExpedsSelector = createSelector(
   extSelector,
@@ -18,13 +19,7 @@ const mkFleetEReqResultObjectSelector = fleetId => createSelector(
     const expedId = selectedExpeds[fleetId]
     const expedReqStage2 = expedReqsStage2[expedId]
     const ereqResultObj = mapExpedReq(
-      obj => {
-        const result = obj.stage2(fleet)
-        return {
-          ...obj,
-          result,
-        }
-      }
+      EReq.computeResult(fleet)
     )(expedReqStage2)
 
     return ereqResultObj

@@ -93,11 +93,32 @@ class EReq {
     }))
 
   static prepare = dispatchEReq('prepare')
-}
 
 /*
 
-   stages:
+   note that the `prepare` method above is a curried function
+   that takes 3 parameters before yielding the final result:
+
+   - ereq structure
+   - config structure
+   - fleet structure
+
+   if we partially apply a function depending on the availability
+   of info, we can break things into some stages:
+
+   - stage1: the stage after `ereq` itself is applied to prepare
+   - stage2: the stage after `config` is applied
+   - result: the stage after `fleet` is applied, yielding the final result
+
+   `performStage1` takes `ereq` structure and transforms it into a structure of
+
+   {
+     ereq: <Object>,
+     stage1: <function>,
+   }
+
+   after this stage, applying arguments should keep attaching fields
+   into this structure, the meaning of them are:
 
    - ereq: raw object, serializable representation
    - stage1: result of EReq.prepare(ereq)
@@ -106,5 +127,20 @@ class EReq {
      for rendering on UIs
 
  */
+  static performStage1 = ereq => {
+    const stage1 = EReq.prepare(ereq)
+    return {ereq, stage1}
+  }
+
+  static performStage2 = config => obj => ({
+    ...obj,
+    stage2: obj.stage1(config),
+  })
+
+  static computeResult = fleet => obj => ({
+    ...obj,
+    result: obj.stage2(fleet),
+  })
+}
 
 export { EReq }
