@@ -20,7 +20,7 @@
            - every element of the list is of a unique type
  */
 
-import { _ } from 'lodash'
+import _ from 'lodash'
 
 import * as et from './estype'
 import { enumFromTo, valMap, error } from './utils'

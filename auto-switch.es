@@ -22,7 +22,7 @@
 
  */
 
-import { _ } from 'lodash'
+import _ from 'lodash'
 
 // some heuristic to determine which fleet we are changing.
 // returns a number: 1,2,3,4 to indicate the id of the changing fleet
