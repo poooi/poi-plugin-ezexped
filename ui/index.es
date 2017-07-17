@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import {
   Panel,
 } from 'react-bootstrap'
+
+import {
+  createStructuredSelector,
+} from 'reselect'
 
 import { join } from 'path-extra'
 
@@ -12,18 +17,29 @@ import { ExpeditionTable } from './expedition-table'
 import { RequirementViewer } from './requirement-viewer'
 
 import { loadAndUpdateConfig } from '../config'
-
 import {
   findChangingFleet,
   findNextAvailableFleet,
   isSendingFleetToExped,
 } from '../auto-switch'
-
 import { modifyObject } from '../utils'
 import { PTyp } from '../ptyp'
 import { observeAll } from '../observers'
+import { mapDispatchToProps } from '../store'
 
-class EZExpedMain extends Component {
+import {
+  fleetAutoSwitchSelector,
+  selectedExpedsSelector,
+  gsFlagsSelector,
+  hideMainFleetSelector,
+  sparkledCountSelector,
+  hideSatReqsSelector,
+  isFleetCombinedSelector,
+  visibleFleetsInfoSelector,
+  fleetIdSelector,
+} from '../selectors'
+
+class EZExpedMainImpl extends Component {
   static propTypes = {
     fleetId: PTyp.number.isRequired,
     fleets: PTyp.array.isRequired,
@@ -222,6 +238,23 @@ class EZExpedMain extends Component {
     )
   }
 }
+
+const mainUISelector = createStructuredSelector({
+  fleets: visibleFleetsInfoSelector,
+  isFleetCombined: isFleetCombinedSelector,
+  fleetId: fleetIdSelector,
+  fleetAutoSwitch: fleetAutoSwitchSelector,
+  selectedExpeds: selectedExpedsSelector,
+  gsFlags: gsFlagsSelector,
+  hideMainFleet: hideMainFleetSelector,
+  sparkledCount: sparkledCountSelector,
+  hideSatReqs: hideSatReqsSelector,
+})
+
+const EZExpedMain = connect(
+  mainUISelector,
+  mapDispatchToProps
+)(EZExpedMainImpl)
 
 export {
   EZExpedMain,
