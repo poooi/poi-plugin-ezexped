@@ -226,8 +226,7 @@ class EZExpedMainImpl extends Component {
                 collapsible
                 expanded={expedTableExpanded}
                 style={{marginBottom: "5px"}} >
-                <ExpeditionTable
-                  fleet={fleet} />
+                <ExpeditionTable />
               </Panel>
             )
           }
