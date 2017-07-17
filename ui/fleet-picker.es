@@ -15,7 +15,7 @@ import { PTyp } from '../ptyp'
 const { dispatch } = window
 
 // props:
-// - fleetInd: current selected fleet id
+// - fleetId: current selected fleet id
 // - fleets: array of fleet representation
 // - selectedExpeds
 // - gsFlags
@@ -26,7 +26,7 @@ const { dispatch } = window
 // - recommendSparkled
 class FleetPicker extends Component {
   static propTypes = {
-    fleetInd: PTyp.number,
+    fleetId: PTyp.number,
     selectedExpeds: PTyp.objectOf(PTyp.number).isRequired,
     gsFlags: PTyp.objectOf(PTyp.bool).isRequired,
     isFleetCombined: PTyp.bool.isRequired,
@@ -39,13 +39,13 @@ class FleetPicker extends Component {
   }
 
   static defaultProps = {
-    fleetInd: null,
+    fleetId: null,
   }
 
   render() {
     const mkTooltip = fleet =>
       (
-        <Tooltip id={`fpfleet-${fleet.index}`}>
+        <Tooltip id={`fpfleet-${fleet.id}`}>
           <div style={{display: "flex", flexDirection: "column"}}>
             {
               fleet.ships.map(ship => (
@@ -67,8 +67,8 @@ class FleetPicker extends Component {
     //   - otherwise red
     // - not available: always blue
     const mkButton = fleet => {
-      const fleetInd = fleet.index
-      const expedId = this.props.selectedExpeds[fleetInd]
+      const fleetId = fleet.id
+      const expedId = this.props.selectedExpeds[fleetId]
       const greatSuccess = this.props.gsFlags[expedId]
 
       const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
@@ -83,20 +83,20 @@ class FleetPicker extends Component {
         (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
       const bsStyle =
-          fleetInd === 0 ? "success"
-        : this.props.isFleetCombined && fleetInd === 1 ? "success"
+          fleetId === 0 ? "success"
+        : this.props.isFleetCombined && fleetId === 1 ? "success"
         : !fleet.available ? "primary"
         : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
         : normReadyFlag && gsReadyFlag ? "warning"
         : "danger"
 
-      const focused = this.props.fleetInd === fleetInd
+      const focused = this.props.fleetId === fleetId
       const handleFocusFleetInMainUI = () => {
         dispatch({
           type: '@@TabSwitch',
           tabInfo: {
             activeMainTab: 'shipView',
-            activeFleetId: fleetInd,
+            activeFleetId: fleetId,
           },
         })
       }
@@ -110,7 +110,7 @@ class FleetPicker extends Component {
             width: "75px", overflow: "hidden"}}
           active={focused}
           onContextMenu={handleFocusFleetInMainUI}
-          onClick={() => this.props.onSelectFleet(fleetInd)}>
+          onClick={() => this.props.onSelectFleet(fleetId)}>
         <div style={{textOverflow: "ellipsis", overflow: "hidden"}} >
           {fleet.name}
         </div>
@@ -128,7 +128,7 @@ class FleetPicker extends Component {
           {
             this.props.fleets.map(fleet => (
               <OverlayTrigger
-                key={fleet.index}
+                key={fleet.id}
                 placement="bottom" overlay={mkTooltip(fleet)}>
                 {mkButton(fleet)}
               </OverlayTrigger>

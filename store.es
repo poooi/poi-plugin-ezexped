@@ -29,21 +29,21 @@ const reducer = (state = initState, action) => {
   if (action.type === "@poi-plugin-ezexped@ChangeFleet") {
     return {
       ...state,
-      fleetInd: action.fleetInd,
+      fleetId: action.fleetId,
     }
   }
 
   // only record successful expeditions
   if (action.type === "@@Response/kcsapi/api_req_mission/result") {
     const expedId = expedNameToId( action.body.api_quest_name )
-    const fleetInd = parseInt(action.postBody.api_deck_id, 10)-1
+    const fleetId = parseInt(action.postBody.api_deck_id, 10)-1
     let currentState = state
 
     if (action.body.api_clear_result !== 0) {
       currentState = modifyObject(
         'selectedExpeds',
         modifyObject(
-          fleetInd, () => expedId))(currentState)
+          fleetId, () => expedId))(currentState)
     }
 
     // switch to the corresponding fleet on expedition result screen
@@ -51,7 +51,7 @@ const reducer = (state = initState, action) => {
     if (state.fleetAutoSwitch) {
       return {
         ...currentState,
-        fleetInd,
+        fleetId,
       }
     }
 
@@ -66,10 +66,10 @@ const mapDispatchToProps = dispatch => ({
       type: '@poi-plugin-ezexped@ConfigReady',
       config,
     }),
-  changeFleet: (fleetInd,reason=null) =>
+  changeFleet: (fleetId,reason=null) =>
     dispatch({
       type: "@poi-plugin-ezexped@ChangeFleet",
-      fleetInd,
+      fleetId,
       reason,
     }),
   modifyState: modifier =>

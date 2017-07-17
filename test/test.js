@@ -138,14 +138,21 @@ describe("autoSwitch", () => {
 
       // 5 ships for each fleet, 3 equips for each ship
       // so that we can test adding
-      const fleets = utils.enumFromTo(0,3).map( fleetInd => (
+      const fleets = utils.enumFromTo(1,4).map( fleetId => (
         {
-          index: fleetInd,
+          id: fleetId,
           ships: utils.enumFromTo(0,4).map(newShip),
         }))
 
-      const modifyShips = f => ({index,ships}) =>
-        ({index,ships: f(ships)})
+      const modifyFleetById = fleetId => f => fleetArr => {
+        const ind = fleetArr.findIndex(x => x.id === fleetId)
+        if (ind === -1)
+          return fleetArr
+        return utils.modifyArray(ind,f)(fleetArr)
+      }
+
+      const modifyShips = f => ({id,ships}) =>
+        ({id,ships: f(ships)})
 
       const arraySwap = (ind1,ind2) => xs => {
         const ys = [...xs]
@@ -166,27 +173,27 @@ describe("autoSwitch", () => {
       assert.equal(
         autoSwitch.findChangingFleet(
           fleets,
-          utils.modifyArray(2,modifyShips(x => x.slice(0,1)))(fleets)),
-        2,
+          modifyFleetById(3)(modifyShips(x => x.slice(0,1)))(fleets)),
+        3,
         "dismiss all except fs in 3rd fleet")
       assert.equal(
         autoSwitch.findChangingFleet(
           fleets,
-          utils.modifyArray(1,modifyShips(
+          modifyFleetById(2)(modifyShips(
             arraySwap(0,1)))(fleets)),
-          1,
+          2,
           "swap first two ships in 2nd fleet")
 
       assert.equal(
         autoSwitch.findChangingFleet(
           fleets,
-          utils.modifyArray(
-            3,modifyShips( xs => {
+          modifyFleetById(4)(
+            modifyShips( xs => {
               const ys = [...xs]
               ys.push(newShip())
               return ys
             }))(fleets)),
-        3,
+        4,
         "adding one ship to 4th fleet")
 
       // multiple changing fleets
@@ -202,7 +209,7 @@ describe("autoSwitch", () => {
           autoSwitch.findChangingFleet(
             fleets,
             newFleets),
-          3,
+          4,
           "moving 3rd ship of 1st fleet to 4th fleet")
       }
       {
@@ -226,7 +233,7 @@ describe("autoSwitch", () => {
           autoSwitch.findChangingFleet(
             fleets,
             newFleets),
-          3,
+          4,
           "deprive equipment from 1st fleet to 4th fleet")
       }
       {
@@ -249,14 +256,14 @@ describe("autoSwitch", () => {
           autoSwitch.findChangingFleet(
             fleets,
             newFleets),
-          3,
+          4,
           "deprive equipment from 2nd fleet to 4th fleet (not adding)")
 
         assert.equal(
           autoSwitch.findChangingFleet(
             fleets.slice(1,4),
             newFleets.slice(1,4)),
-          3,
+          4,
           "deprive equipment from 2nd fleet to 4th fleet (not adding, ignore main fleet)")
       }
     })
@@ -266,55 +273,55 @@ describe("autoSwitch", () => {
     spec("skipping main fleet", () => {
       assert.equal(
         autoSwitch.findNextAvailableFleet([
-          {available: true, index: 0},
-          {available: true, index: 1},
-          {available: true, index: 2},
+          {available: true, id: 1},
+          {available: true, id: 2},
+          {available: true, id: 3},
         ],false),
-        1,
+        2,
         "show main, not combined")
 
       assert.equal(
         autoSwitch.findNextAvailableFleet([
-          {available: true, index: 1},
-          {available: true, index: 2},
+          {available: true, id: 2},
+          {available: true, id: 3},
         ],false),
-        1,
+        2,
         "hide main, not combined")
 
       assert.equal(
         autoSwitch.findNextAvailableFleet([
-          {available: true, index: 0},
-          {available: true, index: 1},
-          {available: true, index: 2},
+          {available: true, id: 1},
+          {available: true, id: 2},
+          {available: true, id: 3},
         ],true),
-        2,
+        3,
         "show main, combined")
 
       assert.equal(
         autoSwitch.findNextAvailableFleet([
-          {available: true, index: 2},
+          {available: true, id: 3},
         ],true),
-        2,
+        3,
         "hide main, combined")
     })
 
     spec("nothing to return", () => {
       assert.equal(
         autoSwitch.findNextAvailableFleet([
-          {available: true, index: 0},
-          {available: false, index: 1},
-          {available: false, index: 2},
-          {available: false, index: 3},
+          {available: true, id: 1},
+          {available: false, id: 2},
+          {available: false, id: 3},
+          {available: false, id: 4},
         ],false),
         null,
         "show main, not combined")
 
       assert.equal(
         autoSwitch.findNextAvailableFleet([
-          {available: true, index: 0},
-          {available: true, index: 1},
-          {available: false, index: 2},
-          {available: false, index: 3},
+          {available: true, id: 1},
+          {available: true, id: 2},
+          {available: false, id: 3},
+          {available: false, id: 4},
         ],true),
         null,
         "show main, combined")
@@ -324,16 +331,16 @@ describe("autoSwitch", () => {
   describe("isSendingFleetToExped", () => {
     spec("tests", () => {
       // all available
-      const fleets1 = [0,1,2,3].map( x =>
-        ({available: true, index: x}))
+      const fleets1 = [1,2,3,4].map( x =>
+        ({available: true, id: x}))
 
       // all available except second fleet
       const fleets2 = utils.modifyArray(
-        1, (({index}) => ({available: false,index})))(fleets1)
+        1, (({id}) => ({available: false,id})))(fleets1)
 
       // all available except third fleet
       const fleets3 = utils.modifyArray(
-        2, (({index}) => ({available: false,index})))(fleets1)
+        2, (({id}) => ({available: false,id})))(fleets1)
 
       assert.equal(
         autoSwitch.isSendingFleetToExped(

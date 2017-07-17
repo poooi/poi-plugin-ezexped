@@ -16,9 +16,9 @@ const isFleetCombinedSelector =
     sortieSelector,
     sortie => sortie.combinedFlag !== 0)
 
-const fleetIndSelector = createSelector(
+const fleetIdSelector = createSelector(
   extSelector,
-  ext => ext.fleetInd)
+  ext => ext.fleetId)
 
 const visibleFleetsInfoSelector = createSelector(
   allFleetsInfoSelector,
@@ -26,23 +26,26 @@ const visibleFleetsInfoSelector = createSelector(
   isFleetCombinedSelector,
   (allFleetsInfo, {config}, isFleetCombined) => {
     const { hideMainFleet } = config
-    const fleets = []
-    const beginInd = hideMainFleet
-      ? (!isFleetCombined ? 1 : 2)
-      : 0
+    const minId = hideMainFleet ?
+      /*
+         is hiding main fleet.
 
-    for (let fleetInd=beginInd; fleetInd<4; ++fleetInd) {
-      const fleetRep = allFleetsInfo[fleetInd]
-      if (fleetRep !== null)
-        fleets.push( fleetRep )
-    }
-    return fleets
+         - for combined fleets, we need to hide
+           both first (id=1) fleet and second (id=2) one
+         - otherwise just first (id=1) fleet
+
+       */
+      (isFleetCombined ? 3 : 2) :
+      1
+
+    return allFleetsInfo.filter(fleetInfo =>
+      fleetInfo && fleetInfo.id >= minId)
   })
 
 export {
   mkFleetInfoSelector,
   isFleetCombinedSelector,
-  fleetIndSelector,
+  fleetIdSelector,
   visibleFleetsInfoSelector,
 
   extSelector,

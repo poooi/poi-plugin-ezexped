@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   isFleetCombinedSelector,
   visibleFleetsInfoSelector,
-  fleetIndSelector,
+  fleetIdSelector,
   extConfigSelector,
 } from './selectors'
 
@@ -20,9 +20,12 @@ const settingsClass = Settings
 
 /*
 
+   TODO
+
    - reduxify states and move some logic part into selectors
    - redo requirement implementation, allow alternative fleet compo
    - fleet tooltip redo, might include morale & related equips (DLC & drum)
+   - should really be using fleetId (1/2/3/4), because indices are unstable.
 
  */
 
@@ -31,11 +34,11 @@ const reactClass = connect(
     const {config} = extConfigSelector(state)
     const isFleetCombined = isFleetCombinedSelector(state)
     const fleets = visibleFleetsInfoSelector(state)
-    const fleetInd = fleetIndSelector(state)
+    const fleetId = fleetIdSelector(state)
     return {
       fleets,
       isFleetCombined,
-      fleetInd,
+      fleetId,
       ...config,
     }
   },

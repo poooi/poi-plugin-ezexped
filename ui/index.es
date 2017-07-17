@@ -25,7 +25,7 @@ import { observeAll } from '../observers'
 
 class EZExpedMain extends Component {
   static propTypes = {
-    fleetInd: PTyp.number.isRequired,
+    fleetId: PTyp.number.isRequired,
     fleets: PTyp.array.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
     isFleetCombined: PTyp.bool.isRequired,
@@ -59,14 +59,14 @@ class EZExpedMain extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { changeFleet } = nextProps
-    const nextCurrentFleet = nextProps.fleetInd !== null
-      && nextProps.fleets.find( fleet => fleet.index === nextProps.fleetInd )
+    const nextCurrentFleet = nextProps.fleetId !== null
+      && nextProps.fleets.find( fleet => fleet.id === nextProps.fleetId )
 
     if (!nextCurrentFleet) {
       // current focus is null, we need to find a new focus
       if (nextProps.fleets.length > 0) {
         changeFleet(
-          nextProps.fleets[0].index,
+          nextProps.fleets[0].id,
           "initializing fleet focus")
       }
       return
@@ -99,7 +99,7 @@ class EZExpedMain extends Component {
           // nxt === null
           if (! nextProps.hideMainFleet && nextProps.fleets.length > 0) {
             changeFleet(
-              nextProps.fleets[0].index,
+              nextProps.fleets[0].id,
               "all fleets are sent, switching to main fleet")
           }
         }
@@ -132,7 +132,7 @@ class EZExpedMain extends Component {
           // nxt === null
           if (! this.props.hideMainFleet && this.props.fleets.length > 0) {
             this.props.changeFleet(
-              this.props.fleets[0].index,
+              this.props.fleets[0].id,
               "at exped screen, no fleet available, switching to main")
           }
         }
@@ -141,27 +141,27 @@ class EZExpedMain extends Component {
   }
 
   selectExped = newExpedId => {
-    const fleetInd = this.props.fleetInd
+    const fleetId = this.props.fleetId
     this.setState({ expedGridExpanded: false })
     this.props.modifyState(
       modifyObject(
         'selectedExpeds',
-        modifyObject(fleetInd, () => newExpedId)))
+        modifyObject(fleetId, () => newExpedId)))
   }
 
   render() {
-    const { fleetInd } = this.props
+    const { fleetId } = this.props
     const { selectedExpeds, gsFlags } = this.props
-    const expedId = selectedExpeds[fleetInd]
+    const expedId = selectedExpeds[fleetId]
     const gsFlag = gsFlags[expedId]
-    const fleet = this.props.fleets.find(flt => flt.index === fleetInd) || null
+    const fleet = this.props.fleets.find(flt => flt.id === fleetId) || null
     return (
       <div className="poi-plugin-ezexped">
         <link rel="stylesheet" href={join(__dirname, '..', 'assets', 'ezexped.css')} />
         <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
           <FleetPicker
               fleets={this.props.fleets}
-              fleetInd={fleetInd}
+              fleetId={fleetId}
               selectedExpeds={selectedExpeds}
               gsFlags={gsFlags}
               isFleetCombined={this.props.isFleetCombined}
