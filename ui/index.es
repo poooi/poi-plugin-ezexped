@@ -34,7 +34,6 @@ import {
   gsFlagsSelector,
   hideMainFleetSelector,
   sparkledCountSelector,
-  hideSatReqsSelector,
   isFleetCombinedSelector,
   visibleFleetsInfoSelector,
   fleetIdSelector,
@@ -51,7 +50,6 @@ class EZExpedMainImpl extends Component {
     gsFlags: PTyp.objectOf(PTyp.bool).isRequired,
     hideMainFleet: PTyp.bool.isRequired,
     sparkledCount: PTyp.number.isRequired,
-    hideSatReqs: PTyp.bool.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
 
     changeFleet: PTyp.func.isRequired,
@@ -232,13 +230,7 @@ class EZExpedMainImpl extends Component {
           }
           {
             fleet && (
-              <RequirementViewer
-                fleet={fleet}
-                expedId={expedId}
-                greatSuccess={gsFlag}
-                recommendSparkled={this.props.sparkledCount}
-                hideSatReqs={this.props.hideSatReqs}
-              />
+              <RequirementViewer />
             )
           }
         </div>
@@ -256,7 +248,6 @@ const mainUISelector = createStructuredSelector({
   gsFlags: gsFlagsSelector,
   hideMainFleet: hideMainFleetSelector,
   sparkledCount: sparkledCountSelector,
-  hideSatReqs: hideSatReqsSelector,
   expedTableExpanded: expedTableExpandedSelector,
 })
 

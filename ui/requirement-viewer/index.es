@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
   ListGroup, ListGroupItem,
 } from 'react-bootstrap'
+import { createStructuredSelector } from 'reselect'
 
 import {
   checkExpedDetail,
@@ -16,6 +17,14 @@ import { PTyp } from '../../ptyp'
 import { CheckResultBox } from './check-result-box'
 import { RequirementListItem } from './requirement-list-item'
 import { mkFleetEReqResultObjectSelector } from './selectors'
+
+import {
+  fleetInfoSelector,
+  expedIdSelector,
+  gsFlagSelector,
+  sparkledCountSelector,
+  hideSatReqsSelector,
+} from '../../selectors'
 
 // props:
 // - fleet: fleet representation
@@ -125,11 +134,20 @@ class RequirementViewerImpl extends Component {
   }
 }
 
+const uiExtrasSelector = createStructuredSelector({
+  fleet: fleetInfoSelector,
+  expedId: expedIdSelector,
+  greatSuccess: gsFlagSelector,
+  recommendSparkled: sparkledCountSelector,
+  hideSatReqs: hideSatReqsSelector,
+})
+
 const RequirementViewer = connect(
-  (state, props) => {
-    const {fleet} = props
+  state => {
+    const uiExtras = uiExtrasSelector(state)
+    const {fleet} = uiExtras
     const fleetEReqResultObject = mkFleetEReqResultObjectSelector(fleet.id)(state)
-    return {fleetEReqResultObject}
+    return {...uiExtras, fleetEReqResultObject}
   },
 )(RequirementViewerImpl)
 
