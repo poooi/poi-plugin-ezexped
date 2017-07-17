@@ -5,6 +5,8 @@ import { defaultConfig } from './config'
 
 const initState = {
   ...defaultConfig,
+
+  expedTableExpanded: false,
   ready: false,
 }
 
@@ -12,6 +14,7 @@ const reducer = (state = initState, action) => {
   if (action.type === '@poi-plugin-ezexped@ConfigReady') {
     const {config} = action
     return {
+      ...state,
       ...config,
       ready: true,
     }
