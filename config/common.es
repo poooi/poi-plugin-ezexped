@@ -16,4 +16,9 @@ const defaultConfig = {
   configVer: '1.0.0',
 }
 
-export { defaultConfig }
+const defaultConfigProps = Object.keys(defaultConfig)
+
+export {
+  defaultConfig,
+  defaultConfigProps,
+}

@@ -16,7 +16,11 @@ const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-ezexped'),
   ext => _.isEmpty(ext) ? initState : ext)
 
-// memoized in case we accidentally created a new one
+/*
+   if we need to load some parts of the state with dynamic propNames,
+   we can use this function so selectors accessing the store with same propNames
+   are never re-created
+ */
 const mkExtPropSelector = _.memoize(
   propName =>
     createSelector(extSelector, ext => ext[propName]))
@@ -35,10 +39,14 @@ const gsFlagsSelector =
   mkExtPropSelector('gsFlags')
 const selectedExpedsSelector =
   mkExtPropSelector('selectedExpeds')
+const expedTableExpandedSelector =
+  mkExtPropSelector('expedTableExpanded')
 const readySelector =
   mkExtPropSelector('ready')
 
 export {
+  mkExtPropSelector,
+
   isFleetCombinedSelector,
 
   extSelector,
@@ -50,5 +58,6 @@ export {
   fleetIdSelector,
   gsFlagsSelector,
   selectedExpedsSelector,
+  expedTableExpandedSelector,
   readySelector,
 }
