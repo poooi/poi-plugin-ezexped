@@ -227,9 +227,7 @@ class EZExpedMainImpl extends Component {
                 expanded={expedTableExpanded}
                 style={{marginBottom: "5px"}} >
                 <ExpeditionTable
-                  fleet={fleet}
-                  expedId={expedId}
-                  onSelectExped={this.selectExped} />
+                  fleet={fleet} />
               </Panel>
             )
           }

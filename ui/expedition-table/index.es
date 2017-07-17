@@ -1,25 +1,42 @@
 import _ from 'lodash'
+import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
-
-import { enumFromTo } from '../../utils'
+import { connect } from 'react-redux'
+import { enumFromTo, modifyObject } from '../../utils'
 import { checkExpedReqs } from '../../requirement'
 import { PTyp } from '../../ptyp'
 import { ExpeditionButton } from './expedition-button'
+import {
+  fleetIdSelector,
+  expedIdSelector,
+} from '../../selectors'
+import { mapDispatchToProps } from '../../store'
 
-// props:
-// - expedId: current active expedition
-// - onSelectExped: when one expedition is selected
-// - fleet: fleet representation
-class ExpeditionTable extends Component {
+class ExpeditionTableImpl extends Component {
   static propTypes = {
+    // current active expedition
     expedId: PTyp.number.isRequired,
+    fleetId: PTyp.number.isRequired,
+    // fleet representation
     fleet: PTyp.object.isRequired,
-    onSelectExped: PTyp.func.isRequired,
+    modifyState: PTyp.func.isRequired,
   }
 
   shouldComponentUpdate(nextProps) {
     return this.props.expedId !== nextProps.expedId ||
       ! _.isEqual(this.props.fleet,nextProps.fleet)
+  }
+
+  handleSelectExped = newExpedId => () => {
+    const fleetId = this.props.fleetId
+    this.props.modifyState(
+      _.flow(
+        modifyObject(
+          'expedTableExpanded',
+          () => false),
+        modifyObject(
+          'selectedExpeds',
+          modifyObject(fleetId, () => newExpedId))))
   }
 
   render() {
@@ -43,7 +60,7 @@ class ExpeditionTable extends Component {
                       ready={isReadyArr[expedId]}
                       active={this.props.expedId === expedId}
                       expedId={expedId}
-                      onSelectExped={this.props.onSelectExped}
+                      onClick={this.handleSelectExped(expedId)}
                     />
                   )
                 )
@@ -54,5 +71,13 @@ class ExpeditionTable extends Component {
       </div>)
   }
 }
+
+const ExpeditionTable = connect(
+  createStructuredSelector({
+    expedId: expedIdSelector,
+    fleetId: fleetIdSelector,
+  }),
+  mapDispatchToProps
+)(ExpeditionTableImpl)
 
 export { ExpeditionTable }
