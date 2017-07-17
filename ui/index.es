@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
@@ -37,6 +38,7 @@ import {
   isFleetCombinedSelector,
   visibleFleetsInfoSelector,
   fleetIdSelector,
+  expedTableExpandedSelector,
 } from '../selectors'
 
 class EZExpedMainImpl extends Component {
@@ -50,17 +52,16 @@ class EZExpedMainImpl extends Component {
     hideMainFleet: PTyp.bool.isRequired,
     sparkledCount: PTyp.number.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
+    expedTableExpanded: PTyp.bool.isRequired,
+
     changeFleet: PTyp.func.isRequired,
     configReady: PTyp.func.isRequired,
     modifyState: PTyp.func.isRequired,
   }
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.unsubscribe = null
-    this.state = {
-      expedGridExpanded: false,
-    }
   }
 
   componentDidMount() {
@@ -74,6 +75,7 @@ class EZExpedMainImpl extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // TODO: better handle this in observer
     const { changeFleet } = nextProps
     const nextCurrentFleet = nextProps.fleetId !== null
       && nextProps.fleets.find( fleet => fleet.id === nextProps.fleetId )
@@ -158,16 +160,22 @@ class EZExpedMainImpl extends Component {
 
   selectExped = newExpedId => {
     const fleetId = this.props.fleetId
-    this.setState({ expedGridExpanded: false })
     this.props.modifyState(
-      modifyObject(
-        'selectedExpeds',
-        modifyObject(fleetId, () => newExpedId)))
+      _.flow(
+        modifyObject(
+          'expedTableExpanded',
+          () => false),
+        modifyObject(
+          'selectedExpeds',
+          modifyObject(fleetId, () => newExpedId))))
   }
 
   render() {
-    const { fleetId } = this.props
-    const { selectedExpeds, gsFlags } = this.props
+    const {
+      selectedExpeds, gsFlags,
+      fleetId,
+      expedTableExpanded,
+    } = this.props
     const expedId = selectedExpeds[fleetId]
     const gsFlag = gsFlags[expedId]
     const fleet = this.props.fleets.find(flt => flt.id === fleetId) || null
@@ -197,7 +205,10 @@ class EZExpedMainImpl extends Component {
                 fleet={fleet}
                 greatSuccess={gsFlag}
                 onClickExped={() =>
-                  this.setState({expedGridExpanded: !this.state.expedGridExpanded})}
+                  this.props.modifyState(
+                    modifyObject(
+                      'expedTableExpanded',
+                      () => !expedTableExpanded))}
                 onClickGS={() =>
                   this.props.modifyState(
                     modifyObject(
@@ -213,7 +224,7 @@ class EZExpedMainImpl extends Component {
             fleet && (
               <Panel
                 collapsible
-                expanded={this.state.expedGridExpanded}
+                expanded={expedTableExpanded}
                 style={{marginBottom: "5px"}} >
                 <ExpeditionTable
                   fleet={fleet}
@@ -249,6 +260,7 @@ const mainUISelector = createStructuredSelector({
   hideMainFleet: hideMainFleetSelector,
   sparkledCount: sparkledCountSelector,
   hideSatReqs: hideSatReqsSelector,
+  expedTableExpanded: expedTableExpandedSelector,
 })
 
 const EZExpedMain = connect(
