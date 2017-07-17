@@ -46,8 +46,10 @@ const loadAndUpdateConfig = onConfigReady => {
   {
     const val = _.get(rawConfig,'selectedExpeds')
     if (typeof val !== 'undefined') {
+      // the old version is actually using fleetInd
       enumFromTo(0,3).map(fleetInd => {
-        currentConfig.selectedExpeds[fleetInd] = val[fleetInd]
+        const fleetId = fleetInd+1
+        currentConfig.selectedExpeds[fleetId] = val[fleetInd]
       })
     }
   }
