@@ -58,6 +58,11 @@ const gsFlagSelector = createSelector(
   expedIdSelector,
   (gsFlags,expedId) => gsFlags[expedId])
 
+const fleetInfoSelector = createSelector(
+  indexedFleetsInfoSelector,
+  fleetIdSelector,
+  (indexedFleetsInfo,fleetId) => indexedFleetsInfo[fleetId])
+
 export * from './common'
 export * from './fleet-info'
 
@@ -65,4 +70,5 @@ export {
   visibleFleetsInfoSelector,
   expedIdSelector,
   gsFlagSelector,
+  fleetInfoSelector,
 }

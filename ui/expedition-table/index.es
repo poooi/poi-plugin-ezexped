@@ -9,6 +9,7 @@ import { ExpeditionButton } from './expedition-button'
 import {
   fleetIdSelector,
   expedIdSelector,
+  fleetInfoSelector,
 } from '../../selectors'
 import { mapDispatchToProps } from '../../store'
 
@@ -76,6 +77,7 @@ const ExpeditionTable = connect(
   createStructuredSelector({
     expedId: expedIdSelector,
     fleetId: fleetIdSelector,
+    fleet: fleetInfoSelector,
   }),
   mapDispatchToProps
 )(ExpeditionTableImpl)
