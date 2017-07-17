@@ -10,7 +10,7 @@ const loadAndUpdateConfig = onConfigReady => {
 
   // nothing to update if config version matches
   if (_.get(rawConfig,'data.configVer') === defaultConfig.configVer) {
-    return onConfigReady(rawConfig)
+    return onConfigReady(rawConfig.data)
   }
 
   // need to update config

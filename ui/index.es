@@ -21,6 +21,7 @@ import {
 
 import { modifyObject } from '../utils'
 import { PTyp } from '../ptyp'
+import { observeAll } from '../observers'
 
 class EZExpedMain extends Component {
   static propTypes = {
@@ -40,6 +41,7 @@ class EZExpedMain extends Component {
 
   constructor() {
     super()
+    this.unsubscribe = null
     this.state = {
       expedGridExpanded: false,
     }
@@ -48,6 +50,11 @@ class EZExpedMain extends Component {
   componentDidMount() {
     setTimeout(() => loadAndUpdateConfig(this.props.configReady))
     window.addEventListener('game.response', this.handleGameResponse)
+
+    if (this.unsubscribe !== null) {
+      console.error(`unsubscribe function should be null`)
+    }
+    this.unsubscribe = observeAll()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -101,6 +108,13 @@ class EZExpedMain extends Component {
   }
 
   componentWillUnmount() {
+    if (typeof this.unsubscribe !== 'function') {
+      console.error(`invalid unsubscribe function`)
+    } else {
+      this.unsubscribe()
+      this.unsubscribe = null
+    }
+
     window.removeEventListener('game.response', this.handleGameResponse)
   }
 

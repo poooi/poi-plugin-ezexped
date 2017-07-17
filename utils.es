@@ -1,3 +1,7 @@
+import shallowequal from 'shallowequal'
+
+const shallowEqual = shallowequal
+
 // enumFromTo(x,y) = [x,x+1,x+2...y]
 // only guarantee to work on increasing sequences
 const enumFromTo = (frm,to,succ=(x => x+1)) => {
@@ -68,6 +72,8 @@ const modifyObject = (propName, f, removeUndefined = false) => {
 const not = x => !x
 
 export {
+  shallowEqual,
+
   enumFromTo,
   valMap,
   ignore,
