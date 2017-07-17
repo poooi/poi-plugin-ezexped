@@ -20,14 +20,9 @@ const mapExpedReq = f => reqObj => {
   }
 }
 
-const performStage1 = ereq => {
-  const stage1 = EReq.prepare(ereq)
-  return {ereq, stage1}
-}
-
 const defineExped = id => (norm,gs = greatSuccessReq(id)) => {
   const resupply = mk.Resupply()
-  expedReqs[id] = mapExpedReq(performStage1)({id,norm,gs,resupply})
+  expedReqs[id] = mapExpedReq(EReq.performStage1)({id,norm,gs,resupply})
 }
 
 defineWorld1(defineExped)
