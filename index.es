@@ -25,7 +25,6 @@ const settingsClass = Settings
    - reduxify states and move some logic part into selectors
    - redo requirement implementation, allow alternative fleet compo
    - fleet tooltip redo, might include morale & related equips (DLC & drum)
-   - should really be using fleetId (1/2/3/4), because indices are unstable.
 
  */
 

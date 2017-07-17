@@ -1,5 +1,6 @@
 import { defaultConfig } from './common'
-import { loadAndUpdateConfig } from './loader'
+import { loadAndUpdateConfig } from './load'
+import { saveConfig } from './save'
 
 // extract config object from a plugin state.
 const stateToConfig = state =>
@@ -9,11 +10,6 @@ const stateToConfig = state =>
       [propName]: state[propName],
     }),
     {})
-
-const saveConfig = configData => {
-  const { config } = window
-  config.set('plugin.poi-plugin-ezexped.data', configData)
-}
 
 export {
   defaultConfig,
