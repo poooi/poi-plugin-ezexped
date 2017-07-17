@@ -21,9 +21,8 @@ const extSelector = createSelector(
    we can use this function so selectors accessing the store with same propNames
    are never re-created
  */
-const mkExtPropSelector = _.memoize(
-  propName =>
-    createSelector(extSelector, ext => ext[propName]))
+const mkExtPropSelector = _.memoize(propName =>
+  createSelector(extSelector, ext => ext[propName]))
 
 const fleetAutoSwitchSelector =
   mkExtPropSelector('fleetAutoSwitch')

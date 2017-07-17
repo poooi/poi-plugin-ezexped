@@ -114,7 +114,7 @@ class EZExpedMain extends Component {
       this.unsubscribe()
       this.unsubscribe = null
     }
-
+    // TODO: use observer
     window.removeEventListener('game.response', this.handleGameResponse)
   }
 
