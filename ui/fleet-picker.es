@@ -83,8 +83,8 @@ class FleetPicker extends Component {
         (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
       const bsStyle =
-          fleetId === 0 ? "success"
-        : this.props.isFleetCombined && fleetId === 1 ? "success"
+          fleetId === 1 ? "success"
+        : this.props.isFleetCombined && fleetId === 2 ? "success"
         : !fleet.available ? "primary"
         : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
         : normReadyFlag && gsReadyFlag ? "warning"
