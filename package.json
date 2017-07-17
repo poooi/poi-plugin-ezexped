@@ -28,7 +28,9 @@
     "priority": 5,
     "icon": "check-square-o"
   },
-  "dependencies": {},
+  "dependencies": {
+    "shallowequal": "^1.0.2"
+  },
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",

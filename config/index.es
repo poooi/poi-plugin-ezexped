@@ -10,8 +10,14 @@ const stateToConfig = state =>
     }),
     {})
 
+const saveConfig = configData => {
+  const { config } = window
+  config.set('plugin.poi-plugin-ezexped.data', configData)
+}
+
 export {
   defaultConfig,
   loadAndUpdateConfig,
   stateToConfig,
+  saveConfig,
  }
