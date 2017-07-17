@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
   sortieSelector,
+  configSelector,
 } from 'views/utils/selectors'
 
 import { initState } from '../store'
@@ -43,10 +44,20 @@ const expedTableExpandedSelector =
 const readySelector =
   mkExtPropSelector('ready')
 
+const themeSelector = createSelector(
+  configSelector,
+  config => _.get(config,'poi.theme','paperdark'))
+
+const darkThemes = _.words('dark black slate superhero papercyan')
+const isDarkThemeSelector = createSelector(
+  themeSelector,
+  theme => darkThemes.includes(theme))
+
 export {
   mkExtPropSelector,
 
   isFleetCombinedSelector,
+  isDarkThemeSelector,
 
   extSelector,
 
