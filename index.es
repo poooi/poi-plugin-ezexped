@@ -8,15 +8,8 @@ import {
 } from './selectors'
 
 import { reducer, mapDispatchToProps } from './store'
-
-import {
-  Settings,
-} from './ui/settings'
-
+import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain } from './ui'
-
-const settingsClass = Settings
-
 
 /*
 
