@@ -8,7 +8,6 @@ import {
   fleetIdSelector,
 } from './common'
 import {
-  mkFleetInfoSelector,
   allFleetsInfoSelector,
 } from './fleet-info'
 
@@ -49,9 +48,9 @@ const gsFlagSelector = createSelector(
   (gsFlags,expedId) => gsFlags[expedId])
 
 export * from './common'
+export * from './fleet-info'
 
 export {
-  mkFleetInfoSelector,
   visibleFleetsInfoSelector,
   expedIdSelector,
   gsFlagSelector,

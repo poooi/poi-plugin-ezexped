@@ -71,6 +71,16 @@ const modifyObject = (propName, f, removeUndefined = false) => {
 
 const not = x => !x
 
+const testSelector = selector => () => {
+  try {
+    const { getStore } = window
+    // eslint-disable-next-line no-console
+    console.log(selector(getStore()))
+  } catch (e) {
+    console.error(`error while testing selector ${e}`)
+  }
+}
+
 export {
   shallowEqual,
 
@@ -83,4 +93,6 @@ export {
 
   warn,
   error,
+
+  testSelector,
 }
