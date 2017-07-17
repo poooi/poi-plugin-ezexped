@@ -75,16 +75,18 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
   }
 }
 
-// 0 <= fleetInd <= 3
-const mkFleetInfoSelector = _.memoize(fleetInd =>
-  createSelector(
+// 1 <= fleetId <= 4
+const mkFleetInfoSelector = _.memoize(fleetId => {
+  const fleetInd = fleetId-1
+  return createSelector(
     fleetShipsDataSelectorFactory(fleetInd),
     fleetShipsEquipDataSelectorFactory(fleetInd),
     fleetSelectorFactory(fleetInd),
-    mkFleetInfo))
+    mkFleetInfo)
+})
 
 const allFleetsInfoSelector = createSelector(
-  [1,2,3,4].map(fleetId => mkFleetInfoSelector(fleetId-1)),
+  [1,2,3,4].map(fleetId => mkFleetInfoSelector(fleetId)),
   (...fleets) => fleets)
 
 export {
