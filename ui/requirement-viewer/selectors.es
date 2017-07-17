@@ -1,15 +1,14 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
-import { extSelector, mkFleetInfoSelector } from '../../selectors'
+import {
+  selectedExpedsSelector,
+  mkFleetInfoSelector,
+} from '../../selectors'
 import { mapExpedReq } from '../../exped-reqs'
 
 import { expedReqsStage2Selector } from '../../selectors/exped-reqs'
 import { EReq } from '../../structs/ereq'
-
-const selectedExpedsSelector = createSelector(
-  extSelector,
-  ext => ext.selectedExpeds)
 
 const mkFleetEReqResultObjectSelector = fleetId => createSelector(
   selectedExpedsSelector,

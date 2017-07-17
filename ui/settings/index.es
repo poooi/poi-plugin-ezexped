@@ -1,3 +1,4 @@
+import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
@@ -6,7 +7,12 @@ import {
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
-import { extConfigSelector } from '../../selectors/config'
+import {
+  readySelector,
+  sparkledCountSelector,
+  hideMainFleetSelector,
+  hideSatReqsSelector,
+} from '../../selectors'
 import { mapDispatchToProps } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
@@ -108,20 +114,12 @@ class SettingsImpl extends PureComponent {
 }
 
 const Settings = connect(
-  state => {
-    const {config, ready} = extConfigSelector(state)
-    const {
-      sparkledCount,
-      hideMainFleet,
-      hideSatReqs,
-    } = config
-    return {
-      ready,
-      sparkledCount,
-      hideMainFleet,
-      hideSatReqs,
-    }
-  },
+  createStructuredSelector({
+    ready: readySelector,
+    sparkledCount: sparkledCountSelector,
+    hideMainFleet: hideMainFleetSelector,
+    hideSatReqs: hideSatReqsSelector,
+  }),
   dispatch => {
     const {modifyState} = mapDispatchToProps(dispatch)
     return {modifyState}
