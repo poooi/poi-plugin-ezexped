@@ -240,10 +240,23 @@ class ExpeditionViewer extends Component {
             style={{display: "flex"}}
             onClick={this.props.onClickGS}>
             <FontAwesome
+              className={
+                /*
+                   always use dark theme, as button texts are white in light themes
+                   but poi-ship-cond-53 is supposed to be applied on texts (which is dark)
+                 */
+                this.props.greatSuccess ? 'poi-ship-cond-53 dark' : ''
+              }
               style={{marginRight: "5px", marginTop: "2px"}}
               name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
             <div
-              style={{flex: "1", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}} >
+              className={this.props.greatSuccess ? 'poi-ship-cond-53 dark' : ''}
+              style={{
+                flex: 1,
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+              }} >
               {__("Great Success")}</div>
           </Button>
         </div>

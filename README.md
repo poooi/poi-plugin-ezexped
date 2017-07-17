@@ -11,6 +11,7 @@ check expedition requirements and estimate expedition income accurately.
 
 - (TODO) Added Fleet composition requirements related to DE and CVE
 - (TODO) More tooltips
+- Gold "Great Success" toggle when it's on
 
 ### 0.5.0
 
