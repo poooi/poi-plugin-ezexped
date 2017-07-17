@@ -36,7 +36,7 @@ const reducer = (state = initState, action) => {
   // only record successful expeditions
   if (action.type === "@@Response/kcsapi/api_req_mission/result") {
     const expedId = expedNameToId( action.body.api_quest_name )
-    const fleetId = parseInt(action.postBody.api_deck_id, 10)-1
+    const fleetId = parseInt(action.postBody.api_deck_id, 10)
     let currentState = state
 
     if (action.body.api_clear_result !== 0) {
