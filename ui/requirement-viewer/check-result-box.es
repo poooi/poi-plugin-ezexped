@@ -1,5 +1,5 @@
 import FontAwesome from 'react-fontawesome'
-import { _ } from 'lodash'
+import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import {
   Button,

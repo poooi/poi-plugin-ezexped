@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { _ } from 'lodash'
+import _ from 'lodash'
 import {
   hideMainFleetSelector,
   isFleetCombinedSelector,
