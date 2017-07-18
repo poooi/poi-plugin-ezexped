@@ -12,6 +12,9 @@ import { error, enumFromTo } from '../utils'
 import {
   hideMainFleetSelector,
   isMainFleetFuncSelector,
+  selectedExpedsSelector,
+  gsFlagsSelector,
+  fleetIdSelector,
 } from './common'
 
 const fleetNumberCountSelector = createSelector(
@@ -120,6 +123,33 @@ const visibleFleetsInfoSelector = createSelector(
     visibleFleetIds.map(fleetId =>
       indexedFleetsInfo[fleetId]))
 
+const expedIdSelectorForFleet = _.memoize(fleetId =>
+  createSelector(
+    selectedExpedsSelector,
+    selectedExpeds => selectedExpeds[fleetId]))
+
+const gsFlagSelectorForFleet = _.memoize(fleetId =>
+  createSelector(
+    gsFlagsSelector,
+    expedIdSelectorForFleet(fleetId),
+    (gsFlags,expedId) => gsFlags[expedId]))
+
+// the expedition selected for current focusing fleet
+const expedIdSelector = createSelector(
+  selectedExpedsSelector,
+  fleetIdSelector,
+  (selectedExpeds,fleetId) => selectedExpeds[fleetId])
+
+const gsFlagSelector = createSelector(
+  gsFlagsSelector,
+  expedIdSelector,
+  (gsFlags,expedId) => gsFlags[expedId])
+
+const fleetInfoSelector = createSelector(
+  indexedFleetsInfoSelector,
+  fleetIdSelector,
+  (indexedFleetsInfo,fleetId) => indexedFleetsInfo[fleetId])
+
 export {
   allFleetIdsSelector,
   mkFleetInfoSelector,
@@ -127,4 +157,11 @@ export {
 
   visibleFleetIdsSelector,
   visibleFleetsInfoSelector,
+
+  expedIdSelector,
+  gsFlagSelector,
+  fleetInfoSelector,
+
+  expedIdSelectorForFleet,
+  gsFlagSelectorForFleet,
 }
