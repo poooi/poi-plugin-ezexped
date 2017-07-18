@@ -13,8 +13,11 @@
        returns an Object of the following shape:
 
        {
-         sat: <boolean>, // whether this requirement is satisfied
-         tooltip: <Object> or null, // no spec atm, just stuff necessary to render a tooltip
+         // whether this requirement is satisfied
+         sat: <boolean>,
+         // no spec atm, just extra information necessary
+         // to render both the requirements and results
+         extra: <Object> or null,
        }
 
    - make(...args) = Object

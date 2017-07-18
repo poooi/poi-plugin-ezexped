@@ -13,7 +13,7 @@ class AnyFleetCompo {
         return {countedCompo, sat}
       })
       const sat = results.some(x => x.sat)
-      return {sat, tooltip: results}
+      return {sat, extra: results}
     })
 }
 

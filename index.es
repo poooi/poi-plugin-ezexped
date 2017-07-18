@@ -18,6 +18,7 @@ import { loadAndUpdateConfig } from './config'
      instead of actually hiding it, we show a tag to indicate that it will disappear
      after switching to other fleets
    - i18n
+   - use contextual classes rather than direct colors
 
  */
 

@@ -131,7 +131,7 @@ class NewRequirementItem extends Component {
 
   render() {
     const {ereq,result,which,prefix} = this.props
-    const {sat,tooltip} = result
+    const {sat,extra} = result
     const checkboxColor = sat ?
       (which === 'gs' ? 'gold' : 'green') :
       (which === 'gs' ? 'grey' : 'red')
@@ -146,17 +146,17 @@ class NewRequirementItem extends Component {
           name={sat ? 'check-square-o' : 'square-o'}
         />
         <div>
-          {renderRequirement(ereq, result, prefix, tooltip)}
+          {renderRequirement(ereq, result, prefix, extra)}
         </div>
       </div>
     )
 
-    return result.tooltip ? (
+    return result.extra ? (
       <OverlayTrigger
         placement="top"
         overlay={
           <Tooltip id={`${prefix}-tt`}>
-            {JSON.stringify(result.tooltip)}
+            {JSON.stringify(result.extra)}
           </Tooltip>
         }
       >
