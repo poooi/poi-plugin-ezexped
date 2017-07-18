@@ -23,21 +23,18 @@ import {
   findNextAvailableFleet,
   isSendingFleetToExped,
 } from '../auto-switch'
-import { modifyObject } from '../utils'
 import { PTyp } from '../ptyp'
 import { observeAll } from '../observers'
 import { mapDispatchToProps } from '../store'
 
 import {
-  fleetAutoSwitchSelector,
-  selectedExpedsSelector,
-  gsFlagsSelector,
-  hideMainFleetSelector,
-  sparkledCountSelector,
-  isFleetCombinedSelector,
-  visibleFleetsInfoSelector,
   fleetIdSelector,
+  visibleFleetsInfoSelector,
+  fleetAutoSwitchSelector,
+  isFleetCombinedSelector,
+  hideMainFleetSelector,
   expedTableExpandedSelector,
+  fleetInfoSelector,
 } from '../selectors'
 
 class EZExpedMainImpl extends Component {
@@ -46,15 +43,16 @@ class EZExpedMainImpl extends Component {
     fleets: PTyp.array.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
     isFleetCombined: PTyp.bool.isRequired,
-    selectedExpeds: PTyp.objectOf(PTyp.number).isRequired,
-    gsFlags: PTyp.objectOf(PTyp.bool).isRequired,
     hideMainFleet: PTyp.bool.isRequired,
-    sparkledCount: PTyp.number.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
+    fleet: PTyp.object,
 
     changeFleet: PTyp.func.isRequired,
     configReady: PTyp.func.isRequired,
-    modifyState: PTyp.func.isRequired,
+  }
+
+  static defaultProps = {
+    fleet: null,
   }
 
   constructor(props) {
@@ -156,44 +154,16 @@ class EZExpedMainImpl extends Component {
     }
   }
 
-  selectExped = newExpedId => {
-    const fleetId = this.props.fleetId
-    this.props.modifyState(
-      _.flow(
-        modifyObject(
-          'expedTableExpanded',
-          () => false),
-        modifyObject(
-          'selectedExpeds',
-          modifyObject(fleetId, () => newExpedId))))
-  }
-
   render() {
     const {
-      selectedExpeds, gsFlags,
-      fleetId,
       expedTableExpanded,
+      fleet,
     } = this.props
-    const fleet = this.props.fleets.find(flt => flt.id === fleetId) || null
     return (
       <div className="poi-plugin-ezexped">
         <link rel="stylesheet" href={join(__dirname, '..', 'assets', 'ezexped.css')} />
         <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
-          <FleetPicker
-              fleets={this.props.fleets}
-              fleetId={fleetId}
-              selectedExpeds={selectedExpeds}
-              gsFlags={gsFlags}
-              isFleetCombined={this.props.isFleetCombined}
-              autoSwitch={this.props.fleetAutoSwitch}
-              recommendSparkled={this.props.sparkledCount}
-              onToggleAutoSwitch={() =>
-                this.props.modifyState(
-                  modifyObject(
-                    'fleetAutoSwitch',
-                    x => !x))
-              }
-              onSelectFleet={this.props.changeFleet} />
+          <FleetPicker />
           {
             fleet && (
               <ExpeditionViewer />
@@ -221,14 +191,12 @@ class EZExpedMainImpl extends Component {
 }
 
 const mainUISelector = createStructuredSelector({
+  fleet: fleetInfoSelector,
   fleets: visibleFleetsInfoSelector,
   isFleetCombined: isFleetCombinedSelector,
   fleetId: fleetIdSelector,
   fleetAutoSwitch: fleetAutoSwitchSelector,
-  selectedExpeds: selectedExpedsSelector,
-  gsFlags: gsFlagsSelector,
   hideMainFleet: hideMainFleetSelector,
-  sparkledCount: sparkledCountSelector,
   expedTableExpanded: expedTableExpandedSelector,
 })
 
