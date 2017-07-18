@@ -131,48 +131,6 @@ const findChangingFleet = (curFleets, nextFleets) => {
   return null
 }
 
-// finds next available fleet to send for expeditions
-// returns `null` if all fleets are sent
-// Note: main fleets are always skipped: they cannot be send to expeditions.
-// for this reason, we still need to check "beginFleetIndex"
-// regardless of "hideMainFleet" setting
-const findNextAvailableFleet = (fleetsExtra, isFleetCombined) => {
-  const minFleetId = isFleetCombined ? 3 : 2
-
-  // const beginFleetIndex = !isFleetCombined ? 1 : 2
-  for (let i=0; i<fleetsExtra.length; ++i) {
-    const fleet = fleetsExtra[i]
-    if (fleet.id < minFleetId)
-      continue
-    if (fleet.available)
-      return fleet.id
-  }
-  // move back to first fleet after all expeditions are sent
-  // or do nothing at all if we are not supposed to keep track of main fleet
-  return null
-}
-
-// detect whether we are sending a fleet
-// see "Note" of "findNextAvailableFleet"
-// also note that curFleets and nextFleets should be of the same length
-const isSendingFleetToExped = (curFleets, nextFleets, isFleetCombined) => {
-  const minFleetId = isFleetCombined ? 3 : 2
-  // find a place "i" where an available fleet becoming unavailable next moment
-  // const beginFleetIndex = !isFleetCombined ? 1 : 2
-  for (let i = 0; i<curFleets.length; ++i) {
-    const curFleet = curFleets[i]
-    if (curFleet.id < minFleetId)
-      continue
-
-    const nextFleet = nextFleets[i]
-    if (curFleet.available && !nextFleet.available)
-      return true
-  }
-  return false
-}
-
 export {
   findChangingFleet,
-  findNextAvailableFleet,
-  isSendingFleetToExped,
 }
