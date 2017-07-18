@@ -1,7 +1,7 @@
 import { observer } from 'redux-observers'
 import { createStructuredSelector } from 'reselect'
 import {
-  nextAvailableFleetSelector,
+  nextAvailableFleetIdSelector,
   hideMainFleetSelector,
   fleetAutoSwitchSelector,
 } from '../selectors'
@@ -13,9 +13,9 @@ import { mapDispatchToProps } from '../store'
 
    see also: ../store/auto-switch.es
  */
-const nextAvailableFleetObserver = observer(
+const nextAvailableFleetIdObserver = observer(
   createStructuredSelector({
-    nextAvailableFleet: nextAvailableFleetSelector,
+    nextAvailableFleetId: nextAvailableFleetIdSelector,
     fleetAutoSwitch: fleetAutoSwitchSelector,
     hideMainFleet: hideMainFleetSelector,
   }),
@@ -23,12 +23,12 @@ const nextAvailableFleetObserver = observer(
     if (current.fleetAutoSwitch !== true)
       return
 
-    if (current.nextAvailableFleet !== previous.nextAvailableFleet) {
-      const {nextAvailableFleet, hideMainFleet} = current
-      if (nextAvailableFleet !== null) {
+    if (current.nextAvailableFleetId !== previous.nextAvailableFleetId) {
+      const {nextAvailableFleetId, hideMainFleet} = current
+      if (nextAvailableFleetId !== null) {
         mapDispatchToProps(dispatch)
           .changeFleet(
-            nextAvailableFleet,
+            nextAvailableFleetId,
             'change detected by observer')
       } else {
         if (!hideMainFleet)
@@ -40,4 +40,4 @@ const nextAvailableFleetObserver = observer(
     }
   })
 
-export { nextAvailableFleetObserver }
+export { nextAvailableFleetIdObserver }

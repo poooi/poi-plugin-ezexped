@@ -11,7 +11,7 @@ import {
   hideMainFleetSelector,
   visibleFleetIdsSelector,
   visibleFleetsInfoSelector,
-  nextAvailableFleetSelector,
+  nextAvailableFleetIdSelector,
 } from '../selectors'
 
 const asyncChangeFleet = (...args) =>
@@ -79,7 +79,7 @@ const subReducer = (state, action) => {
   ) {
     const reason = `triggered by game action ${action.type}`
     const poiState = store.getState()
-    const mayFleetId = nextAvailableFleetSelector(poiState)
+    const mayFleetId = nextAvailableFleetIdSelector(poiState)
     if (typeof mayFleetId === 'number') {
       const fleetId = mayFleetId
       asyncChangeFleet(fleetId, reason)
