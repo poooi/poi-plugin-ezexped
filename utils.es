@@ -81,6 +81,13 @@ const testSelector = selector => () => {
   }
 }
 
+const mergeMapDispatchToProps = (...mdtps) => dispatch =>
+  mdtps.reduce(
+    (props, curMdtp) => ({...props, ...curMdtp(dispatch)}),
+    {})
+
+const mergeMapStateToProps = mergeMapDispatchToProps
+
 export {
   shallowEqual,
 
@@ -95,4 +102,7 @@ export {
   error,
 
   testSelector,
+
+  mergeMapDispatchToProps,
+  mergeMapStateToProps,
 }
