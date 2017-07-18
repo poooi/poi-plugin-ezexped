@@ -22,11 +22,10 @@ const expedReqsStage2Selector = createSelector(
    */
   _.memoize(sparkledCount => {
     const config = {sparkledCount}
-    return expedReqs.map(expedReq => {
-      if (! expedReq)
-        return expedReq
-      return mapExpedReq(EReq.performStage2(config))(expedReq)
-    })
+    return _.mapValues(
+      expedReqs,
+      mapExpedReq(EReq.performStage2(config))
+    )
   }))
 
 const mkEReqResultObjectSelectorForFleet = _.memoize(
