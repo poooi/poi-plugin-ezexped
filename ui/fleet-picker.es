@@ -22,10 +22,8 @@ import {
   fleetAutoSwitchSelector,
   sparkledCountSelector,
 } from '../selectors'
-import { mapDispatchToProps } from '../store'
-import { modifyObject } from '../utils'
-
-const { dispatch } = window
+import { mapDispatchToProps as extMdtp } from '../store'
+import { modifyObject, mergeMapDispatchToProps } from '../utils'
 
 class FleetPickerImpl extends Component {
   static propTypes = {
@@ -39,6 +37,7 @@ class FleetPickerImpl extends Component {
 
     modifyState: PTyp.func.isRequired,
     changeFleet: PTyp.func.isRequired,
+    changeFleetFocusInMainUI: PTyp.func.isRequired,
   }
 
   handleToggleAutoSwitch = () =>
@@ -96,15 +95,8 @@ class FleetPickerImpl extends Component {
         : "danger"
 
       const focused = this.props.fleetId === fleetId
-      const handleFocusFleetInMainUI = () => {
-        dispatch({
-          type: '@@TabSwitch',
-          tabInfo: {
-            activeMainTab: 'shipView',
-            activeFleetId: fleetId-1,
-          },
-        })
-      }
+      const handleFocusFleetInMainUI = () =>
+        this.props.changeFleetFocusInMainUI(fleetId)
 
       return (<Button
           bsStyle={bsStyle}
@@ -169,9 +161,20 @@ const uiSelector = createStructuredSelector({
   recommendSparkled: sparkledCountSelector,
 })
 
+const poiMdtp = dispatch => ({
+  changeFleetFocusInMainUI: fleetId =>
+    dispatch({
+      type: '@@TabSwitch',
+      tabInfo: {
+        activeMainTab: 'shipView',
+        activeFleetId: fleetId-1,
+      },
+    }),
+})
+
 const FleetPicker = connect(
   uiSelector,
-  mapDispatchToProps,
+  mergeMapDispatchToProps(extMdtp, poiMdtp),
 )(FleetPickerImpl)
 
 export { FleetPicker }
