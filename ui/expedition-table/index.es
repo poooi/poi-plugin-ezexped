@@ -15,6 +15,8 @@ import {
 } from '../../selectors'
 import { mapDispatchToProps } from '../../store'
 
+const allExpedIds = enumFromTo(1,40)
+
 class ExpeditionTableImpl extends Component {
   static propTypes = {
     // current active expedition
@@ -65,24 +67,35 @@ class ExpeditionTableImpl extends Component {
         style={{marginBottom: "5px"}} >
         <div style={{display: "flex"}} >
           {
-            enumFromTo(1,5).map(world => (
-              <div key={world}
-                   style={{flex: "1", display: "flex", marginRight: "5px", flexDirection: "column"}}>
-                {
-                  enumFromTo(1+8*(world-1), 8*world).map(expedId =>
-                    (
-                      <ExpeditionButton
-                        key={expedId}
-                        ready={isReadyArr[expedId]}
-                        active={this.props.expedId === expedId}
-                        expedId={expedId}
-                        onClick={this.handleSelectExped(expedId)}
-                      />
-                    )
-                  )
+            _.zip(
+              // worlds
+              enumFromTo(1,5),
+              // expedition ids in that world
+              _.chunk(allExpedIds,8))
+             .map(([world, expedIds]) => (
+               <div
+                 key={world}
+                 style={{
+                   flex: 1,
+                   display: 'flex',
+                   marginRight: 5,
+                   flexDirection: 'column',
+                 }}>
+                 {
+                   expedIds.map(expedId =>
+                     (
+                       <ExpeditionButton
+                         key={expedId}
+                         ready={isReadyArr[expedId]}
+                         active={this.props.expedId === expedId}
+                         expedId={expedId}
+                         onClick={this.handleSelectExped(expedId)}
+                       />
+                     )
+                   )
                 }
-              </div>)
-            )
+               </div>
+             ))
           }
         </div>
       </Panel>
