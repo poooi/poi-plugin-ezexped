@@ -50,7 +50,8 @@ class RequirementViewerImpl extends Component {
       this.props.greatSuccess !== nextProps.greatSuccess ||
       this.props.recommendSparkled !== nextProps.recommendSparkled ||
       this.props.hideSatReqs !== nextProps.hideSatReqs ||
-      ! _.isEqual(this.props.fleet, nextProps.fleet)
+      ! _.isEqual(this.props.fleet, nextProps.fleet) ||
+      this.props.fleetEReqResultObject !== nextProps.fleetEReqResultObject
   }
 
   genTmpList = () => {

@@ -9,7 +9,6 @@ import { ExpeditionButton } from './expedition-button'
 import {
   fleetIdSelector,
   expedIdSelector,
-  fleetInfoSelector,
   expedTableExpandedSelector,
 } from '../../selectors'
 import {
@@ -25,20 +24,12 @@ class ExpeditionTableImpl extends Component {
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
-    // fleet representation, note that the fleet could be null
-    fleet: PTyp.object,
     modifyState: PTyp.func.isRequired,
     normFlags: PTyp.objectOf(PTyp.bool).isRequired,
   }
 
   static defaultProps = {
     fleet: null,
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.expedId !== nextProps.expedId ||
-      this.props.expedTableExpanded !== nextProps.expedTableExpanded ||
-      ! _.isEqual(this.props.fleet,nextProps.fleet)
   }
 
   handleSelectExped = newExpedId => () => {
@@ -101,7 +92,6 @@ class ExpeditionTableImpl extends Component {
 const uiSelector = createStructuredSelector({
   expedId: expedIdSelector,
   fleetId: fleetIdSelector,
-  fleet: fleetInfoSelector,
   expedTableExpanded: expedTableExpandedSelector,
 })
 
