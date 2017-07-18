@@ -1,49 +1,15 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash'
 import {
-  hideMainFleetSelector,
-  isFleetCombinedSelector,
   selectedExpedsSelector,
   gsFlagsSelector,
   fleetIdSelector,
 } from './common'
 import {
-  allFleetIdsSelector,
   indexedFleetsInfoSelector,
 } from './fleet-info'
 
 import {} from './exped-reqs'
-
-const visibleFleetIdsSelector = createSelector(
-  allFleetIdsSelector,
-  hideMainFleetSelector,
-  isFleetCombinedSelector,
-  (allFleetIds, hideMainFleet, isFleetCombined) =>
-    allFleetIds.filter(fleetId => {
-      if (!hideMainFleet)
-        return true
-
-      const isMainFleet = isFleetCombined ?
-        (
-          /*
-             for a combined fleet, both the first and the second fleets
-             should be considered main fleet
-           */
-          fleetId <= 2
-        ) :
-        (
-          // otherwise we just need to hide the first fleet
-          fleetId === 1
-        )
-      return !isMainFleet
-    }))
-
-const visibleFleetsInfoSelector = createSelector(
-  indexedFleetsInfoSelector,
-  visibleFleetIdsSelector,
-  (indexedFleetsInfo,visibleFleetIds) =>
-    visibleFleetIds.map(fleetId =>
-      indexedFleetsInfo[fleetId]))
 
 // TODO: cases where fleet is not available.
 
@@ -65,9 +31,9 @@ const fleetInfoSelector = createSelector(
 
 export * from './common'
 export * from './fleet-info'
+export * from './auto-switch'
 
 export {
-  visibleFleetsInfoSelector,
   expedIdSelector,
   gsFlagSelector,
   fleetInfoSelector,
