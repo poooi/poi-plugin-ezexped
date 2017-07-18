@@ -5,7 +5,7 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap'
 
-import { PTyp } from '../../../ptyp'
+import { PTyp } from '../../../../ptyp'
 
 class ItemTemplate extends Component {
   static propTypes = {

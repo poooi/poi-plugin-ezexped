@@ -4,7 +4,7 @@ import React from 'react'
 import {
   Tooltip,
 } from 'react-bootstrap'
-import { __ } from '../../../tr'
+import { __ } from '../../../../tr'
 
 const formatReqExplain = ereqType => (...args) =>
     __(`RequirementExplain.${ereqType}`, ...args)
@@ -14,14 +14,18 @@ const getExtraType = props =>
 
 const mayNoFlagship = props =>
   getExtraType(props) === 'NoFlagship' ? (
-    <Tooltip id={`${props.prefix}detail`}>
+    <Tooltip
+      className="ezexped-pop"
+      id={`${props.prefix}detail`}>
       Flagship not found
     </Tooltip>
   ) : null
 
 const mayNeedMore = (describe,typ = 'GreaterOrEqual') => props =>
   getExtraType(props) === typ ? (
-    <Tooltip id={`${props.prefix}detail`}>
+    <Tooltip
+      className="ezexped-pop"
+      id={`${props.prefix}detail`}>
       {describe(props.result.extra.left, props.result.extra.right)}
     </Tooltip>
   ) : null
