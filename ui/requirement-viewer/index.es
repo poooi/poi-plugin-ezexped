@@ -16,14 +16,15 @@ import { PTyp } from '../../ptyp'
 
 import { CheckResultBox } from './check-result-box'
 import { RequirementListItem } from './requirement-list-item'
-import { mkFleetEReqResultObjectSelector } from './selectors'
 
 import {
+  fleetIdSelector,
   fleetInfoSelector,
   expedIdSelector,
   gsFlagSelector,
   sparkledCountSelector,
   hideSatReqsSelector,
+  mkEReqResultObjectSelectorForFleet,
 } from '../../selectors'
 
 // props:
@@ -36,8 +37,12 @@ class RequirementViewerImpl extends Component {
     greatSuccess: PTyp.bool.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
     recommendSparkled: PTyp.number.isRequired,
-    fleet: PTyp.object.isRequired,
+    fleet: PTyp.object,
     fleetEReqResultObject: PTyp.object.isRequired,
+  }
+
+  static defaultProps = {
+    fleet: null,
   }
 
   shouldComponentUpdate(nextProps) {
@@ -135,6 +140,7 @@ class RequirementViewerImpl extends Component {
 }
 
 const uiExtrasSelector = createStructuredSelector({
+  fleetId: fleetIdSelector,
   fleet: fleetInfoSelector,
   expedId: expedIdSelector,
   greatSuccess: gsFlagSelector,
@@ -145,8 +151,9 @@ const uiExtrasSelector = createStructuredSelector({
 const RequirementViewer = connect(
   state => {
     const uiExtras = uiExtrasSelector(state)
-    const {fleet} = uiExtras
-    const fleetEReqResultObject = mkFleetEReqResultObjectSelector(fleet.id)(state)
+    const {fleetId} = uiExtras
+    const fleetEReqResultObject =
+      mkEReqResultObjectSelectorForFleet(fleetId)(state)
     return {...uiExtras, fleetEReqResultObject}
   },
 )(RequirementViewerImpl)

@@ -9,8 +9,6 @@ import {
   indexedFleetsInfoSelector,
 } from './fleet-info'
 
-import {} from './exped-reqs'
-
 const expedIdSelectorForFleet = _.memoize(fleetId =>
   createSelector(
     selectedExpedsSelector,
@@ -41,6 +39,7 @@ const fleetInfoSelector = createSelector(
 export * from './common'
 export * from './fleet-info'
 export * from './auto-switch'
+export * from './exped-reqs'
 
 export {
   expedIdSelector,
