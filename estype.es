@@ -84,6 +84,17 @@ const longDesc = __ => estypeName => {
   return translated
 }
 
+const esFleetCompoToPairs = (() => {
+  // by convention we make "heavier" ships go first
+  const revAllESTypes = [...allESTypes].reverse()
+
+  return fleetCompo => _.flatMap(
+    revAllESTypes,
+    estype => (estype in fleetCompo) ?
+      [[estype, fleetCompo[estype]]] :
+      [])
+})()
+
 export {
   allSTypes,
   nameToId,
@@ -95,4 +106,5 @@ export {
   shortDesc,
   longDesc,
   countFleetCompo,
+  esFleetCompoToPairs,
 }
