@@ -1,6 +1,5 @@
 /*
 
-   (TODO)
    EReq should destruct <EReq> structure and dispatch it
    to the actual impl accordingly, every EReq is implemented
    as a class with static methods, these methods should respect the following
@@ -118,7 +117,8 @@ class EReq {
    }
 
    after this stage, applying arguments should keep attaching fields
-   into this structure, the meaning of them are:
+   into this structure ('attaching' in functional sense),
+   the meaning of them are:
 
    - ereq: raw object, serializable representation
    - stage1: result of EReq.prepare(ereq)
