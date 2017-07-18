@@ -14,7 +14,7 @@ import {
   expedIdSelectorForFleet,
   gsFlagSelectorForFleet,
   mkFleetInfoSelector,
-  isFleetCombinedSelector,
+  isMainFleetFuncSelector,
   sparkledCountSelector,
 } from '../../selectors'
 
@@ -40,6 +40,7 @@ class FleetButtonImpl extends Component {
     expedId: PTyp.number.isRequired,
     greatSuccess: PTyp.bool.isRequired,
     isFleetCombined: PTyp.bool.isRequired,
+    isMainFleetFunc: PTyp.func.isRequired,
     recommendSparkled: PTyp.number.isRequired,
     fleet: PTyp.object,
     changeFleet: PTyp.func.isRequired,
@@ -51,7 +52,10 @@ class FleetButtonImpl extends Component {
   }
 
   render() {
-    const {fleet, fleetId, expedId, greatSuccess} = this.props
+    const {
+      fleet, fleetId, expedId, greatSuccess,
+      isMainFleetFunc,
+    } = this.props
     // Button color:
     // - available:
     //   - first fleet always green
@@ -72,12 +76,11 @@ class FleetButtonImpl extends Component {
       (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
     const bsStyle =
-      fleetId === 1 ? "success"
-      : this.props.isFleetCombined && fleetId === 2 ? "success"
-      : !fleet.available ? "primary"
-      : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? "success"
-      : normReadyFlag && gsReadyFlag ? "warning"
-      : "danger"
+      isMainFleetFunc(fleetId) ? 'success'
+      : !fleet.available ? 'primary'
+      : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? 'success'
+      : normReadyFlag && gsReadyFlag ? 'warning'
+      : 'danger'
 
     const {focused} = this.props
     const handleFocusFleetInMainUI = () =>
@@ -112,7 +115,7 @@ const FleetButton = connect(
     const expedId = expedIdSelectorForFleet(fleetId)(state)
     const greatSuccess = gsFlagSelectorForFleet(fleetId)(state)
     const fleet = mkFleetInfoSelector(fleetId)(state)
-    const isFleetCombined = isFleetCombinedSelector(state)
+    const isMainFleetFunc = isMainFleetFuncSelector(state)
     const recommendSparkled = sparkledCountSelector(state)
 
     return {
@@ -120,7 +123,7 @@ const FleetButton = connect(
       expedId,
       greatSuccess,
       fleet,
-      isFleetCombined,
+      isMainFleetFunc,
       recommendSparkled,
     }
   },

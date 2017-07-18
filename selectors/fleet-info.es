@@ -11,7 +11,7 @@ import {
 import { error, enumFromTo } from '../utils'
 import {
   hideMainFleetSelector,
-  isFleetCombinedSelector,
+  isMainFleetFuncSelector,
 } from './common'
 
 const fleetNumberCountSelector = createSelector(
@@ -105,25 +105,12 @@ const indexedFleetsInfoSelector = createSelector(
 const visibleFleetIdsSelector = createSelector(
   allFleetIdsSelector,
   hideMainFleetSelector,
-  isFleetCombinedSelector,
-  (allFleetIds, hideMainFleet, isFleetCombined) =>
+  isMainFleetFuncSelector,
+  (allFleetIds, hideMainFleet, isMainFleetFunc) =>
     allFleetIds.filter(fleetId => {
       if (!hideMainFleet)
         return true
-
-      const isMainFleet = isFleetCombined ?
-        (
-          /*
-             for a combined fleet, both the first and the second fleets
-             should be considered main fleet
-           */
-          fleetId <= 2
-        ) :
-        (
-          // otherwise we just need to hide the first fleet
-          fleetId === 1
-        )
-      return !isMainFleet
+      return !isMainFleetFunc(fleetId)
     }))
 
 const visibleFleetsInfoSelector = createSelector(
