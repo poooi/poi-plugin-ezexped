@@ -1,7 +1,6 @@
 import assert from 'assert'
 
 import * as estype from "../estype"
-import * as req from "../requirement"
 import * as utils from "../utils"
 import * as autoSwitch from "../auto-switch"
 
@@ -30,27 +29,6 @@ describe('estype', () => {
       assert( ! estype.isESType.CVE(ty.CVL, 318))
       assert( estype.isESType.DE( ty.DE ) )
       assert( ! estype.isESType.DE( ty.DD ) )
-    })
-  })
-})
-
-describe('requirement', () => {
-  describe('collapseResults', () => {
-    spec('tests', () => {
-      const aT = inp => assert( req.collapseResults( inp ) )
-      const aF = inp => assert( !req.collapseResults( inp ) )
-
-      aT( true )
-      aF( false )
-
-      aT( [true, true, {x: true, y: true}] )
-      aF( [true, true, {x: false, y: true}] )
-
-      aT( [[true,true],[],{}] )
-      aF( [[true,true],[false],{}] )
-
-      aT( {x: true, y: [{}, []], z: [true,true]} )
-      aF( {x: true, y: [{u: false}, []], z: [true,true]} )
     })
   })
 })

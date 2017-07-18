@@ -13,6 +13,7 @@ check expedition requirements and estimate expedition income accurately.
 - (TODO) More tooltips
 - "Great Success" toggle turns golden when it's on
 - Improved fleet auto switch mechanism
+- Improved requirement checking mechanism
 
 ### 0.5.0
 
