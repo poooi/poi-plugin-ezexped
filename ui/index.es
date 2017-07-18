@@ -3,10 +3,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import {
-  Panel,
-} from 'react-bootstrap'
-
-import {
   createStructuredSelector,
 } from 'reselect'
 
@@ -20,13 +16,11 @@ import { RequirementViewer } from './requirement-viewer'
 import { PTyp } from '../ptyp'
 
 import {
-  expedTableExpandedSelector,
   fleetInfoSelector,
 } from '../selectors'
 
 class EZExpedMainImpl extends Component {
   static propTypes = {
-    expedTableExpanded: PTyp.bool.isRequired,
     fleet: PTyp.object,
   }
 
@@ -36,13 +30,18 @@ class EZExpedMainImpl extends Component {
 
   render() {
     const {
-      expedTableExpanded,
       fleet,
     } = this.props
     return (
       <div className="poi-plugin-ezexped">
-        <link rel="stylesheet" href={join(__dirname, '..', 'assets', 'ezexped.css')} />
-        <div style={{paddingRight: "5px", paddingLeft: "5px"}}>
+        <link
+          rel="stylesheet"
+          href={join(__dirname, '..', 'assets', 'ezexped.css')}
+        />
+        <div style={{
+          paddingRight: 5,
+          paddingLeft: 5,
+        }}>
           <FleetPicker />
           {
             fleet && (
@@ -51,12 +50,7 @@ class EZExpedMainImpl extends Component {
           }
           {
             fleet && (
-              <Panel
-                collapsible
-                expanded={expedTableExpanded}
-                style={{marginBottom: "5px"}} >
-                <ExpeditionTable />
-              </Panel>
+              <ExpeditionTable />
             )
           }
           {
@@ -72,7 +66,6 @@ class EZExpedMainImpl extends Component {
 
 const mainUISelector = createStructuredSelector({
   fleet: fleetInfoSelector,
-  expedTableExpanded: expedTableExpandedSelector,
 })
 
 const EZExpedMain = connect(
