@@ -1,11 +1,11 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
-  selectedExpedsSelector,
   sparkledCountSelector,
 } from './common'
 import {
   mkFleetInfoSelector,
+  expedIdSelectorForFleet,
 } from './fleet-info'
 import { expedReqs, mapExpedReq } from '../exped-reqs'
 import { EReq } from '../structs/ereq'
@@ -31,11 +31,12 @@ const expedReqsStage2Selector = createSelector(
 
 const mkEReqResultObjectSelectorForFleet = _.memoize(
   fleetId => createSelector(
-    selectedExpedsSelector,
+    expedIdSelectorForFleet(fleetId),
     mkFleetInfoSelector(fleetId),
     expedReqsStage2Selector,
-    (selectedExpeds,fleet,expedReqsStage2) => {
-      const expedId = selectedExpeds[fleetId]
+    (expedId,fleet,expedReqsStage2) => {
+      if (_.isEmpty(fleet))
+        return null
       const expedReqStage2 = expedReqsStage2[expedId]
       const ereqResultObj = mapExpedReq(
         EReq.computeResult(fleet)
