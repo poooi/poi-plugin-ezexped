@@ -1,10 +1,10 @@
-import { fslSc, mk } from './common'
+import { fslSc, mk, escortSpecialFleetCompos } from './common'
 
 const defineWorld2 = defineExped => {
   defineExped(9)(
     [
       ...fslSc(3,4),
-      mk.FleetCompo({CL: 1, DD: 2}),
+      escortSpecialFleetCompos,
     ])
 
   defineExped(10)(
