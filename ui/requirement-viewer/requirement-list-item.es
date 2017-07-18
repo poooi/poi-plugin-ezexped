@@ -1,5 +1,4 @@
 import FontAwesome from 'react-fontawesome'
-import _ from 'lodash'
 import React, { Component } from 'react'
 import {
   ListGroupItem,

@@ -6,7 +6,6 @@ import {
 } from 'react-bootstrap'
 
 import { getExpedReqs, checkAllReq, collapseResults } from '../../requirement'
-import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import {
@@ -66,14 +65,6 @@ class FleetButtonImpl extends Component {
       fleet, fleetId, expedId, greatSuccess,
       isMainFleetFunc,
     } = this.props
-    // Button color:
-    // - available:
-    //   - first fleet always green
-    //     (for combined fleet, second fleet is always green too)
-    //   - if everything is satisfied: green
-    //   - if just needs resupply: yellow
-    //   - otherwise red
-    // - not available: always blue
     const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
 
     const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet.ships)
@@ -85,6 +76,14 @@ class FleetButtonImpl extends Component {
       !greatSuccess ||
       (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
 
+    // Button color:
+    // - available:
+    //   - first fleet always green
+    //     (for combined fleet, second fleet is always green too)
+    //   - if everything is satisfied: green
+    //   - if just needs resupply: yellow
+    //   - otherwise red
+    // - not available: always blue
     const bsStyle =
       isMainFleetFunc(fleetId) ? 'success'
       : !fleet.available ? 'primary'
