@@ -4,18 +4,15 @@ import {
   Button,
   Tooltip, OverlayTrigger,
 } from 'react-bootstrap'
-
-import { getExpedReqs, checkAllReq, collapseResults } from '../../requirement'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import {
   fleetIdSelector,
-  expedIdSelectorForFleet,
-  gsFlagSelectorForFleet,
   mkFleetInfoSelector,
-  isMainFleetFuncSelector,
-  sparkledCountSelector,
 } from '../../selectors'
+import {
+  mkBsStyleForFleetButtonSelector,
+} from './selectors'
 
 const mkTooltip = fleet =>
   (
@@ -36,11 +33,8 @@ class FleetButtonImpl extends Component {
   static propTypes = {
     focused: PTyp.bool.isRequired,
     fleetId: PTyp.number.isRequired,
-    expedId: PTyp.number.isRequired,
-    greatSuccess: PTyp.bool.isRequired,
-    isMainFleetFunc: PTyp.func.isRequired,
-    recommendSparkled: PTyp.number.isRequired,
     fleet: PTyp.object,
+    bsStyle: PTyp.string.isRequired,
 
     changeFleet: PTyp.func.isRequired,
     changeFleetFocusInMainUI: PTyp.func.isRequired,
@@ -61,38 +55,7 @@ class FleetButtonImpl extends Component {
   }
 
   render() {
-    const {
-      fleet, fleetId, expedId, greatSuccess,
-      isMainFleetFunc,
-    } = this.props
-    const eR = getExpedReqs(expedId,true,true,this.props.recommendSparkled)
-
-    const resupplyReadyFlag = checkAllReq(eR.resupply)(fleet.ships)
-    // without resupply
-    const normReadyFlag =
-      collapseResults( checkAllReq( eR.norm )(fleet.ships) )
-
-    const gsReadyFlag =
-      !greatSuccess ||
-      (greatSuccess && collapseResults( checkAllReq( eR.gs )(fleet.ships) ))
-
-    // Button color:
-    // - available:
-    //   - first fleet always green
-    //     (for combined fleet, second fleet is always green too)
-    //   - if everything is satisfied: green
-    //   - if just needs resupply: yellow
-    //   - otherwise red
-    // - not available: always blue
-    const bsStyle =
-      isMainFleetFunc(fleetId) ? 'success'
-      : !fleet.available ? 'primary'
-      : normReadyFlag && resupplyReadyFlag && gsReadyFlag ? 'success'
-      : normReadyFlag && gsReadyFlag ? 'warning'
-      : 'danger'
-
-    const {focused} = this.props
-
+    const {fleet, bsStyle, focused} = this.props
     return (
       <OverlayTrigger
         placement="bottom" overlay={mkTooltip(fleet)}>
@@ -125,19 +88,12 @@ const FleetButton = connect(
   (state, props) => {
     const {fleetId} = props
     const currentFocusingFleetId = fleetIdSelector(state)
-    const expedId = expedIdSelectorForFleet(fleetId)(state)
-    const greatSuccess = gsFlagSelectorForFleet(fleetId)(state)
     const fleet = mkFleetInfoSelector(fleetId)(state)
-    const isMainFleetFunc = isMainFleetFuncSelector(state)
-    const recommendSparkled = sparkledCountSelector(state)
-
+    const bsStyle = mkBsStyleForFleetButtonSelector(fleetId)(state)
     return {
       focused: fleetId === currentFocusingFleetId,
-      expedId,
-      greatSuccess,
       fleet,
-      isMainFleetFunc,
-      recommendSparkled,
+      bsStyle,
     }
   },
   mapDispatchToProps,
