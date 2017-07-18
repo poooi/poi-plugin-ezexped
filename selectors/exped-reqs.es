@@ -44,7 +44,23 @@ const mkEReqResultObjectSelectorForFleet = _.memoize(
       return ereqResultObj
     }))
 
+const mkEReqSatFlagsSelectorForFleet = _.memoize(
+  fleetId => createSelector(
+    mkEReqResultObjectSelectorForFleet(fleetId),
+    ereqResultObj => {
+      if (ereqResultObj === null)
+        return null
+      const {norm, gs, resupply} = ereqResultObj
+      const isSat = x => x.result.sat === true
+      return {
+        normFlag: norm.every(isSat),
+        gsFlag: gs.every(isSat),
+        resupplyFlag: isSat(resupply),
+      }
+    }))
+
 export {
   expedReqsStage2Selector,
   mkEReqResultObjectSelectorForFleet,
+  mkEReqSatFlagsSelectorForFleet,
 }
