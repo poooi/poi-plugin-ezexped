@@ -1,20 +1,18 @@
 import { onFleetShips, singObj } from './common'
-import { countFleetCompo } from '../../estype'
+
+import { computeResult } from './fleet-compo'
 
 class AnyFleetCompo {
   static make = singObj('compos')
 
-  static prepare = ({compos}) => () =>
-    onFleetShips(ships => {
-      const results = compos.map(compo => {
-        const countedCompo = countFleetCompo(compo)(ships)
-        const sat = Object.entries(compo).every(([estype,count]) =>
-          countedCompo[estype] >= count)
-        return {countedCompo, sat}
-      })
-      const sat = results.some(x => x.sat)
-      return {sat, extra: results}
+  static prepare = ({compos}) => {
+    const fs = compos.map(computeResult)
+    return () => onFleetShips(ships => {
+      const results = fs.map(f => f(ships))
+      const sat = results.some(r => r.sat)
+      return {sat, extra: {type: 'AnyFleetCompo', results}}
     })
+  }
 }
 
 export { AnyFleetCompo }

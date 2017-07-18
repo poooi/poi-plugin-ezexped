@@ -59,15 +59,6 @@ const [isESType, allESTypes] = (() => {
   return [$isESType, $allESTypes]
 })()
 
-// countFleetCompo(<FleetCompo>)(<Array of Ship>) = FleetCompo
-const countFleetCompo = compo => ships =>
-  _.fromPairs(
-    Object.keys(compo).map(estype => {
-      const count = ships.filter(s =>
-        isESType[estype](s.stype, s.mstId)).length
-      return [estype, count]
-    }))
-
 const shortDesc = estypeName =>
     estypeName === "CVLike" ? "CV*"
   : estypeName === "SSLike" ? "SS*"
@@ -105,6 +96,5 @@ export {
 
   shortDesc,
   longDesc,
-  countFleetCompo,
   esFleetCompoToPairs,
 }
