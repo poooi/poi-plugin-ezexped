@@ -135,15 +135,22 @@ class FleetPickerImpl extends Component {
           key="auto-fleet"
           placement="left" overlay={tooltipAutoSwitch}>
           <Button
-            style={{display: "flex", minWidth: "40px"}}
+            style={{display: 'flex', minWidth: 40}}
             onClick={this.handleToggleAutoSwitch}>
             <FontAwesome
-              style={{marginRight: "5px", marginTop: "2px"}}
-              name={this.props.autoSwitch ? "check-square-o" : "square-o"} />
+              style={{marginRight: 5, marginTop: 2}}
+              name={
+                this.props.autoSwitch ?
+                  'check-square-o' :
+                  'square-o'
+              }
+            />
             <div style={{
               flex: "1",
               textOverflow: "ellipsis",
-              overflow: "hidden"}} >{__("Auto")}</div>
+              overflow: "hidden"}} >
+              {__("Auto")}
+            </div>
           </Button>
         </OverlayTrigger>
       </div>)
