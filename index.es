@@ -10,7 +10,6 @@ import { loadAndUpdateConfig } from './config'
 
    TODO
 
-   - reduxify states and move some logic part into selectors
    - allow alternative fleet compo
    - fleet tooltip redo, might include morale & related equips (DLC & drum)
    - exped table: fleet tag on buttons for showing which fleet is currently running that exped
@@ -18,6 +17,7 @@ import { loadAndUpdateConfig } from './config'
    - improve 'hide main fleet' toggling behavior: if we need to hide current fleet,
      instead of actually hiding it, we show a tag to indicate that it will disappear
      after switching to other fleets
+   - i18n
 
  */
 
