@@ -9,7 +9,7 @@ import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 import { CheckResultBox } from './check-result-box'
-import { NewRequirementItem } from './new-requirement-item'
+import { EReqListGroupItem } from './ereq-list-group-item'
 
 import {
   fleetIdSelector,
@@ -19,6 +19,19 @@ import {
   mkEReqResultObjectSelectorForFleet,
   mkEReqSatFlagsSelectorForFleet,
 } from '../../selectors'
+
+const renderReqListItem = ({ereq,result,which,key}) => (
+  <ListGroupItem
+    style={{padding: 10}}
+    key={key}>
+    <EReqListGroupItem
+      prefix={`${key}-`}
+      ereq={ereq}
+      result={result}
+      which={which}
+    />
+  </ListGroupItem>
+)
 
 // props:
 // - fleet: fleet representation
@@ -39,25 +52,29 @@ class RequirementViewerImpl extends Component {
     fleet: null,
   }
 
-  genTmpList = () => {
+  prepareReqListItems = () => {
     const {greatSuccess, ereqResult, expedId} = this.props
     const transformObj = which => ({ereq,result},ind) => ({
       ereq,result,which,
       key: `exped-${expedId}-${which}-${ind}`,
     })
-    const xs = [
+    const allReqList = [
       ...ereqResult.norm.map(transformObj('norm')),
       transformObj('resupply')(ereqResult.resupply,0),
-      ...(greatSuccess ? ereqResult.gs : []).map(transformObj('gs')),
+      ...(greatSuccess ? ereqResult.gs.map(transformObj('gs')) : []),
     ]
-    return xs
+    const {hideSatReqs} = this.props
+    const filteredReqList = hideSatReqs ?
+      allReqList.filter(obj => !obj.result.sat) :
+      allReqList
+
+    return filteredReqList
   }
 
   render() {
     const {
       normFlag, gsFlag, resupplyFlag,
       greatSuccess,
-      hideSatReqs,
     } = this.props
     const effectiveNormFlag = normFlag && resupplyFlag
     const effectiveGsFlag = effectiveNormFlag && (!greatSuccess || gsFlag)
@@ -78,20 +95,14 @@ class RequirementViewerImpl extends Component {
         </div>
         <ListGroup>
           {
-            this.genTmpList().map(({ereq,result,which,key}) => (
-              (!result.sat || !hideSatReqs) && (
-                <ListGroupItem
-                  style={{padding: 10}}
-                  key={key}>
-                  <NewRequirementItem
-                    prefix={`${key}-`}
-                    ereq={ereq}
-                    result={result}
-                    which={which}
-                    hideSatReqs={hideSatReqs}
-                  />
-                </ListGroupItem>
-              )
+            this.prepareReqListItems().map(({key, ereq, result, which}) => (
+              <EReqListGroupItem
+                key={key}
+                prefix={`${key}-`}
+                ereq={ereq}
+                result={result}
+                which={which}
+              />
             ))
           }
         </ListGroup>

@@ -1,12 +1,50 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import {
+  ListGroupItem,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
-import { __ } from '../../tr'
-import { PTyp } from '../../ptyp'
-import * as estype from '../../estype'
+import { __ } from '../../../tr'
+import { PTyp } from '../../../ptyp'
+import * as estype from '../../../estype'
+import { EReq } from '../../../structs/ereq'
+
+/*
+   TODO:
+
+   - FSLevelItem
+   - FSTypeItem
+   - ShipCountItem
+   - DrumCarrierCountItem
+   - DrumCountItem
+   - LevelSumItem
+   - SparkledCountItem
+   - SparkledCountCustomItem
+   - MoraleItem
+   - ResupplyItem
+   - AllSparkledItem
+   - FleetCompoItem
+   - AnyFleetCompoItem
+
+ */
+
+const ereqComponents = new Map()
+const defineERC = (ereqType, EReqComponent) =>
+  ereqComponents.set(ereqType, EReqComponent)
+
+// completeness check
+{
+  const missingTypes = EReq.allTypes.filter(ereqType =>
+    !ereqComponents.has(ereqType))
+
+  if (missingTypes.length > 0) {
+    const missingTypesText = missingTypes.join(', ')
+    console.warn(
+      `Missing EReq Component for following types: ${missingTypesText}`
+    )
+  }
+}
 
 const renderRequirement = (ereq, _result, prefix, extraResults) => {
   const fmt = (...args) =>
@@ -121,15 +159,27 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
   return JSON.stringify(ereq)
 }
 
-class NewRequirementItem extends Component {
+class EReqListGroupItem extends Component {
   static propTypes = {
-    ereq: PTyp.object.isRequired,
+    ereq: PTyp.shape({
+      type: PTyp.EReqType.isRequired,
+    }).isRequired,
     result: PTyp.object.isRequired,
     which: PTyp.oneOf(['norm','resupply','gs']).isRequired,
     prefix: PTyp.string.isRequired,
   }
 
   render() {
+    const ereqType = this.props.ereq.type
+    if (ereqComponents.has(ereqType)) {
+      const EReqComponent = ereqComponents.get(ereqType)
+      return (
+        <EReqComponent
+          {...this.props}
+        />
+      )
+    }
+
     const {ereq,result,which,prefix} = this.props
     const {sat,extra} = result
     const checkboxColor = sat ?
@@ -151,21 +201,27 @@ class NewRequirementItem extends Component {
       </div>
     )
 
-    return result.extra ? (
-      <OverlayTrigger
-        placement="top"
-        overlay={
-          <Tooltip id={`${prefix}-tt`}>
-            {JSON.stringify(result.extra)}
-          </Tooltip>
+    return (
+      <ListGroupItem
+        style={{padding: 10}}>
+        {
+          result.extra ? (
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                <Tooltip id={`${prefix}-tt`}>
+                  {JSON.stringify(result.extra)}
+                </Tooltip>
+              }>
+              {content}
+            </OverlayTrigger>
+          ) : (
+            content
+          )
         }
-      >
-        {content}
-      </OverlayTrigger>
-    ) : (
-      content
+      </ListGroupItem>
     )
   }
 }
 
-export { NewRequirementItem }
+export { EReqListGroupItem }

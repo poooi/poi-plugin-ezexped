@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types'
+import { EReq } from './structs/ereq'
 
 // PTyp is just short for PropTypes.
 // In addition, this allows us to collect validation logic
@@ -18,11 +19,15 @@ const allRequired = shapeObj => {
 const FleetIndex = PropTypes.oneOf([0,1,2,3])
 const FleetId = PropTypes.oneOf([1,2,3,4])
 
+const EReqType = PropTypes.oneOf(EReq.allTypes)
+
 const PTyp = {
   ...PropTypes,
   allRequired,
   FleetIndex,
   FleetId,
+
+  EReqType,
 }
 
 export {

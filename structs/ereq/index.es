@@ -64,6 +64,8 @@ const classTable = _.fromPairs([
   AnyFleetCompo,
 ].map(cls => [cls.name, cls]))
 
+const allEReqTypes = Object.keys(classTable)
+
 const dispatchEReq = propName => ereq => {
   const {type} = ereq
   const cls = classTable[type]
@@ -76,6 +78,7 @@ const dispatchEReq = propName => ereq => {
 }
 
 class EReq {
+  static allTypes = allEReqTypes
   /*
 
      EReq.make.<EReq type>(...args)
