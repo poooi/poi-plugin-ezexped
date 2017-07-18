@@ -24,7 +24,6 @@ import {
   isSendingFleetToExped,
 } from '../auto-switch'
 import { PTyp } from '../ptyp'
-import { observeAll } from '../observers'
 import { mapDispatchToProps } from '../store'
 
 import {
@@ -55,19 +54,9 @@ class EZExpedMainImpl extends Component {
     fleet: null,
   }
 
-  constructor(props) {
-    super(props)
-    this.unsubscribe = null
-  }
-
   componentDidMount() {
     setTimeout(() => loadAndUpdateConfig(this.props.configReady))
     window.addEventListener('game.response', this.handleGameResponse)
-
-    if (this.unsubscribe !== null) {
-      console.error(`unsubscribe function should be null`)
-    }
-    this.unsubscribe = observeAll()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -122,12 +111,6 @@ class EZExpedMainImpl extends Component {
   }
 
   componentWillUnmount() {
-    if (typeof this.unsubscribe !== 'function') {
-      console.error(`invalid unsubscribe function`)
-    } else {
-      this.unsubscribe()
-      this.unsubscribe = null
-    }
     // TODO: use observer
     window.removeEventListener('game.response', this.handleGameResponse)
   }
