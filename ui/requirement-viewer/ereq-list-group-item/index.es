@@ -18,13 +18,13 @@ import { DrumCountItem } from './drum-count-item'
 import { LevelSumItem } from './level-sum-item'
 import { SparkledCountItem } from './sparkled-count-item'
 import { SparkledCountCustomItem } from './sparkled-count-custom-item'
+import { MoraleItem } from './morale-item'
+import { ResupplyItem } from './resupply-item'
+import { AllSparkledItem } from './all-sparkled-item'
 
 /*
    TODO:
 
-   - MoraleItem
-   - ResupplyItem
-   - AllSparkledItem
    - FleetCompoItem
    - AnyFleetCompoItem
 
@@ -54,6 +54,9 @@ const ereqComponents = new Map()
     LevelSumItem,
     SparkledCountItem,
     SparkledCountCustomItem,
+    MoraleItem,
+    ResupplyItem,
+    AllSparkledItem,
   ].map(defineERC)
 }
 
@@ -71,21 +74,6 @@ const ereqComponents = new Map()
 }
 
 const renderRequirement = (ereq, _result, prefix, extraResults) => {
-  const fmt = (...args) =>
-    __(`RequirementExplain.${ereq.type}`, ...args)
-
-  if (ereq.type === "Morale") {
-    return fmt(ereq.morale)
-  }
-
-  if (ereq.type === "Resupply") {
-    return fmt()
-  }
-
-  if (ereq.type === "AllSparkled") {
-    return fmt()
-  }
-
   if (ereq.type === 'FleetCompo') {
     const {compo} = ereq
     return (

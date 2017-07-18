@@ -1,6 +1,7 @@
 import {
   onFleetShips,
   singObj,
+  mkShipList,
 } from './common'
 
 class Morale {
@@ -9,9 +10,10 @@ class Morale {
   static prepare = ({morale}) => () =>
     onFleetShips(ships => {
       const lowMoraleShips = ships.filter(s => s.morale < morale)
-      return lowMoraleShips.length > 0 ?
-        {sat: false, extra: lowMoraleShips} :
-        {sat: true}
+      return {
+        sat: lowMoraleShips.length === 0,
+        extra: mkShipList(lowMoraleShips),
+      }
     })
 }
 

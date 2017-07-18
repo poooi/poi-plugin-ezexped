@@ -1,6 +1,7 @@
 import {
   onFleetShips,
   isShipSparkled,
+  mkShipList,
 } from './common'
 
 class AllSparkled {
@@ -9,9 +10,10 @@ class AllSparkled {
   static prepare = () => () =>
     onFleetShips(ships => {
       const nonSparkledShips = ships.filter(s => ! isShipSparkled(s))
-      return nonSparkledShips.length > 0 ?
-        {sat: false, extra: nonSparkledShips} :
-        {sat: true, extra: {}}
+      return {
+        sat: nonSparkledShips.length === 0,
+        extra: mkShipList(nonSparkledShips),
+      }
     })
 }
 
