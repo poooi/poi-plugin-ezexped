@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react'
-
-import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 class IconAndLabel extends PureComponent {

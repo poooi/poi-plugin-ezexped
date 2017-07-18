@@ -1,11 +1,9 @@
 import FontAwesome from 'react-fontawesome'
-import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import {
   Button,
 } from 'react-bootstrap'
 
-import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 // a box for showing whether the fleet is ready

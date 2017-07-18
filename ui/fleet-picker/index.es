@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
