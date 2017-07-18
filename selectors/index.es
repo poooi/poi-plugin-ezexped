@@ -11,6 +11,17 @@ import {
 
 import {} from './exped-reqs'
 
+const expedIdSelectorForFleet = _.memoize(fleetId =>
+  createSelector(
+    selectedExpedsSelector,
+    selectedExpeds => selectedExpeds[fleetId]))
+
+const gsFlagSelectorForFleet = _.memoize(fleetId =>
+  createSelector(
+    gsFlagsSelector,
+    expedIdSelectorForFleet(fleetId),
+    (gsFlags,expedId) => gsFlags[expedId]))
+
 // the expedition selected for current focusing fleet
 const expedIdSelector = createSelector(
   selectedExpedsSelector,
@@ -35,4 +46,7 @@ export {
   expedIdSelector,
   gsFlagSelector,
   fleetInfoSelector,
+
+  expedIdSelectorForFleet,
+  gsFlagSelectorForFleet,
 }
