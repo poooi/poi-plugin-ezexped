@@ -9,7 +9,7 @@ import {
 
 // return next available fleet id for expeditions,
 // null if we cannot find such a fleet
-const nextAvailableFleetSelector = createSelector(
+const nextAvailableFleetIdSelector = createSelector(
   allFleetIdsSelector,
   indexedFleetsInfoSelector,
   isFleetCombinedSelector,
@@ -24,5 +24,5 @@ const nextAvailableFleetSelector = createSelector(
   })
 
 export {
-  nextAvailableFleetSelector,
+  nextAvailableFleetIdSelector,
 }
