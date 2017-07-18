@@ -174,8 +174,6 @@ class EZExpedMainImpl extends Component {
       fleetId,
       expedTableExpanded,
     } = this.props
-    const expedId = selectedExpeds[fleetId]
-    const gsFlag = gsFlags[expedId]
     const fleet = this.props.fleets.find(flt => flt.id === fleetId) || null
     return (
       <div className="poi-plugin-ezexped">
@@ -198,24 +196,7 @@ class EZExpedMainImpl extends Component {
               onSelectFleet={this.props.changeFleet} />
           {
             fleet && (
-              <ExpeditionViewer
-                expedId={expedId}
-                fleet={fleet}
-                greatSuccess={gsFlag}
-                onClickExped={() =>
-                  this.props.modifyState(
-                    modifyObject(
-                      'expedTableExpanded',
-                      () => !expedTableExpanded))}
-                onClickGS={() =>
-                  this.props.modifyState(
-                    modifyObject(
-                      'gsFlags',
-                      modifyObject(
-                        expedId,
-                        x => !x)))
-                }
-              />
+              <ExpeditionViewer />
             )
           }
           {

@@ -1,18 +1,26 @@
+import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import { connect } from 'react-redux'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { expedInfo } from '../../exped-info'
-import { error } from '../../utils'
+import { error, modifyObject } from '../../utils'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
 
 import { __, fmtTime } from '../../tr'
 import { PTyp } from '../../ptyp'
+import { mapDispatchToProps } from '../../store'
 
 import { IconAndLabel } from './icon-and-label'
 import { ResourceWithDetail } from './resource-with-detail'
+import {
+  expedIdSelector,
+  fleetInfoSelector,
+  gsFlagSelector,
+} from '../../selectors'
 
 const itemNameToMaterialId = x =>
     x === "Bucket" ? 6
@@ -69,19 +77,28 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
 
 const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
 
-// props:
-// - expedId: expedition id
-// - greatSuccess: bool
-// - onClickExped: when expedition button is clicked
-// - onClickGS: when great success button is clicked
-// - fleet: fleet representation
-class ExpeditionViewer extends Component {
+class ExpeditionViewerImpl extends Component {
   static propTypes = {
     expedId: PTyp.number.isRequired,
     greatSuccess: PTyp.bool.isRequired,
     fleet: PTyp.object.isRequired,
-    onClickExped: PTyp.func.isRequired,
-    onClickGS: PTyp.func.isRequired,
+    modifyState: PTyp.func.isRequired,
+  }
+
+  handleClickExped = () =>
+    this.props.modifyState(
+      modifyObject(
+        'expedTableExpanded',
+        x => !x))
+
+  handleToggleGS = () => {
+    const {expedId, modifyState} = this.props
+    modifyState(
+      modifyObject(
+        'gsFlags',
+        modifyObject(
+          expedId,
+          x => !x)))
   }
 
   render() {
@@ -120,7 +137,7 @@ class ExpeditionViewer extends Component {
       <div style={{display: "flex", marginBottom: "5px"}}>
         <div style={{flex: "1", maxWidth: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
           <Button
-              onClick={this.props.onClickExped}>
+            onClick={this.handleClickExped}>
             <div style={{
               textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}} >
               {`${this.props.expedId} ${info.name}`}
@@ -168,7 +185,7 @@ class ExpeditionViewer extends Component {
           </div>
           <Button
             style={{display: "flex"}}
-            onClick={this.props.onClickGS}>
+            onClick={this.handleToggleGS}>
             <FontAwesome
               className={
                 /*
@@ -194,5 +211,16 @@ class ExpeditionViewer extends Component {
     )
   }
 }
+
+const uiSelector = createStructuredSelector({
+  expedId: expedIdSelector,
+  fleet: fleetInfoSelector,
+  greatSuccess: gsFlagSelector,
+})
+
+const ExpeditionViewer = connect(
+  uiSelector,
+  mapDispatchToProps,
+)(ExpeditionViewerImpl)
 
 export { ExpeditionViewer }
