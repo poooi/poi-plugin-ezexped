@@ -53,6 +53,14 @@ const isDarkThemeSelector = createSelector(
   themeSelector,
   theme => darkThemes.includes(theme))
 
+const isMainFleetFuncSelector = createSelector(
+  isFleetCombinedSelector,
+  isFleetCombined =>
+    isFleetCombined ?
+      (fleetId => fleetId <= 2) :
+      (fleetId => fleetId === 1)
+)
+
 export {
   mkExtPropSelector,
 
@@ -70,4 +78,6 @@ export {
   selectedExpedsSelector,
   expedTableExpandedSelector,
   readySelector,
+
+  isMainFleetFuncSelector,
 }
