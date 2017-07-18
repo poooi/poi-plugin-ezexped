@@ -39,16 +39,26 @@ class FleetButtonImpl extends Component {
     fleetId: PTyp.number.isRequired,
     expedId: PTyp.number.isRequired,
     greatSuccess: PTyp.bool.isRequired,
-    isFleetCombined: PTyp.bool.isRequired,
     isMainFleetFunc: PTyp.func.isRequired,
     recommendSparkled: PTyp.number.isRequired,
     fleet: PTyp.object,
+
     changeFleet: PTyp.func.isRequired,
     changeFleetFocusInMainUI: PTyp.func.isRequired,
   }
 
   static defaultProps = {
     fleet: null,
+  }
+
+  handleFocusFleetInMainUI = () => {
+    const {fleetId, changeFleetFocusInMainUI} = this.props
+    changeFleetFocusInMainUI(fleetId)
+  }
+
+  handleChangeFleet = () => {
+    const {fleetId, changeFleet} = this.props
+    changeFleet(fleetId)
   }
 
   render() {
@@ -83,8 +93,6 @@ class FleetButtonImpl extends Component {
       : 'danger'
 
     const {focused} = this.props
-    const handleFocusFleetInMainUI = () =>
-      this.props.changeFleetFocusInMainUI(fleetId)
 
     return (
       <OverlayTrigger
@@ -92,14 +100,20 @@ class FleetButtonImpl extends Component {
         <Button
           bsStyle={bsStyle}
           style={{
-            marginRight: "5px", flex: "1",
-            opacity: focused ? "1" : "0.5",
-            whiteSpace: "nowrap",
-            width: "75px", overflow: "hidden"}}
+            marginRight: 5, flex: 1,
+            opacity: focused ? 1 : .5,
+            whiteSpace: 'nowrap',
+            width: 75,
+            overflow: 'hidden',
+          }}
           active={focused}
-          onContextMenu={handleFocusFleetInMainUI}
-          onClick={() => this.props.changeFleet(fleetId)}>
-          <div style={{textOverflow: "ellipsis", overflow: "hidden"}} >
+          onContextMenu={this.handleFocusFleetInMainUI}
+          onClick={this.handleChangeFleet}
+        >
+          <div style={{
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+          }}>
             {fleet.name}
           </div>
         </Button>
