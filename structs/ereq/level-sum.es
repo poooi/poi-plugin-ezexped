@@ -1,6 +1,6 @@
 import {
   onFleetShips,
-  wrapBool,
+  requireGreaterOrEqual,
   sum,
   singObj,
 } from './common'
@@ -10,8 +10,8 @@ class LevelSum {
 
   static prepare = ({level}) => () =>
     onFleetShips(ships =>
-      wrapBool(
-        sum(ships.map(s => s.level)) >= level))
+      requireGreaterOrEqual(
+        sum(ships.map(s => s.level)),level))
 }
 
 export { LevelSum }

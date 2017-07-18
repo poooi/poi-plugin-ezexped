@@ -13,15 +13,15 @@ import { EReq } from '../../../structs/ereq'
 import { FSLevelItem } from './fs-level-item'
 import { FSTypeItem } from './fs-type-item'
 import { ShipCountItem } from './ship-count-item'
+import { DrumCarrierCountItem } from './drum-carrier-count-item'
+import { DrumCountItem } from './drum-count-item'
+import { LevelSumItem } from './level-sum-item'
+import { SparkledCountItem } from './sparkled-count-item'
+import { SparkledCountCustomItem } from './sparkled-count-custom-item'
 
 /*
    TODO:
 
-   - DrumCarrierCountItem
-   - DrumCountItem
-   - LevelSumItem
-   - SparkledCountItem
-   - SparkledCountCustomItem
    - MoraleItem
    - ResupplyItem
    - AllSparkledItem
@@ -31,23 +31,31 @@ import { ShipCountItem } from './ship-count-item'
  */
 
 const ereqComponents = new Map()
-const defineERC = EReqComponent => {
-  const reResult = /^(.+)Item$/.exec(EReqComponent.name)
-  if (! Array.isArray(reResult)) {
-    return console.error(`name ${EReqComponent.name} does not match the pattern`)
-  }
-  const ereqType = reResult[1]
-  if (! EReq.allTypes.includes(ereqType)) {
-    return console.error(`not a valid ereq type: ${ereqType}`)
-  }
-  ereqComponents.set(ereqType, EReqComponent)
-}
 
-[
-  FSLevelItem,
-  FSTypeItem,
-  ShipCountItem,
-].map(defineERC)
+{
+  const defineERC = EReqComponent => {
+    const reResult = /^(.+)Item$/.exec(EReqComponent.name)
+    if (! Array.isArray(reResult)) {
+      return console.error(`name ${EReqComponent.name} does not match the pattern`)
+    }
+    const ereqType = reResult[1]
+    if (! EReq.allTypes.includes(ereqType)) {
+      return console.error(`not a valid ereq type: ${ereqType}`)
+    }
+    ereqComponents.set(ereqType, EReqComponent)
+  }
+
+  [
+    FSLevelItem,
+    FSTypeItem,
+    ShipCountItem,
+    DrumCarrierCountItem,
+    DrumCountItem,
+    LevelSumItem,
+    SparkledCountItem,
+    SparkledCountCustomItem,
+  ].map(defineERC)
+}
 
 // completeness check
 {
@@ -66,32 +74,6 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
   const fmt = (...args) =>
     __(`RequirementExplain.${ereq.type}`, ...args)
 
-  if (ereq.type === "ShipCount") {
-    return fmt(ereq.count)
-  }
-
-  if (ereq.type === "DrumCarrierCount") {
-    return fmt(ereq.count)
-  }
-
-  if (ereq.type === "DrumCount") {
-    return fmt(ereq.count)
-  }
-
-  if (ereq.type === "LevelSum") {
-    return fmt(ereq.level)
-  }
-
-  if (ereq.type === "SparkledCount") {
-    return fmt(ereq.count)
-  }
-
-  /*
-  if (ereq.type === "RecommendSparkledCount") {
-    return fmt(ereq.count)
-  }
-  */
-
   if (ereq.type === "Morale") {
     return fmt(ereq.morale)
   }
@@ -103,8 +85,6 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
   if (ereq.type === "AllSparkled") {
     return fmt()
   }
-
-  // TODO: SparkledCountCustom
 
   if (ereq.type === 'FleetCompo') {
     const {compo} = ereq

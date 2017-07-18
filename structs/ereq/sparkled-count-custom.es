@@ -13,7 +13,14 @@ class SparkledCountCustom {
         requireGreaterOrEqual(
           ships.filter(isShipSparkled).length,
           sparkledCount)
-      return {sat, extra: {sparkledCount, extra2: extra}}
+      return {
+        sat,
+        extra: {
+          ...(extra || {}),
+          sparkledCount,
+          type: 'SparkledCountCustom',
+        },
+      }
     })
 }
 
