@@ -75,7 +75,7 @@ const ereqComponents = new Map()
 
 const renderRequirement = (ereq, _result, prefix, extraResults) => {
   if (ereq.type === 'FleetCompo') {
-    const {compo} = ereq
+    const {results} = extraResults
     return (
       <OverlayTrigger
         placement="bottom"
@@ -83,27 +83,22 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
           <Tooltip id={`${prefix}-req-detail`} className="ezexped-pop">
             <div style={{display: "flex", flexDirection: "column"}}>
               {
-                Object.keys(compo).map(estypeK => {
-                  const count = compo[estypeK]
-                  const actualCount = extraResults[estypeK]
-                  const sat = actualCount >= count
-                  return (
-                    <div
-                      key={estypeK}
-                          style={{
-                            flex: 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                          }}>
-                      <FontAwesome
-                        style={{marginRight: "5px", marginTop: "2px"}}
-                              name={sat ? "check-square-o" : "square-o"} />
-                      <div style={{flex: "1", whiteSpace: "nowrap"}}>
-                        {`${estype.longDesc(__)(estypeK)} x ${actualCount} / ${count}`}
-                      </div>
+                results.map(({estype: estypeK, actual, need, sat}) => (
+                  <div
+                    key={estypeK}
+                        style={{
+                          flex: 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                    <FontAwesome
+                      style={{marginRight: "5px", marginTop: "2px"}}
+                            name={sat ? "check-square-o" : "square-o"} />
+                    <div style={{flex: "1", whiteSpace: "nowrap"}}>
+                      {`${estype.longDesc(__)(estypeK)} x ${actual} / ${need}`}
                     </div>
-                  )
-                })
+                  </div>
+                ))
               }
             </div>
           </Tooltip>
@@ -111,21 +106,16 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
         <div style={{display: 'flex', alignItems: 'center'}}>
           <div key="header">{__("Fleet Composition")}:</div>
           {
-            Object.keys(compo).map(estypeK => {
-              const count = compo[estypeK]
-              const actualCount = extraResults[estypeK]
-              const sat = actualCount >= count
-              return (
-                <div
-                  style={{
-                    marginLeft: "5px",
-                    color: sat ? 'green' : 'red',
-                  }}
-                  key={`ce-${estypeK}`}>
-                  {`${count}${estype.shortDesc(estypeK)}`}
-                </div>
-              )
-            })
+            results.map(({estype: estypeK, need, sat}) => (
+              <div
+                style={{
+                  marginLeft: "5px",
+                  color: sat ? 'green' : 'red',
+                }}
+                key={`ce-${estypeK}`}>
+                {`${need}${estype.shortDesc(estypeK)}`}
+              </div>
+            ))
           }
         </div>
       </OverlayTrigger>
