@@ -1,7 +1,9 @@
-import { expedNameToId } from './exped-info'
-import { modifyObject } from './utils'
-
-import { defaultConfig } from './config'
+import { expedNameToId } from '../exped-info'
+import { modifyObject } from '../utils'
+import { defaultConfig } from '../config'
+import {
+  subReducer as autoSwitchSubReducer,
+} from './auto-switch'
 
 const initState = {
   ...defaultConfig,
@@ -60,30 +62,17 @@ const reducer = (state = initState, action) => {
 
     return state
   }
-  return state
+
+  if (state.fleetAutoSwitch) {
+    return autoSwitchSubReducer(state,action)
+  } else {
+    return state
+  }
 }
 
-const mapDispatchToProps = dispatch => ({
-  configReady: config =>
-    dispatch({
-      type: '@poi-plugin-ezexped@ConfigReady',
-      config,
-    }),
-  changeFleet: (fleetId,reason=null) =>
-    dispatch({
-      type: '@poi-plugin-ezexped@ChangeFleet',
-      fleetId,
-      reason,
-    }),
-  modifyState: modifier =>
-    dispatch({
-      type: '@poi-plugin-ezexped@ModifyState',
-      modifier,
-    }),
-})
+export * from './action-creator'
 
 export {
   initState,
   reducer,
-  mapDispatchToProps,
 }

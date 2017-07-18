@@ -21,7 +21,6 @@ import { loadAndUpdateConfig } from '../config'
 import {
   findChangingFleet,
   findNextAvailableFleet,
-  isSendingFleetToExped,
 } from '../auto-switch'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
@@ -54,11 +53,6 @@ class EZExpedMainImpl extends Component {
     fleet: null,
   }
 
-  componentDidMount() {
-    setTimeout(() => loadAndUpdateConfig(this.props.configReady))
-    window.addEventListener('game.response', this.handleGameResponse)
-  }
-
   componentWillReceiveProps(nextProps) {
     // TODO: better handle this in observer
     const { changeFleet } = nextProps
@@ -85,34 +79,7 @@ class EZExpedMainImpl extends Component {
           changingFleetInd,
           "detected changing fleet")
       }
-
-      if (isSendingFleetToExped(
-        this.props.fleets,
-        nextProps.fleets,
-        nextProps.isFleetCombined)) {
-        const nxt = findNextAvailableFleet(
-          nextProps.fleets,
-          nextProps.isFleetCombined)
-
-        if (nxt !== null) {
-          changeFleet(
-            nxt,
-            "detected that we are sending a fleet out, switching to next one")
-        } else {
-          // nxt === null
-          if (! nextProps.hideMainFleet && nextProps.fleets.length > 0) {
-            changeFleet(
-              nextProps.fleets[0].id,
-              "all fleets are sent, switching to main fleet")
-          }
-        }
-      }
     }
-  }
-
-  componentWillUnmount() {
-    // TODO: use observer
-    window.removeEventListener('game.response', this.handleGameResponse)
   }
 
   handleGameResponse = e => {
