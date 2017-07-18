@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import {
   Button,
   OverlayTrigger,
@@ -25,22 +25,16 @@ const mkExpedTooltip = expedId => {
 // - active: if this component should appear like it's the selected exped
 // - expedId: the expedition id this button is representing for
 // - onSelectedExped
-class ExpeditionButton extends Component {
+class ExpeditionButton extends PureComponent {
   static propTypes = {
     ready: PTyp.bool.isRequired,
     active: PTyp.bool.isRequired,
     expedId: PTyp.number.isRequired,
     onClick: PTyp.func.isRequired,
   }
-  shouldComponentUpdate(nextProps) {
-    return this.props.ready !== nextProps.ready ||
-      this.props.active !== nextProps.active ||
-      this.props.expedId !== nextProps.expedId
-  }
 
   render() {
-    const props = this.props
-    const expedId = props.expedId
+    const {ready, expedId, onClick, active} = this.props
     const tooltip = mkExpedTooltip(expedId)
     // I don't know why but the following one isn't working:
     // const tooltip = (<ExpedTooltip expedId={expedId} />)
@@ -49,11 +43,11 @@ class ExpeditionButton extends Component {
           placement="bottom"
           overlay={tooltip}>
         <Button
-            bsStyle={props.ready ? "primary" : "default"}
+            bsStyle={ready ? "primary" : "default"}
             style={{width: "100%", marginBottom: "2px"}}
-            active={props.active}
-            onClick={this.props.onClick}>
-          {props.expedId}
+            active={active}
+            onClick={onClick}>
+          {expedId}
         </Button>
       </OverlayTrigger>)
   }
