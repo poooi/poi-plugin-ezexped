@@ -21,8 +21,8 @@ import {
   fleetAutoSwitchSelector,
   sparkledCountSelector,
 } from '../../selectors'
-import { mapDispatchToProps as extMdtp } from '../../store'
-import { modifyObject, mergeMapDispatchToProps } from '../../utils'
+import { mapDispatchToProps } from '../../store'
+import { modifyObject } from '../../utils'
 
 class FleetPickerImpl extends Component {
   static propTypes = {
@@ -160,20 +160,9 @@ const uiSelector = createStructuredSelector({
   recommendSparkled: sparkledCountSelector,
 })
 
-const poiMdtp = dispatch => ({
-  changeFleetFocusInMainUI: fleetId =>
-    dispatch({
-      type: '@@TabSwitch',
-      tabInfo: {
-        activeMainTab: 'shipView',
-        activeFleetId: fleetId-1,
-      },
-    }),
-})
-
 const FleetPicker = connect(
   uiSelector,
-  mergeMapDispatchToProps(extMdtp, poiMdtp),
+  mapDispatchToProps,
 )(FleetPickerImpl)
 
 export { FleetPicker }

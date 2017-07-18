@@ -14,6 +14,13 @@ const actionCreator = {
     type: '@poi-plugin-ezexped@ModifyState',
     modifier,
   }),
+  changeFleetFocusInMainUI: fleetId => ({
+    type: '@@TabSwitch',
+    tabInfo: {
+      activeMainTab: 'shipView',
+      activeFleetId: fleetId-1,
+    },
+  }),
 }
 
 const mapDispatchToProps = dispatch =>
