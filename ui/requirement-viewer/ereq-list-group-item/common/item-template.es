@@ -36,6 +36,7 @@ class ItemTemplate extends Component {
           style={{
             color: checkboxColor,
             marginRight: '.4em',
+            width: '1em',
           }}
           name={sat ? 'check-square-o' : 'square-o'}
         />
@@ -45,10 +46,9 @@ class ItemTemplate extends Component {
       </div>
     )
 
-    // TODO: remove color after done
     return (
       <ListGroupItem
-        style={{padding: 10, color: 'cyan'}}>
+        style={{padding: 10}}>
         {
           tooltip ? (
             <OverlayTrigger

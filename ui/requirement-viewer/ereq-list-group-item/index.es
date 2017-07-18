@@ -5,9 +5,7 @@ import {
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
-import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
-import * as estype from '../../../estype'
 import { EReq } from '../../../structs/ereq'
 
 import { FSLevelItem } from './fs-level-item'
@@ -21,11 +19,11 @@ import { SparkledCountCustomItem } from './sparkled-count-custom-item'
 import { MoraleItem } from './morale-item'
 import { ResupplyItem } from './resupply-item'
 import { AllSparkledItem } from './all-sparkled-item'
+import { FleetCompoItem } from './fleet-compo-item'
 
 /*
    TODO:
 
-   - FleetCompoItem
    - AnyFleetCompoItem
 
  */
@@ -57,6 +55,7 @@ const ereqComponents = new Map()
     MoraleItem,
     ResupplyItem,
     AllSparkledItem,
+    FleetCompoItem,
   ].map(defineERC)
 }
 
@@ -71,58 +70,6 @@ const ereqComponents = new Map()
       `Missing EReq Component for following types: ${missingTypesText}`
     )
   }
-}
-
-const renderRequirement = (ereq, _result, prefix, extraResults) => {
-  if (ereq.type === 'FleetCompo') {
-    const {results} = extraResults
-    return (
-      <OverlayTrigger
-        placement="bottom"
-        overlay={
-          <Tooltip id={`${prefix}-req-detail`} className="ezexped-pop">
-            <div style={{display: "flex", flexDirection: "column"}}>
-              {
-                results.map(({estype: estypeK, actual, need, sat}) => (
-                  <div
-                    key={estypeK}
-                        style={{
-                          flex: 1,
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                    <FontAwesome
-                      style={{marginRight: "5px", marginTop: "2px"}}
-                            name={sat ? "check-square-o" : "square-o"} />
-                    <div style={{flex: "1", whiteSpace: "nowrap"}}>
-                      {`${estype.longDesc(__)(estypeK)} x ${actual} / ${need}`}
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
-          </Tooltip>
-        }>
-        <div style={{display: 'flex', alignItems: 'center'}}>
-          <div key="header">{__("Fleet Composition")}:</div>
-          {
-            results.map(({estype: estypeK, need, sat}) => (
-              <div
-                style={{
-                  marginLeft: "5px",
-                  color: sat ? 'green' : 'red',
-                }}
-                key={`ce-${estypeK}`}>
-                {`${need}${estype.shortDesc(estypeK)}`}
-              </div>
-            ))
-          }
-        </div>
-      </OverlayTrigger>
-    )
-  }
-
-  return JSON.stringify(ereq)
 }
 
 class EReqListGroupItem extends Component {
@@ -162,7 +109,7 @@ class EReqListGroupItem extends Component {
           name={sat ? 'check-square-o' : 'square-o'}
         />
         <div>
-          {renderRequirement(ereq, result, prefix, extra)}
+          {JSON.stringify(ereq)}
         </div>
       </div>
     )
