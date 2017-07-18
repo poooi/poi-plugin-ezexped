@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel } from 'react-bootstrap'
 import { enumFromTo, modifyObject } from '../../utils'
-import { checkExpedReqs } from '../../requirement'
 import { PTyp } from '../../ptyp'
 import { ExpeditionButton } from './expedition-button'
 import {
@@ -13,6 +12,9 @@ import {
   fleetInfoSelector,
   expedTableExpandedSelector,
 } from '../../selectors'
+import {
+  mkEReqNormFlagsSelectorForFleet,
+} from './selectors'
 import { mapDispatchToProps } from '../../store'
 
 const allExpedIds = enumFromTo(1,40)
@@ -26,6 +28,7 @@ class ExpeditionTableImpl extends Component {
     // fleet representation, note that the fleet could be null
     fleet: PTyp.object,
     modifyState: PTyp.func.isRequired,
+    normFlags: PTyp.objectOf(PTyp.bool).isRequired,
   }
 
   static defaultProps = {
@@ -51,15 +54,7 @@ class ExpeditionTableImpl extends Component {
   }
 
   render() {
-    const {expedTableExpanded} = this.props
-    const isReadyArr = new Array(40+1)
-    const fleetShips =
-      _.isEmpty(this.props.fleet) ? [] : this.props.fleet.ships
-    enumFromTo(1,40)
-      .map( expedId => {
-        isReadyArr[expedId] =
-          checkExpedReqs(expedId,false,false)(fleetShips)
-      })
+    const {expedTableExpanded, normFlags} = this.props
     return (
       <Panel
         collapsible
@@ -86,7 +81,7 @@ class ExpeditionTableImpl extends Component {
                      (
                        <ExpeditionButton
                          key={expedId}
-                         ready={isReadyArr[expedId]}
+                         ready={normFlags[expedId]}
                          active={this.props.expedId === expedId}
                          expedId={expedId}
                          onClick={this.handleSelectExped(expedId)}
@@ -103,13 +98,20 @@ class ExpeditionTableImpl extends Component {
   }
 }
 
+const uiSelector = createStructuredSelector({
+  expedId: expedIdSelector,
+  fleetId: fleetIdSelector,
+  fleet: fleetInfoSelector,
+  expedTableExpanded: expedTableExpandedSelector,
+})
+
 const ExpeditionTable = connect(
-  createStructuredSelector({
-    expedId: expedIdSelector,
-    fleetId: fleetIdSelector,
-    fleet: fleetInfoSelector,
-    expedTableExpanded: expedTableExpandedSelector,
-  }),
+  state => {
+    const ui = uiSelector(state)
+    const {fleetId} = ui
+    const normFlags = mkEReqNormFlagsSelectorForFleet(fleetId)(state)
+    return {...ui, normFlags}
+  },
   mapDispatchToProps
 )(ExpeditionTableImpl)
 
