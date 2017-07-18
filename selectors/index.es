@@ -11,8 +11,6 @@ import {
 
 import {} from './exped-reqs'
 
-// TODO: cases where fleet is not available.
-
 // the expedition selected for current focusing fleet
 const expedIdSelector = createSelector(
   selectedExpedsSelector,

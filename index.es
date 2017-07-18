@@ -11,7 +11,7 @@ import { loadAndUpdateConfig } from './config'
    TODO
 
    - reduxify states and move some logic part into selectors
-   - redo requirement implementation, allow alternative fleet compo
+   - allow alternative fleet compo
    - fleet tooltip redo, might include morale & related equips (DLC & drum)
    - exped table: fleet tag on buttons for showing which fleet is currently running that exped
    - prefix ids for every "id" properties

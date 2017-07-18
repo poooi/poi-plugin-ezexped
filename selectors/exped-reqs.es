@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
   sparkledCountSelector,
@@ -10,17 +11,20 @@ const minConfigSelector = sparkledCountSelector
 
 const expedReqsStage2Selector = createSelector(
   minConfigSelector,
-  // TODO: this function can be memoized
-  sparkledCount => {
+  /*
+     this function can be memoized because for now the only affecting
+     config is just `sparkledCount` which is a number that takes
+     only a few limited, comparable numbers
+   */
+  _.memoize(sparkledCount => {
     const config = {sparkledCount}
     return expedReqs.map(expedReq => {
       if (! expedReq)
         return expedReq
       return mapExpedReq(EReq.performStage2(config))(expedReq)
     })
-  })
+  }))
 
 export {
-  minConfigSelector,
   expedReqsStage2Selector,
 }
