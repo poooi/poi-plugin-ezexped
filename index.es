@@ -1,7 +1,10 @@
-import { reducer } from './store'
+import { store } from 'views/create-store'
+
+import { reducer, mapDispatchToProps } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain as reactClass } from './ui'
 import { observeAll } from './observers'
+import { loadAndUpdateConfig } from './config'
 
 /*
 
@@ -16,12 +19,25 @@ import { observeAll } from './observers'
  */
 
 let unsubscribe = null
+let configInitId = null
 
 const pluginDidLoad = () => {
   if (unsubscribe !== null) {
     console.error(`unsubscribe function should be null`)
   }
   unsubscribe = observeAll()
+
+  if (configInitId !== null) {
+    console.error(`configInitId should be null`)
+  }
+  configInitId = setTimeout(() => {
+    loadAndUpdateConfig(config =>
+      store.dispatch(dispatch =>
+        mapDispatchToProps(dispatch)
+          .configReady(config)))
+
+    configInitId = null
+  })
 }
 
 const pluginWillUnload = () => {
@@ -30,6 +46,11 @@ const pluginWillUnload = () => {
   } else {
     unsubscribe()
     unsubscribe = null
+  }
+
+  if (configInitId !== null) {
+    clearTimeout(configInitId)
+    configInitId = null
   }
 }
 
