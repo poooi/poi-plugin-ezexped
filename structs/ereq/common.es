@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const checkOk = (extra=null) => ({sat: true, extra})
+const checkOk = (extra={}) => ({sat: true, extra})
 
 // zoom in ships Array of a Fleet representation
 const onFleetShips = f => fleet => f(fleet.ships)
@@ -19,7 +19,7 @@ const requireGreaterOrEqual = (x,y) =>
     {sat: false, extra: {type: 'GreaterOrEqual', left: x, right: y}}
 
 // wrapping a bool value to the expected format
-const wrapBool = b => b ? checkOk() : {sat: false, extra: null}
+const wrapBool = b => b ? checkOk() : {sat: false, extra: {}}
 
 const isEqpDrum = equip => equip.mstId === 75
 const isShipSparkled = ship => ship.morale >= 50

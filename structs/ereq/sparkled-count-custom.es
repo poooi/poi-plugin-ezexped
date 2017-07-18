@@ -16,7 +16,7 @@ class SparkledCountCustom {
       return {
         sat,
         extra: {
-          ...(extra || {}),
+          ...extra,
           sparkledCount,
           type: 'SparkledCountCustom',
         },

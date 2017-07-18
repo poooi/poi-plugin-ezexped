@@ -17,7 +17,7 @@
          sat: <boolean>,
          // no spec atm, just extra information necessary
          // to render both the requirements and results
-         extra: <Object> or null,
+         extra: <Object>,
        }
 
    - make(...args) = Object
