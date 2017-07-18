@@ -8,7 +8,7 @@ import { mk } from './common'
 import { EReq } from '../structs/ereq'
 import { greatSuccessReq } from './great-success'
 
-const expedReqs = new Array(1+40)
+const expedReqs = {}
 
 const mapExpedReq = f => reqObj => {
   const {norm, gs, resupply} = reqObj
