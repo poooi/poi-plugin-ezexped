@@ -17,10 +17,8 @@ import { ExpeditionViewer } from './expedition-viewer'
 import { ExpeditionTable } from './expedition-table'
 import { RequirementViewer } from './requirement-viewer'
 
-import { loadAndUpdateConfig } from '../config'
 import {
   findChangingFleet,
-  findNextAvailableFleet,
 } from '../auto-switch'
 import { PTyp } from '../ptyp'
 import { mapDispatchToProps } from '../store'
@@ -29,8 +27,6 @@ import {
   fleetIdSelector,
   visibleFleetsInfoSelector,
   fleetAutoSwitchSelector,
-  isFleetCombinedSelector,
-  hideMainFleetSelector,
   expedTableExpandedSelector,
   fleetInfoSelector,
 } from '../selectors'
@@ -40,13 +36,10 @@ class EZExpedMainImpl extends Component {
     fleetId: PTyp.number.isRequired,
     fleets: PTyp.array.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
-    isFleetCombined: PTyp.bool.isRequired,
-    hideMainFleet: PTyp.bool.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
     fleet: PTyp.object,
 
     changeFleet: PTyp.func.isRequired,
-    configReady: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -78,28 +71,6 @@ class EZExpedMainImpl extends Component {
         changeFleet(
           changingFleetInd,
           "detected changing fleet")
-      }
-    }
-  }
-
-  handleGameResponse = e => {
-    const path = e.detail.path
-    if (this.props.fleetAutoSwitch) {
-      if (path === "/kcsapi/api_get_member/mission") {
-        const nxt = findNextAvailableFleet(
-          this.props.fleets,
-          this.props.isFleetCombined,
-          this.props.hideMainFleet)
-        if (nxt !== null) {
-          this.props.changeFleet(nxt, "User is at expedition screen")
-        } else {
-          // nxt === null
-          if (! this.props.hideMainFleet && this.props.fleets.length > 0) {
-            this.props.changeFleet(
-              this.props.fleets[0].id,
-              "at exped screen, no fleet available, switching to main")
-          }
-        }
       }
     }
   }
@@ -143,10 +114,8 @@ class EZExpedMainImpl extends Component {
 const mainUISelector = createStructuredSelector({
   fleet: fleetInfoSelector,
   fleets: visibleFleetsInfoSelector,
-  isFleetCombined: isFleetCombinedSelector,
   fleetId: fleetIdSelector,
   fleetAutoSwitch: fleetAutoSwitchSelector,
-  hideMainFleet: hideMainFleetSelector,
   expedTableExpanded: expedTableExpandedSelector,
 })
 

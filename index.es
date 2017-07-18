@@ -18,7 +18,10 @@ import { loadAndUpdateConfig } from './config'
 
  */
 
+// for observer
 let unsubscribe = null
+
+// for config loading process
 let configInitId = null
 
 const pluginDidLoad = () => {
