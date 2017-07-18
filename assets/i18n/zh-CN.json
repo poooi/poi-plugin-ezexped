@@ -42,7 +42,7 @@
     "DrumCount": "舰队携带的“ドラム缶(輸送用)”总量至少为%s",
     "LevelSum": "舰娘等级合计至少为%s",
     "SparkledCount": "携带至少%s名处于“战意高昂”状态的舰娘可极大提高大成功概率",
-    "RecommendSparkledCount": "推荐携带至少%s名“战意高昂”状态的舰娘以提高大成功概率",
+    "SparkledCountCustom": "推荐携带至少%s名“战意高昂”状态的舰娘以提高大成功概率",
     "Morale": "舰娘疲劳度至少为%s",
     "Resupply": "舰队补给",
     "AllSparkled": "舰队全体舰娘都需处于“战意高昂”状态"

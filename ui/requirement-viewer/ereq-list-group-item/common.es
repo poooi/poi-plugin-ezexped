@@ -19,8 +19,8 @@ const mayNoFlagship = props =>
     </Tooltip>
   ) : null
 
-const mayNeedMore = describe => props =>
-  getExtraType(props) === 'GreaterOrEqual' ? (
+const mayNeedMore = (describe,typ = 'GreaterOrEqual') => props =>
+  getExtraType(props) === typ ? (
     <Tooltip id={`${props.prefix}detail`}>
       {describe(props.result.extra.left, props.result.extra.right)}
     </Tooltip>
