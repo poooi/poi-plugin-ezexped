@@ -54,20 +54,30 @@ const shipRosterIdFromAction = action => {
   return null
 }
 
-// TODO: should trigger a findNextAvailable request if fleet availabilty is changed
-
 // let's coin "subReducer" to mean an almost-reducer,
 // which is guaranteed to receive non-undefined state values
 // and doesn't require to provide a default one.
 const subReducer = (state, action) => {
+  /*
+     the following two actions are intentionally not handled by this sub-reducer:
+
+     - action.type === '@@Request/kcsapi/api_req_mission/start'
+     - action.type === '@@Response/kcsapi/api_req_mission/start'
+
+     this is because at the moment when fleet is just sent out,
+     we don't have enough time to allow the availabilty change of fleets
+     a more reliable way is to observe 'nextAvailableFleet' and change fleet
+     accordingly.
+
+     the mechanism described above is implemented in ../observers/next-fleet.es
+
+   */
+
   if (
     // the user is entering expedition screen
-    action.type === '@@Request/kcsapi/api_get_member/mission' ||
-    // the user is sending a fleet to expedition TODO: this is way too early
-    action.type === '@@Request/kcsapi/api_req_mission/start'
+    action.type === '@@Request/kcsapi/api_get_member/mission'
   ) {
     const reason = `triggered by game action ${action.type}`
-
     const poiState = store.getState()
     const mayFleetId = nextAvailableFleetSelector(poiState)
     if (typeof mayFleetId === 'number') {
@@ -76,7 +86,7 @@ const subReducer = (state, action) => {
     } else {
       const hideMainFleet = hideMainFleetSelector(poiState)
       if (! hideMainFleet) {
-        asyncChangeFleet(1, reason)
+        asyncChangeFleet(1, `${reason} (main)`)
       }
     }
     return state
