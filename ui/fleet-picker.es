@@ -1,4 +1,6 @@
+import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   Button,
   ButtonGroup,
@@ -11,20 +13,21 @@ import FontAwesome from 'react-fontawesome'
 import { getExpedReqs, checkAllReq, collapseResults } from '../requirement'
 import { __ } from '../tr'
 import { PTyp } from '../ptyp'
+import {
+  visibleFleetsInfoSelector,
+  fleetIdSelector,
+  selectedExpedsSelector,
+  gsFlagsSelector,
+  isFleetCombinedSelector,
+  fleetAutoSwitchSelector,
+  sparkledCountSelector,
+} from '../selectors'
+import { mapDispatchToProps } from '../store'
+import { modifyObject } from '../utils'
 
 const { dispatch } = window
 
-// props:
-// - fleetId: current selected fleet id
-// - fleets: array of fleet representation
-// - selectedExpeds
-// - gsFlags
-// - onSelectFleet: callback when a new fleet is selected
-//   this callback should accept a fleet id
-// - autoSwitch
-// - onToggleAutoSwitch
-// - recommendSparkled
-class FleetPicker extends Component {
+class FleetPickerImpl extends Component {
   static propTypes = {
     fleetId: PTyp.number.isRequired,
     selectedExpeds: PTyp.objectOf(PTyp.number).isRequired,
@@ -34,9 +37,15 @@ class FleetPicker extends Component {
     fleets: PTyp.array.isRequired,
     autoSwitch: PTyp.bool.isRequired,
 
-    onSelectFleet: PTyp.func.isRequired,
-    onToggleAutoSwitch: PTyp.func.isRequired,
+    modifyState: PTyp.func.isRequired,
+    changeFleet: PTyp.func.isRequired,
   }
+
+  handleToggleAutoSwitch = () =>
+    this.props.modifyState(
+      modifyObject(
+        'fleetAutoSwitch',
+        x => !x))
 
   render() {
     const mkTooltip = fleet =>
@@ -106,7 +115,7 @@ class FleetPicker extends Component {
             width: "75px", overflow: "hidden"}}
           active={focused}
           onContextMenu={handleFocusFleetInMainUI}
-          onClick={() => this.props.onSelectFleet(fleetId)}>
+          onClick={() => this.props.changeFleet(fleetId)}>
         <div style={{textOverflow: "ellipsis", overflow: "hidden"}} >
           {fleet.name}
         </div>
@@ -136,7 +145,7 @@ class FleetPicker extends Component {
           placement="left" overlay={tooltipAutoSwitch}>
           <Button
             style={{display: "flex", minWidth: "40px"}}
-            onClick={this.props.onToggleAutoSwitch}>
+            onClick={this.handleToggleAutoSwitch}>
             <FontAwesome
               style={{marginRight: "5px", marginTop: "2px"}}
               name={this.props.autoSwitch ? "check-square-o" : "square-o"} />
@@ -149,5 +158,20 @@ class FleetPicker extends Component {
       </div>)
   }
 }
+
+const uiSelector = createStructuredSelector({
+  fleets: visibleFleetsInfoSelector,
+  fleetId: fleetIdSelector,
+  selectedExpeds: selectedExpedsSelector,
+  gsFlags: gsFlagsSelector,
+  isFleetCombined: isFleetCombinedSelector,
+  autoSwitch: fleetAutoSwitchSelector,
+  recommendSparkled: sparkledCountSelector,
+})
+
+const FleetPicker = connect(
+  uiSelector,
+  mapDispatchToProps,
+)(FleetPickerImpl)
 
 export { FleetPicker }
