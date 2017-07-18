@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  ListGroup, ListGroupItem,
+  ListGroup,
 } from 'react-bootstrap'
 import { createStructuredSelector } from 'reselect'
 
@@ -19,19 +19,6 @@ import {
   mkEReqResultObjectSelectorForFleet,
   mkEReqSatFlagsSelectorForFleet,
 } from '../../selectors'
-
-const renderReqListItem = ({ereq,result,which,key}) => (
-  <ListGroupItem
-    style={{padding: 10}}
-    key={key}>
-    <EReqListGroupItem
-      prefix={`${key}-`}
-      ereq={ereq}
-      result={result}
-      which={which}
-    />
-  </ListGroupItem>
-)
 
 // props:
 // - fleet: fleet representation
