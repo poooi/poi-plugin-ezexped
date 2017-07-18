@@ -10,12 +10,13 @@ import { PTyp } from '../../../ptyp'
 import * as estype from '../../../estype'
 import { EReq } from '../../../structs/ereq'
 
+import { FSLevelItem } from './fs-level-item'
+import { FSTypeItem } from './fs-type-item'
+import { ShipCountItem } from './ship-count-item'
+
 /*
    TODO:
 
-   - FSLevelItem
-   - FSTypeItem
-   - ShipCountItem
    - DrumCarrierCountItem
    - DrumCountItem
    - LevelSumItem
@@ -30,8 +31,23 @@ import { EReq } from '../../../structs/ereq'
  */
 
 const ereqComponents = new Map()
-const defineERC = (ereqType, EReqComponent) =>
+const defineERC = EReqComponent => {
+  const reResult = /^(.+)Item$/.exec(EReqComponent.name)
+  if (! Array.isArray(reResult)) {
+    return console.error(`name ${EReqComponent.name} does not match the pattern`)
+  }
+  const ereqType = reResult[1]
+  if (! EReq.allTypes.includes(ereqType)) {
+    return console.error(`not a valid ereq type: ${ereqType}`)
+  }
   ereqComponents.set(ereqType, EReqComponent)
+}
+
+[
+  FSLevelItem,
+  FSTypeItem,
+  ShipCountItem,
+].map(defineERC)
 
 // completeness check
 {
@@ -50,14 +66,6 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
   const fmt = (...args) =>
     __(`RequirementExplain.${ereq.type}`, ...args)
 
-  if (ereq.type === "FSType") {
-    return fmt(estype.longDesc(__)(ereq.estype))
-  }
-
-  if (ereq.type === "FSLevel") {
-    return fmt(ereq.level)
-  }
-
   if (ereq.type === "ShipCount") {
     return fmt(ereq.count)
   }
@@ -71,7 +79,7 @@ const renderRequirement = (ereq, _result, prefix, extraResults) => {
   }
 
   if (ereq.type === "LevelSum") {
-    return fmt(ereq.sum)
+    return fmt(ereq.level)
   }
 
   if (ereq.type === "SparkledCount") {
@@ -165,7 +173,7 @@ class EReqListGroupItem extends Component {
       type: PTyp.EReqType.isRequired,
     }).isRequired,
     result: PTyp.object.isRequired,
-    which: PTyp.oneOf(['norm','resupply','gs']).isRequired,
+    which: PTyp.EReqWhich.isRequired,
     prefix: PTyp.string.isRequired,
   }
 

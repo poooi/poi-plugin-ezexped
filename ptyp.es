@@ -20,6 +20,7 @@ const FleetIndex = PropTypes.oneOf([0,1,2,3])
 const FleetId = PropTypes.oneOf([1,2,3,4])
 
 const EReqType = PropTypes.oneOf(EReq.allTypes)
+const EReqWhich = PropTypes.oneOf(['norm','resupply','gs'])
 
 const PTyp = {
   ...PropTypes,
@@ -28,6 +29,7 @@ const PTyp = {
   FleetId,
 
   EReqType,
+  EReqWhich,
 }
 
 export {

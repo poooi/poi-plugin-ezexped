@@ -9,14 +9,14 @@ const onFleetShips = f => fleet => f(fleet.ships)
 const requireFlagship = onFlagship =>
   onFleetShips(ships =>
     ships.length === 0 ?
-      {sat: false, extra: 'emptyFleet'} :
+      {sat: false, extra: {type: 'NoFlagship'}} :
       onFlagship(ships[0]))
 
 // require x >= y and show some message if it's unmet
 const requireGreaterOrEqual = (x,y) =>
   x >= y ?
     checkOk() :
-    {sat: false, extra: `needs ${y-x} more`}
+    {sat: false, extra: {type: 'GreaterOrEqual', left: x, right: y}}
 
 // wrapping a bool value to the expected format
 const wrapBool = b => b ? checkOk() : {sat: false, extra: null}
