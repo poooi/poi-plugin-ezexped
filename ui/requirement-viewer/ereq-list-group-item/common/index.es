@@ -30,10 +30,38 @@ const mayNeedMore = (describe,typ = 'GreaterOrEqual') => props =>
     </Tooltip>
   ) : null
 
+const mayShipList = renderShipList => props =>
+  getExtraType(props) === 'ShipList' ? (
+    <Tooltip
+      className="ezexped-pop"
+      id={`${props.prefix}detail`}>
+      {renderShipList(props.result.extra.shipList)}
+    </Tooltip>
+  ) : null
+
+const renderShipList = (header=null) => shipList => (
+  <div>
+    {
+      header && <div key="header">
+        {header}
+      </div>
+    }
+    {
+      shipList.map(s => (
+        <div key={s.rstId}>
+          {`${s.name} Lv.${s.level}`}
+        </div>
+      ))
+    }
+  </div>
+)
+
 export * from './item-template'
 export {
   formatReqExplain,
   mayNoFlagship,
   mayNeedMore,
+  mayShipList,
+  renderShipList,
 }
 

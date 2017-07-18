@@ -1,5 +1,6 @@
 import {
   onFleetShips,
+  mkShipList,
 } from './common'
 
 class Resupply {
@@ -8,9 +9,10 @@ class Resupply {
   static prepare = () => () =>
     onFleetShips(ships => {
       const needSupShips = ships.filter(s => s.needResupply)
-      return needSupShips.length > 0 ?
-        {sat: false, extra: needSupShips} :
-        {sat: true}
+      return {
+        sat: needSupShips.length === 0,
+        extra: mkShipList(needSupShips),
+      }
     })
 }
 
