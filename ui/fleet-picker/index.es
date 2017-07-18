@@ -9,10 +9,9 @@ import {
 } from 'react-bootstrap'
 
 import FontAwesome from 'react-fontawesome'
-
-import { getExpedReqs, checkAllReq, collapseResults } from '../requirement'
-import { __ } from '../tr'
-import { PTyp } from '../ptyp'
+import { getExpedReqs, checkAllReq, collapseResults } from '../../requirement'
+import { __ } from '../../tr'
+import { PTyp } from '../../ptyp'
 import {
   visibleFleetsInfoSelector,
   fleetIdSelector,
@@ -21,9 +20,9 @@ import {
   isFleetCombinedSelector,
   fleetAutoSwitchSelector,
   sparkledCountSelector,
-} from '../selectors'
-import { mapDispatchToProps as extMdtp } from '../store'
-import { modifyObject, mergeMapDispatchToProps } from '../utils'
+} from '../../selectors'
+import { mapDispatchToProps as extMdtp } from '../../store'
+import { modifyObject, mergeMapDispatchToProps } from '../../utils'
 
 class FleetPickerImpl extends Component {
   static propTypes = {
