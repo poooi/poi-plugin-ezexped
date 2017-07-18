@@ -1,17 +1,16 @@
 import _ from 'lodash'
-import { observer, observe } from 'redux-observers'
+import { observer } from 'redux-observers'
 import { createStructuredSelector } from 'reselect'
-import { store } from 'views/create-store'
 
-import { shallowEqual } from './utils'
+import { shallowEqual } from '../utils'
 import {
   saveConfig,
   defaultConfigProps,
-} from './config'
+} from '../config'
 import {
   readySelector,
   mkExtPropSelector,
-} from './selectors'
+} from '../selectors'
 
 const debouncedSaveConfig = _.debounce(
   configData => setTimeout(() => saveConfig(configData)),
@@ -35,9 +34,4 @@ const configSaveObserver = observer(
   }
 )
 
-const observeAll = () =>
-  observe(store, [
-    configSaveObserver,
-  ])
-
-export { observeAll }
+export { configSaveObserver }

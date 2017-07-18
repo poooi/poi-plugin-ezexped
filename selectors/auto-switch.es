@@ -5,6 +5,8 @@ import {
   indexedFleetsInfoSelector,
 } from './fleet-info'
 
+// TODO: name fleet => fleetId
+
 // return next available fleet id for expeditions,
 // null if we cannot find such a fleet
 const nextAvailableFleetSelector = createSelector(
