@@ -31,6 +31,33 @@ describe('estype', () => {
       assert( ! estype.isESType.DE( ty.DD ) )
     })
   })
+
+  describe('esFleetCompoToPairs', () => {
+    spec('tests', () => {
+      assert.deepEqual(
+        estype.esFleetCompoToPairs({}),
+        [])
+
+      assert.deepEqual(
+        estype.esFleetCompoToPairs({CL: 1, DD: 2, BBV: 3}),
+        estype.esFleetCompoToPairs({BBV: 3, CL: 1, DD: 2}))
+
+      assert.deepEqual(
+        estype.esFleetCompoToPairs({CL: 1, DD: 2, BBV: 3}),
+        [
+          ['BBV', 3],
+          ['CL', 1],
+          ['DD', 2],
+        ])
+      assert.deepEqual(
+        estype.esFleetCompoToPairs({CL: undefined, BBV: null, DD: 2}),
+        [
+          ['BBV', null],
+          ['CL', undefined],
+          ['DD', 2],
+        ])
+    })
+  })
 })
 
 describe('utils', () => {
