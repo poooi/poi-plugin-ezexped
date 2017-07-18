@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
@@ -6,25 +5,19 @@ import {
 } from 'react-bootstrap'
 import { createStructuredSelector } from 'reselect'
 
-import {
-  checkExpedDetail,
-  collapseResults,
-} from '../../requirement'
-
 import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 import { CheckResultBox } from './check-result-box'
-import { RequirementListItem } from './requirement-list-item'
+import { NewRequirementItem } from './new-requirement-item'
 
 import {
   fleetIdSelector,
-  fleetInfoSelector,
   expedIdSelector,
   gsFlagSelector,
-  sparkledCountSelector,
   hideSatReqsSelector,
   mkEReqResultObjectSelectorForFleet,
+  mkEReqSatFlagsSelectorForFleet,
 } from '../../selectors'
 
 // props:
@@ -36,46 +29,40 @@ class RequirementViewerImpl extends Component {
     // whether aimming at great success
     greatSuccess: PTyp.bool.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
-    recommendSparkled: PTyp.number.isRequired,
-    fleet: PTyp.object,
-    fleetEReqResultObject: PTyp.object.isRequired,
+    ereqResult: PTyp.object.isRequired,
+    normFlag: PTyp.bool.isRequired,
+    gsFlag: PTyp.bool.isRequired,
+    resupplyFlag: PTyp.bool.isRequired,
   }
 
   static defaultProps = {
     fleet: null,
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.expedId !== nextProps.expedId ||
-      this.props.greatSuccess !== nextProps.greatSuccess ||
-      this.props.recommendSparkled !== nextProps.recommendSparkled ||
-      this.props.hideSatReqs !== nextProps.hideSatReqs ||
-      ! _.isEqual(this.props.fleet, nextProps.fleet) ||
-      this.props.fleetEReqResultObject !== nextProps.fleetEReqResultObject
-  }
-
   genTmpList = () => {
-    const {greatSuccess, fleetEReqResultObject} = this.props
+    const {greatSuccess, ereqResult, expedId} = this.props
+    const transformObj = which => ({ereq,result},ind) => ({
+      ereq,result,which,
+      key: `exped-${expedId}-${which}-${ind}`,
+    })
     const xs = [
-      ...fleetEReqResultObject.norm,
-      fleetEReqResultObject.resupply,
-      ...(greatSuccess ? fleetEReqResultObject.gs : []),
+      ...ereqResult.norm.map(transformObj('norm')),
+      transformObj('resupply')(ereqResult.resupply,0),
+      ...(greatSuccess ? ereqResult.gs : []).map(transformObj('gs')),
     ]
     return xs
   }
 
   render() {
-    const resultDetail =
-      checkExpedDetail(
-        this.props.expedId,true,true,
-        this.props.recommendSparkled)(this.props.fleet.ships)
-    const normCheckResult = collapseResults( resultDetail.norm.map( ([_req,res]) => res) )
-    const resupplyCheckResult = resultDetail.resupply[1]
-    const gsCheckResult = collapseResults( resultDetail.gs.map( ([_req,res]) => res ) )
-
-    const normFlg = normCheckResult && resupplyCheckResult
-    const gsFlg = normFlg && gsCheckResult
+    const {
+      normFlag, gsFlag, resupplyFlag,
+      greatSuccess,
+      hideSatReqs,
+    } = this.props
+    const effectiveNormFlag = normFlag && resupplyFlag
+    const effectiveGsFlag = effectiveNormFlag && (!greatSuccess || gsFlag)
     const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
+
     return (
       <div>
         <div style={{
@@ -83,55 +70,28 @@ class RequirementViewerImpl extends Component {
           display: "flex",
           justifyContent: "space-between"}}>
           <CheckResultBox
-              ready={normFlg} visible={true}
-              content={`${__("CondNormal")}: ${readyOrNot(normCheckResult)}`} />
+              ready={effectiveNormFlag} visible={true}
+              content={`${__("CondNormal")}: ${readyOrNot(effectiveNormFlag)}`} />
           <CheckResultBox
-              ready={gsFlg} visible={this.props.greatSuccess}
-              content={`${__("CondGreatSuccess")}: ${readyOrNot(gsCheckResult)}`} />
+              ready={effectiveGsFlag} visible={this.props.greatSuccess}
+              content={`${__("CondGreatSuccess")}: ${readyOrNot(effectiveGsFlag)}`} />
         </div>
         <ListGroup>
           {
-            resultDetail.norm.map( ([req,res],ind) => (
-              <RequirementListItem
-                key={`norm-${ind}`}
-                hideSatReqs={this.props.hideSatReqs}
-                req={req}
-                ok={res}
-                greatSuccess={false} />
-            )
-            )
-          }
-          <RequirementListItem
-              key="resupply"
-              hideSatReqs={this.props.hideSatReqs}
-              req={resultDetail.resupply[0]}
-              ok={resultDetail.resupply[1]}
-              greatSuccess={false} />
-          {
-
-            this.props.greatSuccess &&
-            resultDetail.gs.map( ([req,res],ind) => (
-              <RequirementListItem
-                key={`gs-${ind}`}
-                hideSatReqs={this.props.hideSatReqs}
-                req={req}
-                ok={res}
-                greatSuccess={true}
-              />
-            ))
-          }
-          {
-            this.genTmpList().map((data,ind) => (
-              <ListGroupItem key={ind}>
-                <div>
-                  <div>
-                    {JSON.stringify(data.ereq)}
-                  </div>
-                  <div>
-                    {JSON.stringify(data.result)}
-                  </div>
-                </div>
-              </ListGroupItem>
+            this.genTmpList().map(({ereq,result,which,key}) => (
+              (!result.sat || !hideSatReqs) && (
+                <ListGroupItem
+                  style={{padding: 10}}
+                  key={key}>
+                  <NewRequirementItem
+                    prefix={`${key}-`}
+                    ereq={ereq}
+                    result={result}
+                    which={which}
+                    hideSatReqs={hideSatReqs}
+                  />
+                </ListGroupItem>
+              )
             ))
           }
         </ListGroup>
@@ -142,10 +102,8 @@ class RequirementViewerImpl extends Component {
 
 const uiExtrasSelector = createStructuredSelector({
   fleetId: fleetIdSelector,
-  fleet: fleetInfoSelector,
   expedId: expedIdSelector,
   greatSuccess: gsFlagSelector,
-  recommendSparkled: sparkledCountSelector,
   hideSatReqs: hideSatReqsSelector,
 })
 
@@ -153,9 +111,11 @@ const RequirementViewer = connect(
   state => {
     const uiExtras = uiExtrasSelector(state)
     const {fleetId} = uiExtras
-    const fleetEReqResultObject =
+    const ereqResult =
       mkEReqResultObjectSelectorForFleet(fleetId)(state)
-    return {...uiExtras, fleetEReqResultObject}
+    const ereqSatFlags =
+      mkEReqSatFlagsSelectorForFleet(fleetId)(state)
+    return {...uiExtras, ereqResult, ...ereqSatFlags}
   },
 )(RequirementViewerImpl)
 
