@@ -9,7 +9,7 @@ class FleetCompo {
       const countedCompo = countFleetCompo(compo)(ships)
       const sat = Object.entries(compo).every(([estype,count]) =>
         countedCompo[estype] >= count)
-      return {sat, tooltip: countedCompo}
+      return {sat, extra: countedCompo}
     })
 }
 

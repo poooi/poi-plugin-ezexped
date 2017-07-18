@@ -9,7 +9,7 @@ class Resupply {
     onFleetShips(ships => {
       const needSupShips = ships.filter(s => s.needResupply)
       return needSupShips.length > 0 ?
-        {sat: false, tooltip: needSupShips} :
+        {sat: false, extra: needSupShips} :
         {sat: true}
     })
 }

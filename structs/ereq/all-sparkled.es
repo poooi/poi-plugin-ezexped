@@ -10,8 +10,8 @@ class AllSparkled {
     onFleetShips(ships => {
       const nonSparkledShips = ships.filter(s => ! isShipSparkled(s))
       return nonSparkledShips.length > 0 ?
-        {sat: false, tooltip: nonSparkledShips} :
-        {sat: true, tooltip: null}
+        {sat: false, extra: nonSparkledShips} :
+        {sat: true, extra: null}
     })
 }
 

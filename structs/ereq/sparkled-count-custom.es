@@ -8,10 +8,13 @@ class SparkledCountCustom {
   static make = () => {}
 
   static prepare = () => ({sparkledCount}) =>
-    onFleetShips(ships =>
-      requireGreaterOrEqual(
-        ships.filter(isShipSparkled).length,
-        sparkledCount))
+    onFleetShips(ships => {
+      const {sat, extra} =
+        requireGreaterOrEqual(
+          ships.filter(isShipSparkled).length,
+          sparkledCount)
+      return {sat, extra: {sparkledCount, extra2: extra}}
+    })
 }
 
 export { SparkledCountCustom }
