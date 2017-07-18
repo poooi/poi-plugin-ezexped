@@ -11,7 +11,7 @@ class AllSparkled {
       const nonSparkledShips = ships.filter(s => ! isShipSparkled(s))
       return nonSparkledShips.length > 0 ?
         {sat: false, extra: nonSparkledShips} :
-        {sat: true, extra: null}
+        {sat: true, extra: {}}
     })
 }
 
