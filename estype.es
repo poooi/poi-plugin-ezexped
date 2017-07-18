@@ -31,27 +31,32 @@ const nameToId = n =>
 const idToName = i =>
   stypeRev[i] || error(`invalid stype id: ${i}`)
 
-// TODO: for a consistent estype ordering, we need to export a list.
-
-const isESType = (() => {
+const [isESType, allESTypes] = (() => {
   const eq = x => y => x === y
   const oneOf = xs => y => xs.indexOf(y) !== -1
   const t = stype
 
-  return {
-    DE: eq(t.DE),
-    DD: eq(t.DD),
-    CL: eq(t.CL),
-    CVLike: oneOf([t.CV,t.CVL,t.AV,t.CVB]),
-    SSLike: oneOf([t.SS,t.SSV]),
-    CA: eq(t.CA),
-    BBV: eq(t.BBV),
-    AS: eq(t.AS),
-    CT: eq(t.CT),
-    AV: eq(t.AV),
-    CVE: (styp, mstId) =>
-      styp === t.CVL && [521, 526, 380, 529].includes(mstId),
+  const $isESType = {}
+  const $allESTypes = []
+
+  const defineESType = (name, func) => {
+    $isESType[name] = func
+    $allESTypes.push(name)
   }
+
+  defineESType('SSLike', oneOf([t.SS,t.SSV]))
+  defineESType('DE', eq(t.DE))
+  defineESType('DD', eq(t.DD))
+  defineESType('CL', eq(t.CL))
+  defineESType('CT', eq(t.CT))
+  defineESType('CA', eq(t.CA))
+  defineESType('AS', eq(t.AS))
+  defineESType('CVE', (styp, mstId) => styp === t.CVL && [521, 526, 380, 529].includes(mstId))
+  defineESType('AV', eq(t.AV))
+  defineESType('CVLike', oneOf([t.CV,t.CVL,t.AV,t.CVB]))
+  defineESType('BBV', eq(t.BBV))
+
+  return [$isESType, $allESTypes]
 })()
 
 // countFleetCompo(<FleetCompo>)(<Array of Ship>) = FleetCompo
@@ -85,6 +90,7 @@ export {
   idToName,
   stype,
   isESType,
+  allESTypes,
 
   shortDesc,
   longDesc,
