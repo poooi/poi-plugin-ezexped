@@ -32,6 +32,7 @@ check expedition requirements and estimate expedition income accurately.
       (e.g. flagship level requirement, number-of-ships requirement, etc.)
 
 - Improved tooltip coloring respecting theme settings
+- Added fleet indicators in expedition table.
 
 ### 0.5.0
 

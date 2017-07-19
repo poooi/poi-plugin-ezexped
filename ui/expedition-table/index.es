@@ -13,6 +13,7 @@ import {
 } from '../../selectors'
 import {
   mkEReqNormFlagsSelectorForFleet,
+  currentRunningExpedIdToFleetIdSelector,
 } from './selectors'
 import { mapDispatchToProps } from '../../store'
 
@@ -26,6 +27,7 @@ class ExpeditionTableImpl extends Component {
     expedTableExpanded: PTyp.bool.isRequired,
     modifyState: PTyp.func.isRequired,
     normFlags: PTyp.objectOf(PTyp.bool).isRequired,
+    currentRunningExpedIdToFleetId: PTyp.objectOf(PTyp.number).isRequired,
   }
 
   static defaultProps = {
@@ -45,7 +47,11 @@ class ExpeditionTableImpl extends Component {
   }
 
   render() {
-    const {expedTableExpanded, normFlags} = this.props
+    const {
+      expedTableExpanded,
+      normFlags,
+      currentRunningExpedIdToFleetId,
+    } = this.props
     return (
       <Panel
         collapsible
@@ -74,6 +80,9 @@ class ExpeditionTableImpl extends Component {
                          key={expedId}
                          ready={normFlags[expedId]}
                          active={this.props.expedId === expedId}
+                         runningFleetId={
+                           currentRunningExpedIdToFleetId[expedId]
+                         }
                          expedId={expedId}
                          onClick={this.handleSelectExped(expedId)}
                        />
@@ -93,6 +102,7 @@ const uiSelector = createStructuredSelector({
   expedId: expedIdSelector,
   fleetId: fleetIdSelector,
   expedTableExpanded: expedTableExpandedSelector,
+  currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
 })
 
 const ExpeditionTable = connect(
