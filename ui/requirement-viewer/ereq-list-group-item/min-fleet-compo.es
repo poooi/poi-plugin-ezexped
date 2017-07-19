@@ -1,11 +1,12 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 
 import { PTyp } from '../../../ptyp'
 import { shortDesc as esShortDesc } from '../../../estype'
 
 // in case we need to compute a key rather than using Array index
-const computeKey = stypeInfoList => stypeInfoList.map(({estype,need}) =>
-  `${need}${estype}`).join('-')
+const computeKey = _.memoize(stypeInfoList =>
+  stypeInfoList.map(({estype,need}) => `${need}${estype}`).join('-'))
 
 class MinFleetCompo extends Component {
   static propTypes = {
@@ -20,7 +21,9 @@ class MinFleetCompo extends Component {
   }
 
   render() {
-    const {stypeInfoList, style, between} = this.props
+    const {
+      stypeInfoList, style, between,
+    } = this.props
     return (
       <div
         style={{

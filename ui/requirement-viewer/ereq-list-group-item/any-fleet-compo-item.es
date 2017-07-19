@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import {
-  Well,
+  Well, Tooltip,
 } from 'react-bootstrap'
 
 import {
@@ -11,12 +11,23 @@ import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 import { MinFleetCompo, computeKey } from './min-fleet-compo'
+import { AnyFleetCompoTooltipContent } from './any-fleet-compo-tooltip-content'
 
 class AnyFleetCompoItem extends Component {
   static propTypes = {
-    // prefix: PTyp.string.isRequired,
+    prefix: PTyp.string.isRequired,
     result: PTyp.object.isRequired,
   }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentKey: null,
+    }
+  }
+
+  handleChangeKey = newKey => () =>
+    this.setState({currentKey: newKey})
 
   renderContent = () => {
     const {results} = this.props.result.extra
@@ -34,9 +45,14 @@ class AnyFleetCompoItem extends Component {
             _.flatMap(
               results,
               (rs,ind) => {
-                const keyPrefix = `${computeKey(rs.extra.results)}-`
+                const key = computeKey(rs.extra.results)
+                const keyPrefix = `${key}-`
                 const content = (
                   <Well
+                    onMouseOver={this.handleChangeKey(key)}
+                    onMouseOut={this.handleChangeKey(null)}
+                    onFocus={this.handleChangeKey(key)}
+                    onBlur={this.handleChangeKey(null)}
                     key={`${keyPrefix}content`}
                     style={{
                       fontSize: '100%',
@@ -76,10 +92,25 @@ class AnyFleetCompoItem extends Component {
     )
   }
 
+  renderTooltip = () => {
+    const {prefix,result} = this.props
+    return (
+      <Tooltip
+        className="ezexped-pop"
+        id={`${prefix}any-fleet-compo-tooltip`}>
+        <AnyFleetCompoTooltipContent
+          currentKey={this.state.currentKey}
+          fleetCompos={result.extra.results}
+        />
+      </Tooltip>
+    )
+  }
+
   render() {
     return (
       <ItemTemplate
         content={this.renderContent()}
+        tooltip={this.renderTooltip()}
         {...this.props}
       />
     )

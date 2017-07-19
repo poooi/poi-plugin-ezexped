@@ -18,7 +18,9 @@
     "BBV": "Aviation Battleship (BBV)",
     "AS": "Submarine Tender (AS)",
     "CT": "Training Cruiser (CT)",
-    "AV": "Seaplane Tender (AV)"
+    "AV": "Seaplane Tender (AV)",
+    "DE": "Escort (DE)",
+    "CVE": "Escort Carrier (CVE)"
   },
   "RequiredTime": {
     "hour": "%s hr",
