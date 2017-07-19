@@ -31,6 +31,7 @@ class FleetCompoItem extends Component {
         <div key="header">{__("Fleet Composition")}:</div>
         <MinFleetCompo
           style={{marginLeft: '.5em'}}
+          between=".2em"
           stypeInfoList={results}
         />
       </div>

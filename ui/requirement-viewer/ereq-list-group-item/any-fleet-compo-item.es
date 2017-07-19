@@ -23,7 +23,12 @@ class AnyFleetCompoItem extends Component {
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div key="header">{__("Fleet Composition")}:</div>
-        <div style={{flex: 1, display: 'flex', flexWrap: 'wrap'}}>
+        <div style={{
+          marginLeft: '.5em',
+          flex: 1,
+          display: 'flex',
+          flexWrap: 'wrap',
+        }}>
           {
             _.flatMap(
               results,
@@ -32,7 +37,11 @@ class AnyFleetCompoItem extends Component {
                 const content = (
                   <MinFleetCompo
                     key={`${keyPrefix}content`}
-                    style={{marginLeft: '.2em'}}
+                    style={{
+                      marginLeft: 0,
+                      marginRight: 0,
+                    }}
+                    between=".2em"
                     stypeInfoList={rs.extra.results}
                   />
                 )
@@ -41,7 +50,10 @@ class AnyFleetCompoItem extends Component {
                     content,
                     <span
                       key={`${keyPrefix}sep`}
-                      style={{marginLeft: '.2em'}}>
+                      style={{
+                        marginLeft: '.4em',
+                        marginRight: '.4em',
+                      }}>
                       or
                     </span>,
                   ]
