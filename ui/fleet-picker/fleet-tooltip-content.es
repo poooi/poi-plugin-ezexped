@@ -22,7 +22,7 @@ class FleetTooltipContentImpl extends PureComponent {
             <div key={ship.rstId} style={{display: 'flex', alignItems: 'center'}}>
               <span
                 style={{
-                  width: '8em',
+                  width: '4em',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
