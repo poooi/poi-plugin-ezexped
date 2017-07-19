@@ -54,10 +54,17 @@ class FleetCompoItem extends Component {
                   alignItems: 'center',
                 }}>
                 <FontAwesome
+                  className={sat ? 'text-success' : 'text-danger'}
                   style={{marginRight: "5px", marginTop: "2px"}}
                   name={sat ? "check-square-o" : "square-o"} />
                 <div style={{flex: "1", whiteSpace: "nowrap"}}>
-                  {`${estype.longDesc(__)(estypeK)} ${actual}/${need}`}
+                  {`${estype.longDesc(__)(estypeK)}`}
+                </div>
+                <div
+                  className={sat ? 'text-success' : 'text-danger'}
+                  style={{marginLeft: '.4em'}}
+                >
+                  {`${actual}/${need}`}
                 </div>
               </div>
             ))
