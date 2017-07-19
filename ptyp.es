@@ -22,6 +22,8 @@ const FleetId = PropTypes.oneOf([1,2,3,4])
 const EReqType = PropTypes.oneOf(EReq.allTypes)
 const EReqWhich = PropTypes.oneOf(['norm','resupply','gs'])
 
+const DarkOrLight = PropTypes.oneOf(['dark','light'])
+
 const PTyp = {
   ...PropTypes,
   allRequired,
@@ -30,6 +32,7 @@ const PTyp = {
 
   EReqType,
   EReqWhich,
+  DarkOrLight,
 }
 
 export {

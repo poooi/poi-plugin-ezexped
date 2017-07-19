@@ -32,8 +32,8 @@ class MinFleetCompo extends Component {
             const isLast = ind+1 === stypeInfoList.length
             return (
               <div
+                className={sat ? 'text-success' : 'text-danger'}
                 style={{
-                  color: sat ? 'green' : 'red',
                   marginLeft: 0,
                   marginRight: isLast ? 0 : between,
                 }}

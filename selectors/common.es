@@ -48,10 +48,13 @@ const themeSelector = createSelector(
   configSelector,
   config => _.get(config,'poi.theme','paperdark'))
 
-const darkThemes = _.words('dark black slate superhero papercyan')
 const isDarkThemeSelector = createSelector(
   themeSelector,
-  theme => darkThemes.includes(theme))
+  theme => /(dark|black|slate|superhero|papercyan)/i.test(theme))
+
+const darkOrLightSelector = createSelector(
+  isDarkThemeSelector,
+  isDarkTheme => isDarkTheme ? 'dark' : 'light')
 
 const isMainFleetFuncSelector = createSelector(
   isFleetCombinedSelector,
@@ -66,6 +69,7 @@ export {
 
   isFleetCombinedSelector,
   isDarkThemeSelector,
+  darkOrLightSelector,
 
   extSelector,
 
