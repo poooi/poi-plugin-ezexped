@@ -49,16 +49,17 @@ class ExpeditionButton extends PureComponent {
               marginBottom: 2,
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
             active={active}
             onClick={onClick}>
-          <span style={{flex: 1}}>
+          <span>
             {expedId}
           </span>
           {
             runningFleetId && (
               <img
-                style={{height: '1.1em', marginLeft: '.2em'}}
+                style={{height: '1.1em', marginLeft: '.6em'}}
                 alt={`/${runningFleetId}`}
                 src={join(__dirname,'..','..','assets','images',`fleet-${runningFleetId}.png`)}
               />
