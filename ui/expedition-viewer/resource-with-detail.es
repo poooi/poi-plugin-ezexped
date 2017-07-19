@@ -30,7 +30,7 @@ class ResourceWithDetail extends Component {
       <Tooltip
           className="ezexped-pop"
           style={{display: "flex"}}
-          id={`tooltip-${this.props.resourceName}`}>
+          id={`ezexped-tooltip-${this.props.resourceName}`}>
         {
           tooltipTexts.map(x => (
             <div style={{flex: "1", textAlign: "left"}} key={x}>

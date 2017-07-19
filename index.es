@@ -11,6 +11,8 @@ import { loadAndUpdateConfig } from './config'
    TODO
 
    - i18n
+   - fleet avability change should force a findNextAvailable action, shouldn't
+     relying on selector value change as it doesn't take user action into account
 
  */
 
