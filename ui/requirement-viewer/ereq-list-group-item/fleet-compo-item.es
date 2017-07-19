@@ -11,6 +11,8 @@ import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 import * as estype from '../../../estype'
 
+import { MinFleetCompo } from './min-fleet-compo'
+
 class FleetCompoItem extends Component {
   static propTypes = {
     result: PTyp.shape({
@@ -27,18 +29,10 @@ class FleetCompoItem extends Component {
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div key="header">{__("Fleet Composition")}:</div>
-        {
-          results.map(({estype: estypeK, need, sat}) => (
-            <div
-              style={{
-                marginLeft: "5px",
-                color: sat ? 'green' : 'red',
-              }}
-              key={`ce-${estypeK}`}>
-              {`${need}${estype.shortDesc(estypeK)}`}
-            </div>
-          ))
-        }
+        <MinFleetCompo
+          style={{marginLeft: '.5em'}}
+          stypeInfoList={results}
+        />
       </div>
     )
   }
