@@ -6,19 +6,9 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { expedInfo } from '../../exped-info'
 import { PTyp } from '../../ptyp'
 
-const mkExpedTooltip = expedId => {
-  const info = expedInfo[expedId]
-  return (
-    <Tooltip id={`tooltip-${expedId}`} style={{display: "flex", flexDirection: "column"}}>
-      <div>{info.name}</div>
-      <div>{["fuel","ammo","steel","bauxite"].map(k => info.resource[k]).join(", ")}</div>
-    </Tooltip>)
-}
-
-// const ExpedTooltip = props => mkExpedTooltip(props.expedId)
+import { ExpedTooltipContent } from './exped-tooltip-content'
 
 // every expedition button inside the table
 // props:
@@ -44,13 +34,14 @@ class ExpeditionButton extends PureComponent {
       ready, expedId, onClick,
       active, runningFleetId,
     } = this.props
-    const tooltip = mkExpedTooltip(expedId)
-    // I don't know why but the following one isn't working:
-    // const tooltip = (<ExpedTooltip expedId={expedId} />)
     return (
       <OverlayTrigger
           placement="bottom"
-          overlay={tooltip}>
+          overlay={
+            <Tooltip id={`ezexped-tooltip-${expedId}`}>
+              <ExpedTooltipContent expedId={expedId} />
+            </Tooltip>
+          }>
         <Button
             bsStyle={ready ? "primary" : "default"}
             style={{

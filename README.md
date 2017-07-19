@@ -33,6 +33,7 @@ check expedition requirements and estimate expedition income accurately.
 
 - Improved tooltip coloring respecting theme settings
 - Added fleet indicators in expedition table.
+- Improved expedition table tooltip
 
 ### 0.5.0
 
