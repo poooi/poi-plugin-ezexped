@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { expedNameToId } from '../exped-info'
 import { modifyObject } from '../utils'
 import { defaultConfig } from '../config'
@@ -6,7 +7,7 @@ import {
 } from './auto-switch'
 import { log } from '../debug'
 
-const fleetChangeDebug = true
+const fleetChangeDebug = false
 
 const initState = {
   ...defaultConfig,
@@ -38,35 +39,30 @@ const reducer = (state = initState, action) => {
     if (fleetChangeDebug && action.reason)
       log(`changeFleet for reason: ${action.reason}`)
 
-    return {
-      ...state,
-      fleetId: action.fleetId,
-    }
+    return modifyObject(
+      'fleetId', () => action.fleetId)(state)
   }
 
-  // only record successful expeditions
+
   if (action.type === '@@Response/kcsapi/api_req_mission/result') {
     const expedId = expedNameToId( action.body.api_quest_name )
     const fleetId = parseInt(action.postBody.api_deck_id, 10)
-    let currentState = state
 
-    if (action.body.api_clear_result !== 0) {
-      currentState = modifyObject(
-        'selectedExpeds',
+    const modifiers = [
+      // only record successful expeditions
+      action.body.api_clear_result !== 0 &&
         modifyObject(
-          fleetId, () => expedId))(currentState)
-    }
+          'selectedExpeds',
+          modifyObject(
+            fleetId, () => expedId)),
+      // switch to the corresponding fleet on expedition result screen
+      // if "fleetAutoSwitch" is on
+      state.fleetAutoSwitch &&
+        modifyObject(
+          'fleetId', () => fleetId),
+    ]
 
-    // switch to the corresponding fleet on expedition result screen
-    // if "fleetAutoSwitch" is on
-    if (state.fleetAutoSwitch) {
-      return {
-        ...currentState,
-        fleetId,
-      }
-    }
-
-    return state
+    return _.flow(_.compact(modifiers))(state)
   }
 
   if (state.fleetAutoSwitch) {
