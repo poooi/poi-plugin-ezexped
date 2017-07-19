@@ -38,6 +38,7 @@ class AnyFleetCompoItem extends Component {
                 const keyPrefix = `${computeKey(rs.extra.results)}-`
                 const content = (
                   <Label
+                    key={`${keyPrefix}content`}
                     style={{
                       fontSize: '100%',
                       marginTop: '.1em',
@@ -46,7 +47,6 @@ class AnyFleetCompoItem extends Component {
                       paddingRight: '.2em',
                     }}>
                     <MinFleetCompo
-                      key={`${keyPrefix}content`}
                       style={{
                         marginLeft: 0,
                         marginRight: 0,
