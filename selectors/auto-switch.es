@@ -7,21 +7,24 @@ import {
   indexedFleetsInfoSelector,
 } from './fleet-info'
 
-// return next available fleet id for expeditions,
-// null if we cannot find such a fleet
-const nextAvailableFleetIdSelector = createSelector(
+const availableFleetIdsSelector = createSelector(
   allFleetIdsSelector,
   indexedFleetsInfoSelector,
   isMainFleetFuncSelector,
-  (allFleetIds, indexedFleetsInfo, isMainFleetFunc) => {
-    const fleetIds =
-      allFleetIds.filter(fleetId =>
-        ! isMainFleetFunc(fleetId) &&
-        indexedFleetsInfo[fleetId] &&
-        indexedFleetsInfo[fleetId].available)
-    return fleetIds.length > 0 ? fleetIds[0] : null
-  })
+  (allFleetIds, indexedFleetsInfo, isMainFleetFunc) =>
+    allFleetIds.filter(fleetId =>
+      ! isMainFleetFunc(fleetId) &&
+      indexedFleetsInfo[fleetId] &&
+      indexedFleetsInfo[fleetId].available))
+
+// return next available fleet id for expeditions,
+// null if we cannot find such a fleet
+const nextAvailableFleetIdSelector = createSelector(
+  availableFleetIdsSelector,
+  availableFleetIds =>
+    availableFleetIds.length > 0 ? availableFleetIds[0] : null)
 
 export {
+  availableFleetIdsSelector,
   nextAvailableFleetIdSelector,
 }
