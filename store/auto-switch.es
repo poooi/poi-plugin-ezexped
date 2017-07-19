@@ -14,9 +14,13 @@ import {
   nextAvailableFleetIdSelector,
 } from '../selectors'
 
-const asyncChangeFleet = (...args) =>
+/*
+   creates an asynchronous computation that might end up sending
+   an action of changeFleet.
+ */
+const asyncChangeFleet = func =>
   store.dispatch(dispatch => setTimeout(() =>
-    mapDispatchToProps(dispatch).changeFleet(...args)))
+    func(mapDispatchToProps(dispatch).changeFleet)))
 
 // parse a **positive** number from perhaps string, returns null on failure
 // this works on both fleetId and ship's rosterId because both starts from 1
@@ -75,20 +79,29 @@ const subReducer = (state, action) => {
 
   if (
     // the user is entering expedition screen
-    action.type === '@@Request/kcsapi/api_get_member/mission'
+    action.type === '@@Request/kcsapi/api_get_member/mission' ||
+    // or through a direct request
+    action.type === '@poi-plugin-ezexped@SwitchToNextAvailable'
   ) {
-    const reason = `triggered by game action ${action.type}`
-    const poiState = store.getState()
-    const mayFleetId = nextAvailableFleetIdSelector(poiState)
-    if (typeof mayFleetId === 'number') {
-      const fleetId = mayFleetId
-      asyncChangeFleet(fleetId, reason)
-    } else {
-      const hideMainFleet = hideMainFleetSelector(poiState)
-      if (! hideMainFleet) {
-        asyncChangeFleet(1, `${reason} (main)`)
+    const reason =
+      action.type === '@poi-plugin-ezexped@SwitchToNextAvailable' ?
+        action.reason :
+        `triggered by game action ${action.type}`
+
+    asyncChangeFleet(changeFleet => {
+      const poiState = store.getState()
+      const mayFleetId = nextAvailableFleetIdSelector(poiState)
+      if (typeof mayFleetId === 'number') {
+        const fleetId = mayFleetId
+        changeFleet(fleetId, reason)
+      } else {
+        const hideMainFleet = hideMainFleetSelector(poiState)
+        if (! hideMainFleet) {
+          changeFleet(1, `${reason} (main)`)
+        }
       }
-    }
+    })
+
     return state
   }
 
@@ -96,13 +109,14 @@ const subReducer = (state, action) => {
   {
     const mayFleetId = fleetIdFromAction(action)
     if (mayFleetId && typeof mayFleetId === 'number') {
-      const fleetId = mayFleetId
-      const poiState = store.getState()
-      const visibleFleetIds = visibleFleetIdsSelector(poiState)
-      // only consider changes in visible fleets
-      if (visibleFleetIds.includes(fleetId))
-        asyncChangeFleet(fleetId, 'fleet compo changed')
-
+      asyncChangeFleet(changeFleet => {
+        const fleetId = mayFleetId
+        const poiState = store.getState()
+        const visibleFleetIds = visibleFleetIdsSelector(poiState)
+        // only consider changes in visible fleets
+        if (visibleFleetIds.includes(fleetId))
+          changeFleet(fleetId, 'fleet compo changed')
+      })
       return state
     }
   }
@@ -111,16 +125,18 @@ const subReducer = (state, action) => {
   {
     const mayShipRstId = shipRosterIdFromAction(action)
     if (mayShipRstId && typeof mayShipRstId === 'number') {
-      const shipRstId = mayShipRstId
-      const poiState = store.getState()
-      const visibleFleetsInfo = visibleFleetsInfoSelector(poiState)
-      const fleetInfoInd = visibleFleetsInfo.findIndex(fi =>
-        fi.ships.findIndex(s => s.rstId === shipRstId) !== -1)
+      asyncChangeFleet(changeFleet => {
+        const shipRstId = mayShipRstId
+        const poiState = store.getState()
+        const visibleFleetsInfo = visibleFleetsInfoSelector(poiState)
+        const fleetInfoInd = visibleFleetsInfo.findIndex(fi =>
+          fi.ships.findIndex(s => s.rstId === shipRstId) !== -1)
 
-      if (fleetInfoInd !== -1) {
-        const fleetInfo = visibleFleetsInfo[fleetInfoInd]
-        asyncChangeFleet(fleetInfo.id, 'fleet member eqp changed')
-      }
+        if (fleetInfoInd !== -1) {
+          const fleetInfo = visibleFleetsInfo[fleetInfoInd]
+          changeFleet(fleetInfo.id, 'fleet member eqp changed')
+        }
+      })
 
       return state
     }
