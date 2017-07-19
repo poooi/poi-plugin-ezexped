@@ -14,6 +14,10 @@ const actionCreator = {
     type: '@poi-plugin-ezexped@ModifyState',
     modifier,
   }),
+  switchToNextAvailable: (reason=null) => ({
+    type: '@poi-plugin-ezexped@SwitchToNextAvailable',
+    reason,
+  }),
   changeFleetFocusInMainUI: fleetId => ({
     type: '@@TabSwitch',
     tabInfo: {
