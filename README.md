@@ -31,6 +31,8 @@ check expedition requirements and estimate expedition income accurately.
       pass the fleet composition check. However, it's still necessary to meet requirements other than fleet composition
       (e.g. flagship level requirement, number-of-ships requirement, etc.)
 
+- Improved tooltip coloring respecting theme settings
+
 ### 0.5.0
 
 - Remove "Allow switching to this plugin automatically"
