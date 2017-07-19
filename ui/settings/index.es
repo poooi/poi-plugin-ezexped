@@ -58,7 +58,7 @@ class SettingsImpl extends PureComponent {
           <Col sm={8}>
             <OverlayTrigger
               overlay={
-                <Tooltip id="tooltip-ezexped-settings-sparked-count">
+                <Tooltip id="ezexped-settings-sparked-count-tooltip">
                   The number of sparkled ships for great success
                 </Tooltip>
               }

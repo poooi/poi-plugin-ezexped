@@ -53,7 +53,7 @@ class FleetPickerImpl extends Component {
           key="auto-fleet"
           placement="left"
           overlay={
-            <Tooltip id="tt-auto-btn">
+            <Tooltip id="ezexped-auto-btn-tooltip">
               {__("AutoTooltip")}
             </Tooltip>
           }>
