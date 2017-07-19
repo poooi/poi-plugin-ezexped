@@ -20,6 +20,7 @@ import { MoraleItem } from './morale-item'
 import { ResupplyItem } from './resupply-item'
 import { AllSparkledItem } from './all-sparkled-item'
 import { FleetCompoItem } from './fleet-compo-item'
+import { AnyFleetCompoItem } from './any-fleet-compo-item'
 
 /*
    TODO:
@@ -56,6 +57,7 @@ const ereqComponents = new Map()
     ResupplyItem,
     AllSparkledItem,
     FleetCompoItem,
+    AnyFleetCompoItem,
   ].map(defineERC)
 }
 
