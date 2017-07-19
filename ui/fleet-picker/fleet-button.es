@@ -14,6 +14,10 @@ import {
   mkBsStyleForFleetButtonSelector,
 } from './selectors'
 
+import {
+  FleetTooltipContent,
+} from './fleet-tooltip-content'
+
 const mkTooltip = fleet =>
   (
     <Tooltip id={`fpfleet-${fleet.id}`}>
@@ -58,7 +62,12 @@ class FleetButtonImpl extends Component {
     const {fleet, bsStyle, focused} = this.props
     return (
       <OverlayTrigger
-        placement="bottom" overlay={mkTooltip(fleet)}>
+        placement="bottom" overlay={
+          <Tooltip id={`ezexped-fpfleet-${fleet.id}`}>
+            <FleetTooltipContent
+              fleet={fleet} />
+          </Tooltip>
+        }>
         <Button
           bsStyle={bsStyle}
           style={{
