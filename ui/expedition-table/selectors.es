@@ -2,14 +2,14 @@ import _ from 'lodash'
 import { createSelector } from 'reselect'
 
 import {
-  fleetsSelector
+  fleetsSelector,
 } from 'views/utils/selectors'
 
 import {
   expedReqsStage2Selector,
   mkFleetInfoSelector,
 } from '../../selectors'
-import { enumFromTo, testSelector } from '../../utils'
+import { enumFromTo } from '../../utils'
 import { EReq } from '../../structs/ereq'
 import { mapExpedReq } from '../../exped-reqs'
 
