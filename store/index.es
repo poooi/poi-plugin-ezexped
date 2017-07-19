@@ -4,6 +4,7 @@ import { defaultConfig } from '../config'
 import {
   subReducer as autoSwitchSubReducer,
 } from './auto-switch'
+import { log } from '../debug'
 
 const initState = {
   ...defaultConfig,
@@ -32,6 +33,9 @@ const reducer = (state = initState, action) => {
   }
 
   if (action.type === '@poi-plugin-ezexped@ChangeFleet') {
+    if (action.reason)
+      log(`changeFleet for reason ${action.reason}`)
+
     return {
       ...state,
       fleetId: action.fleetId,
