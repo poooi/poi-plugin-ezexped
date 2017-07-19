@@ -11,14 +11,16 @@ class MinFleetCompo extends Component {
   static propTypes = {
     stypeInfoList: PTyp.array.isRequired,
     style: PTyp.object,
+    between: PTyp.string,
   }
 
   static defaultProps = {
     style: {},
+    between: '.2em',
   }
 
   render() {
-    const {stypeInfoList, style} = this.props
+    const {stypeInfoList, style, between} = this.props
     return (
       <div style={{
         display: 'flex',
@@ -26,16 +28,20 @@ class MinFleetCompo extends Component {
         ...style,
       }}>
         {
-          stypeInfoList.map(({estype, need, sat}) => (
-            <div
-              style={{
-                marginLeft: '.2em',
-                color: sat ? 'green' : 'red',
-              }}
-              key={estype}>
-              {`${need}${esShortDesc(estype)}`}
-            </div>
-          ))
+          stypeInfoList.map(({estype, need, sat},ind) => {
+            const isLast = ind+1 === stypeInfoList.length
+            return (
+              <div
+                style={{
+                  color: sat ? 'green' : 'red',
+                  marginLeft: 0,
+                  marginRight: isLast ? 0 : between,
+                }}
+                key={estype}>
+                {`${need}${esShortDesc(estype)}`}
+              </div>
+            )
+          })
         }
       </div>
     )
