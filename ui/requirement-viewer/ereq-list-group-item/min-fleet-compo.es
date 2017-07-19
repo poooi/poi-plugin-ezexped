@@ -22,11 +22,12 @@ class MinFleetCompo extends Component {
   render() {
     const {stypeInfoList, style, between} = this.props
     return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        ...style,
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          ...style,
+        }}>
         {
           stypeInfoList.map(({estype, need, sat},ind) => {
             const isLast = ind+1 === stypeInfoList.length

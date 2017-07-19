@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import {
-  Tooltip,
-  Label,
+  Well,
 } from 'react-bootstrap'
 
 import {
@@ -37,14 +36,13 @@ class AnyFleetCompoItem extends Component {
               (rs,ind) => {
                 const keyPrefix = `${computeKey(rs.extra.results)}-`
                 const content = (
-                  <Label
+                  <Well
                     key={`${keyPrefix}content`}
                     style={{
                       fontSize: '100%',
                       marginTop: '.1em',
                       marginBottom: '.1em',
-                      paddingLeft: '.2em',
-                      paddingRight: '.2em',
+                      padding: '.2em .2em',
                     }}>
                     <MinFleetCompo
                       style={{
@@ -54,7 +52,7 @@ class AnyFleetCompoItem extends Component {
                       between=".2em"
                       stypeInfoList={rs.extra.results}
                     />
-                  </Label>
+                  </Well>
                 )
                 if (ind+1 !== results.length) {
                   return [
