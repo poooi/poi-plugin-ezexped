@@ -13,6 +13,12 @@ import { loadAndUpdateConfig } from './config'
    - i18n
    - fleet avability change should force a findNextAvailable action, shouldn't
      relying on selector value change as it doesn't take user action into account
+   - fleet button tooltip: show one of the following:
+
+      - is on expedition X
+      - is ready for expedition X
+      - only needs resupply for expedition X
+      - has unmet requirements for expedition X
 
  */
 
