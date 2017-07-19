@@ -60,7 +60,30 @@ class FleetButtonImpl extends Component {
 
   render() {
     const {fleet, bsStyle, focused} = this.props
-    return (
+    const content = (
+      <Button
+        bsStyle={bsStyle}
+        style={{
+          marginRight: 5, flex: 1,
+          opacity: focused ? 1 : .5,
+          whiteSpace: 'nowrap',
+          width: 75,
+          overflow: 'hidden',
+        }}
+        active={focused}
+        onContextMenu={this.handleFocusFleetInMainUI}
+        onClick={this.handleChangeFleet}
+      >
+        <div style={{
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+        }}>
+          {fleet.name}
+        </div>
+      </Button>
+    )
+
+    return fleet ? (
       <OverlayTrigger
         placement="bottom" overlay={
           <Tooltip id={`ezexped-fpfleet-${fleet.id}`}>
@@ -68,28 +91,9 @@ class FleetButtonImpl extends Component {
               fleet={fleet} />
           </Tooltip>
         }>
-        <Button
-          bsStyle={bsStyle}
-          style={{
-            marginRight: 5, flex: 1,
-            opacity: focused ? 1 : .5,
-            whiteSpace: 'nowrap',
-            width: 75,
-            overflow: 'hidden',
-          }}
-          active={focused}
-          onContextMenu={this.handleFocusFleetInMainUI}
-          onClick={this.handleChangeFleet}
-        >
-          <div style={{
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-          }}>
-            {fleet.name}
-          </div>
-        </Button>
+        {content}
       </OverlayTrigger>
-    )
+    ) : content
   }
 }
 
