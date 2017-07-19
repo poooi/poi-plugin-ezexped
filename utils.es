@@ -44,8 +44,13 @@ const modifyArray = (index, f) => {
       return xs
     const ys = [...xs]
     const v = ys[index]
-    ys[index] = f(v)
-    return ys
+    const newV = f(v)
+    if (v !== newV) {
+      ys[index] = newV
+      return ys
+    } else {
+      return xs
+    }
   }
 }
 
@@ -56,6 +61,9 @@ const modifyObject = (propName, f, removeUndefined = false) => {
   return obj => {
     const val = obj[propName]
     const newVal = f(val)
+    if (val === newVal)
+      return obj
+
     if (typeof newVal === 'undefined' && removeUndefined) {
       const newObj = {...obj}
       delete newObj[propName]
