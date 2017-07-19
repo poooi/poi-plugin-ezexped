@@ -1,10 +1,15 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
+
+import {
+  fleetsSelector
+} from 'views/utils/selectors'
+
 import {
   expedReqsStage2Selector,
   mkFleetInfoSelector,
 } from '../../selectors'
-import { enumFromTo } from '../../utils'
+import { enumFromTo, testSelector } from '../../utils'
 import { EReq } from '../../structs/ereq'
 import { mapExpedReq } from '../../exped-reqs'
 
@@ -31,4 +36,17 @@ const mkEReqNormFlagsSelectorForFleet = _.memoize(
   )
 )
 
-export { mkEReqNormFlagsSelectorForFleet }
+const currentRunningExpedIdToFleetIdSelector = createSelector(
+  fleetsSelector,
+  fleets => _.fromPairs(fleets.map(fleetData => [
+    _.get(fleetData,['api_mission',1]),
+    _.get(fleetData,'api_id'),
+  ]).filter(([expedId,fleetId]) =>
+    _.isInteger(expedId) && expedId >= 1 && expedId <= 40 &&
+    _.isInteger(fleetId) && fleetId >= 1 && fleetId <= 4))
+)
+
+export {
+  mkEReqNormFlagsSelectorForFleet,
+  currentRunningExpedIdToFleetIdSelector,
+}

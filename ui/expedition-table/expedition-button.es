@@ -1,3 +1,4 @@
+import { join } from 'path-extra'
 import React, { PureComponent } from 'react'
 import {
   Button,
@@ -30,11 +31,19 @@ class ExpeditionButton extends PureComponent {
     ready: PTyp.bool.isRequired,
     active: PTyp.bool.isRequired,
     expedId: PTyp.number.isRequired,
+    runningFleetId: PTyp.number,
     onClick: PTyp.func.isRequired,
   }
 
+  static defaultProps = {
+    runningFleetId: null,
+  }
+
   render() {
-    const {ready, expedId, onClick, active} = this.props
+    const {
+      ready, expedId, onClick,
+      active, runningFleetId,
+    } = this.props
     const tooltip = mkExpedTooltip(expedId)
     // I don't know why but the following one isn't working:
     // const tooltip = (<ExpedTooltip expedId={expedId} />)
@@ -44,10 +53,26 @@ class ExpeditionButton extends PureComponent {
           overlay={tooltip}>
         <Button
             bsStyle={ready ? "primary" : "default"}
-            style={{width: "100%", marginBottom: "2px"}}
+            style={{
+              width: '100%',
+              marginBottom: 2,
+              display: 'flex',
+              alignItems: 'center',
+            }}
             active={active}
             onClick={onClick}>
-          {expedId}
+          <span style={{flex: 1}}>
+            {expedId}
+          </span>
+          {
+            runningFleetId && (
+              <img
+                style={{height: '1.1em', marginLeft: '.2em'}}
+                alt={`/${runningFleetId}`}
+                src={join(__dirname,'..','..','assets','images',`fleet-${runningFleetId}.png`)}
+              />
+            )
+          }
         </Button>
       </OverlayTrigger>)
   }
