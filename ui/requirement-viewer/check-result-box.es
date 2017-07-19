@@ -1,42 +1,44 @@
 import FontAwesome from 'react-fontawesome'
 import React, { PureComponent } from 'react'
 import {
-  Button,
+  Label,
 } from 'react-bootstrap'
 
 import { PTyp } from '../../ptyp'
 
 // a box for showing whether the fleet is ready
-// props:
-// - content
-// - ready: bool
-// - visible: bool
 class CheckResultBox extends PureComponent {
   static propTypes = {
     ready: PTyp.bool.isRequired,
-    visible: PTyp.bool.isRequired,
     content: PTyp.node.isRequired,
   }
+
   render() {
-    const {ready, visible, content} = this.props
+    const {ready, content} = this.props
     return (
-      <Button
-        bsStyle={ready ? "success" : "danger"}
+      <Label
+        bsStyle={ready ? 'success' : 'danger'}
         disabled={true}
         style={{
-          width: "48%",
-          opacity: "1", margin: "10px 0 10px 0",
-          borderRadius: "10px", display: "flex",
-          visibility: visible ? "visible" : "hidden"}}>
+          fontSize: '100%',
+          padding: '.7em',
+          margin: '10px 0',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+        }}>
         <FontAwesome
-          style={{marginRight: "5px", marginTop: "2px"}}
-          name={ready ? "check-square-o" : "square-o"} />
+          name={ready ? 'check-square-o' : 'square-o'}
+        />
         <div style={{
-          overflow: "hidden",
-          textOverflow: "ellipsis"}}>
+          marginLeft: '.4em',
+          textAlign: 'left',
+          flex: 1,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'}}>
           {content}
         </div>
-      </Button>
+      </Label>
     )
   }
 }
