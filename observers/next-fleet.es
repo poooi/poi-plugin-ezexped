@@ -2,62 +2,53 @@ import _ from 'lodash'
 import { observer } from 'redux-observers'
 import { createStructuredSelector } from 'reselect'
 import {
-  availableFleetIdsSelector,
-  hideMainFleetSelector,
   fleetAutoSwitchSelector,
+  expedFleetsAvailabilitySelector,
 } from '../selectors'
 import { mapDispatchToProps } from '../store'
 
 /*
-   observe next fleet available for expedition
-   and switching to that fleet if fleet auto switch is on
+   observes expedition fleet availability changes
+   and send a "switch to next fleet" request
 
-   see also: ../store/auto-switch.es
-
-   note that we should observe the change of array of available fleets
-   (main fleets are excluded because they cannot be sent to expeditions)
-   rather than just observing 'nextAvailableFleetId'.
-   otherwise we cannot handle the following scenario correctly
-
-   - if available fleets are 2,4
-   - on expedition screen, user sends fleet 4 first
-   - because 'nextAvailableFleetId' does not change, observer will do nothing
-
-   TODO: should handle sending / returning separately:
-
-   - when sending a fleet out, we detect true => false changes on availability,
-     and switch to next fleet
-   - when a fleet is returning, we detect false => true changes, and switch to that fleet
-     (note that first available fleet is not always the returning fleet!)
+   see ../docs/auto-switch.md for details
 
 */
-const availableFleetIdsObserver = observer(
+const expedFleetsAvailabilityObserver = observer(
   createStructuredSelector({
-    availableFleetIds: availableFleetIdsSelector,
+    avails: expedFleetsAvailabilitySelector,
     fleetAutoSwitch: fleetAutoSwitchSelector,
-    hideMainFleet: hideMainFleetSelector,
   }),
   (dispatch, current, previous) => {
-    if (current.fleetAutoSwitch !== true)
-      return
+    if (current.fleetAutoSwitch) {
+      // check shape difference
+      if (
+        /*
+           if shape check fails:
 
-    if (! _.isEqual(current.availableFleetIds, previous.availableFleetIds)) {
-      const {availableFleetIds, hideMainFleet} = current
-      const nextAvailableFleetId =
-        availableFleetIds.length > 0 ? availableFleetIds[0] : null
-      if (nextAvailableFleetId !== null) {
-        mapDispatchToProps(dispatch)
-          .changeFleet(
-            nextAvailableFleetId,
-            'change detected by observer')
-      } else {
-        if (!hideMainFleet)
-          mapDispatchToProps(dispatch)
-            .changeFleet(
-              1,
-              'switching to main by observer')
-      }
-    }
-  })
+           - could be that user is openning a new fleet
+           - or a combined fleet is formed / cancelled
 
-export { availableFleetIdsObserver }
+           the observer is interested in none of these changes.
+         */
+        _.isEqual(
+          current.avails.map(x => x.fleetId),
+          previous.avails.map(x => x.fleetId))
+      ) {
+        // find difference
+        const ava = current.avails.find((cur,ind) =>
+          previous.avails[ind].available === true &&
+          cur.available === false)
+
+        if (ava)
+          mapDispatchToProps(dispatch).autoSwitchToNextAvailable(
+            `observer: detected that we are sending fleet ${ava.fleetId} out`
+          )
+      } // if same shape
+    } // if fleetAutoSwitch
+  }
+)
+
+export {
+  expedFleetsAvailabilityObserver,
+}

@@ -2,6 +2,10 @@
 
    new in-game action-based auto switch mechanism without guesswork
 
+   see ../docs/auto-switch.md for details.
+
+   note that this part is only taken into account when fleetAutoSwitch is on
+
  */
 import _ from 'lodash'
 import { store } from 'views/create-store'
@@ -15,8 +19,10 @@ import {
 } from '../selectors'
 
 /*
-   creates an asynchronous computation that might end up sending
-   an action of changeFleet.
+   asyncChangeFleet(func) creates an asynchronous computation
+   that might end up sending an action of changeFleet.
+
+   func is called with changeFleet
  */
 const asyncChangeFleet = func =>
   store.dispatch(dispatch => setTimeout(() =>
@@ -81,10 +87,10 @@ const subReducer = (state, action) => {
     // the user is entering expedition screen
     action.type === '@@Request/kcsapi/api_get_member/mission' ||
     // or through a direct request
-    action.type === '@poi-plugin-ezexped@SwitchToNextAvailable'
+    action.type === '@poi-plugin-ezexped@AutoSwitchToNextAvailable'
   ) {
     const reason =
-      action.type === '@poi-plugin-ezexped@SwitchToNextAvailable' ?
+      action.type === '@poi-plugin-ezexped@AutoSwitchToNextAvailable' ?
         action.reason :
         `triggered by game action ${action.type}`
 
@@ -97,7 +103,7 @@ const subReducer = (state, action) => {
       } else {
         const hideMainFleet = hideMainFleetSelector(poiState)
         if (! hideMainFleet) {
-          changeFleet(1, `${reason} (main)`)
+          changeFleet(1, reason)
         }
       }
     })
