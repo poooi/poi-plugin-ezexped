@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React, { Component } from 'react'
 import {
   Tooltip,
+  Label,
 } from 'react-bootstrap'
 
 import {
@@ -28,6 +29,7 @@ class AnyFleetCompoItem extends Component {
           flex: 1,
           display: 'flex',
           flexWrap: 'wrap',
+          alignItems: 'center',
         }}>
           {
             _.flatMap(
@@ -35,15 +37,24 @@ class AnyFleetCompoItem extends Component {
               (rs,ind) => {
                 const keyPrefix = `${computeKey(rs.extra.results)}-`
                 const content = (
-                  <MinFleetCompo
-                    key={`${keyPrefix}content`}
+                  <Label
                     style={{
-                      marginLeft: 0,
-                      marginRight: 0,
-                    }}
-                    between=".2em"
-                    stypeInfoList={rs.extra.results}
-                  />
+                      fontSize: '100%',
+                      marginTop: '.1em',
+                      marginBottom: '.1em',
+                      paddingLeft: '.2em',
+                      paddingRight: '.2em',
+                    }}>
+                    <MinFleetCompo
+                      key={`${keyPrefix}content`}
+                      style={{
+                        marginLeft: 0,
+                        marginRight: 0,
+                      }}
+                      between=".2em"
+                      stypeInfoList={rs.extra.results}
+                    />
+                  </Label>
                 )
                 if (ind+1 !== results.length) {
                   return [

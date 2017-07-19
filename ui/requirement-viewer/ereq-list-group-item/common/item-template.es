@@ -1,4 +1,6 @@
+import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
 import {
   ListGroupItem,
@@ -6,8 +8,9 @@ import {
 } from 'react-bootstrap'
 
 import { PTyp } from '../../../../ptyp'
+import { darkOrLightSelector } from '../../../../selectors'
 
-class ItemTemplate extends Component {
+class ItemTemplateImpl extends Component {
   static propTypes = {
     result: PTyp.shape({
       sat: PTyp.bool.isRequired,
@@ -15,6 +18,7 @@ class ItemTemplate extends Component {
     which: PTyp.EReqWhich.isRequired,
     content: PTyp.node.isRequired,
     tooltip: PTyp.node,
+    darkOrLight: PTyp.DarkOrLight.isRequired,
   }
 
   static defaultProps = {
@@ -25,16 +29,18 @@ class ItemTemplate extends Component {
     const {
       result, which,
       tooltip, content,
+      darkOrLight,
     } = this.props
     const {sat} = result
-    const checkboxColor = sat ?
-      (which === 'gs' ? 'gold' : 'green') :
-      (which === 'gs' ? 'grey' : 'red')
+    const checkboxClass = sat ?
+      (which === 'gs' ? `poi-ship-cond-53 ${darkOrLight}` : 'text-success') :
+      (which === 'gs' ? 'text-muted' : 'text-danger')
     const itemContent = (
       <div style={{display: 'flex', alignItems: 'center'}}>
         <FontAwesome
+          className={checkboxClass}
           style={{
-            color: checkboxColor,
+            fontWeight: 'normal',
             marginRight: '.4em',
             width: '1em',
           }}
@@ -64,5 +70,10 @@ class ItemTemplate extends Component {
     )
   }
 }
+
+const ItemTemplate = connect(
+  createStructuredSelector({
+    darkOrLight: darkOrLightSelector,
+  }))(ItemTemplateImpl)
 
 export { ItemTemplate }
