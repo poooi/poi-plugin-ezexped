@@ -13,6 +13,9 @@ import { PTyp } from '../../../ptyp'
 import { MinFleetCompo, computeKey } from './min-fleet-compo'
 import { AnyFleetCompoTooltipContent } from './any-fleet-compo-tooltip-content'
 
+// TODO: currently tooltip position is unstable,
+// but I'm not sure whether we can do something about it
+
 class AnyFleetCompoItem extends Component {
   static propTypes = {
     prefix: PTyp.string.isRequired,
