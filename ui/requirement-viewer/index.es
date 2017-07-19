@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
   ListGroup,
+  Grid, Row, Col,
 } from 'react-bootstrap'
 import { createStructuredSelector } from 'reselect'
 
@@ -69,17 +70,25 @@ class RequirementViewerImpl extends Component {
 
     return (
       <div>
-        <div style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between"}}>
-          <CheckResultBox
-              ready={effectiveNormFlag} visible={true}
-              content={`${__("CondNormal")}: ${readyOrNot(effectiveNormFlag)}`} />
-          <CheckResultBox
-              ready={effectiveGsFlag} visible={this.props.greatSuccess}
-              content={`${__("CondGreatSuccess")}: ${readyOrNot(effectiveGsFlag)}`} />
-        </div>
+        <Grid style={{width: '100%'}}>
+          <Row>
+            <Col sm={6} style={{paddingRight: '.5em'}}>
+              <CheckResultBox
+                ready={effectiveNormFlag}
+                content={`${__("CondNormal")}: ${readyOrNot(effectiveNormFlag)}`} />
+            </Col>
+            <Col sm={6} style={{paddingLeft: '.5em'}}>
+              {
+                this.props.greatSuccess && (
+                  <CheckResultBox
+                    ready={effectiveGsFlag}
+                    content={`${__("CondGreatSuccess")}: ${readyOrNot(effectiveGsFlag)}`}
+                  />
+                )
+              }
+            </Col>
+          </Row>
+        </Grid>
         <ListGroup>
           {
             this.prepareReqListItems().map(({key, ereq, result, which}) => (
