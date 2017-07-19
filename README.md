@@ -35,6 +35,9 @@ check expedition requirements and estimate expedition income accurately.
 - Added fleet indicators in expedition table
 - Improved expedition table tooltip
 - Improved requirement checking result indicator
+- Improved fleet button tooltips
+
+    - now shows ship level, morale status and expedition-related equipments
 
 ### 0.5.0
 
