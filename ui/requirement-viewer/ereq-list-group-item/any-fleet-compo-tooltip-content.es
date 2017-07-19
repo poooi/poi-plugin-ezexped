@@ -30,7 +30,7 @@ class AnyFleetCompoTooltipContent extends Component {
         {
           _.flatMap(
             fleetCompos,
-            fcInfo => {
+            (fcInfo,ind) => {
               const key = computeKey(fcInfo.extra.results)
               const mainContent = (
                 <div
@@ -49,8 +49,16 @@ class AnyFleetCompoTooltipContent extends Component {
                 </div>
               )
 
+              /*
+                 thanks to the fact that detail lists are always containing two
+                 items, by always having a focus, we don't have to worry about
+                 tooltip's height being changed when it's visible.
+               */
+              const isFocused =
+                (currentKey === null && ind === 0) ||
+                currentKey === key
               const detailContents =
-                currentKey === key ?
+                isFocused ?
                   fcInfo.extra.results.map(({estype,need,actual,sat}) => (
                     <div
                       style={{marginLeft: '.8em', display: 'flex', alignItems: 'center'}}

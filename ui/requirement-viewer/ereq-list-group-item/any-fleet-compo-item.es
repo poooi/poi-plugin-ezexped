@@ -13,9 +13,6 @@ import { PTyp } from '../../../ptyp'
 import { MinFleetCompo, computeKey } from './min-fleet-compo'
 import { AnyFleetCompoTooltipContent } from './any-fleet-compo-tooltip-content'
 
-// TODO: currently tooltip position is unstable,
-// but I'm not sure whether we can do something about it
-
 class AnyFleetCompoItem extends Component {
   static propTypes = {
     prefix: PTyp.string.isRequired,
@@ -50,12 +47,16 @@ class AnyFleetCompoItem extends Component {
               (rs,ind) => {
                 const key = computeKey(rs.extra.results)
                 const keyPrefix = `${key}-`
+                /*
+                   change key when moving over this component or
+                   focusing on it. onBlur and onMouseOut is intentionally
+                   left unset, so that most of the time it will have a focused
+                   fleet composition to show
+                 */
                 const content = (
                   <Well
                     onMouseOver={this.handleChangeKey(key)}
-                    onMouseOut={this.handleChangeKey(null)}
                     onFocus={this.handleChangeKey(key)}
-                    onBlur={this.handleChangeKey(null)}
                     key={`${keyPrefix}content`}
                     style={{
                       fontSize: '100%',
