@@ -4,9 +4,13 @@ import {
   Button,
   Tooltip, OverlayTrigger,
 } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
+
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import {
+  hideMainFleetSelector,
+  isMainFleetFuncSelector,
   fleetIdSelector,
   mkFleetInfoSelector,
 } from '../../selectors'
@@ -24,6 +28,7 @@ class FleetButtonImpl extends Component {
     fleetId: PTyp.number.isRequired,
     fleet: PTyp.object,
     bsStyle: PTyp.string.isRequired,
+    shouldHide: PTyp.bool.isRequired,
 
     changeFleet: PTyp.func.isRequired,
     changeFleetFocusInMainUI: PTyp.func.isRequired,
@@ -44,7 +49,7 @@ class FleetButtonImpl extends Component {
   }
 
   render() {
-    const {fleet, bsStyle, focused} = this.props
+    const {fleet, bsStyle, focused, shouldHide} = this.props
     const content = (
       <Button
         bsStyle={bsStyle}
@@ -59,12 +64,20 @@ class FleetButtonImpl extends Component {
         onContextMenu={this.handleFocusFleetInMainUI}
         onClick={this.handleChangeFleet}
       >
-        <div style={{
+        <span style={{
           textOverflow: 'ellipsis',
           overflow: 'hidden',
         }}>
           {fleet.name}
-        </div>
+        </span>
+        {
+          shouldHide && (
+            <FontAwesome
+              style={{marginLeft: '.2em'}}
+              name="ban"
+            />
+          )
+        }
       </Button>
     )
 
@@ -90,10 +103,14 @@ const FleetButton = connect(
     const currentFocusingFleetId = fleetIdSelector(state)
     const fleet = mkFleetInfoSelector(fleetId)(state)
     const bsStyle = mkBsStyleForFleetButtonSelector(fleetId)(state)
+    const hideMainFleet = hideMainFleetSelector(state)
+    const isMainFleetFunc = isMainFleetFuncSelector(state)
+    const shouldHide = hideMainFleet && isMainFleetFunc(fleetId)
     return {
       focused: fleetId === currentFocusingFleetId,
       fleet,
       bsStyle,
+      shouldHide,
     }
   },
   mapDispatchToProps,
