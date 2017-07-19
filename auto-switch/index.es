@@ -20,6 +20,8 @@
       but if all fleets are sent, we only have main fleet to play with,
       so let's focus on it)
 
+   - TODO: this module is no longer in use
+
  */
 
 import _ from 'lodash'
