@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome'
 import {
   ListGroupItem,
-  OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
@@ -21,13 +19,6 @@ import { ResupplyItem } from './resupply-item'
 import { AllSparkledItem } from './all-sparkled-item'
 import { FleetCompoItem } from './fleet-compo-item'
 import { AnyFleetCompoItem } from './any-fleet-compo-item'
-
-/*
-   TODO:
-
-   - AnyFleetCompoItem
-
- */
 
 const ereqComponents = new Map()
 
@@ -79,9 +70,6 @@ class EReqListGroupItem extends Component {
     ereq: PTyp.shape({
       type: PTyp.EReqType.isRequired,
     }).isRequired,
-    result: PTyp.object.isRequired,
-    which: PTyp.EReqWhich.isRequired,
-    prefix: PTyp.string.isRequired,
   }
 
   render() {
@@ -95,45 +83,10 @@ class EReqListGroupItem extends Component {
       )
     }
 
-    const {ereq,result,which,prefix} = this.props
-    const {sat,extra} = result
-    const checkboxColor = sat ?
-      (which === 'gs' ? 'gold' : 'green') :
-      (which === 'gs' ? 'grey' : 'red')
-
-    const content = (
-      <div style={{display: 'flex', alignItems: 'center'}}>
-        <FontAwesome
-          style={{
-            color: checkboxColor,
-            marginRight: '.4em',
-          }}
-          name={sat ? 'check-square-o' : 'square-o'}
-        />
-        <div>
-          {JSON.stringify(ereq)}
-        </div>
-      </div>
-    )
-
     return (
       <ListGroupItem
         style={{padding: 10}}>
-        {
-          result.extra ? (
-            <OverlayTrigger
-              placement="top"
-              overlay={
-                <Tooltip id={`${prefix}-tt`}>
-                  {JSON.stringify(result.extra)}
-                </Tooltip>
-              }>
-              {content}
-            </OverlayTrigger>
-          ) : (
-            content
-          )
-        }
+        {JSON.stringify(this.props.ereq)}
       </ListGroupItem>
     )
   }
