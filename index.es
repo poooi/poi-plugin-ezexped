@@ -10,10 +10,6 @@ import { loadAndUpdateConfig } from './config'
 
    TODO
 
-   - fleet tooltip redo, might include morale & related equips (DLC & drum)
-   - improve 'hide main fleet' toggling behavior: if we need to hide current fleet,
-     instead of actually hiding it, we show a tag to indicate that it will disappear
-     after switching to other fleets
    - i18n
 
  */

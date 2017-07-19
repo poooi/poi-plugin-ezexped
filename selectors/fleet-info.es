@@ -105,12 +105,21 @@ const indexedFleetsInfoSelector = createSelector(
   [1,2,3,4].map(mkFleetInfoSelector),
   (...fleets) => _.keyBy(fleets,'id'))
 
+/*
+   if user choose to hide the main fleet while main fleet is selected,
+   instead of actually hiding it, we place an indicator on it
+   and hide main fleet after having switched to other fleet.
+ */
 const visibleFleetIdsSelector = createSelector(
   allFleetIdsSelector,
   hideMainFleetSelector,
   isMainFleetFuncSelector,
-  (allFleetIds, hideMainFleet, isMainFleetFunc) =>
+  fleetIdSelector,
+  (allFleetIds, hideMainFleet, isMainFleetFunc, currentFleetId) =>
     allFleetIds.filter(fleetId => {
+      // bypassing visibility check if current fleet is the selected one
+      if (fleetId === currentFleetId)
+        return true
       if (!hideMainFleet)
         return true
       return !isMainFleetFunc(fleetId)
