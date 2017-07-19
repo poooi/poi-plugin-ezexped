@@ -34,28 +34,23 @@ Not to be confused with the mechanism of poi's "switching between plugins automa
   - After a fleet is send, auto-switch further checks whether there are more fleets to
     send and switch focus to it.
 
-    This is handled by `observer/next-fleet.es`. An observer can observe changes
-    of a redux store and perform actions accordingly.
+    This is handled by both `observer/next-fleet.es` and `store/auto-switch.es`:
 
-    The current implementation observes the array of available fleets
-    (by "available fleet" I mean fleets that can be sent to expeditions,
-    so this excludes main fleets), and always switches to the first available one.
+    `store/auto-switch.es` implements an observer that observes the availability
+    of expedition fleets (by "expedition fleet" I mean fleets that can be sent
+    to expeditions, so this excludes main fleets),
+    and send a redux action, which is then handled by `store/auto-switch.es`.
 
-    If no fleet is availble, we may have sent all fleets out (except of course
-    main fleets), in this case we will switch focus to main fleet if
-    user wishes to show main fleets in EZ Exped (i.e. "Hide main fleet" setting is `false`).
+
+  - When a fleet returns, auto-switch mechanism will switch focus to that fleet.
+
+    This is handled by `store/index.es`. A fleet returning packet is handled.
+    Additionally, an successful expeditions causes fleet to target that expedition.
+
+  - If `store/auto-switch.es` wants to switch to next available fleet but
+    no fleet is availble, we will instead switch focus to main fleet if
+    "Hide main fleet" setting is `false`.
 
     I admit there is not really a very good reason for doing this,
     but if all fleets are sent, we only have main fleet to play with,
     so let's focus on it.
-
-  - When a fleet returns, auto-switch mechanism will switch focus to that fleet.
-
-    (TODO) this is now poorly handled: despite that `observer/next-fleet.es`
-    does a good job when we are sending fleets out, it doesn't work well
-    when a fleet returns. This is because first available fleet is not
-    always the returning fleet. For this reason, we'll be:
-
-    - monitoring network packets to figure out the returning fleet and switch to it
-    - modify the observer so it only cares about sending fleets out, does nothing when
-      fleet returns.

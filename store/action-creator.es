@@ -14,8 +14,9 @@ const actionCreator = {
     type: '@poi-plugin-ezexped@ModifyState',
     modifier,
   }),
-  switchToNextAvailable: (reason=null) => ({
-    type: '@poi-plugin-ezexped@SwitchToNextAvailable',
+  // note that this action is handled only when 'fleetAutoSwitch' is on
+  autoSwitchToNextAvailable: (reason=null) => ({
+    type: '@poi-plugin-ezexped@AutoSwitchToNextAvailable',
     reason,
   }),
   changeFleetFocusInMainUI: fleetId => ({

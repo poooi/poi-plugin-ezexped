@@ -18,17 +18,20 @@ check expedition requirements and estimate expedition income accurately.
 
     - See [Reference](https://docs.google.com/spreadsheets/d/17Fe9x9L7GXNtO88NOak_wqKtcUwtMr4Utl9l9vq367s/edit#gid=1571341102) for details
     - `DE` is short for escort, and `CVE` for escort carriers.
-    - For now the only implemented escort carriers (`CVE`) in game are Kasuga Maru and her remodels. Namely one of the following:
+    - For now the only implemented escort carriers (`CVE`) in game are Kasuga Maru and her remodels.
+      Namely one of the following:
 
         - Kasuga Maru
         - Taiyou
         - Taiyou Kai
         - Taiyou Kai Ni
 
-    - Basically Expedition `#4`, `#5`, `#9` allow alternative fleet compositions in addition to the traditional `1CL 2DD`.
+    - Basically Expedition `#4`, `#5`, `#9` allow alternative fleet compositions
+      in addition to the traditional `1CL 2DD`.
     - Added fleet compositions are: `1DD 3DE`, `1CL 2DE`, `1CT 2DE`, `1CVE 2DE`, `1CVE 2DD`.
     - For 3 expeditions mentioned above, one only need to achieve one of these fleet compositions to
-      pass the fleet composition check. However, it's still necessary to meet requirements other than fleet composition
+      pass the fleet composition check. However, it's still necessary to meet requirements
+      other than fleet composition
       (e.g. flagship level requirement, number-of-ships requirement, etc.)
 
 - Improved tooltip coloring respecting theme settings
@@ -37,7 +40,7 @@ check expedition requirements and estimate expedition income accurately.
 - Improved requirement checking result indicator
 - Improved fleet button tooltips
 
-    - now shows ship level, morale status and expedition-related equipments
+    - Now shows ship level, morale status and expedition-related equipments
 
 ### 0.5.0
 
