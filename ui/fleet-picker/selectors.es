@@ -1,11 +1,16 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
+  constSelector,
+} from 'views/utils/selectors'
+
+import {
   mkFleetInfoSelector,
   isMainFleetFuncSelector,
   gsFlagSelectorForFleet,
   mkEReqSatFlagsSelectorForFleet,
 } from '../../selectors'
+
 
 const mkBsStyleForFleetButtonSelector = _.memoize(
   fleetId => createSelector(
@@ -41,6 +46,23 @@ const mkBsStyleForFleetButtonSelector = _.memoize(
   )
 )
 
+const equipWhiteList = [
+  75,
+  68,
+  166,
+  167,
+  193,
+]
+
+const equipIconIdsSelector = createSelector(
+  constSelector,
+  ({$equips}) => _.fromPairs(
+    equipWhiteList.map(mstId =>
+      [mstId, $equips[mstId].api_type[3]])
+  )
+)
+
 export {
   mkBsStyleForFleetButtonSelector,
+  equipIconIdsSelector,
 }

@@ -18,21 +18,6 @@ import {
   FleetTooltipContent,
 } from './fleet-tooltip-content'
 
-const mkTooltip = fleet =>
-  (
-    <Tooltip id={`fpfleet-${fleet.id}`}>
-      <div style={{display: "flex", flexDirection: "column"}}>
-        {
-          fleet.ships.map(ship => (
-            <div key={ship.rstId}>
-              {`${ship.name} (Lv. ${ship.level})`}
-            </div>
-          ))
-        }
-      </div>
-    </Tooltip>
-  )
-
 class FleetButtonImpl extends Component {
   static propTypes = {
     focused: PTyp.bool.isRequired,
@@ -86,7 +71,9 @@ class FleetButtonImpl extends Component {
     return fleet ? (
       <OverlayTrigger
         placement="bottom" overlay={
-          <Tooltip id={`ezexped-fpfleet-${fleet.id}`}>
+          <Tooltip
+            className="ezexped-pop"
+            id={`ezexped-fpfleet-${fleet.id}`}>
             <FleetTooltipContent
               fleet={fleet} />
           </Tooltip>
