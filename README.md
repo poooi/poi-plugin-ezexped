@@ -9,12 +9,7 @@ check expedition requirements and estimate expedition income accurately.
 
 ### (TODO) 1.0.0
 
-
-- "Great Success" toggle turns golden when it's on
-
-- Improved fleet auto switch mechanism
-
-- Improved requirement checking mechanism
+#### Escort- / Escort Carrier-Related Expeditions
 
 - Added Fleet composition requirements related to `DE` and `CVE`
 
@@ -40,20 +35,37 @@ check expedition requirements and estimate expedition income accurately.
       other than fleet composition
       (e.g. flagship level requirement, number-of-ships requirement, etc.)
 
-- Improved tooltip coloring respecting theme settings
+#### UI Improvments
 
-- Added fleet indicators in expedition table
+- Improvements to fleet selector
 
-- Improved expedition table tooltip
+    - Improved fleet button tooltips
 
-- Improved requirement checking result indicator
+        - Shows description of current fleet status
 
-- Improved fleet button tooltips
+        - Shows ship level, morale status and expedition-related equipments
 
-    - Shows description of current fleet status
-    - Shows ship level, morale status and expedition-related equipments
+- Improvements to requirement viewer & expedition selector
+
+    - Added fleet indicators to expedition buttons
+
+    - Expedition button turns golden when great success check passes
+
+    - Improved expedition table tooltip
+
+    - "Great Success" toggle turns golden when it's on
+
+- Requirement list now provides more details
 
 - Added a "Great Success" effect on expedition selector buttons
+
+- Make some parts of the UI respect theme settings
+
+#### Other Improvments & Fixes
+
+- Improved fleet auto switch mechanism
+
+- Improved requirement checking mechanism
 
 ### 0.5.0
 
