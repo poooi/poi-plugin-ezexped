@@ -56,7 +56,9 @@ class FleetTooltipContent extends PureComponent {
               }}>
                 {`Lv.${ship.level}`}
               </span>
-              <Morale morale={ship.morale} />
+              <Morale
+                style={{width: '1.6em'}}
+                morale={ship.morale} />
               <span
                 style={{
                   marginLeft: '.2em',

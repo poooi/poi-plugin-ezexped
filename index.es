@@ -11,7 +11,6 @@ import { loadAndUpdateConfig } from './config'
    TODO
 
    - i18n
-   - schedule an optimization release
 
  */
 
