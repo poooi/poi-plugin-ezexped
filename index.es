@@ -6,14 +6,6 @@ import { EZExpedMain as reactClass } from './ui'
 import { observeAll } from './observers'
 import { loadAndUpdateConfig } from './config'
 
-/*
-
-   TODO
-
-   - i18n
-
- */
-
 // for observer
 let unsubscribe = null
 
