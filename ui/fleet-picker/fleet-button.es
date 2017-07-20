@@ -7,6 +7,7 @@ import {
 import FontAwesome from 'react-fontawesome'
 
 import { PTyp } from '../../ptyp'
+import { __ } from '../../tr'
 import { mapDispatchToProps } from '../../store'
 import {
   fleetIdSelector,
@@ -72,7 +73,7 @@ class FleetButtonImpl extends Component {
           textOverflow: 'ellipsis',
           overflow: 'hidden',
         }}>
-          {fleet.name}
+          {fleet ? fleet.name : __('FleetState.NotAvail')}
         </span>
         {
           shouldHide && (

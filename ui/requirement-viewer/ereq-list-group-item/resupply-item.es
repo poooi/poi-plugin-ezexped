@@ -6,6 +6,7 @@ import {
   mayShipList,
   renderShipList,
 } from './common'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('Resupply')
@@ -16,7 +17,7 @@ const ResupplyItem = props => (
     tooltip={
       !props.result.sat &&
       mayShipList(renderShipList(
-        'Needs resupply:'
+        __('RequirementExplain.TTResupply')
       ))(props)}
     {...props}
   />

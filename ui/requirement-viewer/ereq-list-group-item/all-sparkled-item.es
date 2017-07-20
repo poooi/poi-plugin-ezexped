@@ -6,6 +6,7 @@ import {
   mayShipList,
   renderShipList,
 } from './common'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('AllSparkled')
@@ -16,7 +17,7 @@ const AllSparkledItem = props => (
     tooltip={
       !props.result.sat &&
       mayShipList(renderShipList(
-        'Not sparkled:'
+        __('RequirementExplain.TTNotSparkled')
       ))(props)}
     {...props}
   />

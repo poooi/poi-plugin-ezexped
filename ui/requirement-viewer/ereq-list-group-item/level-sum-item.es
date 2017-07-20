@@ -5,11 +5,12 @@ import {
   formatReqExplain,
   mayNeedMore,
 } from './common'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('LevelSum')
 
-const describe = (x,_y) => `Current total level: ${x}`
+const describe = (x,_y) => __('RequirementExplain.TTCurrentTotalLevel',x)
 
 const LevelSumItem = props => (
   <ItemTemplate
