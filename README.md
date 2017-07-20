@@ -53,6 +53,8 @@ check expedition requirements and estimate expedition income accurately.
     - Shows description of current fleet status
     - Shows ship level, morale status and expedition-related equipments
 
+- Added a "Great Success" effect on expedition selector buttons
+
 ### 0.5.0
 
 - Remove "Allow switching to this plugin automatically"

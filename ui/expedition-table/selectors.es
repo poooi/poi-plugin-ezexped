@@ -13,15 +13,17 @@ import { enumFromTo } from '../../utils'
 import { EReq } from '../../structs/ereq'
 import { mapExpedReq } from '../../exped-reqs'
 
-const emptyNormFlags = _.fromPairs(enumFromTo(1,40).map(eId => [eId, false]))
+const emptyNormGsFlags =
+  _.fromPairs(enumFromTo(1,40).map(eId =>
+    [eId, {norm: false, gs: false}]))
 
-const mkEReqNormFlagsSelectorForFleet = _.memoize(
+const mkEReqNormGsFlagsSelectorForFleet = _.memoize(
   fleetId => createSelector(
     mkFleetInfoSelector(fleetId),
     expedReqsStage2Selector,
     (fleet,expedReqsStage2) => {
       if (fleet === null)
-        return emptyNormFlags
+        return emptyNormGsFlags
       const isSat = x => x.result.sat === true
       return _.mapValues(
         expedReqsStage2,
@@ -29,7 +31,10 @@ const mkEReqNormFlagsSelectorForFleet = _.memoize(
           expedReqStage2 => mapExpedReq(
             EReq.computeResult(fleet)
           )(expedReqStage2),
-          obj => obj.norm.every(isSat),
+          obj => ({
+            norm: obj.norm.every(isSat),
+            gs: obj.gs.every(isSat),
+          }),
         ])
       )
     }
@@ -47,6 +52,6 @@ const currentRunningExpedIdToFleetIdSelector = createSelector(
 )
 
 export {
-  mkEReqNormFlagsSelectorForFleet,
+  mkEReqNormGsFlagsSelectorForFleet,
   currentRunningExpedIdToFleetIdSelector,
 }

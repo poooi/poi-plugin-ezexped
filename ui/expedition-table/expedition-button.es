@@ -23,16 +23,19 @@ class ExpeditionButton extends PureComponent {
     expedId: PTyp.number.isRequired,
     runningFleetId: PTyp.number,
     onClick: PTyp.func.isRequired,
+    btnClassName: PTyp.string,
   }
 
   static defaultProps = {
     runningFleetId: null,
+    btnClassName: '',
   }
 
   render() {
     const {
       ready, expedId, onClick,
       active, runningFleetId,
+      btnClassName,
     } = this.props
     return (
       <OverlayTrigger
@@ -43,16 +46,17 @@ class ExpeditionButton extends PureComponent {
             </Tooltip>
           }>
         <Button
-            bsStyle={ready ? "primary" : "default"}
-            style={{
-              width: '100%',
-              marginBottom: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            active={active}
-            onClick={onClick}>
+          className={btnClassName}
+          bsStyle={ready ? "primary" : "default"}
+          style={{
+            width: '100%',
+            marginBottom: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          active={active}
+          onClick={onClick}>
           <span>
             {expedId}
           </span>
