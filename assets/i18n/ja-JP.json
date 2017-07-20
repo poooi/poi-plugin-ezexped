@@ -2,9 +2,12 @@
   "EZ Exped": "イージー遠征",
   "Auto": "Auto",
   "AutoTooltip": "Switching between fleets automatically depending on your in-game actions.",
+  "SparkledCountCustom": "Number of sparkled ships",
   "SparkledCountCustomDesc": "Custom the number of sparkled ships for a better Great Success rate",
   "HideMainFleet": "Hide main fleet",
   "HideSatReqs": "Hide satisfied requirements",
+  "Cost": "Cost",
+  "Great Success": "Great Success",
   "CondNormal": "Normal",
   "CondGreatSuccess": "Great Success",
   "CondNotReady": "Not Ready",
@@ -45,7 +48,26 @@
     "SparkledCountCustom": "≥%s sparkled ship(s) for a better great success rate",
     "Morale": "All ships in this fleet should have morale ≥%s",
     "Resupply": "All ships in this fleet should be fully resupplied",
-    "AllSparkled": "All ships need to be sparkled."
+    "AllSparkled": "All ships need to be sparkled",
+    "TTNoFlagship": "No Flagship",
+    "TTNeedsMoreShips": "Needs %s more ships",
+    "TTNeedsMoreDrumCarriers": "Needs %s more ships to carry \"ドラム缶(輸送用)\"",
+    "TTNeedsMoreDrums": "Needs to carry %s more \"ドラム缶(輸送用)\"",
+    "TTCurrentTotalLevel": "Current Total Level: %s",
+    "TTNeedsMoreSparkledShips": "Needs %s more sparkled ship(s)",
+    "TTLowMorale": "Low morale:",
+    "TTResupply": "Not resupplied:",
+    "TTNotSparkled": "Not Sparkled:"
   },
-  "Expedition made easy": "遠征報酬早見表"
+  "FleetState": {
+    "MainShouldHide": "Will be hidden",
+    "NotAvail": "Not Available",
+    "OnExped": "On Expedition #%s",
+    "Ready": "Ready for Expedition #%s",
+    "NeedResupply": "Need Resupply for Expedition #%s",
+    "Unmet": "Requirement Unmet for Expedition #%s"
+  },
+  "Expedition made easy": "遠征報酬早見表",
+  "Required Time (mins)": "Required Time (mins)",
+  "Fleet Composition": "Fleet Composition"
 }
