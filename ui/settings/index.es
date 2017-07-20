@@ -59,12 +59,12 @@ class SettingsImpl extends PureComponent {
             <OverlayTrigger
               overlay={
                 <Tooltip id="ezexped-settings-sparked-count-tooltip">
-                  The number of sparkled ships for great success
+                  {__('SparkledCountCustomDesc')}
                 </Tooltip>
               }
               placement="bottom">
               <div>
-                Number of sparkled ships
+                {__('SparkledCountCustom')}
               </div>
             </OverlayTrigger>
           </Col>

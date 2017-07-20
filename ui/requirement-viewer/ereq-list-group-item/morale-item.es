@@ -6,6 +6,7 @@ import {
   mayShipList,
   renderShipList,
 } from './common'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('Morale')
@@ -16,7 +17,7 @@ const MoraleItem = props => (
     tooltip={
       !props.result.sat &&
       mayShipList(renderShipList(
-        'Low morale ships:'
+        __('RequirementExplain.TTLowMorale')
       ))(props)}
     {...props}
   />

@@ -5,11 +5,13 @@ import {
   formatReqExplain,
   mayNeedMore,
 } from './common'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('SparkledCountCustom')
 
-const describe = (x,y) => `needs ${y-x} more sparkled ship(s)`
+const describe = (x,y) =>
+  __('RequirementExplain.TTNeedsMoreSparkledShips',y-x)
 
 const SparkledCountCustomItem = props => (
   <ItemTemplate

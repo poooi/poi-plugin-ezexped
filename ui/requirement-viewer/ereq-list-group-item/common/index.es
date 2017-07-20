@@ -17,7 +17,7 @@ const mayNoFlagship = props =>
     <Tooltip
       className="ezexped-pop"
       id={`${props.prefix}detail`}>
-      Flagship not found
+      {__('RequirementExplain.TTNoFlagship')}
     </Tooltip>
   ) : null
 

@@ -5,11 +5,12 @@ import {
   formatReqExplain,
   mayNeedMore,
 } from './common'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('DrumCarrierCount')
 
-const describe = (x,y) => `needs ${y-x} more ship(s) to carry drums`
+const describe = (x,y) => __('RequirementExplain.TTNeedsMoreDrumCarriers',y-x)
 
 const DrumCarrierCountItem = props => (
   <ItemTemplate

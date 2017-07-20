@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { __ } from '../../tr'
 import { singObj } from '../../utils'
 
 const fleetStates = {}
@@ -21,41 +22,41 @@ defineFleetState(
   'Main', 'success',
   singObj('shouldHide'),
   ({shouldHide}) => shouldHide ?
-    'Will be hidden' : null
+    __('FleetState.MainShouldHide') : null
 )
 
 defineFleetState(
   'NotAvail', 'primary',
   () => ({}),
-  () => 'Not Available'
+  () => __('FleetState.NotAvail')
 )
 
 defineFleetState(
   'OnExped', 'primary',
   singObj('expedId'),
   ({expedId}) =>
-    `Running Expedition #${expedId}`
+    __('FleetState.OnExped', expedId)
 )
 
 defineFleetState(
   'Ready', 'success',
   singObj('expedId'),
   ({expedId}) =>
-    `Ready for Expedition #${expedId}`
+    __('FleetState.Ready', expedId)
 )
 
 defineFleetState(
   'NeedResupply', 'warning',
   singObj('expedId'),
   ({expedId}) =>
-    `Need Resupply for Expedition ${expedId}`
+    __('FleetState.NeedResupply', expedId)
 )
 
 defineFleetState(
   'Unmet', 'danger',
   singObj('expedId'),
   ({expedId}) =>
-    `Requirement Unmet for Expedition ${expedId}`
+    __('FleetState.Unmet', expedId)
 )
 
 const dispatchMethodByType = methodName =>
