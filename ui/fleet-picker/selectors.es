@@ -1,68 +1,65 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
-import {
-  constSelector,
-} from 'views/utils/selectors'
 
 import {
   mkFleetInfoSelector,
   isMainFleetFuncSelector,
+  expedIdSelectorForFleet,
   gsFlagSelectorForFleet,
   mkEReqSatFlagsSelectorForFleet,
+  hideMainFleetSelector,
 } from '../../selectors'
 
+import { FleetState } from './fleet-state'
 
-const mkBsStyleForFleetButtonSelector = _.memoize(
+const mk = FleetState.make
+
+const fleetStateSelector = _.memoize(
   fleetId => createSelector(
     mkFleetInfoSelector(fleetId),
     isMainFleetFuncSelector,
+    expedIdSelectorForFleet(fleetId),
     gsFlagSelectorForFleet(fleetId),
     mkEReqSatFlagsSelectorForFleet(fleetId),
-    (fleet, isMainFleetFunc, needGreatSuccess, flags) => {
-      // main fleets are always green
+    hideMainFleetSelector,
+    (
+      fleet, isMainFleetFunc,
+      configExpedId, needGreatSuccess, flags,
+      hideMainFleet
+    ) => {
       if (isMainFleetFunc(fleetId)) {
-        return 'success'
+        return mk.Main(hideMainFleet)
       }
 
-      const available = fleet === null ? false : fleet.available
-
-      // non-available fleets are always blue
-      // (perhaps in the middle of an expedition
-      if (!available) {
-        return 'primary'
+      if (fleet === null) {
+        return mk.NotAvail()
       }
 
+      if (!fleet.available) {
+        // perhaps on expedition
+        return fleet.duringExpedId ? mk.OnExped(fleet.duringExpedId)
+          : mk.NotAvail()
+      }
+
+      /*
+         otherwise we are looking at an available fleet,
+         should use data from config
+       */
+      const expedId = configExpedId
       const {normFlag, gsFlag, resupplyFlag} = flags
       const effectiveGsFlag = !needGreatSuccess || gsFlag
 
       // if every requirements are met (without considering resupplyFlag)
       if (normFlag && effectiveGsFlag) {
         // now consider resupply flag in this block
-        return resupplyFlag ? 'success' : 'warning'
+        return resupplyFlag ? mk.Ready(expedId) : mk.NeedResupply(expedId)
       }
 
-      return 'danger'
+      return mk.Unmet(expedId)
     }
   )
 )
 
-const equipWhiteList = [
-  75,
-  68,
-  166,
-  167,
-  193,
-]
-
-const equipIconIdsSelector = createSelector(
-  constSelector,
-  ({$equips}) => _.fromPairs(
-    equipWhiteList.map(mstId =>
-      [mstId, $equips[mstId].api_type[3]])
-  )
-)
-
 export {
-  mkBsStyleForFleetButtonSelector,
-  equipIconIdsSelector,
+  fleetStateSelector,
 }

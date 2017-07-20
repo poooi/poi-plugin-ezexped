@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { singObj } from '../../utils'
 
 const checkOk = (extra={}) => ({sat: true, extra})
 
@@ -25,9 +26,6 @@ const isEqpDrum = equip => equip.mstId === 75
 const isShipSparkled = ship => ship.morale >= 50
 
 const {sum} = _
-
-// create singleton object
-const singObj = propName => v => ({[propName]: v})
 
 const mkShipList = shipList => ({type: 'ShipList', shipList})
 

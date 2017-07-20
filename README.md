@@ -10,14 +10,18 @@ check expedition requirements and estimate expedition income accurately.
 ### (TODO) 1.0.0
 
 
-- (TODO) More tooltips
 - "Great Success" toggle turns golden when it's on
+
 - Improved fleet auto switch mechanism
+
 - Improved requirement checking mechanism
+
 - Added Fleet composition requirements related to `DE` and `CVE`
 
     - See [Reference](https://docs.google.com/spreadsheets/d/17Fe9x9L7GXNtO88NOak_wqKtcUwtMr4Utl9l9vq367s/edit#gid=1571341102) for details
+
     - `DE` is short for escort, and `CVE` for escort carriers.
+
     - For now the only implemented escort carriers (`CVE`) in game are Kasuga Maru and her remodels.
       Namely one of the following:
 
@@ -28,19 +32,26 @@ check expedition requirements and estimate expedition income accurately.
 
     - Basically Expedition `#4`, `#5`, `#9` allow alternative fleet compositions
       in addition to the traditional `1CL 2DD`.
+
     - Added fleet compositions are: `1DD 3DE`, `1CL 2DE`, `1CT 2DE`, `1CVE 2DE`, `1CVE 2DD`.
+
     - For 3 expeditions mentioned above, one only need to achieve one of these fleet compositions to
       pass the fleet composition check. However, it's still necessary to meet requirements
       other than fleet composition
       (e.g. flagship level requirement, number-of-ships requirement, etc.)
 
 - Improved tooltip coloring respecting theme settings
+
 - Added fleet indicators in expedition table
+
 - Improved expedition table tooltip
+
 - Improved requirement checking result indicator
+
 - Improved fleet button tooltips
 
-    - Now shows ship level, morale status and expedition-related equipments
+    - Shows description of current fleet status
+    - Shows ship level, morale status and expedition-related equipments
 
 ### 0.5.0
 
