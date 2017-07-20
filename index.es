@@ -11,12 +11,7 @@ import { loadAndUpdateConfig } from './config'
    TODO
 
    - i18n
-   - fleet button tooltip: show one of the following:
-
-      - is on expedition X
-      - is ready for expedition X
-      - only needs resupply for expedition X
-      - has unmet requirements for expedition X
+   - schedule an optimization release
 
  */
 

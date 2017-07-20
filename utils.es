@@ -96,6 +96,9 @@ const mergeMapDispatchToProps = (...mdtps) => dispatch =>
 
 const mergeMapStateToProps = mergeMapDispatchToProps
 
+// create singleton object
+const singObj = propName => v => ({[propName]: v})
+
 export {
   shallowEqual,
 
@@ -113,4 +116,6 @@ export {
 
   mergeMapDispatchToProps,
   mergeMapStateToProps,
+
+  singObj,
 }

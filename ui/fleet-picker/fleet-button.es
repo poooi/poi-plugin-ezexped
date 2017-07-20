@@ -9,26 +9,27 @@ import FontAwesome from 'react-fontawesome'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import {
-  hideMainFleetSelector,
-  isMainFleetFuncSelector,
   fleetIdSelector,
   mkFleetInfoSelector,
 } from '../../selectors'
 import {
-  mkBsStyleForFleetButtonSelector,
+  fleetStateSelector,
 } from './selectors'
 
 import {
   FleetTooltipContent,
 } from './fleet-tooltip-content'
 
+import {
+  FleetState,
+} from './fleet-state'
+
 class FleetButtonImpl extends Component {
   static propTypes = {
     focused: PTyp.bool.isRequired,
     fleetId: PTyp.number.isRequired,
     fleet: PTyp.object,
-    bsStyle: PTyp.string.isRequired,
-    shouldHide: PTyp.bool.isRequired,
+    fleetState: PTyp.object.isRequired,
 
     changeFleet: PTyp.func.isRequired,
     changeFleetFocusInMainUI: PTyp.func.isRequired,
@@ -49,7 +50,10 @@ class FleetButtonImpl extends Component {
   }
 
   render() {
-    const {fleet, bsStyle, focused, shouldHide} = this.props
+    const {fleet, focused, fleetState} = this.props
+    const bsStyle = FleetState.bsStyle(fleetState)
+    const fleetStateDesc = FleetState.describe(fleetState)
+    const shouldHide = fleetState.type === 'Main' && fleetState.shouldHide
     const content = (
       <Button
         bsStyle={bsStyle}
@@ -88,6 +92,7 @@ class FleetButtonImpl extends Component {
             className="ezexped-pop"
             id={`ezexped-fpfleet-${fleet.id}`}>
             <FleetTooltipContent
+              stateContent={fleetStateDesc}
               fleet={fleet} />
           </Tooltip>
         }>
@@ -102,15 +107,11 @@ const FleetButton = connect(
     const {fleetId} = props
     const currentFocusingFleetId = fleetIdSelector(state)
     const fleet = mkFleetInfoSelector(fleetId)(state)
-    const bsStyle = mkBsStyleForFleetButtonSelector(fleetId)(state)
-    const hideMainFleet = hideMainFleetSelector(state)
-    const isMainFleetFunc = isMainFleetFuncSelector(state)
-    const shouldHide = hideMainFleet && isMainFleetFunc(fleetId)
+    const fleetState = fleetStateSelector(fleetId)(state)
     return {
       focused: fleetId === currentFocusingFleetId,
       fleet,
-      bsStyle,
-      shouldHide,
+      fleetState,
     }
   },
   mapDispatchToProps,
