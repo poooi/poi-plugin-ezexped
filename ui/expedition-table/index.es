@@ -10,9 +10,10 @@ import {
   fleetIdSelector,
   expedIdSelector,
   expedTableExpandedSelector,
+  darkOrLightSelector,
 } from '../../selectors'
 import {
-  mkEReqNormFlagsSelectorForFleet,
+  mkEReqNormGsFlagsSelectorForFleet,
   currentRunningExpedIdToFleetIdSelector,
 } from './selectors'
 import { mapDispatchToProps } from '../../store'
@@ -21,12 +22,16 @@ const allExpedIds = enumFromTo(1,40)
 
 class ExpeditionTableImpl extends Component {
   static propTypes = {
+    darkOrLight: PTyp.DarkOrLight.isRequired,
     // current active expedition
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
     modifyState: PTyp.func.isRequired,
-    normFlags: PTyp.objectOf(PTyp.bool).isRequired,
+    normGsFlags: PTyp.objectOf(PTyp.shape({
+      norm: PTyp.bool.isRequired,
+      gs: PTyp.bool.isRequired,
+    })).isRequired,
     currentRunningExpedIdToFleetId: PTyp.objectOf(PTyp.number).isRequired,
   }
 
@@ -49,8 +54,9 @@ class ExpeditionTableImpl extends Component {
   render() {
     const {
       expedTableExpanded,
-      normFlags,
+      normGsFlags,
       currentRunningExpedIdToFleetId,
+      darkOrLight,
     } = this.props
     return (
       <Panel
@@ -78,7 +84,13 @@ class ExpeditionTableImpl extends Component {
                      (
                        <ExpeditionButton
                          key={expedId}
-                         ready={normFlags[expedId]}
+                         ready={normGsFlags[expedId].norm}
+                         btnClassName={
+                           (
+                             normGsFlags[expedId].norm &&
+                             normGsFlags[expedId].gs
+                           ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
+                         }
                          active={this.props.expedId === expedId}
                          runningFleetId={
                            currentRunningExpedIdToFleetId[expedId]
@@ -103,14 +115,15 @@ const uiSelector = createStructuredSelector({
   fleetId: fleetIdSelector,
   expedTableExpanded: expedTableExpandedSelector,
   currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
+  darkOrLight: darkOrLightSelector,
 })
 
 const ExpeditionTable = connect(
   state => {
     const ui = uiSelector(state)
     const {fleetId} = ui
-    const normFlags = mkEReqNormFlagsSelectorForFleet(fleetId)(state)
-    return {...ui, normFlags}
+    const normGsFlags = mkEReqNormGsFlagsSelectorForFleet(fleetId)(state)
+    return {...ui, normGsFlags}
   },
   mapDispatchToProps
 )(ExpeditionTableImpl)
