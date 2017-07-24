@@ -5,7 +5,10 @@ import {
   fleetAutoSwitchSelector,
   expedFleetsAvailabilitySelector,
 } from '../selectors'
-import { mapDispatchToProps } from '../store'
+import {
+  asyncBoundActionCreator,
+  mapDispatchToProps,
+} from '../store'
 
 /*
    observes expedition fleet availability changes
@@ -41,8 +44,10 @@ const expedFleetsAvailabilityObserver = observer(
           cur.available === false)
 
         if (ava)
-          mapDispatchToProps(dispatch).autoSwitchToNextAvailable(
-            `observer: detected that we are sending fleet ${ava.fleetId} out`
+          asyncBoundActionCreator(({autoSwitchToNextAvailable}) =>
+            autoSwitchToNextAvailable(
+              `observer: detected that we are sending fleet ${ava.fleetId} out`
+            )
           )
       } // if same shape
     } // if fleetAutoSwitch

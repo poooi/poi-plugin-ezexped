@@ -1,6 +1,4 @@
-import { store } from 'views/create-store'
-
-import { reducer, mapDispatchToProps } from './store'
+import { reducer, boundActionCreator } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain as reactClass } from './ui'
 import { observeAll } from './observers'
@@ -22,11 +20,9 @@ const pluginDidLoad = () => {
     console.error(`configInitId should be null`)
   }
   configInitId = setTimeout(() => {
-    loadAndUpdateConfig(config =>
-      store.dispatch(dispatch =>
-        mapDispatchToProps(dispatch)
-          .configReady(config)))
-
+    loadAndUpdateConfig(
+      boundActionCreator.configReady
+    )
     configInitId = null
   })
 }

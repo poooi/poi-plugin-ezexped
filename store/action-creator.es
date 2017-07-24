@@ -32,7 +32,6 @@ const actionCreator = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreator, dispatch)
 
-// TODO: simplify other parts to use this...
 const boundActionCreator =
   mapDispatchToProps(store.dispatch)
 
