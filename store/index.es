@@ -1,11 +1,12 @@
 import _ from 'lodash'
+import { modifyObject } from 'subtender'
+
 import { expedNameToId } from '../exped-info'
-import { modifyObject } from '../utils'
 import { defaultConfig } from '../config'
 import {
   subReducer as autoSwitchSubReducer,
 } from './auto-switch'
-import { log } from '../debug'
+import { debug } from '../debug'
 
 const fleetChangeDebug = false
 
@@ -37,7 +38,7 @@ const reducer = (state = initState, action) => {
 
   if (action.type === '@poi-plugin-ezexped@ChangeFleet') {
     if (fleetChangeDebug && action.reason)
-      log(`changeFleet for reason: ${action.reason}`)
+      debug.log(`changeFleet for reason: ${action.reason}`)
 
     return modifyObject(
       'fleetId', () => action.fleetId)(state)

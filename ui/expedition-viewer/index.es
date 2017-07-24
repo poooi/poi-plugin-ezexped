@@ -3,11 +3,10 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
+import { modifyObject } from 'subtender'
 
 import { MaterialIcon } from 'views/components/etc/icon'
-
 import { expedInfo } from '../../exped-info'
-import { error, modifyObject } from '../../utils'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
 
 import { __, fmtTime } from '../../tr'
@@ -22,6 +21,7 @@ import {
   gsFlagSelector,
   darkOrLightSelector,
 } from '../../selectors'
+import { debug } from '../../debug'
 
 const itemNameToMaterialId = x =>
     x === "Bucket" ? 6
@@ -30,7 +30,7 @@ const itemNameToMaterialId = x =>
   : x === "FCoinSmall" ? 10
   : x === "FCoinMedium" ? 11
   : x === "FCoinLarge" ? 12
-  : error(`unknown item name: ${x}`)
+  : debug.error(`unknown item name: ${x}`)
 
 // pretty-printing a floating number
 const pprFloat = (v,digits=2) => v.toFixed(digits)

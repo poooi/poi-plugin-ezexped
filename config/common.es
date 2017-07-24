@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { enumFromTo } from '../utils'
+import { enumFromTo } from 'subtender'
 
 /*
 

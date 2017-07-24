@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { singObj } from '../../utils'
+import { singObj } from 'subtender'
 
 const checkOk = (extra={}) => ({sat: true, extra})
 

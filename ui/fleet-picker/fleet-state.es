@@ -1,6 +1,7 @@
 import _ from 'lodash'
+import { singObj } from 'subtender'
+
 import { __ } from '../../tr'
-import { singObj } from '../../utils'
 
 const fleetStates = {}
 

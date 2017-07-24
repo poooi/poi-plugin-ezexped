@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
+import { enumFromTo } from 'subtender'
 
 import {
   fleetsSelector,
@@ -9,7 +10,7 @@ import {
   expedReqsStage2Selector,
   mkFleetInfoSelector,
 } from '../../selectors'
-import { enumFromTo } from '../../utils'
+
 import { EReq } from '../../structs/ereq'
 import { mapExpedReq } from '../../exped-reqs'
 

@@ -10,6 +10,7 @@
 import _ from 'lodash'
 import { compose } from 'redux'
 import { store } from 'views/create-store'
+import { precompose } from 'subtender'
 
 import {
   asyncBoundActionCreator,
@@ -20,9 +21,6 @@ import {
   visibleFleetsInfoSelector,
   nextAvailableFleetIdSelector,
 } from '../selectors'
-import {
-  precompose,
-} from '../utils'
 
 /*
    asyncChangeFleet(func) creates an asynchronous computation

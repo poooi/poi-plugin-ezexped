@@ -8,7 +8,7 @@ import {
   fleetSelectorFactory,
 } from 'views/utils/selectors'
 
-import { error, enumFromTo } from '../utils'
+import { enumFromTo } from 'subtender'
 import {
   hideMainFleetSelector,
   isMainFleetFuncSelector,
@@ -16,6 +16,7 @@ import {
   gsFlagsSelector,
   fleetIdSelector,
 } from './common'
+import { debug } from '../debug'
 
 const fleetNumberCountSelector = createSelector(
   basicSelector,
@@ -29,12 +30,12 @@ const allFleetIdsSelector = createSelector(
 const arrayOrUndef = x =>
   (Array.isArray(x) || typeof x === 'undefined') ?
     _.noop() :
-    error(`Expecting an Array or undefined value but get ${x}`)
+    debug.error(`Expecting an Array or undefined value but get ${x}`)
 
 const objOrUndef = x =>
   ((x !== null && typeof x === 'object') || typeof x === 'undefined') ?
     _.noop() :
-    error(`Expecting an Object or undefined value but get ${x}`)
+    debug.error(`Expecting an Object or undefined value but get ${x}`)
 
 /*
 

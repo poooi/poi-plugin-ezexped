@@ -11,7 +11,7 @@
 import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
-import { error } from './utils'
+import { debug } from './debug'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
@@ -26,10 +26,10 @@ const stypeRev = (() => {
 })()
 
 const nameToId = n =>
-  stype[n] || error(`invalid stype name: ${n}`)
+  stype[n] || debug.error(`invalid stype name: ${n}`)
 
 const idToName = i =>
-  stypeRev[i] || error(`invalid stype id: ${i}`)
+  stypeRev[i] || debug.error(`invalid stype id: ${i}`)
 
 const [isESType, allESTypes] = (() => {
   const eq = x => y => x === y

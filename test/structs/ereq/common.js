@@ -1,6 +1,6 @@
 import assert from 'assert'
 
-import { enumFromTo } from '../../../utils'
+import { enumFromTo } from 'subtender'
 
 const spec = it
 
