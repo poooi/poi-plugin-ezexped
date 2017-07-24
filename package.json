@@ -29,7 +29,8 @@
     "icon": "check-square-o"
   },
   "dependencies": {
-    "shallowequal": "^1.0.2"
+    "shallowequal": "^1.0.2",
+    "subtender": "^0.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
