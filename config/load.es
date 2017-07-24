@@ -14,6 +14,20 @@ const loadAndUpdateConfig = onConfigReady => {
     return onConfigReady(rawConfig.data)
   }
 
+  if (_.get(rawConfig,'data.configVer') === '1.0.0') {
+    // update 1.0.0 to 1.1.0
+    const updatedConfig = {
+      ...rawConfig.data,
+      syncMainFleetId: false,
+      configVer: '1.1.0',
+    }
+
+    setTimeout(() => {
+      saveConfig(updatedConfig)
+    })
+    return onConfigReady(updatedConfig)
+  }
+
   // need to update config
   const currentConfig = {...defaultConfig};
 
