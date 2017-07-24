@@ -11,25 +11,9 @@
 import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
-import { debug } from './debug'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys( stype )
-
-// for reverse lookup
-const stypeRev = (() => {
-  const arr = new Array(allSTypes.length + 1)
-  allSTypes.map(styp => {
-    arr[stype[styp]] = styp
-  })
-  return arr
-})()
-
-const nameToId = n =>
-  stype[n] || debug.error(`invalid stype name: ${n}`)
-
-const idToName = i =>
-  stypeRev[i] || debug.error(`invalid stype id: ${i}`)
 
 const [isESType, allESTypes] = (() => {
   const eq = x => y => x === y
@@ -88,8 +72,6 @@ const esFleetCompoToPairs = (() => {
 
 export {
   allSTypes,
-  nameToId,
-  idToName,
   stype,
   isESType,
   allESTypes,

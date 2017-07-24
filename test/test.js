@@ -5,14 +5,6 @@ import * as estype from "../estype"
 const spec = it
 
 describe('estype', () => {
-  describe('nameToId & idToName', () => {
-    spec('name -> id -> name', () => {
-      estype.allSTypes.map( n => {
-        assert.equal(n, estype.idToName(estype.nameToId(n)))
-      })
-    })
-  })
-
   const ty = estype.stype
   describe('isESType', () => {
     spec('tests', () => {
