@@ -12,6 +12,7 @@ import {
   sparkledCountSelector,
   hideMainFleetSelector,
   hideSatReqsSelector,
+  syncMainFleetIdSelector,
 } from '../../selectors'
 import { mapDispatchToProps } from '../../store'
 import { PTyp } from '../../ptyp'
@@ -24,6 +25,7 @@ class SettingsImpl extends PureComponent {
     sparkledCount: PTyp.number.isRequired,
     hideMainFleet: PTyp.bool.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
+    syncMainFleetId: PTyp.bool.isRequired,
     modifyState: PTyp.func.isRequired,
   }
 
@@ -45,6 +47,7 @@ class SettingsImpl extends PureComponent {
       sparkledCount,
       hideMainFleet,
       hideSatReqs,
+      syncMainFleetId,
     } = this.props
     const rowStyle = {
       display: 'flex',
@@ -108,6 +111,21 @@ class SettingsImpl extends PureComponent {
               />
           </Col>
         </Row>
+        <Row style={rowStyle}>
+          <Col sm={8}>
+            {
+              /* TODO i18n */
+              'Sync with main fleet focus'
+            }
+          </Col>
+          <Col sm={4}>
+            <Checkbox
+              onChange={this.handleChange('syncMainFleetId')}
+              disabled={!ready}
+              checked={syncMainFleetId}
+              />
+          </Col>
+        </Row>
       </Grid>
     )
   }
@@ -119,6 +137,7 @@ const Settings = connect(
     sparkledCount: sparkledCountSelector,
     hideMainFleet: hideMainFleetSelector,
     hideSatReqs: hideSatReqsSelector,
+    syncMainFleetId: syncMainFleetIdSelector,
   }),
   dispatch => {
     const {modifyState} = mapDispatchToProps(dispatch)

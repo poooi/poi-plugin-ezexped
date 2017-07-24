@@ -33,6 +33,8 @@ const hideSatReqsSelector =
   mkExtPropSelector('hideSatReqs')
 const sparkledCountSelector =
   mkExtPropSelector('sparkledCount')
+const syncMainFleetIdSelector =
+  mkExtPropSelector('syncMainFleetId')
 const fleetIdSelector =
   mkExtPropSelector('fleetId')
 const gsFlagsSelector =
@@ -77,6 +79,7 @@ export {
   hideMainFleetSelector,
   hideSatReqsSelector,
   sparkledCountSelector,
+  syncMainFleetIdSelector,
   fleetIdSelector,
   gsFlagsSelector,
   selectedExpedsSelector,
