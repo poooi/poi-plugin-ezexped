@@ -99,6 +99,9 @@ const mergeMapStateToProps = mergeMapDispatchToProps
 // create singleton object
 const singObj = propName => v => ({[propName]: v})
 
+const precompose = prj => f => (...args) =>
+  f(...args.map(prj))
+
 export {
   shallowEqual,
 
@@ -118,4 +121,5 @@ export {
   mergeMapStateToProps,
 
   singObj,
+  precompose,
 }
