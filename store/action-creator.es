@@ -20,11 +20,11 @@ const actionCreator = {
     type: '@poi-plugin-ezexped@AutoSwitchToNextAvailable',
     reason,
   }),
-  changeFleetFocusInMainUI: fleetId => ({
+  changeFleetFocusInMainUI: (fleetId, tabSwitch=true) => ({
     type: '@@TabSwitch',
     tabInfo: {
-      activeMainTab: 'shipView',
       activeFleetId: fleetId-1,
+      ...(tabSwitch ? {activeMainTab: 'shipView'} : {}),
     },
   }),
 }
@@ -36,8 +36,13 @@ const mapDispatchToProps = dispatch =>
 const boundActionCreator =
   mapDispatchToProps(store.dispatch)
 
+const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
+  dispatch(() => setTimeout(() =>
+    func(boundActionCreator)))
+
 export {
   actionCreator,
   mapDispatchToProps,
   boundActionCreator,
+  asyncBoundActionCreator,
 }
