@@ -10,13 +10,18 @@
 import _ from 'lodash'
 import { store } from 'views/create-store'
 
-import { mapDispatchToProps } from './action-creator'
+import {
+  asyncBoundActionCreator,
+} from './action-creator'
 import {
   hideMainFleetSelector,
   visibleFleetIdsSelector,
   visibleFleetsInfoSelector,
   nextAvailableFleetIdSelector,
 } from '../selectors'
+import {
+  precompose,
+} from '../utils'
 
 /*
    asyncChangeFleet(func) creates an asynchronous computation
@@ -25,8 +30,8 @@ import {
    func is called with changeFleet
  */
 const asyncChangeFleet = func =>
-  store.dispatch(dispatch => setTimeout(() =>
-    func(mapDispatchToProps(dispatch).changeFleet)))
+  asyncBoundActionCreator(
+    precompose(x => x.changeFleet)(func))
 
 // parse a **positive** number from perhaps string, returns null on failure
 // this works on both fleetId and ship's rosterId because both starts from 1
