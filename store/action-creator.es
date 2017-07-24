@@ -1,4 +1,5 @@
 import { bindActionCreators } from 'redux'
+import { store } from 'views/create-store'
 
 const actionCreator = {
   configReady: config => ({
@@ -31,7 +32,12 @@ const actionCreator = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreator, dispatch)
 
+// TODO: simplify other parts to use this...
+const boundActionCreator =
+  mapDispatchToProps(store.dispatch)
+
 export {
   actionCreator,
   mapDispatchToProps,
+  boundActionCreator,
 }
