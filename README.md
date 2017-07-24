@@ -7,7 +7,7 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.1.0 (pending)
+### 1.1.0
 
 - New option "Sync with main fleet focus" (disabled by default)
 
