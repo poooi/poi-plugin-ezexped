@@ -7,7 +7,6 @@ import {
 } from '../selectors'
 import {
   asyncBoundActionCreator,
-  mapDispatchToProps,
 } from '../store'
 
 /*
@@ -47,7 +46,8 @@ const expedFleetsAvailabilityObserver = observer(
           asyncBoundActionCreator(({autoSwitchToNextAvailable}) =>
             autoSwitchToNextAvailable(
               `observer: detected that we are sending fleet ${ava.fleetId} out`
-            )
+            ),
+            dispatch
           )
       } // if same shape
     } // if fleetAutoSwitch

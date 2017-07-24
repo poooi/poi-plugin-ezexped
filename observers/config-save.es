@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import { observer } from 'redux-observers'
 import { createStructuredSelector } from 'reselect'
+import shallowEqual from 'shallowequal'
 
-import { shallowEqual } from '../utils'
 import {
   saveConfig,
   defaultConfigProps,

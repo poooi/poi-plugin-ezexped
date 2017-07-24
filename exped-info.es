@@ -1,7 +1,7 @@
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
-import { error } from './utils'
+import { debug } from 'subtender'
 
 const expedInfoRaw = readJsonSync(join(__dirname, 'assets', 'exped-info.json'))
 
@@ -18,7 +18,7 @@ const expedInfo = (() => {
       : x === 10 ? "FCoinSmall"
       : x === 11 ? "FCoinMedium"
       : x === 12 ? "FCoinLarge"
-      : error(`unknown item id: ${x}`)
+      : debug.error(`unknown item id: ${x}`)
 
     const mkItem = itemData =>
       itemData[0] === 0
@@ -49,7 +49,7 @@ const expedInfo = (() => {
 
 const expedNameToId = expedName =>
   (expedInfo.find( e => e && e.name === expedName )
-  || error(`unknown exped name: ${expedName}`)).id
+  || debug.error(`unknown exped name: ${expedName}`)).id
 
 export {
   expedInfo,

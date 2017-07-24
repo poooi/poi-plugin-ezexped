@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "shallowequal": "^1.0.2",
-    "subtender": "^0.4.1"
+    "subtender": "^0.5.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

@@ -7,7 +7,7 @@ import {
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap'
-
+import { modifyObject } from 'subtender'
 import FontAwesome from 'react-fontawesome'
 import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
@@ -16,7 +16,7 @@ import {
   fleetAutoSwitchSelector,
 } from '../../selectors'
 import { mapDispatchToProps } from '../../store'
-import { modifyObject } from '../../utils'
+
 import { FleetButton } from './fleet-button'
 
 class FleetPickerImpl extends Component {

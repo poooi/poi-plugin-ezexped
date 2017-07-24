@@ -6,6 +6,7 @@ import {
   Checkbox, FormControl,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
+import { modifyObject } from 'subtender'
 
 import {
   readySelector,
@@ -17,7 +18,6 @@ import {
 import { actionCreator } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
-import { modifyObject } from '../../utils'
 
 class SettingsImpl extends PureComponent {
   static propTypes = {
