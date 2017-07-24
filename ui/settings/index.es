@@ -14,7 +14,7 @@ import {
   hideSatReqsSelector,
   syncMainFleetIdSelector,
 } from '../../selectors'
-import { mapDispatchToProps } from '../../store'
+import { actionCreator } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { modifyObject } from '../../utils'
@@ -139,11 +139,7 @@ const Settings = connect(
     hideSatReqs: hideSatReqsSelector,
     syncMainFleetId: syncMainFleetIdSelector,
   }),
-  dispatch => {
-    // TODO
-    const {modifyState} = mapDispatchToProps(dispatch)
-    return {modifyState}
-  }
+  actionCreator,
 )(SettingsImpl)
 
 export { Settings }
