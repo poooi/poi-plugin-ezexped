@@ -7,6 +7,14 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.1.0 (pending)
+
+- New option "Sync with main fleet focus" (disabled by default)
+
+    This option keeps fleet focus in sync with that of main program's.
+    Note that if you have EZ Exped's auto fleet switch feature turned on,
+    it'll also switch main fleets' focus.
+
 ### 1.0.0
 
 #### Escort- / Escort Carrier-Related Expeditions
