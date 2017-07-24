@@ -8,6 +8,7 @@
 
  */
 import _ from 'lodash'
+import { compose } from 'redux'
 import { store } from 'views/create-store'
 
 import {
@@ -29,9 +30,10 @@ import {
 
    func is called with changeFleet
  */
-const asyncChangeFleet = func =>
-  asyncBoundActionCreator(
-    precompose(x => x.changeFleet)(func))
+const asyncChangeFleet = compose(
+  asyncBoundActionCreator,
+  precompose(x => x.changeFleet)
+)
 
 // parse a **positive** number from perhaps string, returns null on failure
 // this works on both fleetId and ship's rosterId because both starts from 1
