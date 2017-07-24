@@ -113,10 +113,7 @@ class SettingsImpl extends PureComponent {
         </Row>
         <Row style={rowStyle}>
           <Col sm={8}>
-            {
-              /* TODO i18n */
-              'Sync with main fleet focus'
-            }
+            {__('SyncMainFleetId')}
           </Col>
           <Col sm={4}>
             <Checkbox
