@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.1.1
+
+- Just switching to use subtender for utility functions. No changes are made on the surface.
+
 ### 1.1.0
 
 - New option "Sync with main fleet focus" (disabled by default)
