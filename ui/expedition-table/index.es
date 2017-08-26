@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Panel } from 'react-bootstrap'
+import { Panel, Button, Checkbox } from 'react-bootstrap'
 import { enumFromTo, modifyObject } from 'subtender'
 import { PTyp } from '../../ptyp'
 import { ExpeditionButton } from './expedition-button'
@@ -17,6 +17,7 @@ import {
   currentRunningExpedIdToFleetIdSelector,
 } from './selectors'
 import { mapDispatchToProps } from '../../store'
+import { KanceptsExporter } from './kancepts-exporter'
 
 const allExpedIds = enumFromTo(1,40)
 
@@ -105,6 +106,7 @@ class ExpeditionTableImpl extends Component {
              ))
           }
         </div>
+        <KanceptsExporter style={{}} />
       </Panel>
     )
   }

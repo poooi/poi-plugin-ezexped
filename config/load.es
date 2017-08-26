@@ -14,6 +14,8 @@ const loadAndUpdateConfig = onConfigReady => {
     return onConfigReady(rawConfig.data)
   }
 
+  // TODO: 1.2.0: adding 'kanceptsExportShipList' (bool)
+
   if (_.get(rawConfig,'data.configVer') === '1.0.0') {
     // update 1.0.0 to 1.1.0
     const updatedConfig = {
