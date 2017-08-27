@@ -31,6 +31,7 @@ class AnyFleetCompoItem extends Component {
 
   renderContent = () => {
     const {results} = this.props.result.extra
+    const {sat} = this.props.result
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div key="header">{__("Fleet Composition")}:</div>
@@ -70,6 +71,7 @@ class AnyFleetCompoItem extends Component {
                         marginRight: 0,
                       }}
                       between=".2em"
+                      noDanger={sat}
                       stypeInfoList={rs.extra.results}
                     />
                   </Well>
@@ -103,6 +105,7 @@ class AnyFleetCompoItem extends Component {
         className="ezexped-pop"
         id={`${prefix}any-fleet-compo-tooltip`}>
         <AnyFleetCompoTooltipContent
+          noDanger={result.sat}
           currentKey={this.state.currentKey}
           fleetCompos={result.extra.results}
         />

@@ -12,17 +12,20 @@ class MinFleetCompo extends Component {
   static propTypes = {
     stypeInfoList: PTyp.array.isRequired,
     style: PTyp.object,
+    // CSS margin between elements
     between: PTyp.string,
+    noDanger: PTyp.bool,
   }
 
   static defaultProps = {
     style: {},
     between: '.2em',
+    noDanger: false,
   }
 
   render() {
     const {
-      stypeInfoList, style, between,
+      stypeInfoList, style, between, noDanger,
     } = this.props
     return (
       <div
@@ -36,7 +39,10 @@ class MinFleetCompo extends Component {
             const isLast = ind+1 === stypeInfoList.length
             return (
               <div
-                className={sat ? 'text-success' : 'text-danger'}
+                className={
+                  sat ? 'text-success' :
+                    (noDanger ? '' : 'text-danger')
+                }
                 style={{
                   marginLeft: 0,
                   marginRight: isLast ? 0 : between,
