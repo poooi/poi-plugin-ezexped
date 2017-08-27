@@ -13,6 +13,8 @@ import { enumFromTo } from 'subtender'
 
    - 1.1.0: added 'syncMainFleetId' (default to false)
 
+   - 1.2.0: added 'kanceptsExportShipList' (default to true)
+
  */
 
 const defaultConfig = {
@@ -28,7 +30,9 @@ const defaultConfig = {
   selectedExpeds: _.fromPairs(
     enumFromTo(1,4).map(fleetId => [fleetId, 1])),
 
-  configVer: '1.1.0',
+  kanceptsExportShipList: true,
+
+  configVer: '1.2.0',
 }
 
 const defaultConfigProps = Object.keys(defaultConfig)
