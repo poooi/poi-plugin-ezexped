@@ -68,6 +68,10 @@
     "NeedResupply": "Need Resupply for Expedition #%s",
     "Unmet": "Requirement Unmet for Expedition #%s"
   },
+  "Kancepts": {
+    "Launch": "Launch Kancepts...",
+    "ExportShipList": "Export ship list"
+  },
   "Expedition made easy": "遠征報酬早見表",
   "Required Time (mins)": "Required Time (mins)",
   "Fleet Composition": "Fleet Composition"

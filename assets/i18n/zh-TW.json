@@ -68,6 +68,10 @@
     "NeedResupply": "遠征#%s 需要補給",
     "Unmet": "遠征#%s 條件未滿足"
   },
+  "Kancepts": {
+    "Launch": "啓動Kancepts…",
+    "ExportShipList": "導出艦船列表"
+  },
   "Expedition made easy": "遠征條件檢查與精確收入預測",
   "Required Time (mins)": "所需時間(分鐘)",
   "Fleet Composition": "艦隊構成"
