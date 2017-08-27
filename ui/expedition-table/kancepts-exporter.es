@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { shell } from 'electron'
 import { Button, Checkbox } from 'react-bootstrap'
@@ -8,8 +9,13 @@ import { PTyp } from '../../ptyp'
 const makeLink = () => {
   const {getStore} = window
   const slVal = encodeURIComponent(
-    Object.values(getStore().info.ships).map(x =>
-      `${x.api_lv>99?'r':''}${x.api_ship_id}`).join(',')
+    _.flatMap(
+      Object.values(getStore().info.ships),
+      rawInfo =>
+        rawInfo.api_locked === 1 ? [
+          `${rawInfo.api_lv>99?'r':''}${rawInfo.api_ship_id}`,
+        ] : []
+    ).join(',')
   )
 
   return `https://javran.github.io/kancepts/?sl=${slVal}`
@@ -37,7 +43,7 @@ class KanceptsExporter extends PureComponent {
           onClick={this.handleOpen}
           style={{marginRight: '.5em'}}
         >
-          Open Kancepts...
+          Launch Kancepts...
         </Button>
         <Checkbox
           style={{marginBottom: 0, marginTop: 0}}
