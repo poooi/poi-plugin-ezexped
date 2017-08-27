@@ -68,6 +68,10 @@
     "NeedResupply": "远征#%s 需要补给",
     "Unmet": "远征#%s 条件未满足"
   },
+  "Kancepts": {
+    "Launch": "启动Kancepts…",
+    "ExportShipList": "导出舰船列表"
+  },
   "Expedition made easy": "远征条件检查与精确收入预测",
   "Required Time (mins)": "所需时间(分钟)",
   "Fleet Composition": "舰队构成"

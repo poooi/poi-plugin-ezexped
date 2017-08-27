@@ -8,8 +8,8 @@ import { Button, Checkbox } from 'react-bootstrap'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
 import { kanceptsExportShipListSelector } from '../../selectors'
+import { __ } from '../../tr'
 
-// TODO i18n
 const makeLink = exportShipList => {
   if (exportShipList) {
     const {getStore} = window
@@ -64,14 +64,14 @@ class KanceptsExporterImpl extends PureComponent {
           onClick={this.handleOpen}
           style={{marginRight: '.5em'}}
         >
-          Launch Kancepts...
+          {__('Kancepts.Launch')}
         </Button>
         <Checkbox
           style={{marginBottom: 0, marginTop: 0}}
           checked={exportShipList}
           onChange={this.handleToggleExport}
         >
-          Export ship list
+          {__('Kancepts.ExportShipList')}
         </Checkbox>
       </div>
     )
