@@ -7,6 +7,13 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.2.0 (pending)
+
+- [Kancepts](https://javran.github.io/kancepts/) can now be launched from plugin.
+
+    - Optionally you can export your ship list, which could improve the accuracy
+      of the cost model a bit. (This is enabled by default, but can be easily disabled)
+
 ### 1.1.1
 
 - Just switching to use subtender for utility functions. No changes are made on the surface.
