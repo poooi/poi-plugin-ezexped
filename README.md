@@ -7,12 +7,18 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.2.0 (pending)
+### 1.2.0
 
 - [Kancepts](https://javran.github.io/kancepts/) can now be launched from plugin.
 
     - Optionally you can export your ship list, which could improve the accuracy
       of the cost model a bit. (This is enabled by default, but can be easily disabled)
+
+- For composition requirements that have alternatives,
+  The 'dangerous' coloring is only used when the whole requirement is not satisfied.
+
+  This is to respect the convention that whenever something is in red ('dangerous'),
+  it's highly likely that something is wrong.
 
 ### 1.1.1
 
