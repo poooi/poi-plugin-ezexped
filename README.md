@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.2.1
+
+- Added translation for Japanese (thanks to @KochiyaOcean)
+
 ### 1.2.0
 
 - [Kancepts](https://javran.github.io/kancepts/) can now be launched from plugin.
