@@ -9,6 +9,7 @@ import {
 } from 'views/utils/selectors'
 
 import { enumFromTo } from 'subtender'
+import { canEquipDLC } from 'subtender/kc'
 import {
   hideMainFleetSelector,
   isMainFleetFuncSelector,
@@ -37,6 +38,9 @@ const objOrUndef = x =>
   ((x !== null && typeof x === 'object') || typeof x === 'undefined') ?
     _.noop() :
     debug.error(`Expecting an Object or undefined value but get ${x}`)
+
+const isExpedRelatedEquipment = mstId =>
+  [75,68,166,167,193].includes(mstId)
 
 /*
 
@@ -73,6 +77,24 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
         [ship.api_bull, $ship.api_bull_max],
         [ship.api_fuel, $ship.api_fuel_max],
       ]
+
+    // assuming expedition-related items cannot be equipped in extra slots,
+    // we only care about normal slots
+    const normalSlotCount = $ship.api_slot_num
+    const occupiedNormalSlotCount =
+      equips.filter(e => isExpedRelatedEquipment(e.mstId)).length
+    // how many more DLC-class equipment can this ship carry?
+    const extraDlcCapability =
+      canEquipDLC($ship.api_stype, $ship.api_id) ?
+        Math.max(
+          normalSlotCount - occupiedNormalSlotCount,
+          /*
+             this should never happen as long as expedition-related
+             cannot be equipped in ex-slot, but just in case.
+           */
+          0
+        ) : 0
+
     return {
       mstId: $ship.api_id,
       // roster ID of current ship
@@ -84,6 +106,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
       maxAmmo, maxFuel,
       needResupply: curAmmo !== maxAmmo || curFuel !== maxFuel,
       stype: $ship.api_stype,
+      extraDlcCapability,
     }
   })
 
