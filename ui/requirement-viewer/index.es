@@ -16,6 +16,7 @@ import {
   fleetIdSelector,
   expedIdSelector,
   gsFlagSelector,
+  dlcFlagSelector,
   hideSatReqsSelector,
   mkEReqResultObjectSelectorForFleet,
   mkEReqSatFlagsSelectorForFleet,
@@ -29,10 +30,12 @@ class RequirementViewerImpl extends Component {
     expedId: PTyp.number.isRequired,
     // whether aimming at great success
     greatSuccess: PTyp.bool.isRequired,
+    fillDlc: PTyp.bool.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
     ereqResult: PTyp.object.isRequired,
     normFlag: PTyp.bool.isRequired,
     gsFlag: PTyp.bool.isRequired,
+    dlcFlag: PTyp.bool.isRequired,
     resupplyFlag: PTyp.bool.isRequired,
   }
 
@@ -41,7 +44,7 @@ class RequirementViewerImpl extends Component {
   }
 
   prepareReqListItems = () => {
-    const {greatSuccess, ereqResult, expedId} = this.props
+    const {greatSuccess, ereqResult, expedId, fillDlc} = this.props
     const transformObj = which => ({ereq,result},ind) => ({
       ereq,result,which,
       key: `exped-${expedId}-${which}-${ind}`,
@@ -49,7 +52,7 @@ class RequirementViewerImpl extends Component {
     const allReqList = [
       ...ereqResult.norm.map(transformObj('norm')),
       transformObj('resupply')(ereqResult.resupply,0),
-      transformObj('dlc')(ereqResult.dlc,0),
+      ...(fillDlc ? [transformObj('dlc')(ereqResult.dlc,0)] : []),
       ...(greatSuccess ? ereqResult.gs.map(transformObj('gs')) : []),
     ]
     const {hideSatReqs} = this.props
@@ -62,10 +65,12 @@ class RequirementViewerImpl extends Component {
 
   render() {
     const {
-      normFlag, gsFlag, resupplyFlag,
+      normFlag, gsFlag, resupplyFlag, dlcFlag,
+      fillDlc,
       greatSuccess,
     } = this.props
-    const effectiveNormFlag = normFlag && resupplyFlag
+    const effectiveDlcFlag = !fillDlc || (fillDlc && dlcFlag)
+    const effectiveNormFlag = normFlag && resupplyFlag && effectiveDlcFlag
     const effectiveGsFlag = effectiveNormFlag && (!greatSuccess || gsFlag)
     const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
 
@@ -112,6 +117,7 @@ const uiExtrasSelector = createStructuredSelector({
   fleetId: fleetIdSelector,
   expedId: expedIdSelector,
   greatSuccess: gsFlagSelector,
+  fillDlc: dlcFlagSelector,
   hideSatReqs: hideSatReqsSelector,
 })
 

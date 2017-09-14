@@ -174,6 +174,12 @@ const gsFlagSelectorForFleet = _.memoize(fleetId =>
     expedIdSelectorForFleet(fleetId),
     (gsFlags,expedId) => gsFlags[expedId]))
 
+const dlcFlagSelectorForFleet = _.memoize(fleetId =>
+  createSelector(
+    dlcFlagsSelector,
+    expedIdSelectorForFleet(fleetId),
+    (dlcFlags,expedId) => dlcFlags[expedId]))
+
 // the expedition selected for current focusing fleet
 const expedIdSelector = createSelector(
   selectedExpedsSelector,
@@ -210,4 +216,5 @@ export {
 
   expedIdSelectorForFleet,
   gsFlagSelectorForFleet,
+  dlcFlagSelectorForFleet,
 }
