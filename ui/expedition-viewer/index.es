@@ -1,6 +1,10 @@
 import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
-import { Button, ButtonGroup } from 'react-bootstrap'
+import {
+  Button,
+  ButtonGroup,
+  OverlayTrigger, Tooltip,
+} from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
@@ -228,17 +232,31 @@ class ExpeditionViewerImpl extends Component {
                 }} >
                 {__("Great Success")}</span>
             </Button>
-            <Button
-              style={{
-                width: '3em',
-                padding: 0,
-              }}
+            <OverlayTrigger
+              placement="left"
+              overlay={
+                (
+                  <Tooltip id="ezexped-dlc-button">
+                    {
+                      // TODO: i18n
+                      'Require fleet to carry as many "大発動艇" or "特大発動艇" as possible.'
+                    }
+                  </Tooltip>
+                )
+              }
             >
-              <SlotitemIcon
-                className="slotitem-img"
-                slotitemId={20}
-              />
-            </Button>
+              <Button
+                style={{
+                  width: '3em',
+                  padding: 0,
+                }}
+              >
+                <SlotitemIcon
+                  className="slotitem-img"
+                  slotitemId={20}
+                />
+              </Button>
+            </OverlayTrigger>
           </ButtonGroup>
         </div>
       </div>
