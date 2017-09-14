@@ -28,9 +28,9 @@ class ResourceWithDetail extends Component {
     // .map( k => `${translateKey(k)}: ${this.props.renderedResource[k]}`)
     const tooltip = (
       <Tooltip
-          className="ezexped-pop"
-          style={{display: "flex"}}
-          id={`ezexped-tooltip-${this.props.resourceName}`}>
+        className="ezexped-pop"
+        style={{display: "flex"}}
+        id={`ezexped-tooltip-${this.props.resourceName}`}>
         {
           tooltipTexts.map(x => (
             <div style={{flex: "1", textAlign: "left"}} key={x}>

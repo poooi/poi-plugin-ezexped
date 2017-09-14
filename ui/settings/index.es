@@ -96,7 +96,7 @@ class SettingsImpl extends PureComponent {
               onChange={this.handleChange('hideMainFleet')}
               disabled={!ready}
               checked={hideMainFleet}
-              />
+            />
           </Col>
         </Row>
         <Row style={rowStyle}>
@@ -108,7 +108,7 @@ class SettingsImpl extends PureComponent {
               onChange={this.handleChange('hideSatReqs')}
               disabled={!ready}
               checked={hideSatReqs}
-              />
+            />
           </Col>
         </Row>
         <Row style={rowStyle}>
@@ -120,7 +120,7 @@ class SettingsImpl extends PureComponent {
               onChange={this.handleChange('syncMainFleetId')}
               disabled={!ready}
               checked={syncMainFleetId}
-              />
+            />
           </Col>
         </Row>
       </Grid>

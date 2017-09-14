@@ -112,7 +112,7 @@ class EReq {
 
   static prepare = dispatchEReq('prepare')
 
-/*
+  /*
 
    note that the `prepare` method above is a curried function
    that takes 3 parameters before yielding the final result:

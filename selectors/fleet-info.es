@@ -69,8 +69,10 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
         level: equipInst.api_level,
       }))
     const [[curAmmo, maxAmmo], [curFuel,maxFuel]] =
-      [[ship.api_bull, $ship.api_bull_max],
-       [ship.api_fuel, $ship.api_fuel_max]]
+      [
+        [ship.api_bull, $ship.api_bull_max],
+        [ship.api_fuel, $ship.api_fuel_max],
+      ]
     return {
       mstId: $ship.api_id,
       // roster ID of current ship

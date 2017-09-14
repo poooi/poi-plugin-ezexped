@@ -39,12 +39,12 @@ class ExpeditionButton extends PureComponent {
     } = this.props
     return (
       <OverlayTrigger
-          placement="bottom"
-          overlay={
-            <Tooltip id={`ezexped-tooltip-${expedId}`}>
-              <ExpedTooltipContent expedId={expedId} />
-            </Tooltip>
-          }>
+        placement="bottom"
+        overlay={
+          <Tooltip id={`ezexped-tooltip-${expedId}`}>
+            <ExpedTooltipContent expedId={expedId} />
+          </Tooltip>
+        }>
         <Button
           className={btnClassName}
           bsStyle={ready ? "primary" : "default"}

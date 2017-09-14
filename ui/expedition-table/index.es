@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Panel, Button, Checkbox } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 import { enumFromTo, modifyObject } from 'subtender'
 import { PTyp } from '../../ptyp'
 import { ExpeditionButton } from './expedition-button'
@@ -70,40 +70,42 @@ class ExpeditionTableImpl extends Component {
               // worlds
               enumFromTo(1,5),
               // expedition ids in that world
-              _.chunk(allExpedIds,8))
-             .map(([world, expedIds]) => (
-               <div
-                 key={world}
-                 style={{
-                   flex: 1,
-                   display: 'flex',
-                   marginRight: 5,
-                   flexDirection: 'column',
-                 }}>
-                 {
-                   expedIds.map(expedId =>
-                     (
-                       <ExpeditionButton
-                         key={expedId}
-                         ready={normGsFlags[expedId].norm}
-                         btnClassName={
-                           (
-                             normGsFlags[expedId].norm &&
-                             normGsFlags[expedId].gs
-                           ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
-                         }
-                         active={this.props.expedId === expedId}
-                         runningFleetId={
-                           currentRunningExpedIdToFleetId[expedId]
-                         }
-                         expedId={expedId}
-                         onClick={this.handleSelectExped(expedId)}
-                       />
-                     )
-                   )
-                }
-               </div>
-             ))
+              _.chunk(allExpedIds,8)
+            ).map(([world, expedIds]) =>
+              (
+                <div
+                  key={world}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    marginRight: 5,
+                    flexDirection: 'column',
+                  }}>
+                  {
+                    expedIds.map(expedId =>
+                      (
+                        <ExpeditionButton
+                          key={expedId}
+                          ready={normGsFlags[expedId].norm}
+                          btnClassName={
+                            (
+                              normGsFlags[expedId].norm &&
+                              normGsFlags[expedId].gs
+                            ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
+                          }
+                          active={this.props.expedId === expedId}
+                          runningFleetId={
+                            currentRunningExpedIdToFleetId[expedId]
+                          }
+                          expedId={expedId}
+                          onClick={this.handleSelectExped(expedId)}
+                        />
+                      )
+                    )
+                  }
+                </div>
+              )
+            )
           }
         </div>
         <KanceptsExporter style={{}} />

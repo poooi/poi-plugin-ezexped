@@ -20,11 +20,13 @@ class MoraleImpl extends PureComponent {
 
   render() {
     const { morale, darkOrLight, style } = this.props
+    /* eslint-disable indent */
     const moraleStyle =
       morale <= 48 ? {} :
       morale === 49 ? {textShadow: 'white 0 0 7px'} :
       {textShadow: '#ffee00 0 0 7px'}
-
+    /* eslint-enable indent */
+    /* eslint-disable indent */
     const moraleClasses =
       morale === null ? '' :
       morale <= 19 ? 'poi-ship-cond-0' :
@@ -34,7 +36,7 @@ class MoraleImpl extends PureComponent {
       morale === 49 ? 'poi-ship-cond-49' :
       morale <= 52 ? 'poi-ship-cond-50' :
       'poi-ship-cond-53'
-
+    /* eslint-enable indent */
     return (
       <span
         className={`${moraleClasses} ${darkOrLight}`}

@@ -15,10 +15,9 @@ const fmtTime = timeInMins => {
   if (minutes>0)
     buf.push( minText )
 
-  return buf.length > 0
-    ? buf.join(" ")
-      // show text to the same effect of "0 minutes" if nothing is present, unlikely though.
-    : minText
+  return buf.length > 0 ? buf.join(" ") :
+    // show text to the same effect of "0 minutes" if nothing is present, unlikely though.
+    minText
 }
 
 export { __, fmtTime }
