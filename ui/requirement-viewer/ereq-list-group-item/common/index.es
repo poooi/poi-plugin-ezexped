@@ -7,7 +7,7 @@ import {
 import { __ } from '../../../../tr'
 
 const formatReqExplain = ereqType => (...args) =>
-    __(`RequirementExplain.${ereqType}`, ...args)
+  __(`RequirementExplain.${ereqType}`, ...args)
 
 const getExtraType = props =>
   _.get(props,'result.extra.type')
