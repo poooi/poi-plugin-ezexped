@@ -58,6 +58,7 @@ const renderShipList = (header=null) => shipList => (
 
 export * from './item-template'
 export {
+  getExtraType,
   formatReqExplain,
   mayNoFlagship,
   mayNeedMore,
