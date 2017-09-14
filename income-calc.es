@@ -52,16 +52,19 @@ const computeBonus = fleet => {
     if (tokuCount <= 2)
       return 0.02 * tokuCount
     if (tokuCount === 3) {
-      return normalCount <= 1 ? 0.05
-        : normalCount === 2 ? 0.052
-        : /* normalCount > 2 */ 0.054
+      return normalCount <= 1 ? 0.05 :
+        normalCount === 2 ? 0.052 :
+        /* normalCount > 2 */ 0.054
     }
+
     // tokuCount > 3
-    return normalCount === 0 ? 0.054
-      : normalCount === 1 ? 0.056
-      : normalCount === 2 ? 0.058
-      : normalCount === 3 ? 0.059
-      : /* normalCount > 3 */ 0.06
+    /* eslint-disable indent */
+    return normalCount === 0 ? 0.054 :
+      normalCount === 1 ? 0.056 :
+      normalCount === 2 ? 0.058 :
+      normalCount === 3 ? 0.059 :
+      /* normalCount > 3 */ 0.06
+    /* eslint-enable indent */
   }
 
   let normalCount = 0
