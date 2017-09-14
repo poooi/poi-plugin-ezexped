@@ -41,6 +41,8 @@ const gsFlagsSelector =
   mkExtPropSelector('gsFlags')
 const selectedExpedsSelector =
   mkExtPropSelector('selectedExpeds')
+const dlcFlagsSelector =
+  mkExtPropSelector('dlcFlags')
 const expedTableExpandedSelector =
   mkExtPropSelector('expedTableExpanded')
 const kanceptsExportShipListSelector =
@@ -85,6 +87,7 @@ export {
   fleetIdSelector,
   gsFlagsSelector,
   selectedExpedsSelector,
+  dlcFlagsSelector,
   expedTableExpandedSelector,
   kanceptsExportShipListSelector,
   readySelector,

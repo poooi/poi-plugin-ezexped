@@ -14,6 +14,7 @@ import {
   isMainFleetFuncSelector,
   selectedExpedsSelector,
   gsFlagsSelector,
+  dlcFlagsSelector,
   fleetIdSelector,
 } from './common'
 import { debug } from '../debug'
@@ -159,6 +160,11 @@ const gsFlagSelector = createSelector(
   expedIdSelector,
   (gsFlags,expedId) => gsFlags[expedId])
 
+const dlcFlagSelector = createSelector(
+  dlcFlagsSelector,
+  expedIdSelector,
+  (dlcFlags,expedId) => dlcFlags[expedId])
+
 const fleetInfoSelector = createSelector(
   indexedFleetsInfoSelector,
   fleetIdSelector,
@@ -174,6 +180,7 @@ export {
 
   expedIdSelector,
   gsFlagSelector,
+  dlcFlagSelector,
   fleetInfoSelector,
 
   expedIdSelectorForFleet,

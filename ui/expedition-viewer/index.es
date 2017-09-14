@@ -23,6 +23,7 @@ import {
   expedIdSelector,
   fleetInfoSelector,
   gsFlagSelector,
+  dlcFlagSelector,
   darkOrLightSelector,
 } from '../../selectors'
 import { debug } from '../../debug'
@@ -86,9 +87,12 @@ class ExpeditionViewerImpl extends Component {
   static propTypes = {
     expedId: PTyp.number.isRequired,
     greatSuccess: PTyp.bool.isRequired,
+    dlcFlag: PTyp.bool.isRequired,
+
     fleet: PTyp.object.isRequired,
-    modifyState: PTyp.func.isRequired,
     darkOrLight: PTyp.DarkOrLight.isRequired,
+
+    modifyState: PTyp.func.isRequired,
   }
 
   handleClickExped = () =>
@@ -102,6 +106,16 @@ class ExpeditionViewerImpl extends Component {
     modifyState(
       modifyObject(
         'gsFlags',
+        modifyObject(
+          expedId,
+          x => !x)))
+  }
+
+  handleToggleDlc = () => {
+    const {expedId, modifyState} = this.props
+    modifyState(
+      modifyObject(
+        'dlcFlags',
         modifyObject(
           expedId,
           x => !x)))
@@ -246,6 +260,8 @@ class ExpeditionViewerImpl extends Component {
               }
             >
               <Button
+                bsStyle={this.props.dlcFlag ? 'primary' : 'default'}
+                onClick={this.handleToggleDlc}
                 style={{
                   width: '3em',
                   padding: 0,
@@ -268,6 +284,7 @@ const uiSelector = createStructuredSelector({
   expedId: expedIdSelector,
   fleet: fleetInfoSelector,
   greatSuccess: gsFlagSelector,
+  dlcFlag: dlcFlagSelector,
   darkOrLight: darkOrLightSelector,
 })
 
