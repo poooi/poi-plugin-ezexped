@@ -49,6 +49,7 @@ class RequirementViewerImpl extends Component {
     const allReqList = [
       ...ereqResult.norm.map(transformObj('norm')),
       transformObj('resupply')(ereqResult.resupply,0),
+      transformObj('dlc')(ereqResult.dlc,0),
       ...(greatSuccess ? ereqResult.gs.map(transformObj('gs')) : []),
     ]
     const {hideSatReqs} = this.props
