@@ -5,7 +5,7 @@
    as a class with static methods, these methods should respect the following
    specification:
 
-   - prepare(<EReq>)(<config>)(Fleet) = Object
+   - prepare(<EReq>)(<config>)(Fleet,Extra) = Object
 
        curried in this way to allow pre-processing ahead of
        getting info about the fleet.
@@ -30,6 +30,19 @@
        {
          ships: array of <Ship>s,
        }
+
+   - Extra structure:
+
+       {
+         // (TODO) spare equipments are those not being used in any fleet.
+         spareEquips: {
+           // daihatsu landing craft
+           '68': <number>,
+           // toku daihatsu landing craft
+           '193': <number>,
+         }
+       }
+
 
  */
 import _ from 'lodash'
@@ -143,9 +156,9 @@ class EReq {
     stage2: obj.stage1(config),
   })
 
-  static computeResult = fleet => obj => ({
+  static computeResult = (fleet,extra) => obj => ({
     ...obj,
-    result: obj.stage2(fleet),
+    result: obj.stage2(fleet,extra),
   })
 }
 
