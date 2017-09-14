@@ -9,6 +9,7 @@ import {
 import {
   expedReqsStage2Selector,
   mkFleetInfoSelector,
+  extraSelector,
 } from '../../selectors'
 
 import { EReq } from '../../structs/ereq'
@@ -21,8 +22,9 @@ const emptyNormGsFlags =
 const mkEReqNormGsFlagsSelectorForFleet = _.memoize(
   fleetId => createSelector(
     mkFleetInfoSelector(fleetId),
+    extraSelector,
     expedReqsStage2Selector,
-    (fleet,expedReqsStage2) => {
+    (fleet,extra,expedReqsStage2) => {
       if (fleet === null)
         return emptyNormGsFlags
       const isSat = x => x.result.sat === true
@@ -30,7 +32,7 @@ const mkEReqNormGsFlagsSelectorForFleet = _.memoize(
         expedReqsStage2,
         _.flow([
           expedReqStage2 => mapExpedReq(
-            EReq.computeResult(fleet)
+            EReq.computeResult(fleet,extra)
           )(expedReqStage2),
           obj => ({
             norm: obj.norm.every(isSat),
