@@ -7,9 +7,11 @@ import {
   ItemTemplate,
   getExtraType,
 } from './common'
-import { __ } from '../../../tr'
+// TODO: i18n
+// import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
+/* eslint-disable react/prop-types */
 const mayFillDlc = props =>
   getExtraType(props) === 'FillDlc' ? (
     <Tooltip
@@ -24,6 +26,7 @@ const mayFillDlc = props =>
       }
     </Tooltip>
   ) : null
+/* eslint-enable react/prop-types */
 
 const FillDlcItem = props => (
   <ItemTemplate
@@ -37,7 +40,6 @@ const FillDlcItem = props => (
 )
 
 FillDlcItem.propTypes = {
-  ereq: PTyp.object.isRequired,
   result: PTyp.object.isRequired,
 }
 
