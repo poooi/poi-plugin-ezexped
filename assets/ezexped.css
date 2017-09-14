@@ -9,3 +9,19 @@
 .ezexped-pop .tooltip-inner .slotitem-img.svg {
     height: 1.2em;
 }
+
+.ezexped-pop .tooltip-inner .slotitem-img.png {
+    height: 1.6em;
+}
+
+.ezexped-pop .tooltip-inner .slotitem-img.svg {
+    height: 1.2em;
+}
+
+#poi-plugin-ezexped .exped-viewer .slotitem-img.png {
+    height: 2em;
+}
+
+#poi-plugin-ezexped .exped-viewer .slotitem-img.svg {
+    height: 1.6em;
+}

@@ -1,11 +1,11 @@
 import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ButtonGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
 
-import { MaterialIcon } from 'views/components/etc/icon'
+import { MaterialIcon, SlotitemIcon } from 'views/components/etc/icon'
 import { expedInfo } from '../../exped-info'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
 
@@ -136,8 +136,22 @@ class ExpeditionViewerImpl extends Component {
     const hasGreatSuccessItem = this.props.greatSuccess && info.itemGreatSuccess
     const prettyRange = (x,y) => x === y ? `${x}` : `${x}~${y}`
     return (
-      <div style={{display: "flex", marginBottom: "5px"}}>
-        <div style={{flex: "1", maxWidth: "50%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+      <div
+        className="exped-viewer"
+        style={{
+          display: 'flex',
+          marginBottom: 5,
+        }}
+      >
+        <div
+          style={{
+            flex: "1",
+            maxWidth: "50%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <Button
             onClick={this.handleClickExped}>
             <div style={{
@@ -166,7 +180,13 @@ class ExpeditionViewerImpl extends Component {
             </div>
           </div>
         </div>
-        <div style={{display: "flex", maxWidth: "50%", flex: "1", flexDirection: "column"}}>
+        <div
+          style={{
+            display: 'flex',
+            maxWidth: '50%',
+            flex: 1,
+            flexDirection: 'column',
+          }}>
           <div style={{display: "flex", flex: "1"}}>
             <div style={{flex: "1", ...colFlexStyle}}>
               <ResourceWithDetail
@@ -185,28 +205,41 @@ class ExpeditionViewerImpl extends Component {
                   icon={mkMat(4)} renderedResource={renderedResources.bauxite} />
             </div>
           </div>
-          <Button
-            style={{display: "flex"}}
-            onClick={this.handleToggleGS}>
-            <FontAwesome
-              className={
-                this.props.greatSuccess ?
-                  `poi-ship-cond-53 ${this.props.darkOrLight}` :
-                  ''
-              }
-              style={{marginRight: "5px", marginTop: "2px"}}
-              name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
-            <span
-              className={
-                this.props.greatSuccess ? `poi-ship-cond-53 ${this.props.darkOrLight}` : ''}
+          <ButtonGroup style={{display: 'flex'}}>
+            <Button
+              style={{flex: 1, display: 'flex', alignItems: 'baseline'}}
+              onClick={this.handleToggleGS}>
+              <FontAwesome
+                className={
+                  this.props.greatSuccess ?
+                           `poi-ship-cond-53 ${this.props.darkOrLight}` :
+                           ''
+                }
+                style={{marginRight: 5}}
+                name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
+              <span
+                className={
+                  this.props.greatSuccess ? `poi-ship-cond-53 ${this.props.darkOrLight}` : ''}
+                style={{
+                  flex: 1,
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                }} >
+                {__("Great Success")}</span>
+            </Button>
+            <Button
               style={{
-                flex: 1,
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-              }} >
-              {__("Great Success")}</span>
-          </Button>
+                width: '3em',
+                padding: 0,
+              }}
+            >
+              <SlotitemIcon
+                className="slotitem-img"
+                slotitemId={20}
+              />
+            </Button>
+          </ButtonGroup>
         </div>
       </div>
     )
