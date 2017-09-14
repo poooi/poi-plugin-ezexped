@@ -11,18 +11,20 @@ import { greatSuccessReq } from './great-success'
 const expedReqs = {}
 
 const mapExpedReq = f => reqObj => {
-  const {norm, gs, resupply} = reqObj
+  const {norm, gs, resupply, dlc} = reqObj
   return {
     ...reqObj,
     norm: norm.map(f),
     gs: gs.map(f),
     resupply: f(resupply),
+    dlc: f(dlc),
   }
 }
 
 const defineExped = id => (norm,gs = greatSuccessReq(id)) => {
   const resupply = mk.Resupply()
-  expedReqs[id] = mapExpedReq(EReq.performStage1)({id,norm,gs,resupply})
+  const dlc = mk.FillDlc()
+  expedReqs[id] = mapExpedReq(EReq.performStage1)({id,norm,gs,resupply,dlc})
 }
 
 defineWorld1(defineExped)
