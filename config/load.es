@@ -6,7 +6,7 @@ import { saveConfig } from './save'
 
 // loads config from poi and perform config data update when it's necessary
 const loadAndUpdateConfig = onConfigReady => {
-  const latestVersion = '1.2.0'
+  const latestVersion = '1.3.0'
   const {config} = window
   // postfixing 'W' means the actual data is wrapped in 'data' property.
   const oldConfigW = config.get('plugin.poi-plugin-ezexped')
@@ -68,7 +68,7 @@ const loadAndUpdateConfig = onConfigReady => {
   }
 
   if (_.get(oldConfigW,'data.configVer') === '1.0.0') {
-    // update 1.0.0 to 1.1.0
+    // update from 1.0.0 to 1.1.0
     const updatedConfig = {
       ...oldConfigW.data,
       syncMainFleetId: false,
@@ -79,11 +79,23 @@ const loadAndUpdateConfig = onConfigReady => {
   }
 
   if (_.get(oldConfigW,'data.configVer') === '1.1.0') {
-    // update 1.1.0 to 1.2.0
+    // update from 1.1.0 to 1.2.0
     const updatedConfig = {
       ...oldConfigW.data,
       kanceptsExportShipList: true,
       configVer: '1.2.0',
+    }
+
+    oldConfigW.data = updatedConfig
+  }
+
+  if (_.get(oldConfigW,'data.configVer') === '1.2.0') {
+    // update from 1.2.0 to 1.3.0
+    const dlcFlags = _.fromPairs(enumFromTo(1,40).map(eId => [eId, true]))
+    const updatedConfig = {
+      ...oldConfigW.data,
+      dlcFlags,
+      configVer: '1.3.0',
     }
 
     oldConfigW.data = updatedConfig

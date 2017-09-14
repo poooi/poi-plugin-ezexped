@@ -15,6 +15,9 @@ import { enumFromTo } from 'subtender'
 
    - 1.2.0: added 'kanceptsExportShipList' (default to true)
 
+   - 1.3.0: added 'dlcFlags' (an Object whose keys are
+     from "1" to "40" with bool values default to true)
+
  */
 
 const defaultConfig = {
@@ -29,10 +32,13 @@ const defaultConfig = {
     enumFromTo(1,40).map(eId => [eId, false])),
   selectedExpeds: _.fromPairs(
     enumFromTo(1,4).map(fleetId => [fleetId, 1])),
+  dlcFlags: _.fromPairs(
+    enumFromTo(1,40).map(eId => [eId, true])
+  ),
 
   kanceptsExportShipList: true,
 
-  configVer: '1.2.0',
+  configVer: '1.3.0',
 }
 
 const defaultConfigProps = Object.keys(defaultConfig)

@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.3.0 (pending)
+
+- (TODO) DLC.
+
 ### 1.2.1
 
 - Added translation for Japanese (thanks to @KochiyaOcean)
