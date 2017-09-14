@@ -11,14 +11,17 @@ const expedInfo = (() => {
   expedInfoRaw.map( data => {
     const id = data.api_id
     const toPercent = x => Math.round(100 * x)
+
+    /* eslint-disable indent */
     const itemIdToName = x =>
-        x === 1 ? "Bucket"
-      : x === 2 ? "Flamethrower"
-      : x === 3 ? "DevMat"
-      : x === 10 ? "FCoinSmall"
-      : x === 11 ? "FCoinMedium"
-      : x === 12 ? "FCoinLarge"
-      : debug.error(`unknown item id: ${x}`)
+      x === 1 ? "Bucket" :
+      x === 2 ? "Flamethrower" :
+      x === 3 ? "DevMat" :
+      x === 10 ? "FCoinSmall" :
+      x === 11 ? "FCoinMedium" :
+      x === 12 ? "FCoinLarge" :
+      debug.error(`unknown item id: ${x}`)
+    /* eslint-enable indent */
 
     const mkItem = itemData =>
       itemData[0] === 0

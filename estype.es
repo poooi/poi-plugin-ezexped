@@ -43,10 +43,12 @@ const [isESType, allESTypes] = (() => {
   return [$isESType, $allESTypes]
 })()
 
+/* eslint-disable indent */
 const shortDesc = estypeName =>
-    estypeName === "CVLike" ? "CV*"
-  : estypeName === "SSLike" ? "SS*"
-  : estypeName
+  estypeName === "CVLike" ? "CV*" :
+  estypeName === "SSLike" ? "SS*" :
+  estypeName
+/* eslint-enable indent */
 
 // note: in order to keep this module pure for testing,
 // one has to provide a translating function, which for now is "__" from "tr.es"

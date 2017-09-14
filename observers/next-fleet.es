@@ -43,8 +43,8 @@ const expedFleetsAvailabilityObserver = observer(
           cur.available === false)
 
         if (ava)
-          asyncBoundActionCreator(({autoSwitchToNextAvailable}) =>
-            autoSwitchToNextAvailable(
+          asyncBoundActionCreator(
+            ({autoSwitchToNextAvailable}) => autoSwitchToNextAvailable(
               `observer: detected that we are sending fleet ${ava.fleetId} out`
             ),
             dispatch

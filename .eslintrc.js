@@ -10,11 +10,6 @@ module.exports = {
     'es6': true,
     'node': true,
   },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
   'parser': 'babel-eslint',
   'rules': {
     'semi': ['error', 'never'],
