@@ -38,6 +38,7 @@
     "totalIncome": "总收入",
     "netIncome": "净收入"
   },
+  "TTFillDlcExplain": "要求舰队尽可能携带“大発動艇”或“特大発動艇”",
   "RequirementExplain": {
     "FSType": "旗舰舰种为%s",
     "FSLevel": "旗舰等级至少为%s",
@@ -58,7 +59,8 @@
     "TTNeedsMoreSparkledShips": "还需%s名处于“战意高昂”状态的舰娘",
     "TTLowMorale": "低士气:",
     "TTResupply": "未补给:",
-    "TTNotSparkled": "未处于“战意高昂”状态:"
+    "TTNotSparkled": "未处于“战意高昂”状态:",
+    "TTShipCanCarryMoreDlc": "%s 还可携带最多%s枚大发系装备"
   },
   "FleetState": {
     "MainShouldHide": "将被隐藏",
