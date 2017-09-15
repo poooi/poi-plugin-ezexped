@@ -38,7 +38,7 @@
     "totalIncome": "総収入",
     "netIncome": "純収入"
   },
-  "TTFillDlcExplain": "Require fleet to carry as many \"大発動艇\" or \"特大発動艇\" as possible",
+  "TTFillDlcExplain": "できる限り \"大発動艇\" や \"特大発動艇\" を搭載することを必要とする",
   "RequirementExplain": {
     "FSType": "旗艦艦種: %s",
     "FSLevel": "旗艦レベル ≥%s",
@@ -51,7 +51,7 @@
     "Morale": "各艦の疲労度 ≥%s",
     "Resupply": "各艦とも補給済み",
     "AllSparkled": "各艦ともキラキラ",
-    "FillDlc": "Carry as many \"大発動艇\" or \"特大発動艇\" as possible",
+    "FillDlc": "できる限り \"大発動艇\" や \"特大発動艇\" を搭載する",
     "TTNoFlagship": "旗艦がありません",
     "TTNeedsMoreShips": "まだ艦娘 %s 隻が必要です",
     "TTNeedsMoreDrumCarriers": "まだ\"ドラム缶(輸送用)\" 装備艦 %s 隻が必要です",
@@ -61,7 +61,7 @@
     "TTLowMorale": "疲労状態:",
     "TTResupply": "未補給:",
     "TTNotSparkled": "未キラ付け:",
-    "TTShipCanCarryMoreDlc": "%s can carry %s more Daihatsu-class equipment(s)"
+    "TTShipCanCarryMoreDlc": "%s は %s もっと多くの大発動艇を搭載することが可能です"
   },
   "FleetState": {
     "MainShouldHide": "非表示になります",
