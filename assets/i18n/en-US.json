@@ -38,6 +38,7 @@
     "totalIncome": "Total Income",
     "netIncome": "Net Income"
   },
+  "TTFillDlcExplain": "Require fleet to carry as many \"大発動艇\" or \"特大発動艇\" as possible",
   "RequirementExplain": {
     "FSType": "Flagship type: %s",
     "FSLevel": "Flagship level ≥%s",
@@ -58,7 +59,8 @@
     "TTNeedsMoreSparkledShips": "Needs %s more sparkled ship(s)",
     "TTLowMorale": "Low morale:",
     "TTResupply": "Not resupplied:",
-    "TTNotSparkled": "Not Sparkled:"
+    "TTNotSparkled": "Not Sparkled:",
+    "TTShipCanCarryMoreDlc": "%s can carry %s more Daihatsu-class equipment(s)"
   },
   "FleetState": {
     "MainShouldHide": "Will be hidden",
