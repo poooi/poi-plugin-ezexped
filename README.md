@@ -7,9 +7,17 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.3.0 (pending)
+### 1.3.0
 
-- (TODO) DLC.
+- Added new checker to make sure a fleet carries as many Daihatsu-class equipments as one can.
+
+    - Only "大発動艇" and "特大発動艇" are taken into account, since the other few
+      either does not provide significant boost or is mainly used for non-expedition purposes.
+
+    - Like great success toggle, this checker can be turn on or off for each expedition.
+
+    - Should be smart enough so that it won't bother you when you simply
+      don't have enough Daihatsu in your possession.
 
 ### 1.2.1
 
