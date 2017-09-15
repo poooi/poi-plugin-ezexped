@@ -38,7 +38,7 @@
     "totalIncome": "總收入",
     "netIncome": "淨收入"
   },
-  "TTFillDlcExplain": "要求艦隊儘可能攜帶“大発動艇”或“特大発動艇”",
+  "TTFillDlcExplain": "要求艦隊攜帶儘可能多的“大発動艇”或“特大発動艇”",
   "RequirementExplain": {
     "FSType": "旗艦艦種爲%s",
     "FSLevel": "旗艦等級至少爲%s",
@@ -51,6 +51,7 @@
     "Morale": "艦娘疲勞度至少爲%s",
     "Resupply": "艦隊補給",
     "AllSparkled": "艦隊全體艦娘都需處於“戰意高昂”狀態",
+    "FillDlc": "攜帶儘可能多的“大発動艇”或“特大発動艇”",
     "TTNoFlagship": "無旗艦",
     "TTNeedsMoreShips": "還需%s名艦娘",
     "TTNeedsMoreDrumCarriers": "還需攜帶了“ドラム缶(輸送用)”的艦娘%s名",
