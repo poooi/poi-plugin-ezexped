@@ -256,10 +256,7 @@ class ExpeditionViewerImpl extends Component {
               overlay={
                 (
                   <Tooltip id="ezexped-dlc-button">
-                    {
-                      // TODO: i18n
-                      'Require fleet to carry as many "大発動艇" or "特大発動艇" as possible.'
-                    }
+                    {__('TTFillDlcExplain')}
                   </Tooltip>
                 )
               }

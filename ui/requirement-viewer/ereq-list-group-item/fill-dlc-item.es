@@ -8,7 +8,7 @@ import {
   getExtraType,
 } from './common'
 // TODO: i18n
-// import { __ } from '../../../tr'
+import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
 /* eslint-disable react/prop-types */
@@ -20,7 +20,13 @@ const mayFillDlc = props =>
       {
         props.result.extra.ships.map(s => (
           <div key={s.mstId}>
-            {`${s.name} Lv.${s.level} can carry ${s.extraDlcCapability} more Daihatsu-class equipment(s)`}
+            {
+              __(
+                'RequirementExplain.TTShipCanCarryMoreDlc',
+                `${s.name} Lv.${s.level}`,
+                String(s.extraDlcCapability)
+              )
+            }
           </div>
         ))
       }
