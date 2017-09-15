@@ -38,7 +38,7 @@
     "totalIncome": "总收入",
     "netIncome": "净收入"
   },
-  "TTFillDlcExplain": "要求舰队尽可能携带“大発動艇”或“特大発動艇”",
+  "TTFillDlcExplain": "要求舰队携带尽可能多的“大発動艇”或“特大発動艇”",
   "RequirementExplain": {
     "FSType": "旗舰舰种为%s",
     "FSLevel": "旗舰等级至少为%s",
@@ -51,6 +51,7 @@
     "Morale": "舰娘疲劳度至少为%s",
     "Resupply": "舰队补给",
     "AllSparkled": "舰队全体舰娘都需处于“战意高昂”状态",
+    "FillDlc": "携带尽可能多的“大発動艇”或“特大発動艇”",
     "TTNoFlagship": "无旗舰",
     "TTNeedsMoreShips": "还需%s名舰娘",
     "TTNeedsMoreDrumCarriers": "还需携带了“ドラム缶(輸送用)”的舰娘%s名",

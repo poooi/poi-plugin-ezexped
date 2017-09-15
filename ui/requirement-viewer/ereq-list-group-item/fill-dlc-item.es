@@ -36,7 +36,7 @@ const mayFillDlc = props =>
 
 const FillDlcItem = props => (
   <ItemTemplate
-    content={"Carry as many Daihatsu-class equipments as possible"}
+    content={__('RequirementExplain.FillDlc')}
     tooltip={
       !props.result.sat &&
       mayFillDlc(props)
