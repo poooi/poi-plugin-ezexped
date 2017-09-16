@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.3.1
+
+- Fix a problem when default setting is not being properly loaded for new users.
+
 ### 1.3.0
 
 - Added new checker to make sure a fleet carries as many Daihatsu-class equipments as one can.
