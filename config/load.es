@@ -9,7 +9,20 @@ const loadAndUpdateConfig = onConfigReady => {
   const latestVersion = '1.3.0'
   const {config} = window
   // postfixing 'W' means the actual data is wrapped in 'data' property.
-  const oldConfigW = config.get('plugin.poi-plugin-ezexped')
+  let oldConfigW = config.get('plugin.poi-plugin-ezexped')
+
+  /*
+     fill in default config when:
+     - missing (first run)
+     - type mismatches (shouldn't happen though)
+  */
+  if (_.isEmpty(oldConfigW) || typeof oldConfigW !== 'object') {
+    oldConfigW = {data: defaultConfig}
+    // no saving on purpose, so if user doesn't change anything
+    // it'll always use default of the latest version.
+  }
+
+  // INVARIANT: typeof oldConfigW === 'object'
 
   // nothing to update if config version matches
   if (_.get(oldConfigW,'data.configVer') === latestVersion) {
@@ -17,7 +30,7 @@ const loadAndUpdateConfig = onConfigReady => {
   }
 
   // recognize & update from legacy config to 1.1.0
-  if (! _.get(oldConfigW,'data.configVer')) {
+  if (!_.get(oldConfigW,'data.configVer')) {
     // copy config template
     const currentConfig = {...defaultConfig};
 
