@@ -10,6 +10,9 @@ import { mapDispatchToProps } from '../../store'
 import { kanceptsExportShipListSelector } from '../../selectors'
 import { __ } from '../../tr'
 
+const kanceptsAddr = 'https://javran.github.io/kancepts/'
+// const kanceptsAddr = 'http://localhost:3000/'
+
 const makeLink = exportShipList => {
   if (exportShipList) {
     const {getStore} = window
@@ -22,9 +25,9 @@ const makeLink = exportShipList => {
           ] : []
       ).join(',')
     )
-    return `https://javran.github.io/kancepts/?sl=${slVal}`
+    return `${kanceptsAddr}?sl=${slVal}`
   } else {
-    return `https://javran.github.io/kancepts/`
+    return kanceptsAddr
   }
 }
 
