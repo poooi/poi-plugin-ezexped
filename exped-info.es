@@ -1,7 +1,7 @@
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
-import { debug } from 'subtender'
+import { debug } from './debug'
 
 const expedInfoRaw = readJsonSync(join(__dirname, 'assets', 'exped-info.json'))
 

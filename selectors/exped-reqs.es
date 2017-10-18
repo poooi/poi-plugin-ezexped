@@ -93,6 +93,7 @@ const mkEReqResultObjectSelectorForFleet = _.memoize(
       if (_.isEmpty(fleet))
         return null
 
+      // TODO: a "requirement unknown" placeholder Object instead of the permissive one below.
       const expedReqStage2 = expedReqsStage2[expedId] || {
         norm: [],
         gs: [],

@@ -46,24 +46,29 @@ const reducer = (state = initState, action) => {
 
 
   if (action.type === '@@Response/kcsapi/api_req_mission/result') {
-    const expedId = expedNameToId( action.body.api_quest_name )
-    const fleetId = parseInt(action.postBody.api_deck_id, 10)
+    try {
+      const expedId = expedNameToId( action.body.api_quest_name )
+      const fleetId = parseInt(action.postBody.api_deck_id, 10)
 
-    const modifiers = [
-      // only record successful expeditions
-      action.body.api_clear_result !== 0 &&
+      const modifiers = [
+        // only record successful expeditions
+        action.body.api_clear_result !== 0 &&
         modifyObject(
           'selectedExpeds',
           modifyObject(
             fleetId, () => expedId)),
-      // switch to the corresponding fleet on expedition result screen
-      // if "fleetAutoSwitch" is on
-      state.fleetAutoSwitch &&
+        // switch to the corresponding fleet on expedition result screen
+        // if "fleetAutoSwitch" is on
+        state.fleetAutoSwitch &&
         modifyObject(
           'fleetId', () => fleetId),
-    ]
+      ]
 
-    return _.flow(_.compact(modifiers))(state)
+      return _.flow(_.compact(modifiers))(state)
+    } catch (e) {
+      debug.error(`failed to record a successful exped ${e}`)
+      return state
+    }
   }
 
   if (state.fleetAutoSwitch) {
