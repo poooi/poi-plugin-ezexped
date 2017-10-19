@@ -20,6 +20,7 @@ import {
 import { mapDispatchToProps } from '../../store'
 import { KanceptsExporter } from './kancepts-exporter'
 
+// TODO: see below
 const allExpedIds = enumFromTo(1,40)
 
 class ExpeditionTableImpl extends Component {
@@ -74,8 +75,11 @@ class ExpeditionTableImpl extends Component {
               enumFromTo(1,5),
               // expedition ids in that world
               _.chunk(allExpedIds,8)
-            ).map(([world, expedIds]) =>
-              (
+            ).map(([world, expedIdsTmp]) => {
+              // TODO: groupped expeds from master data
+              const expedIds =
+                world === 1 ? [...expedIdsTmp, 100, 101, 102] : expedIdsTmp
+              return (
                 <div
                   key={world}
                   style={{
@@ -85,15 +89,16 @@ class ExpeditionTableImpl extends Component {
                     flexDirection: 'column',
                   }}>
                   {
-                    expedIds.map(expedId =>
-                      (
+                    expedIds.map(expedId => {
+                      const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
+                      return (
                         <ExpeditionButton
                           key={expedId}
-                          ready={normGsFlags[expedId].norm}
+                          ready={normGsFlag.norm}
                           btnClassName={
                             (
-                              normGsFlags[expedId].norm &&
-                              normGsFlags[expedId].gs
+                              normGsFlag.norm &&
+                              normGsFlag.gs
                             ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
                           }
                           active={this.props.expedId === expedId}
@@ -105,11 +110,11 @@ class ExpeditionTableImpl extends Component {
                           onClick={this.handleSelectExped(expedId)}
                         />
                       )
-                    )
+                    })
                   }
                 </div>
               )
-            )
+            })
           }
         </div>
         <KanceptsExporter style={{}} />

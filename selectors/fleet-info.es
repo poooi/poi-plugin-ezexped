@@ -189,12 +189,14 @@ const expedIdSelector = createSelector(
 const gsFlagSelector = createSelector(
   gsFlagsSelector,
   expedIdSelector,
-  (gsFlags,expedId) => gsFlags[expedId])
+  (gsFlags,expedId) => gsFlags[expedId] || false
+)
 
 const dlcFlagSelector = createSelector(
   dlcFlagsSelector,
   expedIdSelector,
-  (dlcFlags,expedId) => dlcFlags[expedId])
+  (dlcFlags,expedId) => dlcFlags[expedId] || true
+)
 
 const fleetInfoSelector = createSelector(
   indexedFleetsInfoSelector,
