@@ -34,7 +34,7 @@
    - Extra structure:
 
        {
-         // (TODO) spare equipments are those not being used in any fleet.
+         // spare equipments are those not being used in any fleet.
          spareEquips: {
            // daihatsu landing craft
            '68': <number>,

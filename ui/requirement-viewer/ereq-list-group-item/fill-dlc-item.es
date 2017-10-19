@@ -7,7 +7,7 @@ import {
   ItemTemplate,
   getExtraType,
 } from './common'
-// TODO: i18n
+
 import { __ } from '../../../tr'
 import { PTyp } from '../../../ptyp'
 
