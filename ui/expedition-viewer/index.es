@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
 
 import { MaterialIcon, SlotitemIcon } from 'views/components/etc/icon'
-import { expedInfo } from '../../exped-info'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
 
 import { __, fmtTime } from '../../tr'
@@ -25,6 +24,7 @@ import {
   gsFlagSelector,
   dlcFlagSelector,
   darkOrLightSelector,
+  getExpedInfoFuncSelector,
 } from '../../selectors'
 import { debug } from '../../debug'
 
@@ -90,6 +90,7 @@ class ExpeditionViewerImpl extends Component {
     expedId: PTyp.number.isRequired,
     greatSuccess: PTyp.bool.isRequired,
     dlcFlag: PTyp.bool.isRequired,
+    getExpedInfo: PTyp.func.isRequired,
 
     fleet: PTyp.object.isRequired,
     darkOrLight: PTyp.DarkOrLight.isRequired,
@@ -124,7 +125,8 @@ class ExpeditionViewerImpl extends Component {
   }
 
   render() {
-    const info = expedInfo[this.props.expedId]
+    const {expedId, getExpedInfo} = this.props
+    const info = getExpedInfo(expedId)
     const resupplyCost =
       fleetResupplyCost(this.props.fleet.ships)(
         info.cost.fuelPercent / 100, info.cost.ammoPercent / 100)
@@ -142,7 +144,7 @@ class ExpeditionViewerImpl extends Component {
       /* eslint-enable indent */
 
       renderedResources[resourceName] = renderTexts(
-        info.resource[resourceName],
+        info.resources[resourceName],
         this.props.greatSuccess,
         daihatsuBonus,
         resupply)
@@ -288,6 +290,7 @@ const uiSelector = createStructuredSelector({
   greatSuccess: gsFlagSelector,
   dlcFlag: dlcFlagSelector,
   darkOrLight: darkOrLightSelector,
+  getExpedInfo: getExpedInfoFuncSelector,
 })
 
 const ExpeditionViewer = connect(

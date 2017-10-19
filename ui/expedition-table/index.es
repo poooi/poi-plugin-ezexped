@@ -11,6 +11,7 @@ import {
   expedIdSelector,
   expedTableExpandedSelector,
   darkOrLightSelector,
+  getExpedInfoFuncSelector,
 } from '../../selectors'
 import {
   mkEReqNormGsFlagsSelectorForFleet,
@@ -28,6 +29,7 @@ class ExpeditionTableImpl extends Component {
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
+    getExpedInfo: PTyp.func.isRequired,
     modifyState: PTyp.func.isRequired,
     normGsFlags: PTyp.objectOf(PTyp.shape({
       norm: PTyp.bool.isRequired,
@@ -58,6 +60,7 @@ class ExpeditionTableImpl extends Component {
       normGsFlags,
       currentRunningExpedIdToFleetId,
       darkOrLight,
+      getExpedInfo,
     } = this.props
     return (
       <Panel
@@ -98,6 +101,7 @@ class ExpeditionTableImpl extends Component {
                             currentRunningExpedIdToFleetId[expedId]
                           }
                           expedId={expedId}
+                          getExpedInfo={getExpedInfo}
                           onClick={this.handleSelectExped(expedId)}
                         />
                       )
@@ -120,6 +124,7 @@ const uiSelector = createStructuredSelector({
   expedTableExpanded: expedTableExpandedSelector,
   currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
   darkOrLight: darkOrLightSelector,
+  getExpedInfo: getExpedInfoFuncSelector,
 })
 
 const ExpeditionTable = connect(

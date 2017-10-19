@@ -22,6 +22,7 @@ class ExpeditionButton extends PureComponent {
     active: PTyp.bool.isRequired,
     expedId: PTyp.number.isRequired,
     runningFleetId: PTyp.number,
+    getExpedInfo: PTyp.func.isRequired,
     onClick: PTyp.func.isRequired,
     btnClassName: PTyp.string,
   }
@@ -36,13 +37,17 @@ class ExpeditionButton extends PureComponent {
       ready, expedId, onClick,
       active, runningFleetId,
       btnClassName,
+      getExpedInfo,
     } = this.props
     return (
       <OverlayTrigger
         placement="bottom"
         overlay={
           <Tooltip id={`ezexped-tooltip-${expedId}`}>
-            <ExpedTooltipContent expedId={expedId} />
+            <ExpedTooltipContent
+              getExpedInfo={getExpedInfo}
+              expedId={expedId}
+            />
           </Tooltip>
         }>
         <Button

@@ -4,18 +4,18 @@ import {
 } from 'react-bootstrap'
 import { MaterialIcon } from 'views/components/etc/icon'
 
-import { expedInfo } from '../../exped-info'
 import { fmtTime } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 class ExpedTooltipContent extends PureComponent {
   static propTypes = {
     expedId: PTyp.number.isRequired,
+    getExpedInfo: PTyp.func.isRequired,
   }
 
   render() {
-    const {expedId} = this.props
-    const info = expedInfo[expedId]
+    const {expedId, getExpedInfo} = this.props
+    const info = getExpedInfo(expedId)
     return (
       <Grid style={{width: '100%', padding: '.2em .4em'}}>
         <Row>
@@ -40,7 +40,11 @@ class ExpedTooltipContent extends PureComponent {
                       className="material-icon"
                     />
                     <span style={{flex: 1, marginLeft: '.4em'}}>
-                      {info.resource[resourceProp]}
+                      {
+                        (info && info.resources) ?
+                          info.resources[resourceProp] :
+                          '???'
+                      }
                     </span>
                   </Col>
                 ))
