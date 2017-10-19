@@ -11,9 +11,26 @@ class ResourceWithDetail extends Component {
     resourceName: PTyp.string.isRequired,
     icon: PTyp.node.isRequired,
     // - one of "renderedResources"'s value in "ExpeditionViewer"
-    renderedResource: PTyp.object.isRequired,
+    renderedResource: PTyp.oneOfType([
+      PTyp.object,
+      PTyp.string,
+    ]).isRequired,
   }
+
+  simpleRender = () => (
+    <div>
+      <IconAndLabel
+        icon={this.props.icon}
+        label={this.props.renderedResource}
+      />
+    </div>
+  )
+
   render() {
+    if (typeof this.props.renderedResource === 'string') {
+      return this.simpleRender()
+    }
+
     // "123Text" => "123"
     const rmText = t => t.slice(0,t.length-4)
     const translateKey = keyName => __(`IncomeExplain.${rmText(keyName)}`)
@@ -24,8 +41,8 @@ class ResourceWithDetail extends Component {
       "tokuBonusText",
       "totalIncomeText",
       "netIncomeText",
-    ].filter( k => this.props.renderedResource[k] )
-    // .map( k => `${translateKey(k)}: ${this.props.renderedResource[k]}`)
+    ].filter(k => this.props.renderedResource[k])
+
     const tooltip = (
       <Tooltip
         className="ezexped-pop"

@@ -61,6 +61,7 @@ import { AllSparkled } from './all-sparkled'
 import { FleetCompo } from './fleet-compo'
 import { AnyFleetCompo } from './any-fleet-compo'
 import { FillDlc } from './fill-dlc'
+import { MissingInfo } from './missing-info'
 
 const classTable = _.fromPairs([
   FSLevel,
@@ -77,6 +78,7 @@ const classTable = _.fromPairs([
   FleetCompo,
   AnyFleetCompo,
   FillDlc,
+  MissingInfo,
 ].map(cls => [cls.name, cls]))
 
 const allEReqTypes = Object.keys(classTable)

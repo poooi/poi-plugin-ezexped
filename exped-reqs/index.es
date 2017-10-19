@@ -27,6 +27,9 @@ const defineExped = id => (norm,gs = greatSuccessReq(id)) => {
   expedReqs[id] = mapExpedReq(EReq.performStage1)({id,norm,gs,resupply,dlc})
 }
 
+// when we cannot find an expedition, "missing" should be used instead
+defineExped('missing')([mk.MissingInfo()])
+
 defineWorld1(defineExped)
 defineWorld2(defineExped)
 defineWorld3(defineExped)

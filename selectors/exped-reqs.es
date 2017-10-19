@@ -15,7 +15,6 @@ import {
 } from './fleet-info'
 import { expedReqs, mapExpedReq } from '../exped-reqs'
 import { EReq } from '../structs/ereq'
-import { mk } from '../exped-reqs/common'
 
 // extracts slice of interest related to expedition requirements
 const minConfigSelector = sparkledCountSelector
@@ -93,17 +92,17 @@ const mkEReqResultObjectSelectorForFleet = _.memoize(
       if (_.isEmpty(fleet))
         return null
 
-      // TODO: a "requirement unknown" placeholder Object instead of the permissive one below.
-      const expedReqStage2 = expedReqsStage2[expedId] || {
-        norm: [],
-        gs: [],
-        resupply: mk.Resupply(),
-        dlc: mk.FillDlc(),
-      }
+      const expedReqStage2 =
+        expedReqsStage2[expedId] || expedReqsStage2.missing
 
-      const ereqResultObj = mapExpedReq(
-        EReq.computeResult(fleet,extra)
-      )(expedReqStage2)
+      /* eslint-disable indent */
+      const ereqResultObj =
+        expedReqStage2 ?
+          mapExpedReq(
+            EReq.computeResult(fleet,extra)
+          )(expedReqStage2) :
+        null
+      /* eslint-enable indent */
       return ereqResultObj
     }))
 

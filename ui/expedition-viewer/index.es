@@ -143,11 +143,15 @@ class ExpeditionViewerImpl extends Component {
         0
       /* eslint-enable indent */
 
-      renderedResources[resourceName] = renderTexts(
-        info.resources[resourceName],
-        this.props.greatSuccess,
-        daihatsuBonus,
-        resupply)
+      if (info.resources) {
+        renderedResources[resourceName] = renderTexts(
+          info.resources[resourceName],
+          this.props.greatSuccess,
+          daihatsuBonus,
+          resupply)
+      } else {
+        renderedResources[resourceName] = String(-resupply)
+      }
     })
 
     const mkMatFromName = name => mkMat(itemNameToMaterialId( name ))
