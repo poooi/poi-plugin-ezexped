@@ -42,9 +42,34 @@ const defineWorld1 = defineExped => {
   defineExped(8)(fslSc(6,6))
 
   // TODO: waiting for requirements to be confirmed
-  defineExped(100)([mk.MissingInfo()])
-  defineExped(101)([mk.MissingInfo()])
-  defineExped(102)([mk.MissingInfo()])
+  defineExped(100)(
+    [
+      mk.ShipCount(4),
+      mk.AnyFleetCompo([
+        {CL: 1, DD: 3},
+        {DD: 4},
+      ]),
+      mk.MissingInfo(),
+    ]
+  )
+  defineExped(101)(
+    [
+      mk.ShipCount(4),
+      mk.FSLevel(20),
+      mk.FleetCompo({DDorDE: 4}),
+      mk.MissingInfo(),
+    ]
+  )
+  defineExped(102)(
+    [
+      mk.ShipCount(5),
+      mk.AnyFleetCompo([
+        {CL: 1, DD: 4},
+        {CL: 1, DD: 2, DE: 2},
+      ]),
+      mk.MissingInfo(),
+    ]
+  )
 }
 
 export { defineWorld1 }

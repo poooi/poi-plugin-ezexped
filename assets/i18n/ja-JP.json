@@ -24,7 +24,8 @@
     "CT": "練習巡洋艦 (CT)",
     "AV": "水上機母艦 (AV)",
     "DE": "海防艦 (DE)",
-    "CVE": "護衛空母 (CVE)"
+    "CVE": "護衛空母 (CVE)",
+    "DDorDE": "駆逐艦/海防艦 (DD/DE)"
   },
   "RequiredTime": {
     "hour": "%s 時間",

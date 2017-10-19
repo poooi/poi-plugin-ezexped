@@ -39,6 +39,7 @@ const [isESType, allESTypes] = (() => {
   defineESType('AV', eq(t.AV))
   defineESType('CVLike', oneOf([t.CV,t.CVL,t.AV,t.CVB]))
   defineESType('BBV', eq(t.BBV))
+  defineESType('DDorDE', oneOf([t.DD,t.DE]))
 
   return [$isESType, $allESTypes]
 })()
@@ -47,6 +48,7 @@ const [isESType, allESTypes] = (() => {
 const shortDesc = estypeName =>
   estypeName === "CVLike" ? "CV*" :
   estypeName === "SSLike" ? "SS*" :
+  estypeName === "DDorDE" ? "DD/DE" :
   estypeName
 /* eslint-enable indent */
 

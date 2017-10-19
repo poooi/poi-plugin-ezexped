@@ -24,7 +24,8 @@
     "CT": "Training Cruiser (CT)",
     "AV": "Seaplane Tender (AV)",
     "DE": "Escort (DE)",
-    "CVE": "Escort Carrier (CVE)"
+    "CVE": "Escort Carrier (CVE)",
+    "DDorDE": "Destroyer or Escort (DD/DE)"
   },
   "RequiredTime": {
     "hour": "%s hr",
