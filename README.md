@@ -8,12 +8,17 @@ check expedition requirements and estimate expedition income accurately.
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
 
-### 1.4.0 (pending)
+### 1.4.0
 
 - Deal with new expeditions temporarily
 
-    - Placed a new checker on new expeditions, which cannot be satisfied. This checker is
-      temporary and will be removed once requirements are confirmed.
+    - Keep in mind that all requirements for new expeditions should be considered temporary
+      and are very likely to be changed in future as more investigations are done.
+
+    - Placed a new checker on new expeditions, which cannot be satisfied.
+      This serves as an indication that a complete check is not yet available.
+
+    - Implemented new fleet ASW stat checker.
 
 - Using "display number" for expeditions.
 
