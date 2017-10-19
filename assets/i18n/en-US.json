@@ -53,6 +53,8 @@
     "Resupply": "All ships in this fleet should be fully resupplied",
     "AllSparkled": "All ships need to be sparkled",
     "FillDlc": "Carry as many \"大発動艇\" or \"特大発動艇\" as possible",
+    "TotalAsw": "Total ASW stats ≥%s",
+    "MissingInfo": "Missing Information",
     "TTNoFlagship": "No Flagship",
     "TTNeedsMoreShips": "Needs %s more ships",
     "TTNeedsMoreDrumCarriers": "Needs %s more ships to carry \"ドラム缶(輸送用)\"",
@@ -62,7 +64,9 @@
     "TTLowMorale": "Low morale:",
     "TTResupply": "Not resupplied:",
     "TTNotSparkled": "Not Sparkled:",
-    "TTShipCanCarryMoreDlc": "%s can carry %s more Daihatsu-class equipment(s)"
+    "TTShipCanCarryMoreDlc": "%s can carry %s more Daihatsu-class equipment(s)",
+    "TTTotalAsw": "Current %s, Need: %s",
+    "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {
     "MainShouldHide": "Will be hidden",

@@ -107,6 +107,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
       needResupply: curAmmo !== maxAmmo || curFuel !== maxFuel,
       stype: $ship.api_stype,
       extraDlcCapability,
+      asw: ship.api_taisen[0],
     }
   })
 

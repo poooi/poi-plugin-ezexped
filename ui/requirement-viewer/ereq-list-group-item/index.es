@@ -20,6 +20,8 @@ import { AllSparkledItem } from './all-sparkled-item'
 import { FleetCompoItem } from './fleet-compo-item'
 import { AnyFleetCompoItem } from './any-fleet-compo-item'
 import { FillDlcItem } from './fill-dlc-item'
+import { TotalAswItem } from './total-asw-item'
+import { MissingInfoItem } from './missing-info-item'
 
 const ereqComponents = new Map()
 
@@ -51,6 +53,8 @@ const ereqComponents = new Map()
     FleetCompoItem,
     AnyFleetCompoItem,
     FillDlcItem,
+    TotalAswItem,
+    MissingInfoItem,
   ].map(defineERC)
 }
 

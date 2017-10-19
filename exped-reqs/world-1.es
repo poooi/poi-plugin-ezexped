@@ -49,6 +49,7 @@ const defineWorld1 = defineExped => {
         {CL: 1, DD: 3},
         {DD: 4},
       ]),
+      mk.TotalAsw(Infinity),
       mk.MissingInfo(),
     ]
   )
@@ -57,6 +58,7 @@ const defineWorld1 = defineExped => {
       mk.ShipCount(4),
       mk.FSLevel(20),
       mk.FleetCompo({DDorDE: 4}),
+      mk.TotalAsw(180),
       mk.MissingInfo(),
     ]
   )
@@ -67,6 +69,7 @@ const defineWorld1 = defineExped => {
         {CL: 1, DD: 4},
         {CL: 1, DD: 2, DE: 2},
       ]),
+      mk.TotalAsw(Infinity),
       mk.MissingInfo(),
     ]
   )

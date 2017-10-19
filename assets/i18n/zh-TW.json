@@ -53,6 +53,8 @@
     "Resupply": "艦隊補給",
     "AllSparkled": "艦隊全體艦娘都需處於“戰意高昂”狀態",
     "FillDlc": "攜帶儘可能多的“大発動艇”或“特大発動艇”",
+    "TotalAsw": "艦隊對潛值之和 ≥%s",
+    "MissingInfo": "信息不全",
     "TTNoFlagship": "無旗艦",
     "TTNeedsMoreShips": "還需%s名艦娘",
     "TTNeedsMoreDrumCarriers": "還需攜帶了“ドラム缶(輸送用)”的艦娘%s名",
@@ -62,7 +64,9 @@
     "TTLowMorale": "低士氣:",
     "TTResupply": "未補給:",
     "TTNotSparkled": "未處於“戰意高昂”狀態:",
-    "TTShipCanCarryMoreDlc": "%s 還可攜帶最多%s枚大發系裝備"
+    "TTShipCanCarryMoreDlc": "%s 還可攜帶最多%s枚大發系裝備",
+    "TTTotalAsw": "當前值: %s, 需要: %s",
+    "TTMissingInfo": "當前信息不足,無法進行完整的遠征檢查"
   },
   "FleetState": {
     "MainShouldHide": "將被隱藏",

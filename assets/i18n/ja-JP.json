@@ -53,6 +53,8 @@
     "Resupply": "各艦とも補給済み",
     "AllSparkled": "各艦ともキラキラ",
     "FillDlc": "できる限り \"大発動艇\" や \"特大発動艇\" を搭載する",
+    "TotalAsw": "Total ASW stats ≥%s",
+    "MissingInfo": "Missing Information",
     "TTNoFlagship": "旗艦がありません",
     "TTNeedsMoreShips": "まだ艦娘 %s 隻が必要です",
     "TTNeedsMoreDrumCarriers": "まだ\"ドラム缶(輸送用)\" 装備艦 %s 隻が必要です",
@@ -62,7 +64,9 @@
     "TTLowMorale": "疲労状態:",
     "TTResupply": "未補給:",
     "TTNotSparkled": "未キラ付け:",
-    "TTShipCanCarryMoreDlc": "%s は %s もっと多くの大発動艇を搭載することが可能です"
+    "TTShipCanCarryMoreDlc": "%s は %s もっと多くの大発動艇を搭載することが可能です",
+    "TTTotalAsw": "Current %s, Need: %s",
+    "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {
     "MainShouldHide": "非表示になります",
