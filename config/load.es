@@ -6,7 +6,7 @@ import { saveConfig } from './save'
 
 // loads config from poi and perform config data update when it's necessary
 const loadAndUpdateConfig = onConfigReady => {
-  const latestVersion = '1.3.0'
+  const latestVersion = '1.4.0'
   const {config} = window
   // postfixing 'W' means the actual data is wrapped in 'data' property.
   let oldConfigW = config.get('plugin.poi-plugin-ezexped')
@@ -111,6 +111,30 @@ const loadAndUpdateConfig = onConfigReady => {
       configVer: '1.3.0',
     }
 
+    oldConfigW.data = updatedConfig
+  }
+
+  if (_.get(oldConfigW,'data.configVer') === '1.3.0') {
+    // update from 1.3.0 to 1.4.0
+    const {dlcFlags,gsFlags} = oldConfigW.data
+    const newDlcFlags = {...dlcFlags}
+    const newGsFlags = {...gsFlags};
+
+    [100,101,102].map(id => {
+      if (typeof newDlcFlags[id] !== 'boolean') {
+        newDlcFlags[id] = true
+      }
+      if (typeof newGsFlags[id] !== 'boolean') {
+        newGsFlags[id] = false
+      }
+    })
+
+    const updatedConfig = {
+      ...oldConfigW.data,
+      dlcFlags: newDlcFlags,
+      gsFlags: newGsFlags,
+      configVer: '1.4.0',
+    }
     oldConfigW.data = updatedConfig
   }
 

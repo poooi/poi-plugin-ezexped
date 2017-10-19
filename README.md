@@ -7,6 +7,14 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+
+### 1.4.0 (pending)
+
+- Deal with new expeditions temporarily
+
+    - Placed a new checker on new expeditions, which cannot be satisfied. This checker is
+      temporary and will be removed once requirements are confirmed.
+
 ### 1.3.1
 
 - Fix a problem when default setting is not being properly loaded for new users.

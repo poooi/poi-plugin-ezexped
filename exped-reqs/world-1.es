@@ -40,6 +40,11 @@ const defineWorld1 = defineExped => {
   defineExped(7)(fslSc(5,6))
 
   defineExped(8)(fslSc(6,6))
+
+  // TODO: waiting for requirements to be confirmed
+  defineExped(100)([mk.MissingInfo()])
+  defineExped(101)([mk.MissingInfo()])
+  defineExped(102)([mk.MissingInfo()])
 }
 
 export { defineWorld1 }

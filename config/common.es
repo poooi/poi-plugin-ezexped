@@ -18,6 +18,9 @@ import { enumFromTo } from 'subtender'
    - 1.3.0: added 'dlcFlags' (an Object whose keys are expedition ids
      with bool values default to true)
 
+   - 1.4.0: new expedition ids: 100,101,102,
+     'dlcFlags' and 'fsFlags' get updated with default values for these keys
+
  */
 
 const expedIds = [...enumFromTo(1,40),100,101,102]
@@ -40,7 +43,7 @@ const defaultConfig = {
 
   kanceptsExportShipList: true,
 
-  configVer: '1.3.0',
+  configVer: '1.4.0',
 }
 
 const defaultConfigProps = Object.keys(defaultConfig)
