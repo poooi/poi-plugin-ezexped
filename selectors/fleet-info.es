@@ -111,7 +111,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
   })
 
   const normalizeExpedId = v =>
-    _.isInteger(v) && v >= 1 && v <= 40 ? v : null
+    _.isInteger(v) && v >= 1 && v < 300 ? v : null
 
   return {
     id: fleetData.api_id,

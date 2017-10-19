@@ -54,7 +54,6 @@ const expedInfoTableSelector = createSelector(
       _.toPairs($missions).map(([expedIdStr, masterRaw]) => {
         const id = Number(expedIdStr)
 
-        // TODO: resource => resources, check for consistency.
         let resources = null
         const rawExtra = rawExpedExtraInfo[expedIdStr]
         if (rawExtra && Array.isArray(rawExtra.resources)) {
@@ -64,6 +63,12 @@ const expedInfoTableSelector = createSelector(
 
         const info = {
           id,
+          /*
+             technically things like "A1" are not numbers,
+             but let's just pretend they are so as to keep terms
+             consistent with game.
+           */
+          displayNum: masterRaw.api_disp_no,
           name: masterRaw.api_name,
           timeInMin: masterRaw.api_time,
           cost: {

@@ -36,30 +36,30 @@ defineFleetState(
 
 defineFleetState(
   'OnExped', 'primary',
-  singObj('expedId'),
-  ({expedId}) =>
-    __('FleetState.OnExped', expedId)
+  singObj('displayNum'),
+  ({displayNum}) =>
+    __('FleetState.OnExped', displayNum)
 )
 
 defineFleetState(
   'Ready', 'success',
-  singObj('expedId'),
-  ({expedId}) =>
-    __('FleetState.Ready', expedId)
+  singObj('displayNum'),
+  ({displayNum}) =>
+    __('FleetState.Ready', displayNum)
 )
 
 defineFleetState(
   'NeedResupply', 'warning',
-  singObj('expedId'),
-  ({expedId}) =>
-    __('FleetState.NeedResupply', expedId)
+  singObj('displayNum'),
+  ({displayNum}) =>
+    __('FleetState.NeedResupply', displayNum)
 )
 
 defineFleetState(
   'Unmet', 'danger',
-  singObj('expedId'),
-  ({expedId}) =>
-    __('FleetState.Unmet', expedId)
+  singObj('displayNum'),
+  ({displayNum}) =>
+    __('FleetState.Unmet', displayNum)
 )
 
 const dispatchMethodByType = methodName =>

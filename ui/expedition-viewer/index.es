@@ -127,6 +127,7 @@ class ExpeditionViewerImpl extends Component {
   render() {
     const {expedId, getExpedInfo} = this.props
     const info = getExpedInfo(expedId)
+    const {displayNum} = info
     const resupplyCost =
       fleetResupplyCost(this.props.fleet.ships)(
         info.cost.fuelPercent / 100, info.cost.ammoPercent / 100)
@@ -185,7 +186,7 @@ class ExpeditionViewerImpl extends Component {
             onClick={this.handleClickExped}>
             <div style={{
               textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}} >
-              {`${this.props.expedId} ${info.name}`}
+              {`${displayNum} ${info.name}`}
             </div>
           </Button>
           <div style={{textAlign: "center"}}>{fmtTime(info.timeInMin)}</div>

@@ -15,6 +15,15 @@ check expedition requirements and estimate expedition income accurately.
     - Placed a new checker on new expeditions, which cannot be satisfied. This checker is
       temporary and will be removed once requirements are confirmed.
 
+- Using "display number" for expeditions.
+
+    Examples:
+
+    - `Expedition #1` is now `Expedition #01`
+
+    - `Expedition #A1` is used instead of `100`.
+      (The latter one is internal id of the expedition)
+
 ### 1.3.1
 
 - Fix a problem when default setting is not being properly loaded for new users.

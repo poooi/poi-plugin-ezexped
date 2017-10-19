@@ -9,6 +9,7 @@ import {
   dlcFlagSelectorForFleet,
   mkEReqSatFlagsSelectorForFleet,
   hideMainFleetSelector,
+  getExpedInfoFuncSelector,
 } from '../../selectors'
 
 import { FleetState } from './fleet-state'
@@ -24,11 +25,17 @@ const fleetStateSelector = _.memoize(
     dlcFlagSelectorForFleet(fleetId),
     mkEReqSatFlagsSelectorForFleet(fleetId),
     hideMainFleetSelector,
+    getExpedInfoFuncSelector,
     (
       fleet, isMainFleetFunc,
       configExpedId, needGreatSuccess, fillDlc, flags,
-      hideMainFleet
+      hideMainFleet, getExpedInfo
     ) => {
+      const displayNumOf = eId => {
+        const info = getExpedInfo(eId)
+        return info ? info.displayNum : eId
+      }
+
       if (isMainFleetFunc(fleetId)) {
         return mk.Main(hideMainFleet)
       }
@@ -39,7 +46,7 @@ const fleetStateSelector = _.memoize(
 
       if (!fleet.available) {
         // perhaps on expedition
-        return fleet.duringExpedId ? mk.OnExped(fleet.duringExpedId)
+        return fleet.duringExpedId ? mk.OnExped(displayNumOf(fleet.duringExpedId))
           : mk.NotAvail()
       }
 
@@ -48,6 +55,7 @@ const fleetStateSelector = _.memoize(
          should use data from config
        */
       const expedId = configExpedId
+      const displayNum = displayNumOf(expedId)
       const {normFlag, gsFlag, resupplyFlag, dlcFlag} = flags
       const effectiveDlcFlag = !fillDlc || (fillDlc && dlcFlag)
       const effectiveNormFlag = normFlag && effectiveDlcFlag
@@ -56,10 +64,10 @@ const fleetStateSelector = _.memoize(
       // if every requirements are met (without considering resupplyFlag)
       if (effectiveNormFlag && effectiveGsFlag) {
         // now consider resupply flag in this block
-        return resupplyFlag ? mk.Ready(expedId) : mk.NeedResupply(expedId)
+        return resupplyFlag ? mk.Ready(displayNum) : mk.NeedResupply(displayNum)
       }
 
-      return mk.Unmet(expedId)
+      return mk.Unmet(displayNum)
     }
   )
 )

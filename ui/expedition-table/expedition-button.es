@@ -63,7 +63,7 @@ class ExpeditionButton extends PureComponent {
           active={active}
           onClick={onClick}>
           <span>
-            {expedId}
+            {getExpedInfo(expedId).displayNum}
           </span>
           {
             runningFleetId && (
