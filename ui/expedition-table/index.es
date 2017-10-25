@@ -3,7 +3,7 @@ import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel } from 'react-bootstrap'
-import { enumFromTo, modifyObject } from 'subtender'
+import { modifyObject } from 'subtender'
 import { PTyp } from '../../ptyp'
 import { ExpeditionButton } from './expedition-button'
 import {
@@ -20,9 +20,6 @@ import {
 } from './selectors'
 import { mapDispatchToProps } from '../../store'
 import { KanceptsExporter } from './kancepts-exporter'
-
-// TODO: see below
-const allExpedIds = enumFromTo(1,40)
 
 class ExpeditionTableImpl extends Component {
   static propTypes = {
@@ -79,51 +76,42 @@ class ExpeditionTableImpl extends Component {
         style={{marginBottom: "5px"}} >
         <div style={{display: "flex"}} >
           {
-            _.zip(
-              // worlds
-              enumFromTo(1,5),
-              // expedition ids in that world
-              _.chunk(allExpedIds,8)
-            ).map(([world, expedIdsTmp]) => {
-              // TODO: groupped expeds from master data
-              const expedIds =
-                world === 1 ? [...expedIdsTmp, 100, 101, 102] : expedIdsTmp
-              return (
-                <div
-                  key={world}
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    marginRight: 5,
-                    flexDirection: 'column',
-                  }}>
-                  {
-                    expedIds.map(expedId => {
-                      const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
-                      return (
-                        <ExpeditionButton
-                          key={expedId}
-                          ready={normGsFlag.norm}
-                          btnClassName={
-                            (
-                              normGsFlag.norm &&
-                              normGsFlag.gs
-                            ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
-                          }
-                          active={this.props.expedId === expedId}
-                          runningFleetId={
-                            currentRunningExpedIdToFleetId[expedId]
-                          }
-                          expedId={expedId}
-                          getExpedInfo={getExpedInfo}
-                          onClick={this.handleSelectExped(expedId)}
-                        />
-                      )
-                    })
-                  }
-                </div>
-              )
-            })
+            expedIdsArr.map(([world, expedIds]) => (
+              <div
+                key={world}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  marginRight: 5,
+                  flexDirection: 'column',
+                }}>
+                {
+                  expedIds.map(expedId => {
+                    const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
+                    return (
+                      <ExpeditionButton
+                        key={expedId}
+                        ready={normGsFlag.norm}
+                        btnClassName={
+                          (
+                            normGsFlag.norm &&
+                            normGsFlag.gs
+                          ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
+                        }
+                        active={this.props.expedId === expedId}
+                        runningFleetId={
+                          currentRunningExpedIdToFleetId[expedId]
+                        }
+                        expedId={expedId}
+                        getExpedInfo={getExpedInfo}
+                        onClick={this.handleSelectExped(expedId)}
+                      />
+                    )
+                  })
+                }
+              </div>
+            )
+            )
           }
         </div>
         <KanceptsExporter style={{}} />
