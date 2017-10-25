@@ -151,7 +151,8 @@ class ExpeditionViewerImpl extends Component {
           daihatsuBonus,
           resupply)
       } else {
-        renderedResources[resourceName] = String(-resupply)
+        renderedResources[resourceName] =
+          resupply > 0 ? `???-${resupply}` : '???'
       }
     })
 
