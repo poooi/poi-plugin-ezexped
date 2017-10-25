@@ -54,6 +54,7 @@
     "AllSparkled": "各艦ともキラキラ",
     "FillDlc": "できる限り \"大発動艇\" や \"特大発動艇\" を搭載する",
     "TotalAsw": "Total ASW stats ≥%s",
+    "TotalAsw": "Total anti-air stats ≥%s",
     "MissingInfo": "Missing Information",
     "TTNoFlagship": "旗艦がありません",
     "TTNeedsMoreShips": "まだ艦娘 %s 隻が必要です",
@@ -66,6 +67,7 @@
     "TTNotSparkled": "未キラ付け:",
     "TTShipCanCarryMoreDlc": "%s は %s もっと多くの大発動艇を搭載することが可能です",
     "TTTotalAsw": "Current %s, Need: %s",
+    "TTTotalAntiAir": "Current %s, Need: %s",
     "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {

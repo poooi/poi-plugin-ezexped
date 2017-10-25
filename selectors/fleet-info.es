@@ -108,6 +108,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
       stype: $ship.api_stype,
       extraDlcCapability,
       asw: ship.api_taisen[0],
+      antiAir: ship.api_taiku[0],
     }
   })
 

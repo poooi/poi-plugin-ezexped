@@ -54,6 +54,7 @@
     "AllSparkled": "All ships need to be sparkled",
     "FillDlc": "Carry as many \"大発動艇\" or \"特大発動艇\" as possible",
     "TotalAsw": "Total ASW stats ≥%s",
+    "TotalAntiAir": "Total anti-air stats ≥%s",
     "MissingInfo": "Missing Information",
     "TTNoFlagship": "No Flagship",
     "TTNeedsMoreShips": "Needs %s more ships",
@@ -66,6 +67,7 @@
     "TTNotSparkled": "Not Sparkled:",
     "TTShipCanCarryMoreDlc": "%s can carry %s more Daihatsu-class equipment(s)",
     "TTTotalAsw": "Current %s, Need: %s",
+    "TTTotalAntiAir": "Current %s, Need: %s",
     "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {

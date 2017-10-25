@@ -50,13 +50,19 @@ const defineWorld1 = defineExped => {
   )
 
   // reference: https://docs.google.com/spreadsheets/d/1BM2SCpxuZRMY0R9ipptY6jQ1-v51tOijBJ8Fofpx33c
+  /*
+     Note: further investigations are still needed (TODO), but for now
+     the following requirements will work most of the time.
+     exceptions are (all of above are mentioned in the reference):
+     - cases where sum of naked AA stat is less than 70
+     - improvement of ASW gears could be taken into account
+   */
   defineExped(101)(
     [
       ...fslSc(20,4),
       mk.FleetCompo({DDorDE: 4}),
       mk.TotalAsw(180),
-      // TODO: AA?
-      mk.MissingInfo(),
+      mk.TotalAntiAir(70),
     ]
   )
 
