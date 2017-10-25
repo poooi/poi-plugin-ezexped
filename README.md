@@ -7,6 +7,23 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.4.1
+
+- Some improvement to expedition selector
+
+    - Now an expedition appears only if you've unlocked them in game.
+      But event support expedition won't appear just like before.
+
+    - Making button layout a bit more compact
+
+- Implemented checkers for A1, A2, A3
+
+    - Subject to change, as investigations are still in progress. But should be good enough.
+
+    - References:
+
+      - [wikiwiki](http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC)
+      - [A2 海峡警備行動 調査](https://docs.google.com/spreadsheets/d/1BM2SCpxuZRMY0R9ipptY6jQ1-v51tOijBJ8Fofpx33c/)
 
 ### 1.4.0
 
