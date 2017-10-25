@@ -2,6 +2,8 @@ import _ from 'lodash'
 import { createSelector } from 'reselect'
 import { join } from 'path-extra'
 import { readJsonSync } from 'fs-extra'
+import { projectorToComparator } from 'subtender'
+
 import {
   constSelector,
 } from 'views/utils/selectors'
@@ -45,6 +47,25 @@ const mkItem = itemData => itemData[0] === 0 ?
 const rawExpedInfoSelector = createSelector(
   constSelector,
   ({$missions}) => $missions
+)
+
+/*
+   produces an Array of all expeditions groupped by world number.
+   every element of the Array is [<World number>, <Array of expedition id>]
+ */
+const grouppedExpedIdsSelector = createSelector(
+  rawExpedInfoSelector,
+  raw =>
+    _.toPairs(
+      _.mapValues(
+        _.groupBy(raw,'api_maparea_id'),
+        xs => xs.map(x => x.api_id)
+      )
+    ).map(
+      ([kS,v]) => [Number(kS),v]
+    ).sort(
+      projectorToComparator(([k,_v]) => k)
+    )
 )
 
 const expedInfoTableSelector = createSelector(
@@ -105,4 +126,5 @@ export {
   expedInfoTableSelector,
   getExpedInfoFuncSelector,
   expedNameToIdFuncSelector,
+  grouppedExpedIdsSelector,
 }
