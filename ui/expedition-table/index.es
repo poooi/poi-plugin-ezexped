@@ -12,6 +12,7 @@ import {
   expedTableExpandedSelector,
   darkOrLightSelector,
   getExpedInfoFuncSelector,
+  grouppedExpedIdsSelector,
 } from '../../selectors'
 import {
   mkEReqNormGsFlagsSelectorForFleet,
@@ -37,6 +38,7 @@ class ExpeditionTableImpl extends Component {
       gs: PTyp.bool.isRequired,
     })).isRequired,
     currentRunningExpedIdToFleetId: PTyp.objectOf(PTyp.number).isRequired,
+    grouppedExpedIds: PTyp.array.isRequired,
   }
 
   static defaultProps = {
@@ -62,7 +64,14 @@ class ExpeditionTableImpl extends Component {
       currentRunningExpedIdToFleetId,
       darkOrLight,
       getExpedInfo,
+      grouppedExpedIds,
     } = this.props
+
+    const expedIdsArr = grouppedExpedIds.filter(
+      // only show expeditions from world 1 to 5
+      ([w,_v]) => w >= 1 && w <= 5
+    )
+
     return (
       <Panel
         collapsible
@@ -130,6 +139,7 @@ const uiSelector = createStructuredSelector({
   currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
   darkOrLight: darkOrLightSelector,
   getExpedInfo: getExpedInfoFuncSelector,
+  grouppedExpedIds: grouppedExpedIdsSelector,
 })
 
 const ExpeditionTable = connect(
