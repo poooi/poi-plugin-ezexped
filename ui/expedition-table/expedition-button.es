@@ -52,9 +52,12 @@ class ExpeditionButton extends PureComponent {
         }>
         <Button
           className={btnClassName}
+          bsSize="small"
           bsStyle={ready ? "primary" : "default"}
           style={{
+            maxWidth: 150,
             width: '100%',
+            height: '2.2em',
             marginBottom: 2,
             display: 'flex',
             alignItems: 'center',
