@@ -55,6 +55,7 @@
     "FillDlc": "攜帶儘可能多的“大発動艇”或“特大発動艇”",
     "TotalAsw": "艦隊對潛值之和 ≥%s",
     "TotalAntiAir": "艦隊對空值之和 ≥%s",
+    "TotalLos": "艦隊索敵值之和 ≥%s",
     "MissingInfo": "信息不足",
     "TTNoFlagship": "無旗艦",
     "TTNeedsMoreShips": "還需%s名艦娘",
@@ -68,6 +69,7 @@
     "TTShipCanCarryMoreDlc": "%s 還可攜帶最多%s枚大發系裝備",
     "TTTotalAsw": "當前值: %s, 需要: %s",
     "TTTotalAntiAir": "當前值: %s, 需要: %s",
+    "TTTotalLos": "當前值: %s, 需要: %s",
     "TTMissingInfo": "當前信息不足,無法進行完整的遠征檢查"
   },
   "FleetState": {

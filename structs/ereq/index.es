@@ -63,6 +63,7 @@ import { AnyFleetCompo } from './any-fleet-compo'
 import { FillDlc } from './fill-dlc'
 import { TotalAsw } from './total-asw'
 import { TotalAntiAir } from './total-anti-air'
+import { TotalLos } from './total-los'
 import { MissingInfo } from './missing-info'
 
 const classTable = _.fromPairs([
@@ -82,6 +83,7 @@ const classTable = _.fromPairs([
   FillDlc,
   TotalAsw,
   TotalAntiAir,
+  TotalLos,
   MissingInfo,
 ].map(cls => [cls.name, cls]))
 
