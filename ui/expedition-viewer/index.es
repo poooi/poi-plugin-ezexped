@@ -237,7 +237,10 @@ class ExpeditionViewerImpl extends Component {
           </div>
           <ButtonGroup style={{display: 'flex'}}>
             <Button
-              style={{flex: 1, display: 'flex', alignItems: 'baseline'}}
+              style={{
+                flex: 1, display: 'flex', alignItems: 'baseline',
+                width: 0,
+              }}
               onClick={this.handleToggleGS}>
               <FontAwesome
                 className={
