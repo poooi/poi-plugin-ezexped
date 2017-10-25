@@ -41,36 +41,35 @@ const defineWorld1 = defineExped => {
 
   defineExped(8)(fslSc(6,6))
 
-  // TODO: waiting for requirements to be confirmed
+  // reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
   defineExped(100)(
     [
-      mk.ShipCount(4),
-      mk.AnyFleetCompo([
-        {CL: 1, DD: 3},
-        {DD: 4},
-      ]),
-      mk.TotalAsw(Infinity),
-      mk.MissingInfo(),
+      ...fslSc(5,4),
+      mk.FleetCompo({DDorDE: 3}),
     ]
   )
+
+  // reference: https://docs.google.com/spreadsheets/d/1BM2SCpxuZRMY0R9ipptY6jQ1-v51tOijBJ8Fofpx33c
   defineExped(101)(
     [
-      mk.ShipCount(4),
-      mk.FSLevel(20),
+      ...fslSc(20,4),
       mk.FleetCompo({DDorDE: 4}),
       mk.TotalAsw(180),
+      // TODO: AA?
       mk.MissingInfo(),
     ]
   )
+
   defineExped(102)(
     [
-      mk.ShipCount(5),
+      ...fslSc(35,5),
+      mk.LevelSum(185),
       mk.AnyFleetCompo([
-        {CL: 1, DD: 4},
-        {CL: 1, DD: 2, DE: 2},
+        {CL: 1, DDorDE: 3},
+        {DD: 1, DE: 3},
+        {CT: 1, DD: 2, DE: 2},
       ]),
-      mk.TotalAsw(Infinity),
-      mk.MissingInfo(),
+      mk.TotalAsw(280),
     ]
   )
 }
