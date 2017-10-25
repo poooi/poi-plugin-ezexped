@@ -7,6 +7,12 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.4.2
+
+- Marked Michishio Kai Ni as DLC-capable
+
+- Early support for new expedition B1
+
 ### 1.4.1
 
 - Some improvement to expedition selector
