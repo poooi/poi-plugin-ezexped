@@ -48,6 +48,17 @@ const defineWorld2 = defineExped => {
       ...fslSc(11,6),
       mk.FleetCompo({CL: 1, DD: 2}),
     ])
+
+  // TODO
+  defineExped(110)(
+    [
+      mk.ShipCount(6),
+      mk.FleetCompo({AV: 1, CL: 1, DDorDE: 2}),
+      mk.TotalAsw(Infinity),
+      mk.TotalAntiAir(Infinity),
+      mk.TotalLos(Infinity),
+      mk.MissingInfo(),
+    ])
 }
 
 export { defineWorld2 }
