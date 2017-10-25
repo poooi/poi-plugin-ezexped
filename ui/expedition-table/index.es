@@ -71,6 +71,7 @@ class ExpeditionTableImpl extends Component {
 
     return (
       <Panel
+        className="exped-btn-table"
         collapsible
         expanded={expedTableExpanded}
         style={{marginBottom: "5px"}} >
