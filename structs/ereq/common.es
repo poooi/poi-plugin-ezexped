@@ -14,10 +14,15 @@ const requireFlagship = onFlagship =>
       onFlagship(ships[0]))
 
 // require x >= y and show some message if it's unmet
-const requireGreaterOrEqual = (x,y) =>
-  x >= y ?
-    checkOk() :
-    {sat: false, extra: {type: 'GreaterOrEqual', left: x, right: y}}
+const requireGreaterOrEqual = (x,y,forceTooltip=false) => {
+  const extra = {type: 'GreaterOrEqual', left: x, right: y}
+
+  if (x >= y) {
+    return checkOk(forceTooltip ? extra : undefined)
+  } else {
+    return {sat: false, extra}
+  }
+}
 
 // wrapping a bool value to the expected format
 const wrapBool = b => b ? checkOk() : {sat: false, extra: {}}

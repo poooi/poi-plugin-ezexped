@@ -13,7 +13,11 @@ class TotalAsw {
     onFleetShips(ships =>
       requireGreaterOrEqual(
         _.sum(ships.map(x => x.asw)),
-        asw))
+        asw,
+        // show tooltip regardless of sat
+        true,
+      )
+    )
 }
 
 export { TotalAsw }
