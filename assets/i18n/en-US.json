@@ -67,9 +67,9 @@
     "TTResupply": "Not resupplied:",
     "TTNotSparkled": "Not Sparkled:",
     "TTShipCanCarryMoreDlc": "%s can carry %s more Daihatsu-class equipment(s)",
-    "TTTotalAsw": "Current %s, Need: %s",
-    "TTTotalAntiAir": "Current %s, Need: %s",
-    "TTTotalLos": "Current %s, Need: %s",
+    "TTTotalAsw": "Current: %s, Needed: %s",
+    "TTTotalAntiAir": "Current: %s, Needed: %s",
+    "TTTotalLos": "Current: %s, Needed: %s",
     "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {

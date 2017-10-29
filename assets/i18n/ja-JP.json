@@ -67,9 +67,9 @@
     "TTResupply": "未補給:",
     "TTNotSparkled": "未キラ付け:",
     "TTShipCanCarryMoreDlc": "%s は %s もっと多くの大発動艇を搭載することが可能です",
-    "TTTotalAsw": "Current %s, Need: %s",
-    "TTTotalAntiAir": "Current %s, Need: %s",
-    "TTTotalLos": "Current %s, Need: %s",
+    "TTTotalAsw": "Current: %s, Needed: %s",
+    "TTTotalAntiAir": "Current: %s, Needed: %s",
+    "TTTotalLos": "Current: %s, Needed: %s",
     "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {
