@@ -50,13 +50,15 @@ const defineWorld2 = defineExped => {
     ])
 
   // TODO
+  // reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
   defineExped(110)(
     [
-      mk.ShipCount(6),
+      ...fslSc(40,6),
+      mk.LevelSum(150),
       mk.FleetCompo({AV: 1, CL: 1, DDorDE: 2}),
-      mk.TotalAsw(Infinity),
-      mk.TotalAntiAir(Infinity),
-      mk.TotalLos(Infinity),
+      mk.TotalAsw(200,true),
+      mk.TotalAntiAir(200),
+      mk.TotalLos(140),
       mk.MissingInfo(),
     ])
 }
