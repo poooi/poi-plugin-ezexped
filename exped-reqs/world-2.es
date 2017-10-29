@@ -49,7 +49,6 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({CL: 1, DD: 2}),
     ])
 
-  // TODO
   // reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
   defineExped(110)(
     [
@@ -59,7 +58,6 @@ const defineWorld2 = defineExped => {
       mk.TotalAsw(200,true),
       mk.TotalAntiAir(200),
       mk.TotalLos(140),
-      mk.MissingInfo(),
     ])
 }
 
