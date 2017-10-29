@@ -64,13 +64,24 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
 
   if (!shipsData || !equipsData || !fleetData)
     return null
-
   const ships = shipsData.map(([ship, $ship], ind) => {
     const equips = _.compact(equipsData[ind])
       .map(([equipInst, $equip]) => ({
         mstId: $equip.api_id,
         rstId: equipInst.api_id,
         level: equipInst.api_level,
+        /*
+           the name could be a bit misleading,
+           this flag is set to true for *all* of the following
+           category of equipments:
+
+           10=水上偵察機
+           11=水上爆撃機
+           41=大型飛行艇
+
+         */
+        isRecon: [10,11,41].includes($equip.api_type[2]),
+        asw: $equip.api_tais,
       }))
     const [[curAmmo, maxAmmo], [curFuel,maxFuel]] =
       [

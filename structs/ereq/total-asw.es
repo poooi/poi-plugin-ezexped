@@ -16,14 +16,39 @@ class TotalAsw {
 
   // TODO: ignore recon planes if necessary
   static prepare = ({asw, noRecon}) => () =>
-    onFleetShips(ships =>
-      requireGreaterOrEqual(
-        _.sum(ships.map(x => x.asw)),
-        asw,
-        // show tooltip regardless of sat
-        true,
-      )
-    )
+    onFleetShips(ships => {
+      const totalAsw = _.sum(ships.map(x => x.asw))
+      if (noRecon) {
+        const totalAswRecon = _.sum(
+          _.flatMap(
+            ships,
+            s =>
+              _.flatMap(
+                s.equips,
+                e => e.isRecon ? [e.asw] : []
+              )
+          )
+        )
+
+        const effectAsw = totalAsw - totalAswRecon
+        const effectAswText = `${effectAsw} = ${totalAsw}-${totalAswRecon}`
+        const {sat,extra} = requireGreaterOrEqual(
+          effectAsw,
+          asw,
+          // show tooltip regardless of sat
+          true,
+        )
+
+        return {sat, extra: {...extra, left: effectAswText}}
+      } else {
+        return requireGreaterOrEqual(
+          totalAsw,
+          asw,
+          // show tooltip regardless of sat
+          true,
+        )
+      }
+    })
 }
 
 export { TotalAsw }
