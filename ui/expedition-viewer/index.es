@@ -111,7 +111,10 @@ class ExpeditionViewerImpl extends Component {
         'gsFlags',
         modifyObject(
           expedId,
-          x => !x)))
+          x => !x
+        )
+      )
+    )
   }
 
   handleToggleDlc = () => {
@@ -121,7 +124,10 @@ class ExpeditionViewerImpl extends Component {
         'dlcFlags',
         modifyObject(
           expedId,
-          x => !x)))
+          x => !x
+        )
+      )
+    )
   }
 
   render() {
@@ -166,6 +172,7 @@ class ExpeditionViewerImpl extends Component {
     const hasNormalItem = info.itemNormal
     const hasGreatSuccessItem = this.props.greatSuccess && info.itemGreatSuccess
     const prettyRange = (x,y) => x === y ? `${x}` : `${x}~${y}`
+
     return (
       <div
         className="exped-viewer"

@@ -203,13 +203,19 @@ const expedIdSelector = createSelector(
 const gsFlagSelector = createSelector(
   gsFlagsSelector,
   expedIdSelector,
-  (gsFlags,expedId) => gsFlags[expedId] || false
+  (gsFlags,expedId) => {
+    const flag = gsFlags[expedId]
+    return typeof flag !== 'undefined' ? flag : false
+  }
 )
 
 const dlcFlagSelector = createSelector(
   dlcFlagsSelector,
   expedIdSelector,
-  (dlcFlags,expedId) => dlcFlags[expedId] || true
+  (dlcFlags,expedId) => {
+    const flag = dlcFlags[expedId]
+    return typeof flag !== 'undefined' ? flag : true
+  }
 )
 
 const fleetInfoSelector = createSelector(
