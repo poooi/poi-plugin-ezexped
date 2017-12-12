@@ -60,7 +60,7 @@ const defineWorld2 = defineExped => {
       mk.TotalLos(140),
       // TODO: I got reports that fleet meeting requirements above are still failing
       // so perhaps we need to wait for a while
-      mk.MissingInfo(),
+      // mk.MissingInfo(),
     ])
 }
 
