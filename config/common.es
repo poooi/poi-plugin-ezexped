@@ -21,6 +21,9 @@ import { enumFromTo } from 'subtender'
    - 1.4.0: new expedition ids: 100,101,102,
      'dlcFlags' and 'fsFlags' get updated with default values for these keys
 
+   - 1.5.0 (TODO): gsFlags & dlcFlags no longer expand to new expeditions,
+     instead, default values should be used.
+
  */
 
 const expedIds = [...enumFromTo(1,40),100,101,102]
