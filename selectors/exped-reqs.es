@@ -17,7 +17,7 @@ import { expedReqs, mapExpedReq } from '../exped-reqs'
 import { EReq } from '../structs/ereq'
 
 // extracts slice of interest related to expedition requirements
-const minConfigSelector = sparkledCountSelector
+const minPStateSelector = sparkledCountSelector
 
 /*
   spare equipments are those not being used in any fleet.
@@ -68,17 +68,17 @@ const extraSelector = createSelector(
 )
 
 const expedReqsStage2Selector = createSelector(
-  minConfigSelector,
+  minPStateSelector,
   /*
      this function can be memoized because for now the only affecting
-     config is just `sparkledCount` which is a number that takes
+     p-state is just `sparkledCount` which is a number that takes
      only a few limited, comparable numbers
    */
   _.memoize(sparkledCount => {
-    const config = {sparkledCount}
+    const pState = {sparkledCount}
     return _.mapValues(
       expedReqs,
-      mapExpedReq(EReq.performStage2(config))
+      mapExpedReq(EReq.performStage2(pState))
     )
   }))
 

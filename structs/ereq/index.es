@@ -5,7 +5,7 @@
    as a class with static methods, these methods should respect the following
    specification:
 
-   - prepare(<EReq>)(<config>)(Fleet,Extra) = Object
+   - prepare(<EReq>)(<pState>)(Fleet,Extra) = Object
 
        curried in this way to allow pre-processing ahead of
        getting info about the fleet.
@@ -128,14 +128,14 @@ class EReq {
    that takes 3 parameters before yielding the final result:
 
    - ereq structure
-   - config structure
+   - pState structure
    - fleet structure
 
    if we partially apply a function depending on the availability
    of info, we can break things into some stages:
 
    - stage1: the stage after `ereq` itself is applied to prepare
-   - stage2: the stage after `config` is applied
+   - stage2: the stage after `pState` is applied
    - result: the stage after `fleet` is applied, yielding the final result
 
    `performStage1` takes `ereq` structure and transforms it into a structure of
@@ -151,8 +151,8 @@ class EReq {
 
    - ereq: raw object, serializable representation
    - stage1: result of EReq.prepare(ereq)
-   - stage2: result of EReq.prepare(ereq)(config)
-   - result: return value of EReq.prepare(ereq)(config)(fleet), serializable,
+   - stage2: result of EReq.prepare(ereq)(pState)
+   - result: return value of EReq.prepare(ereq)(pState)(fleet), serializable,
      for rendering on UIs
 
  */
@@ -161,9 +161,9 @@ class EReq {
     return {ereq, stage1}
   }
 
-  static performStage2 = config => obj => ({
+  static performStage2 = pState => obj => ({
     ...obj,
-    stage2: obj.stage1(config),
+    stage2: obj.stage1(pState),
   })
 
   static computeResult = (fleet,extra) => obj => ({

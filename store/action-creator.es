@@ -2,9 +2,9 @@ import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 
 const actionCreator = {
-  configReady: config => ({
-    type: '@poi-plugin-ezexped@ConfigReady',
-    config,
+  pStateReady: pState => ({
+    type: '@poi-plugin-ezexped@PStateReady',
+    pState,
   }),
   changeFleet: (fleetId,reason=null) => ({
     type: '@poi-plugin-ezexped@ChangeFleet',

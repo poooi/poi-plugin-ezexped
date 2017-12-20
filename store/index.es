@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { modifyObject } from 'subtender'
 import { store } from 'views/create-store'
 
-import { defaultConfig } from '../config'
+import { defaultPState } from '../p-state'
 import {
   subReducer as autoSwitchSubReducer,
 } from './auto-switch'
@@ -13,24 +13,24 @@ import { expedNameToIdFuncSelector } from '../selectors'
 const fleetChangeDebug = false
 
 const initState = {
-  ...defaultConfig,
+  ...defaultPState,
 
   expedTableExpanded: false,
   ready: false,
 }
 
 const reducer = (state = initState, action) => {
-  if (action.type === '@poi-plugin-ezexped@ConfigReady') {
-    const {config} = action
+  if (action.type === '@poi-plugin-ezexped@PStateReady') {
+    const {pState} = action
     return {
       ...state,
-      ...config,
+      ...pState,
       ready: true,
     }
   }
 
   // all other actions requires the state to be ready
-  if (! state.ready)
+  if (!state.ready)
     return state
 
   if (action.type === '@poi-plugin-ezexped@ModifyState') {

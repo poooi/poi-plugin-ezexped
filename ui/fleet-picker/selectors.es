@@ -28,7 +28,7 @@ const fleetStateSelector = _.memoize(
     getExpedInfoFuncSelector,
     (
       fleet, isMainFleetFunc,
-      configExpedId, needGreatSuccess, fillDlc, flags,
+      psExpedId, needGreatSuccess, fillDlc, flags,
       hideMainFleet, getExpedInfo
     ) => {
       const displayNumOf = eId => {
@@ -52,9 +52,9 @@ const fleetStateSelector = _.memoize(
 
       /*
          otherwise we are looking at an available fleet,
-         should use data from config
+         should use data from p-state
        */
-      const expedId = configExpedId
+      const expedId = psExpedId
       const displayNum = displayNumOf(expedId)
       const {normFlag, gsFlag, resupplyFlag, dlcFlag} = flags
       const effectiveDlcFlag = !fillDlc || (fillDlc && dlcFlag)

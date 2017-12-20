@@ -2,10 +2,10 @@ import { reducer, boundActionCreator } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain as reactClass } from './ui'
 import { globalSubscribe, globalUnsubscribe } from './observers'
-import { loadAndUpdateConfig } from './config'
+import { loadAndUpdatePState } from './p-state'
 
-// for config loading process
-let configInitId = null
+// for p-state loading process
+let pStateInitId = null
 
 /*
    TODO
@@ -17,23 +17,23 @@ let configInitId = null
 const pluginDidLoad = () => {
   globalSubscribe()
 
-  if (configInitId !== null) {
-    console.error(`configInitId should be null`)
+  if (pStateInitId !== null) {
+    console.error(`pStateInitId should be null`)
   }
-  configInitId = setTimeout(() => {
-    loadAndUpdateConfig(
-      boundActionCreator.configReady
+  pStateInitId = setTimeout(() => {
+    loadAndUpdatePState(
+      boundActionCreator.pStateReady
     )
-    configInitId = null
+    pStateInitId = null
   })
 }
 
 const pluginWillUnload = () => {
   globalUnsubscribe()
 
-  if (configInitId !== null) {
-    clearTimeout(configInitId)
-    configInitId = null
+  if (pStateInitId !== null) {
+    clearTimeout(pStateInitId)
+    pStateInitId = null
   }
 }
 

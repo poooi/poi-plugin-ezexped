@@ -3,13 +3,13 @@ import { enumFromTo } from 'subtender'
 
 /*
 
-   config data versioning:
+   p-state data versioning:
 
    - starting at '1.0.0', consider it's legacy otherwise
    - keep in sync with the latest package version that
      has made changes to config structure.
 
-   config structure changelog:
+   p-state structure changelog:
 
    - 1.1.0: added 'syncMainFleetId' (default to false)
 
@@ -28,7 +28,7 @@ import { enumFromTo } from 'subtender'
 
 const expedIds = [...enumFromTo(1,40),100,101,102]
 
-const defaultConfig = {
+const defaultPState = {
   fleetAutoSwitch: true,
   hideMainFleet: false,
   hideSatReqs: false,
@@ -49,9 +49,9 @@ const defaultConfig = {
   configVer: '1.4.0',
 }
 
-const defaultConfigProps = Object.keys(defaultConfig)
+const defaultPStateProps = Object.keys(defaultPState)
 
 export {
-  defaultConfig,
-  defaultConfigProps,
+  defaultPState,
+  defaultPStateProps,
 }
