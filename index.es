@@ -1,4 +1,4 @@
-import { reducer, boundActionCreator } from './store'
+import { reducer, boundActionCreators } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain as reactClass } from './ui'
 import { globalSubscribe, globalUnsubscribe } from './observers'
@@ -20,7 +20,7 @@ const pluginDidLoad = () => {
     console.error(`pStateInitId should be null`)
   }
   pStateInitId = setTimeout(() => {
-    boundActionCreator.pStateReady(loadPState())
+    boundActionCreators.pStateReady(loadPState())
     pStateInitId = null
   })
 }

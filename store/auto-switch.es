@@ -13,8 +13,8 @@ import { store } from 'views/create-store'
 import { precompose } from 'subtender'
 
 import {
-  asyncBoundActionCreator,
-} from './action-creator'
+  asyncBoundActionCreators,
+} from './action-creators'
 import {
   hideMainFleetSelector,
   visibleFleetIdsSelector,
@@ -29,7 +29,7 @@ import {
    func is called with changeFleet
  */
 const asyncChangeFleet = compose(
-  asyncBoundActionCreator,
+  asyncBoundActionCreators,
   precompose(x => x.changeFleet)
 )
 

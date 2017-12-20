@@ -1,5 +1,3 @@
-import _ from 'lodash'
-import { enumFromTo } from 'subtender'
 import { ensureDirSync } from 'fs-extra'
 import { join } from 'path-extra'
 

@@ -15,7 +15,7 @@ import {
   hideSatReqsSelector,
   syncMainFleetIdSelector,
 } from '../../selectors'
-import { actionCreator } from '../../store'
+import { actionCreators } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 
@@ -136,7 +136,7 @@ const Settings = connect(
     hideSatReqs: hideSatReqsSelector,
     syncMainFleetId: syncMainFleetIdSelector,
   }),
-  actionCreator,
+  actionCreators,
 )(SettingsImpl)
 
 export { Settings }

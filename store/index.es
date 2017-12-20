@@ -5,7 +5,7 @@ import { store } from 'views/create-store'
 import {
   subReducer as autoSwitchSubReducer,
 } from './auto-switch'
-import { asyncBoundActionCreator } from './action-creator'
+import { asyncBoundActionCreators } from './action-creators'
 import { debug } from '../debug'
 import { expedNameToIdFuncSelector } from '../selectors'
 
@@ -59,7 +59,7 @@ const reducer = (state = initState, action) => {
 
   if (action.type === '@@Response/kcsapi/api_req_mission/result') {
     // get an async action to figure out the exped
-    asyncBoundActionCreator(bac => {
+    asyncBoundActionCreators(bac => {
       try {
         const expedName = action.body.api_quest_name
         const expedNameToId = expedNameToIdFuncSelector(store.getState())
@@ -97,7 +97,7 @@ const reducer = (state = initState, action) => {
   }
 }
 
-export * from './action-creator'
+export * from './action-creators'
 
 export {
   initState,

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 
-const actionCreator = {
+const actionCreators = {
   pStateReady: pState => ({
     type: '@poi-plugin-ezexped@PStateReady',
     pState,
@@ -30,18 +30,18 @@ const actionCreator = {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreator, dispatch)
+  bindActionCreators(actionCreators, dispatch)
 
-const boundActionCreator =
+const boundActionCreators =
   mapDispatchToProps(store.dispatch)
 
-const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
+const asyncBoundActionCreators = (func, dispatch=store.dispatch) =>
   dispatch(() => setTimeout(() =>
-    func(boundActionCreator)))
+    func(boundActionCreators)))
 
 export {
-  actionCreator,
+  actionCreators,
   mapDispatchToProps,
-  boundActionCreator,
-  asyncBoundActionCreator,
+  boundActionCreators,
+  asyncBoundActionCreators,
 }

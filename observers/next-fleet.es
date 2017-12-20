@@ -6,7 +6,7 @@ import {
   expedFleetsAvailabilitySelector,
 } from '../selectors'
 import {
-  asyncBoundActionCreator,
+  asyncBoundActionCreators,
 } from '../store'
 
 /*
@@ -43,7 +43,7 @@ const expedFleetsAvailabilityObserver = observer(
           cur.available === false)
 
         if (ava)
-          asyncBoundActionCreator(
+          asyncBoundActionCreators(
             ({autoSwitchToNextAvailable}) => autoSwitchToNextAvailable(
               `observer: detected that we are sending fleet ${ava.fleetId} out`
             ),

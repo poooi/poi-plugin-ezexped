@@ -14,7 +14,7 @@ import {
   hideMainFleetSelector,
 } from '../selectors'
 import {
-  asyncBoundActionCreator,
+  asyncBoundActionCreators,
 } from '../store'
 
 const poiActiveFleetIdSelector = createSelector(
@@ -67,7 +67,7 @@ const syncMainFleetObserver = observer(
       validFleetId(poiFleetId) &&
       shouldConsiderFleetId(poiFleetId)
     ) {
-      asyncBoundActionCreator(
+      asyncBoundActionCreators(
         ({changeFleet}) =>
           changeFleet(poiFleetId,`sync with main fleet`),
         dispatch)
@@ -82,7 +82,7 @@ const syncMainFleetObserver = observer(
       validFleetId(fleetId) &&
       shouldConsiderFleetId(fleetId)
     ) {
-      asyncBoundActionCreator(
+      asyncBoundActionCreators(
         ({changeFleetFocusInMainUI}) =>
           changeFleetFocusInMainUI(fleetId,false),
         dispatch)
