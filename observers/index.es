@@ -11,11 +11,35 @@ import {
   syncMainFleetObserver,
 } from './sync-main-fleet'
 
-const observeAll = () =>
-  observe(store, [
-    configSaveObserver,
-    expedFleetsAvailabilityObserver,
-    syncMainFleetObserver,
-  ])
+let unsubscribe = null
 
-export { observeAll }
+const globalSubscribe = () => {
+  if (unsubscribe !== null) {
+    console.warn('expecting "unsubscribe" to be null')
+    if (typeof unsubscribe === 'function')
+      unsubscribe()
+    unsubscribe = null
+  }
+
+  unsubscribe = observe(
+    store,
+    [
+      configSaveObserver,
+      expedFleetsAvailabilityObserver,
+      syncMainFleetObserver,
+    ])
+}
+
+const globalUnsubscribe = () => {
+  if (typeof unsubscribe !== 'function') {
+    console.warn('unsubscribe is not a function')
+  } else {
+    unsubscribe()
+  }
+  unsubscribe = null
+}
+
+export {
+  globalSubscribe,
+  globalUnsubscribe,
+}

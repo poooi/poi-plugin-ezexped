@@ -1,20 +1,21 @@
 import { reducer, boundActionCreator } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain as reactClass } from './ui'
-import { observeAll } from './observers'
+import { globalSubscribe, globalUnsubscribe } from './observers'
 import { loadAndUpdateConfig } from './config'
-
-// for observer
-let unsubscribe = null
 
 // for config loading process
 let configInitId = null
 
+/*
+   TODO
+   - switch to use file-based persistent state
+   - failure record as file
+   - move "auto switch" into settings
+ */
+
 const pluginDidLoad = () => {
-  if (unsubscribe !== null) {
-    console.error(`unsubscribe function should be null`)
-  }
-  unsubscribe = observeAll()
+  globalSubscribe()
 
   if (configInitId !== null) {
     console.error(`configInitId should be null`)
@@ -28,12 +29,7 @@ const pluginDidLoad = () => {
 }
 
 const pluginWillUnload = () => {
-  if (typeof unsubscribe !== 'function') {
-    console.error(`invalid unsubscribe function`)
-  } else {
-    unsubscribe()
-    unsubscribe = null
-  }
+  globalUnsubscribe()
 
   if (configInitId !== null) {
     clearTimeout(configInitId)
