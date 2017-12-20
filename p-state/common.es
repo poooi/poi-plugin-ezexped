@@ -1,5 +1,7 @@
 import _ from 'lodash'
 import { enumFromTo } from 'subtender'
+import { ensureDirSync } from 'fs-extra'
+import { join } from 'path-extra'
 
 /*
 
@@ -21,37 +23,31 @@ import { enumFromTo } from 'subtender'
    - 1.4.0: new expedition ids: 100,101,102,
      'dlcFlags' and 'fsFlags' get updated with default values for these keys
 
-   - 1.5.0 (TODO): gsFlags & dlcFlags no longer expand to new expeditions,
-     instead, default values should be used.
+   - 1.5.0:
+
+       - gsFlags & dlcFlags no longer expand to new expeditions,
+         instead, default values should be used.
+       - 'expedTableExpanded' is now included in p-state, the default value is false
+       - 'configVer' is removed, instead, '$dataVersion' is now in use
 
  */
 
-const expedIds = [...enumFromTo(1,40),100,101,102]
-
-const defaultPState = {
-  fleetAutoSwitch: true,
-  hideMainFleet: false,
-  hideSatReqs: false,
-  sparkledCount: 6,
-  syncMainFleetId: false,
-  fleetId: 1,
-
-  gsFlags: _.fromPairs(
-    expedIds.map(eId => [eId, false])),
-  selectedExpeds: _.fromPairs(
-    enumFromTo(1,4).map(fleetId => [fleetId, 1])),
-  dlcFlags: _.fromPairs(
-    expedIds.map(eId => [eId, true])
-  ),
-
-  kanceptsExportShipList: true,
-
-  configVer: '1.4.0',
+const extStateToPState = extState => {
+  const {ready: _ignored, ...ps} = extState
+  return ps
 }
 
-const defaultPStateProps = Object.keys(defaultPState)
+const getPStateFilePath = () => {
+  const { APPDATA_PATH } = window
+  const configPath = join(APPDATA_PATH,'ezexped')
+  ensureDirSync(configPath)
+  return join(configPath,'p-state.json')
+}
+
+const latestVersion = '1.5.0'
 
 export {
-  defaultPState,
-  defaultPStateProps,
+  extStateToPState,
+  getPStateFilePath,
+  latestVersion,
 }

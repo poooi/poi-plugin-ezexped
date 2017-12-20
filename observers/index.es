@@ -27,7 +27,8 @@ const globalSubscribe = () => {
       pStateSaver,
       expedFleetsAvailabilityObserver,
       syncMainFleetObserver,
-    ])
+    ]
+  )
 }
 
 const globalUnsubscribe = () => {

@@ -1,8 +1,7 @@
 import _ from 'lodash'
-import { modifyObject } from 'subtender'
+import { enumFromTo, modifyObject } from 'subtender'
 import { store } from 'views/create-store'
 
-import { defaultPState } from '../p-state'
 import {
   subReducer as autoSwitchSubReducer,
 } from './auto-switch'
@@ -13,9 +12,21 @@ import { expedNameToIdFuncSelector } from '../selectors'
 const fleetChangeDebug = false
 
 const initState = {
-  ...defaultPState,
-
+  fleetAutoSwitch: true,
+  hideMainFleet: false,
+  hideSatReqs: false,
+  sparkledCount: 6,
+  syncMainFleetId: false,
+  fleetId: 1,
+  // an Object from expedId to bool, default to false
+  gsFlags: {},
+  selectedExpeds: _.fromPairs(
+    enumFromTo(1,4).map(fleetId => [fleetId, 1])),
+  // an Object from expedId to bool, default to true
+  dlcFlags: {},
+  kanceptsExportShipList: true,
   expedTableExpanded: false,
+
   ready: false,
 }
 

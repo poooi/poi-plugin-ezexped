@@ -1,15 +1,18 @@
 import _ from 'lodash'
 import { observer } from 'redux-observers'
-import { createStructuredSelector } from 'reselect'
+import {
+  createSelector,
+  createStructuredSelector,
+} from 'reselect'
 import shallowEqual from 'shallowequal'
 
 import {
   savePState,
-  defaultPStateProps,
+  extStateToPState,
 } from '../p-state'
 import {
   readySelector,
-  mkExtPropSelector,
+  extSelector,
 } from '../selectors'
 
 const debouncedSavePState = _.debounce(
@@ -17,18 +20,18 @@ const debouncedSavePState = _.debounce(
   500)
 
 const extPStateSelector = createStructuredSelector({
-  pState: createStructuredSelector(
-    _.fromPairs(defaultPStateProps.map(propName =>
-      [propName, mkExtPropSelector(propName)]))),
+  pState: createSelector(extSelector, extStateToPState),
   ready: readySelector,
 })
 
 const pStateSaver = observer(
   extPStateSelector,
   (_dispatch, current, previous) => {
-    if (current.ready === true &&
-        previous.ready === true &&
-        ! shallowEqual(current.pState, previous.pState)) {
+    if (
+      current.ready === true &&
+      previous.ready === true &&
+      !shallowEqual(current.pState, previous.pState)
+    ) {
       debouncedSavePState(current.pState)
     }
   }

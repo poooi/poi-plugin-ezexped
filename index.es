@@ -2,14 +2,13 @@ import { reducer, boundActionCreator } from './store'
 import { Settings as settingsClass } from './ui/settings'
 import { EZExpedMain as reactClass } from './ui'
 import { globalSubscribe, globalUnsubscribe } from './observers'
-import { loadAndUpdatePState } from './p-state'
+import { loadPState } from './p-state'
 
 // for p-state loading process
 let pStateInitId = null
 
 /*
    TODO
-   - switch to use file-based persistent state
    - failure record as file
    - move "auto switch" into settings
  */
@@ -21,9 +20,7 @@ const pluginDidLoad = () => {
     console.error(`pStateInitId should be null`)
   }
   pStateInitId = setTimeout(() => {
-    loadAndUpdatePState(
-      boundActionCreator.pStateReady
-    )
+    boundActionCreator.pStateReady(loadPState())
     pStateInitId = null
   })
 }
