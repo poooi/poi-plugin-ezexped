@@ -6,7 +6,7 @@ import {
 
 class TotalAsw {
   /*
-     when noRecon = true, stats from some recon planes will be ignored,
+     when noRecon = true, stats from some recon planes should be ignored,
 
      reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
 
@@ -14,7 +14,6 @@ class TotalAsw {
    */
   static make = (asw, noRecon=false) => ({asw, noRecon})
 
-  // TODO: ignore recon planes if necessary
   static prepare = ({asw, noRecon}) => () =>
     onFleetShips(ships => {
       const totalAsw = _.sum(ships.map(x => x.asw))

@@ -58,9 +58,6 @@ const defineWorld2 = defineExped => {
       mk.TotalAsw(200,true),
       mk.TotalAntiAir(200),
       mk.TotalLos(140),
-      // TODO: I got reports that fleet meeting requirements above are still failing
-      // so perhaps we need to wait for a while
-      // mk.MissingInfo(),
     ])
 }
 

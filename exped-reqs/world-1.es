@@ -51,7 +51,7 @@ const defineWorld1 = defineExped => {
 
   // reference: https://docs.google.com/spreadsheets/d/1BM2SCpxuZRMY0R9ipptY6jQ1-v51tOijBJ8Fofpx33c
   /*
-     Note: further investigations are still needed (TODO), but for now
+     Note: further investigations are still needed, but for now
      the following requirements will work most of the time.
      exceptions are (all of above are mentioned in the reference):
      - cases where sum of naked AA stat is less than 70

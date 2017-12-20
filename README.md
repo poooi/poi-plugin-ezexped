@@ -7,9 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.4.5 (pending)
+### 1.5.0 (pending)
 
 - Improved some wording for zh-CN and zh-TW (thanks to @noobwithnohats#0245!)
+- Removing "Missing Info" due to lack of further detail.
 
 ### 1.4.4
 
