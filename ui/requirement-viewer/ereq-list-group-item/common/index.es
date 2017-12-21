@@ -42,9 +42,11 @@ const mayShipList = renderShipList => props =>
 const renderShipList = (header=null) => shipList => (
   <div>
     {
-      header && <div key="header">
-        {header}
-      </div>
+      header && (
+        <div key="header">
+          {header}
+        </div>
+      )
     }
     {
       shipList.map(s => (

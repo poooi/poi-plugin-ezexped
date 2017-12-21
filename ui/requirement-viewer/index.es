@@ -39,10 +39,6 @@ class RequirementViewerImpl extends Component {
     resupplyFlag: PTyp.bool.isRequired,
   }
 
-  static defaultProps = {
-    fleet: null,
-  }
-
   prepareReqListItems = () => {
     const {greatSuccess, ereqResult, expedId, fillDlc} = this.props
     const transformObj = which => ({ereq,result},ind) => ({

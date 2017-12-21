@@ -267,7 +267,8 @@ class ExpeditionViewerImpl extends Component {
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
                 }} >
-                {__("Great Success")}</span>
+                {__("Great Success")}
+              </span>
             </Button>
             <OverlayTrigger
               placement="left"

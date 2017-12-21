@@ -38,12 +38,8 @@ class ExpeditionTableImpl extends Component {
     grouppedExpedIds: PTyp.array.isRequired,
   }
 
-  static defaultProps = {
-    fleet: null,
-  }
-
   handleSelectExped = newExpedId => () => {
-    const fleetId = this.props.fleetId
+    const {fleetId} = this.props
     this.props.modifyState(
       _.flow(
         modifyObject(
