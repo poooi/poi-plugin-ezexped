@@ -71,7 +71,8 @@ const esFleetCompoToPairs = (() => {
     revAllESTypes,
     estype => (estype in fleetCompo) ?
       [[estype, fleetCompo[estype]]] :
-      [])
+      []
+  )
 })()
 
 export {
