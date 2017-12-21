@@ -10,7 +10,8 @@ check expedition requirements and estimate expedition income accurately.
 ### 1.5.0 (pending)
 
 - Improved some wording for zh-CN and zh-TW (thanks to @noobwithnohats#0245!)
-- Removing "Missing Info" due to lack of further detail.
+- Removing "Missing Info" of B1 due to lack of further detail.
+- Moving config into an individual file (no user action required).
 
 ### 1.4.4
 
