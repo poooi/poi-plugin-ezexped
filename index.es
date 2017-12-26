@@ -9,7 +9,6 @@ let pStateInitId = null
 
 /*
    TODO
-   - failure record as file
    - move "auto switch" into settings
  */
 
