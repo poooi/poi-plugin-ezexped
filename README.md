@@ -10,8 +10,13 @@ check expedition requirements and estimate expedition income accurately.
 ### 1.5.0 (pending)
 
 - Improved some wording for zh-CN and zh-TW (thanks to @noobwithnohats#0245!)
+
 - Removing "Missing Info" of B1 due to lack of further detail.
+
 - Moving config into an individual file (no user action required).
+
+- Expedition failure now generates failure reports
+  (Reports are located under `$APPDATA/poi/ezexped/failure-report`, if any)
 
 ### 1.4.4
 
