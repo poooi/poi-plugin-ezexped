@@ -7,7 +7,8 @@ import {
 } from './auto-switch'
 import { asyncBoundActionCreators } from './action-creators'
 import { debug } from '../debug'
-import { expedNameToIdFuncSelector } from '../selectors'
+import { expedNameToIdFuncSelector, cqcSelector } from '../selectors'
+import { recordFailure } from './failure-report'
 
 const fleetChangeDebug = false
 
@@ -61,8 +62,9 @@ const reducer = (state = initState, action) => {
     // get an async action to figure out the exped
     asyncBoundActionCreators(bac => {
       try {
+        const newState = store.getState()
         const expedName = action.body.api_quest_name
-        const expedNameToId = expedNameToIdFuncSelector(store.getState())
+        const expedNameToId = expedNameToIdFuncSelector(newState)
         const expedId = expedNameToId(expedName)
         if (!_.isInteger(expedId))
           throw new Error(`cannot find expedition with name ${expedName}`)
@@ -82,6 +84,21 @@ const reducer = (state = initState, action) => {
             'fleetId', () => fleetId),
         ]
         bac.modifyState(_.flow(_.compact(modifiers)))
+
+        /*
+           record failure report upon expedition failure
+
+           we could have checked against encoded checkers
+           but that would make things unnessarily complicated
+           (e.g. should we ignore MissingInfo and in general missing expeds)
+           so here we just record failed expeditions regardless of
+           what our checker has said.
+
+         */
+        if (action.body.api_clear_result === 0) {
+          const cqc = cqcSelector(newState)
+          recordFailure(action.body, cqc, Number(action.time))
+        }
       } catch (e) {
         debug.error(`failed to record a successful exped ${e}`)
       }
