@@ -59,6 +59,13 @@ const defineWorld2 = defineExped => {
       mk.TotalAntiAir(200),
       mk.TotalLos(140),
     ])
+
+  defineExped(111)(
+    [
+      mk.MissingInfo(),
+      mk.FleetCompo({CA: 1, CL: 1, DD: 4}),
+    ]
+  )
 }
 
 export { defineWorld2 }
