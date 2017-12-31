@@ -64,6 +64,7 @@ import { FillDlc } from './fill-dlc'
 import { TotalAsw } from './total-asw'
 import { TotalAntiAir } from './total-anti-air'
 import { TotalLos } from './total-los'
+import { TotalFirepower } from './total-firepower'
 import { MissingInfo } from './missing-info'
 
 const classTable = _.fromPairs([
@@ -84,6 +85,7 @@ const classTable = _.fromPairs([
   TotalAsw,
   TotalAntiAir,
   TotalLos,
+  TotalFirepower,
   MissingInfo,
 ].map(cls => [cls.name, cls]))
 

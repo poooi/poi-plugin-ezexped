@@ -121,6 +121,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
       asw: ship.api_taisen[0],
       antiAir: ship.api_taiku[0],
       los: ship.api_sakuteki[0],
+      firepower: ship.api_karyoku[0],
     }
   })
 
