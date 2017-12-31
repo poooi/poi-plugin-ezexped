@@ -7,7 +7,7 @@ import {
 } from './common'
 
 class TotalFirepower {
-  static make = singObj('antiAir')
+  static make = singObj('firepower')
 
   static prepare = ({firepower}) => () =>
     onFleetShips(ships =>

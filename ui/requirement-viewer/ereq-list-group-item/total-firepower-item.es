@@ -14,7 +14,7 @@ const describe = (x,y) => __('RequirementExplain.TTTotalFirepower',x,y)
 
 const TotalFirepowerItem = props => (
   <ItemTemplate
-    content={fmt(props.ereq.antiAir)}
+    content={fmt(props.ereq.firepower)}
     tooltip={mayNeedMore(describe)(props)}
     {...props}
   />
