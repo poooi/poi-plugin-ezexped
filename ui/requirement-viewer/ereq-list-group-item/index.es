@@ -23,6 +23,7 @@ import { FillDlcItem } from './fill-dlc-item'
 import { TotalAswItem } from './total-asw-item'
 import { TotalAntiAirItem } from './total-anti-air-item'
 import { TotalLosItem } from './total-los-item'
+import { TotalFirepowerItem } from './total-firepower-item'
 import { MissingInfoItem } from './missing-info-item'
 
 const ereqComponents = new Map()
@@ -58,6 +59,7 @@ const ereqComponents = new Map()
     TotalAswItem,
     TotalAntiAirItem,
     TotalLosItem,
+    TotalFirepowerItem,
     MissingInfoItem,
   ].map(defineERC)
 }

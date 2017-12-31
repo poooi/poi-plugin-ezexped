@@ -56,6 +56,7 @@
     "TotalAsw": "艦隊總對潛 ≥%s",
     "TotalAntiAir": "艦隊總對空 ≥%s",
     "TotalLos": "艦隊總索敵值 ≥%s",
+    "TotalFirepower": "艦隊總火力值 ≥%s",
     "MissingInfo": "信息不足",
     "TTNoFlagship": "無旗艦",
     "TTNeedsMoreShips": "還需%s名艦娘",
@@ -70,6 +71,7 @@
     "TTTotalAsw": "當前值: %s, 需要: %s",
     "TTTotalAntiAir": "當前值: %s, 需要: %s",
     "TTTotalLos": "當前值: %s, 需要: %s",
+    "TTTotalFirepower": "當前值: %s, 需要: %s",
     "TTMissingInfo": "當前信息不足,無法進行完整的遠征檢查"
   },
   "FleetState": {

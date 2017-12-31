@@ -56,6 +56,7 @@
     "TotalAsw": "Total ASW stats ≥%s",
     "TotalAntiAir": "Total anti-air stats ≥%s",
     "TotalLos": "Total LoS stats ≥%s",
+    "TotalFirepower": "Total Firepower stats ≥%s",
     "MissingInfo": "Missing Information",
     "TTNoFlagship": "No Flagship",
     "TTNeedsMoreShips": "Needs %s more ships",
@@ -70,6 +71,7 @@
     "TTTotalAsw": "Current: %s, Needed: %s",
     "TTTotalAntiAir": "Current: %s, Needed: %s",
     "TTTotalLos": "Current: %s, Needed: %s",
+    "TTTotalFirepower": "Current: %s, Needed: %s",
     "TTMissingInfo": "A complete check for this expedition is not available yet."
   },
   "FleetState": {
