@@ -71,47 +71,51 @@ class ExpeditionTableImpl extends Component {
         collapsible
         expanded={expedTableExpanded}
         style={{marginBottom: "5px"}} >
-        <div style={{display: "flex"}} >
-          {
-            expedIdsArr.map(([world, expedIds]) => (
-              <div
-                key={world}
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  marginRight: 5,
-                  flexDirection: 'column',
-                }}>
-                {
-                  expedIds.map(expedId => {
-                    const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
-                    return (
-                      <ExpeditionButton
-                        key={expedId}
-                        ready={normGsFlag.norm}
-                        btnClassName={
-                          (
-                            normGsFlag.norm &&
-                            normGsFlag.gs
-                          ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
-                        }
-                        active={this.props.expedId === expedId}
-                        runningFleetId={
-                          currentRunningExpedIdToFleetId[expedId]
-                        }
-                        expedId={expedId}
-                        getExpedInfo={getExpedInfo}
-                        onClick={this.handleSelectExped(expedId)}
-                      />
-                    )
-                  })
-                }
-              </div>
-            )
-            )
-          }
-        </div>
-        <KanceptsExporter style={{}} />
+        <Panel.Collapse>
+          <Panel.Body>
+            <div style={{display: "flex"}} >
+              {
+                expedIdsArr.map(([world, expedIds]) => (
+                  <div
+                    key={world}
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      marginRight: 5,
+                      flexDirection: 'column',
+                    }}>
+                    {
+                      expedIds.map(expedId => {
+                        const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
+                        return (
+                          <ExpeditionButton
+                            key={expedId}
+                            ready={normGsFlag.norm}
+                            btnClassName={
+                              (
+                                normGsFlag.norm &&
+                                normGsFlag.gs
+                              ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
+                            }
+                            active={this.props.expedId === expedId}
+                            runningFleetId={
+                              currentRunningExpedIdToFleetId[expedId]
+                            }
+                            expedId={expedId}
+                            getExpedInfo={getExpedInfo}
+                            onClick={this.handleSelectExped(expedId)}
+                          />
+                        )
+                      })
+                    }
+                  </div>
+                )
+                )
+              }
+            </div>
+            <KanceptsExporter style={{}} />
+          </Panel.Body>
+        </Panel.Collapse>
       </Panel>
     )
   }
