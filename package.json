@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "shallowequal": "^1.0.2",
-    "subtender": "^0.12.4"
+    "subtender": "^0.12.5"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
