@@ -9,7 +9,6 @@ import {
 } from 'views/utils/selectors'
 
 import { enumFromTo } from 'subtender'
-import { canEquipDLC } from 'subtender/kc'
 import {
   hideMainFleetSelector,
   isMainFleetFuncSelector,
@@ -17,6 +16,7 @@ import {
   gsFlagsSelector,
   dlcFlagsSelector,
   fleetIdSelector,
+  canEquipDLCFuncSelector,
 } from './common'
 import { debug } from '../debug'
 
@@ -57,7 +57,7 @@ CONTRACT:
 returns a fleet representation when the fleet can be found, "null" otherwise.
 
 */
-const mkFleetInfo = (shipsData, equipsData, fleetData) => {
+const mkFleetInfo = (canEquipDLC, shipsData, equipsData, fleetData) => {
   arrayOrUndef(shipsData)
   arrayOrUndef(equipsData)
   objOrUndef(fleetData)
@@ -96,7 +96,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
       equips.filter(e => isExpedRelatedEquipment(e.mstId)).length
     // how many more DLC-class equipment can this ship carry?
     const extraDlcCapability =
-      canEquipDLC($ship.api_stype, $ship.api_id) ?
+      canEquipDLC($ship.api_id) ?
         Math.max(
           normalSlotCount - occupiedNormalSlotCount,
           /*
@@ -141,6 +141,7 @@ const mkFleetInfo = (shipsData, equipsData, fleetData) => {
 const mkFleetInfoSelector = _.memoize(fleetId => {
   const fleetInd = fleetId-1
   return createSelector(
+    canEquipDLCFuncSelector,
     fleetShipsDataSelectorFactory(fleetInd),
     fleetShipsEquipDataSelectorFactory(fleetInd),
     fleetSelectorFactory(fleetInd),
