@@ -6,8 +6,7 @@ import {
   Tooltip,
 } from 'react-bootstrap'
 
-import { PTyp } from '../../ptyp'
-
+import { PTyp } from '../../../../ptyp'
 import { ExpedTooltipContent } from './exped-tooltip-content'
 
 // every expedition button inside the table
@@ -58,6 +57,7 @@ class ExpeditionButton extends PureComponent {
             width: '100%',
             height: '1.8em',
             marginBottom: 2,
+            marginLeft: 0,
             padding: 0,
             display: 'flex',
             alignItems: 'center',
@@ -73,7 +73,7 @@ class ExpeditionButton extends PureComponent {
               <img
                 style={{height: '1.1em', marginLeft: '.6em'}}
                 alt={`/${runningFleetId}`}
-                src={join(__dirname,'..','..','assets','images',`fleet-${runningFleetId}.png`)}
+                src={join(__dirname,'..','..','..','..','assets','images',`fleet-${runningFleetId}.png`)}
               />
             )
           }

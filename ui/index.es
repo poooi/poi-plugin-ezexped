@@ -9,7 +9,6 @@ import { join } from 'path-extra'
 
 import { FleetPicker } from './fleet-picker'
 import { ExpeditionViewer } from './expedition-viewer'
-import { ExpeditionTable } from './expedition-table'
 import { RequirementViewer } from './requirement-viewer'
 
 import { PTyp } from '../ptyp'
@@ -45,11 +44,6 @@ class EZExpedMainImpl extends Component {
           {
             fleet && (
               <ExpeditionViewer />
-            )
-          }
-          {
-            fleet && (
-              <ExpeditionTable />
             )
           }
           {

@@ -4,8 +4,8 @@ import {
 } from 'react-bootstrap'
 import { MaterialIcon } from 'views/components/etc/icon'
 
-import { fmtTime } from '../../tr'
-import { PTyp } from '../../ptyp'
+import { fmtTime } from '../../../../tr'
+import { PTyp } from '../../../../ptyp'
 
 class ExpedTooltipContent extends PureComponent {
   static propTypes = {

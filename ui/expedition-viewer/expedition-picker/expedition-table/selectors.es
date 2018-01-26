@@ -10,10 +10,10 @@ import {
   expedReqsStage2Selector,
   mkFleetInfoSelector,
   extraSelector,
-} from '../../selectors'
+} from '../../../../selectors'
 
-import { EReq } from '../../structs/ereq'
-import { mapExpedReq } from '../../exped-reqs'
+import { EReq } from '../../../../structs/ereq'
+import { mapExpedReq } from '../../../../exped-reqs'
 
 const emptyNormGsFlags =
   _.fromPairs(enumFromTo(1,40).map(eId =>

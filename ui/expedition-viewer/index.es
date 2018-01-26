@@ -18,6 +18,7 @@ import { mapDispatchToProps } from '../../store'
 
 import { IconAndLabel } from './icon-and-label'
 import { ResourceWithDetail } from './resource-with-detail'
+import { ExpeditionPicker } from './expedition-picker'
 import {
   expedIdSelector,
   fleetInfoSelector,
@@ -145,8 +146,8 @@ class ExpeditionViewerImpl extends Component {
     ["fuel","ammo","steel","bauxite"].map( resourceName => {
       /* eslint-disable indent */
       const resupply =
-        resourceName === "fuel" ? resupplyCost.fuelCost :
-        resourceName === "ammo" ? resupplyCost.ammoCost :
+        resourceName === 'fuel' ? resupplyCost.fuelCost :
+        resourceName === 'ammo' ? resupplyCost.ammoCost :
         0
       /* eslint-enable indent */
 
@@ -163,12 +164,6 @@ class ExpeditionViewerImpl extends Component {
     })
 
     const mkMatFromName = name => mkMat(itemNameToMaterialId(name))
-    const colFlexStyle = {
-      display: "flex",
-      justifyContent: "space-around",
-      flexDirection: "column",
-      marginLeft: "10px",
-    }
     const hasNormalItem = info.itemNormal
     const canObtainGreatSuccessItem =
       this.props.greatSuccess && info.itemGreatSuccess
@@ -193,18 +188,7 @@ class ExpeditionViewerImpl extends Component {
             justifyContent: 'space-between',
           }}
         >
-          <Button
-            onClick={this.handleClickExped}>
-            <div
-              style={{
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {`${displayNum} ${info.name}`}
-            </div>
-          </Button>
+          <ExpeditionPicker />
           <div style={{textAlign: 'center'}}>
             {fmtTime(info.timeInMin)}
           </div>

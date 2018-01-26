@@ -57,6 +57,7 @@ class FleetButtonImpl extends Component {
     const shouldHide = fleetState.type === 'Main' && fleetState.shouldHide
     const content = (
       <Button
+        className="ezexped-fleet-picker-button"
         bsStyle={bsStyle}
         style={{
           flex: 1,

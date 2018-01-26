@@ -33,3 +33,7 @@
 #plugin-ezexped-settings .checkbox > label {
     min-height: 0;
 }
+
+#poi-plugin-ezexped .collapsing {
+    transition: none;
+}
