@@ -40,6 +40,7 @@
     "totalIncome": "總收入",
     "netIncome": "淨收入"
   },
+  "TTGreatSucessOnlyItem": "本物品僅可在大成功時獲得",
   "TTFillDlcExplain": "要求艦隊攜帶儘可能多的“大発動艇”或“特大発動艇”",
   "RequirementExplain": {
     "FSType": "旗艦艦種爲%s",

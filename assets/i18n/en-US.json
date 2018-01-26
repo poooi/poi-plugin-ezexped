@@ -40,6 +40,7 @@
     "totalIncome": "Total Income",
     "netIncome": "Net Income"
   },
+  "TTGreatSucessOnlyItem": "This item is only awarded for Great Success.",
   "TTFillDlcExplain": "Require fleet to carry as many \"大発動艇\" or \"特大発動艇\" as possible",
   "RequirementExplain": {
     "FSType": "Flagship type: %s",

@@ -162,7 +162,7 @@ class ExpeditionViewerImpl extends Component {
       }
     })
 
-    const mkMatFromName = name => mkMat(itemNameToMaterialId( name ))
+    const mkMatFromName = name => mkMat(itemNameToMaterialId(name))
     const colFlexStyle = {
       display: "flex",
       justifyContent: "space-around",
@@ -170,9 +170,11 @@ class ExpeditionViewerImpl extends Component {
       marginLeft: "10px",
     }
     const hasNormalItem = info.itemNormal
-    // TODO: hint about great-success-only items
-    const hasGreatSuccessItem = this.props.greatSuccess && info.itemGreatSuccess
+    const canObtainGreatSuccessItem =
+      this.props.greatSuccess && info.itemGreatSuccess
     const prettyRange = (x,y) => x === y ? `${x}` : `${x}~${y}`
+    const gsRangeText =
+      info.itemGreatSuccess && prettyRange(1,info.itemGreatSuccess.itemMaxCount)
 
     return (
       <div
@@ -218,12 +220,23 @@ class ExpeditionViewerImpl extends Component {
                 label={
                   (
                     info.itemGreatSuccess ? (
-                      hasGreatSuccessItem ?
-                        prettyRange(1,info.itemGreatSuccess.itemMaxCount) :
+                      canObtainGreatSuccessItem ?
+                        gsRangeText :
                         (
-                          <span className="text-danger">
-                            {prettyRange(1,info.itemGreatSuccess.itemMaxCount)}
-                          </span>
+                          <OverlayTrigger
+                            overlay={
+                              (
+                                <Tooltip id="ezexped-great-sucess-only-item">
+                                  {__('TTGreatSucessOnlyItem')}
+                                </Tooltip>
+                              )
+                            }
+                            placement="bottom"
+                          >
+                            <span className="text-danger">
+                              {gsRangeText}
+                            </span>
+                          </OverlayTrigger>
                         )
                     ) : '-'
                   )
