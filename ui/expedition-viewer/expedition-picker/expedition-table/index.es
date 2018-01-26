@@ -61,45 +61,43 @@ class ExpeditionTableImpl extends Component {
       ([w,_v]) => w >= 1 && w <= 5
     )
 
+    const worldCount = expedIdsArr.length
     return (
       <div style={{padding: 10}}>
-        <div style={{display: "flex"}} >
+        <div
+          style={{
+            display: 'grid',
+            gridGap: '2px 5px',
+            gridTemplate: `auto / repeat(1fr, ${worldCount})`,
+            alignItems: 'center',
+          }} >
           {
-            expedIdsArr.map(([world, expedIds]) => (
-              <div
-                key={world}
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  marginRight: 5,
-                  flexDirection: 'column',
-                }}>
-                {
-                  expedIds.map(expedId => {
-                    const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
-                    return (
-                      <ExpeditionButton
-                        key={expedId}
-                        ready={normGsFlag.norm}
-                        btnClassName={
-                          (
-                            normGsFlag.norm &&
-                            normGsFlag.gs
-                          ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
-                        }
-                        active={this.props.expedId === expedId}
-                        runningFleetId={
-                          currentRunningExpedIdToFleetId[expedId]
-                        }
-                        expedId={expedId}
-                        getExpedInfo={getExpedInfo}
-                        onClick={this.handleSelectExped(expedId)}
-                      />
-                    )
-                  })
-                }
-              </div>
-            )
+            _.flatMap(
+              expedIdsArr,
+              ([_world, expedIds], worldInd) =>
+                expedIds.map((expedId, expedInd) => {
+                  const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
+                  return (
+                    <ExpeditionButton
+                      style={{gridArea: `${expedInd+1} / ${worldInd+1}`}}
+                      key={expedId}
+                      ready={normGsFlag.norm}
+                      btnClassName={
+                        (
+                          normGsFlag.norm &&
+                          normGsFlag.gs
+                        ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
+                      }
+                      active={this.props.expedId === expedId}
+                      runningFleetId={
+                        currentRunningExpedIdToFleetId[expedId]
+                      }
+                      expedId={expedId}
+                      getExpedInfo={getExpedInfo}
+                      onClick={this.handleSelectExped(expedId)}
+                    />
+                  )
+                })
             )
           }
         </div>

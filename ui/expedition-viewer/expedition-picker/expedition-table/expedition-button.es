@@ -23,12 +23,14 @@ class ExpeditionButton extends PureComponent {
     runningFleetId: PTyp.number,
     getExpedInfo: PTyp.func.isRequired,
     onClick: PTyp.func.isRequired,
+    style: PTyp.object,
     btnClassName: PTyp.string,
   }
 
   static defaultProps = {
     runningFleetId: null,
     btnClassName: '',
+    style: {},
   }
 
   render() {
@@ -36,7 +38,7 @@ class ExpeditionButton extends PureComponent {
       ready, expedId, onClick,
       active, runningFleetId,
       btnClassName,
-      getExpedInfo,
+      getExpedInfo, style,
     } = this.props
     return (
       <OverlayTrigger
@@ -56,12 +58,12 @@ class ExpeditionButton extends PureComponent {
             maxWidth: 150,
             width: '100%',
             height: '1.8em',
-            marginBottom: 2,
-            marginLeft: 0,
+            margin: 0,
             padding: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            ...style,
           }}
           active={active}
           onClick={onClick}>
