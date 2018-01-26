@@ -113,14 +113,14 @@ class SettingsImpl extends PureComponent {
           overlay={
             (
               <Tooltip id="ezexped-auto-btn-tooltip">
-                {__("AutoTooltip")}
+                {__('FleetAutoSwitchDesc')}
               </Tooltip>
             )
           }
           placement="bottom"
         >
           <div>
-            Auto-switch between Fleets
+            {__('FleetAutoSwitch')}
           </div>
         </OverlayTrigger>
         <Checkbox

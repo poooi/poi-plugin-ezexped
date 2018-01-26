@@ -30,6 +30,6 @@
     padding: 8px;
 }
 
-#plugin-ezexped-settings div.checkbox > label {
+#plugin-ezexped-settings .checkbox > label {
     min-height: 0;
 }
