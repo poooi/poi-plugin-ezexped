@@ -243,9 +243,9 @@ class ExpeditionViewerImpl extends Component {
                         }
                                 placement="bottom"
                         >
-                        <span className="text-danger">
+                        <div className="text-danger">
                           {gsRangeText}
-                        </span>
+                        </div>
                       </OverlayTrigger>
                     )
                   ) : '-'
