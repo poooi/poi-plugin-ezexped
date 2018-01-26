@@ -1,16 +1,10 @@
-import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
-import {
-  darkOrLightSelector,
-} from '../../selectors'
 
 import { PTyp } from '../../ptyp'
 
-class MoraleImpl extends PureComponent {
+class Morale extends PureComponent {
   static propTypes = {
     morale: PTyp.number.isRequired,
-    darkOrLight: PTyp.DarkOrLight.isRequired,
     style: PTyp.object,
   }
 
@@ -19,7 +13,7 @@ class MoraleImpl extends PureComponent {
   }
 
   render() {
-    const { morale, darkOrLight, style } = this.props
+    const { morale, style } = this.props
     /* eslint-disable indent */
     const moraleStyle =
       morale <= 48 ? {} :
@@ -39,7 +33,7 @@ class MoraleImpl extends PureComponent {
     /* eslint-enable indent */
     return (
       <span
-        className={`${moraleClasses} ${darkOrLight}`}
+        className={`${moraleClasses} dark`}
         style={{
           ...moraleStyle,
           textAlign: 'center',
@@ -52,9 +46,5 @@ class MoraleImpl extends PureComponent {
     )
   }
 }
-
-const Morale = connect(createStructuredSelector({
-  darkOrLight: darkOrLightSelector,
-}))(MoraleImpl)
 
 export { Morale }

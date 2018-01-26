@@ -8,7 +8,6 @@ import { ExpeditionButton } from './expedition-button'
 import {
   fleetIdSelector,
   expedIdSelector,
-  darkOrLightSelector,
   getExpedInfoFuncSelector,
   grouppedExpedIdsSelector,
 } from '../../../../selectors'
@@ -21,7 +20,6 @@ import { KanceptsExporter } from './kancepts-exporter'
 
 class ExpeditionTableImpl extends Component {
   static propTypes = {
-    darkOrLight: PTyp.DarkOrLight.isRequired,
     // current active expedition
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,
@@ -51,7 +49,6 @@ class ExpeditionTableImpl extends Component {
     const {
       normGsFlags,
       currentRunningExpedIdToFleetId,
-      darkOrLight,
       getExpedInfo,
       grouppedExpedIds,
     } = this.props
@@ -86,7 +83,7 @@ class ExpeditionTableImpl extends Component {
                         (
                           normGsFlag.norm &&
                           normGsFlag.gs
-                        ) ? `poi-ship-cond-53 ${darkOrLight}` : ''
+                        ) ? `poi-ship-cond-53 dark` : ''
                       }
                       active={this.props.expedId === expedId}
                       runningFleetId={
@@ -111,7 +108,6 @@ const uiSelector = createStructuredSelector({
   expedId: expedIdSelector,
   fleetId: fleetIdSelector,
   currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
-  darkOrLight: darkOrLightSelector,
   getExpedInfo: getExpedInfoFuncSelector,
   grouppedExpedIds: grouppedExpedIdsSelector,
 })

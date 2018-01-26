@@ -59,10 +59,6 @@ const isDarkThemeSelector = createSelector(
   themeSelector,
   theme => /(dark|black|slate|superhero|papercyan)/i.test(theme))
 
-const darkOrLightSelector = createSelector(
-  isDarkThemeSelector,
-  isDarkTheme => isDarkTheme ? 'dark' : 'light')
-
 const isMainFleetFuncSelector = createSelector(
   isFleetCombinedSelector,
   isFleetCombined =>
@@ -119,7 +115,6 @@ export {
 
   isFleetCombinedSelector,
   isDarkThemeSelector,
-  darkOrLightSelector,
 
   extSelector,
 

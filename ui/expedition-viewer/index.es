@@ -24,7 +24,6 @@ import {
   fleetInfoSelector,
   gsFlagSelector,
   dlcFlagSelector,
-  darkOrLightSelector,
   getExpedInfoFuncSelector,
 } from '../../selectors'
 import { debug } from '../../debug'
@@ -94,8 +93,6 @@ class ExpeditionViewerImpl extends Component {
     getExpedInfo: PTyp.func.isRequired,
 
     fleet: PTyp.object.isRequired,
-    darkOrLight: PTyp.DarkOrLight.isRequired,
-
     modifyState: PTyp.func.isRequired,
   }
 
@@ -285,14 +282,14 @@ class ExpeditionViewerImpl extends Component {
               <FontAwesome
                 className={
                   this.props.greatSuccess ?
-                    `poi-ship-cond-53 ${this.props.darkOrLight}` :
+                    `poi-ship-cond-53 dark` :
                     ''
                 }
                 style={{marginRight: 5}}
                 name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
               <span
                 className={
-                  this.props.greatSuccess ? `poi-ship-cond-53 ${this.props.darkOrLight}` : ''}
+                  this.props.greatSuccess ? `poi-ship-cond-53 dark` : ''}
                 style={{
                   flex: 1,
                   textOverflow: 'ellipsis',
@@ -338,7 +335,6 @@ const uiSelector = createStructuredSelector({
   fleet: fleetInfoSelector,
   greatSuccess: gsFlagSelector,
   dlcFlag: dlcFlagSelector,
-  darkOrLight: darkOrLightSelector,
   getExpedInfo: getExpedInfoFuncSelector,
 })
 
