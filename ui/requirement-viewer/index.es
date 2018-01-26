@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
   ListGroup,
-  Grid, Row, Col,
 } from 'react-bootstrap'
 import { createStructuredSelector } from 'reselect'
 
@@ -77,25 +76,26 @@ class RequirementViewerImpl extends Component {
           display: 'flex', flexDirection: 'column',
         }}
       >
-        <Grid style={{width: '100%'}}>
-          <Row>
-            <Col sm={6} style={{paddingRight: '.5em'}}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplate: 'auto / 1fr 1fr',
+            gridGap: '0 .4em',
+            alignItems: 'center',
+          }}
+        >
+          <CheckResultBox
+            ready={effectiveNormFlag}
+            content={`${__("CondNormal")}: ${readyOrNot(effectiveNormFlag)}`} />
+          {
+            this.props.greatSuccess && (
               <CheckResultBox
-                ready={effectiveNormFlag}
-                content={`${__("CondNormal")}: ${readyOrNot(effectiveNormFlag)}`} />
-            </Col>
-            <Col sm={6} style={{paddingLeft: '.5em'}}>
-              {
-                this.props.greatSuccess && (
-                  <CheckResultBox
-                    ready={effectiveGsFlag}
-                    content={`${__("CondGreatSuccess")}: ${readyOrNot(effectiveGsFlag)}`}
-                  />
-                )
-              }
-            </Col>
-          </Row>
-        </Grid>
+                ready={effectiveGsFlag}
+                content={`${__("CondGreatSuccess")}: ${readyOrNot(effectiveGsFlag)}`}
+              />
+            )
+          }
+        </div>
         <ListGroup
           style={{
             flex: 1,

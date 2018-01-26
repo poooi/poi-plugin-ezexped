@@ -7,7 +7,6 @@ import { loadPState } from './p-state'
 /*
    TODO:
 
-   - eliminate Grid
    - i18n cleanup
 
  */

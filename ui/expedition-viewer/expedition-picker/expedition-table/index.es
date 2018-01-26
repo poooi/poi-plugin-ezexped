@@ -65,7 +65,7 @@ class ExpeditionTableImpl extends Component {
           style={{
             display: 'grid',
             gridGap: '2px 5px',
-            gridTemplate: `auto / repeat(1fr, ${worldCount})`,
+            gridTemplate: `auto / repeat(${worldCount}, 1fr)`,
             alignItems: 'center',
           }} >
           {

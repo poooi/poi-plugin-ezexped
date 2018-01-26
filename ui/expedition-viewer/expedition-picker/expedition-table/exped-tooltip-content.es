@@ -1,7 +1,4 @@
 import React, { PureComponent } from 'react'
-import {
-  Grid, Row, Col,
-} from 'react-bootstrap'
 import { MaterialIcon } from 'views/components/etc/icon'
 
 import { fmtTime } from '../../../../tr'
@@ -17,42 +14,59 @@ class ExpedTooltipContent extends PureComponent {
     const {expedId, getExpedInfo} = this.props
     const info = getExpedInfo(expedId)
     return (
-      <Grid style={{width: '100%', padding: '.2em .4em'}}>
-        <Row>
-          <Col>{info.name}</Col>
-        </Row>
-        <Row><Col>{fmtTime(info.timeInMin)}</Col></Row>
-        {
-          [
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'stretch',
+        }}>
+        <div
+          style={{paddingLeft: '1em', paddingRight: '1em'}}
+        >
+          {info.name}
+        </div>
+        <div>{fmtTime(info.timeInMin)}</div>
+        <div
+          style={{
+            flex: 1,
+            display: 'grid',
+            gridTemplate: 'auto / 1fr 1fr',
+            alignItems: 'center',
+          }}
+        >
+          {
             [
-              [['fuel',1], ['steel',3]], 'fuel-steel',
-            ],
-            [
-              [['ammo',2], ['bauxite',4]], 'ammo-bauxite',
-            ],
-          ].map(([cols,key]) => (
-            <Row key={key}>
-              {
-                cols.map(([resourceProp,matId]) => (
-                  <Col key={resourceProp} sm={6} style={{display: 'flex', alignItems: 'center'}}>
-                    <MaterialIcon
-                      materialId={matId}
-                      className="material-icon"
-                    />
-                    <span style={{flex: 1, marginLeft: '.4em'}}>
-                      {
-                        (info && info.resources) ?
-                          info.resources[resourceProp] :
-                          '???'
-                      }
-                    </span>
-                  </Col>
-                ))
-              }
-            </Row>
-          ))
-        }
-      </Grid>
+              ['fuel', 1], ['steel', 3],
+              ['ammo', 2], ['bauxite', 4],
+            ].map(([resourceName, matId]) => (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+                key={resourceName}
+              >
+                <MaterialIcon
+                  materialId={matId}
+                  className="material-icon"
+                />
+                <span
+                  style={{
+                    flex: 1,
+                    marginLeft: '.4em',
+                    minWidth: '2.5em',
+                  }}>
+                  {
+                    (info && info.resources) ?
+                      info.resources[resourceName] :
+                      '???'
+                  }
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     )
   }
 }

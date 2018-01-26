@@ -33,6 +33,7 @@ class IconAndLabel extends PureComponent {
           style={{
             flex: 1,
             marginLeft: '.4em',
+            textAlign: 'center',
           }}
         >
           {this.props.label}
