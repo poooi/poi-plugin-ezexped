@@ -2,7 +2,6 @@ import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
-  Grid, Row, Col,
   Checkbox, FormControl,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
@@ -32,13 +31,15 @@ class SettingsImpl extends PureComponent {
   handleChange = propName => e => {
     const v = e.target.checked
     this.props.modifyState(
-      modifyObject(propName, () => v))
+      modifyObject(propName, () => v)
+    )
   }
 
   handleSparkledCountChange = e => {
-    const sparkledCount = parseInt(e.target.value,10)
+    const sparkledCount = Number(e.target.value)
     this.props.modifyState(
-      modifyObject('sparkledCount', () => sparkledCount))
+      modifyObject('sparkledCount', () => sparkledCount)
+    )
   }
 
   render() {
@@ -49,81 +50,63 @@ class SettingsImpl extends PureComponent {
       hideSatReqs,
       syncMainFleetId,
     } = this.props
-    const rowStyle = {
-      display: 'flex',
-      alignItems: 'baseline',
-    }
+
     return (
-      <Grid
-        style={{marginBottom: '1.8em'}}
+      <div
+        id="plugin-ezexped-settings"
+        style={{
+          display: 'grid',
+          gridTemplate: 'auto / 2fr 1fr',
+          marginBottom: '1.8em',
+          alignItems: 'center',
+        }}
       >
-        <Row style={rowStyle}>
-          <Col sm={8}>
-            <OverlayTrigger
-              overlay={
-                <Tooltip id="ezexped-settings-sparked-count-tooltip">
-                  {__('SparkledCountCustomDesc')}
-                </Tooltip>
-              }
-              placement="bottom">
-              <div>
-                {__('SparkledCountCustom')}
-              </div>
-            </OverlayTrigger>
-          </Col>
-          <Col sm={4}>
-            <FormControl
-              onChange={this.handleSparkledCountChange}
-              disabled={!ready}
-              value={sparkledCount}
-              componentClass="select">
-              {
-                [6,5,4,3].map(num => (
-                  <option key={num} value={num}>
-                    {num}
-                  </option>
-                ))
-              }
-            </FormControl>
-          </Col>
-        </Row>
-        <Row style={rowStyle}>
-          <Col sm={8}>
-            {__("HideMainFleet")}
-          </Col>
-          <Col sm={4}>
-            <Checkbox
-              onChange={this.handleChange('hideMainFleet')}
-              disabled={!ready}
-              checked={hideMainFleet}
-            />
-          </Col>
-        </Row>
-        <Row style={rowStyle}>
-          <Col sm={8}>
-            {__("HideSatReqs")}
-          </Col>
-          <Col sm={4}>
-            <Checkbox
-              onChange={this.handleChange('hideSatReqs')}
-              disabled={!ready}
-              checked={hideSatReqs}
-            />
-          </Col>
-        </Row>
-        <Row style={rowStyle}>
-          <Col sm={8}>
-            {__('SyncMainFleetId')}
-          </Col>
-          <Col sm={4}>
-            <Checkbox
-              onChange={this.handleChange('syncMainFleetId')}
-              disabled={!ready}
-              checked={syncMainFleetId}
-            />
-          </Col>
-        </Row>
-      </Grid>
+        <OverlayTrigger
+          overlay={
+            (
+              <Tooltip id="ezexped-settings-sparked-count-tooltip">
+                {__('SparkledCountCustomDesc')}
+              </Tooltip>
+            )
+          }
+          placement="bottom"
+        >
+          <div>
+            {__('SparkledCountCustom')}
+          </div>
+        </OverlayTrigger>
+        <FormControl
+          onChange={this.handleSparkledCountChange}
+          disabled={!ready}
+          value={sparkledCount}
+          componentClass="select">
+          {
+            [6,5,4,3].map(num => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))
+          }
+        </FormControl>
+        <div>{__("HideMainFleet")}</div>
+        <Checkbox
+          onChange={this.handleChange('hideMainFleet')}
+          disabled={!ready}
+          checked={hideMainFleet}
+        />
+        <div>{__("HideSatReqs")}</div>
+        <Checkbox
+          onChange={this.handleChange('hideSatReqs')}
+          disabled={!ready}
+          checked={hideSatReqs}
+        />
+        <div>{__('SyncMainFleetId')}</div>
+        <Checkbox
+          onChange={this.handleChange('syncMainFleetId')}
+          disabled={!ready}
+          checked={syncMainFleetId}
+        />
+      </div>
     )
   }
 }

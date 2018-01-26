@@ -29,3 +29,7 @@
 #poi-plugin-ezexped .exped-btn-table .panel-body {
     padding: 8px;
 }
+
+#plugin-ezexped-settings div.checkbox > label {
+    min-height: 0;
+}
