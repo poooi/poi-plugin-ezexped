@@ -5,10 +5,7 @@ import { globalSubscribe, globalUnsubscribe } from './observers'
 import { loadPState } from './p-state'
 
 /*
-
    - darkOrLight is no longer needed
-   - make only reqs part scrollable
-
  */
 
 // for p-state loading process

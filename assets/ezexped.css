@@ -37,3 +37,8 @@
 #poi-plugin-ezexped .collapsing {
     transition: none;
 }
+
+#poi-plugin-ezexped.poi-app-tabpane {
+    display: flex;
+    flex-direction: column;
+}

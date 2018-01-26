@@ -31,7 +31,15 @@ class EZExpedMainImpl extends Component {
       fleet,
     } = this.props
     return (
-      <div className="poi-plugin-ezexped">
+      <div
+        style={{
+          flex: 1,
+          height: 0,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        className="poi-plugin-ezexped"
+      >
         <link
           rel="stylesheet"
           href={join(__dirname, '..', 'assets', 'ezexped.css')}
@@ -39,6 +47,9 @@ class EZExpedMainImpl extends Component {
         <div style={{
           paddingRight: 5,
           paddingLeft: 5,
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
         }}>
           <FleetPicker />
           {

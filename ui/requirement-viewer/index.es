@@ -71,7 +71,12 @@ class RequirementViewerImpl extends Component {
     const readyOrNot = flg => __(flg ? "CondReady" : "CondNotReady")
 
     return (
-      <div>
+      <div
+        style={{
+          flex: 1, height: 0,
+          display: 'flex', flexDirection: 'column',
+        }}
+      >
         <Grid style={{width: '100%'}}>
           <Row>
             <Col sm={6} style={{paddingRight: '.5em'}}>
@@ -91,7 +96,12 @@ class RequirementViewerImpl extends Component {
             </Col>
           </Row>
         </Grid>
-        <ListGroup>
+        <ListGroup
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+          }}
+        >
           {
             this.prepareReqListItems().map(({key, ereq, result, which}) => (
               <EReqListGroupItem
