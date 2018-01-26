@@ -186,89 +186,110 @@ class ExpeditionViewerImpl extends Component {
       >
         <div
           style={{
-            flex: "1",
-            maxWidth: "50%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
+            flex: 1,
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
           <Button
             onClick={this.handleClickExped}>
-            <div style={{
-              textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}} >
+            <div
+              style={{
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {`${displayNum} ${info.name}`}
             </div>
           </Button>
-          <div style={{textAlign: "center"}}>{fmtTime(info.timeInMin)}</div>
-          <div style={{display: "flex"}}>
-            <div style={{flex: "1", display: "flex", flexDirection: "column"}} >
-              <IconAndLabel
-                icon={mkMat(1)} label={`${info.cost.fuelPercent}%`} />
-              <IconAndLabel
-                style={{flex: "2"}}
-                icon={hasNormalItem ? mkMatFromName(info.itemNormal.itemId) : "-"}
-                label={hasNormalItem ? prettyRange(0,info.itemNormal.itemMaxCount) : "-"} />
-
-            </div>
-            <div style={{flex: "1", display: "flex", flexDirection: "column"}} >
-              <IconAndLabel
-                icon={mkMat(2)} label={`${info.cost.ammoPercent}%`} />
-              <IconAndLabel
-                style={{flex: "2"}}
-                icon={info.itemGreatSuccess ? mkMatFromName(info.itemGreatSuccess.itemId) : '-'}
-                label={
-                  (
-                    info.itemGreatSuccess ? (
-                      canObtainGreatSuccessItem ?
-                        gsRangeText :
-                        (
-                          <OverlayTrigger
-                            overlay={
-                              (
-                                <Tooltip id="ezexped-great-sucess-only-item">
-                                  {__('TTGreatSucessOnlyItem')}
-                                </Tooltip>
-                              )
-                            }
-                            placement="bottom"
-                          >
-                            <span className="text-danger">
-                              {gsRangeText}
-                            </span>
-                          </OverlayTrigger>
-                        )
-                    ) : '-'
-                  )
-                }
-              />
-            </div>
+          <div style={{textAlign: 'center'}}>
+            {fmtTime(info.timeInMin)}
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplate: 'auto / 1fr 1fr',
+              alignItems: 'center',
+            }}
+          >
+            <IconAndLabel
+              icon={mkMat(1)} label={`${info.cost.fuelPercent}%`}
+            />
+            <IconAndLabel
+              icon={mkMat(2)} label={`${info.cost.ammoPercent}%`}
+            />
+            <IconAndLabel
+              icon={hasNormalItem ? mkMatFromName(info.itemNormal.itemId) : '-'}
+              label={hasNormalItem ? prettyRange(0,info.itemNormal.itemMaxCount) : '-'}
+            />
+            <IconAndLabel
+              icon={info.itemGreatSuccess ? mkMatFromName(info.itemGreatSuccess.itemId) : '-'}
+              label={
+                (
+                  info.itemGreatSuccess ? (
+                    canObtainGreatSuccessItem ?
+                    gsRangeText :
+                    (
+                      <OverlayTrigger
+                        overlay={
+                          (
+                            <Tooltip id="ezexped-great-sucess-only-item">
+                              {__('TTGreatSucessOnlyItem')}
+                            </Tooltip>
+                          )
+                        }
+                                placement="bottom"
+                        >
+                        <span className="text-danger">
+                          {gsRangeText}
+                        </span>
+                      </OverlayTrigger>
+                    )
+                  ) : '-'
+                )
+              }
+            />
           </div>
         </div>
         <div
           style={{
             display: 'flex',
-            maxWidth: '50%',
+            width: '50%',
             flex: 1,
             flexDirection: 'column',
           }}>
-          <div style={{display: "flex", flex: "1"}}>
-            <div style={{flex: "1", ...colFlexStyle}}>
-              <ResourceWithDetail
-                resourceName="fuel"
-                icon={mkMat(1)} renderedResource={renderedResources.fuel} />
-              <ResourceWithDetail
-                resourceName="ammo"
-                icon={mkMat(2)} renderedResource={renderedResources.ammo} />
-            </div>
-            <div style={{flex: "1", ...colFlexStyle}}>
-              <ResourceWithDetail
-                resourceName="steel"
-                icon={mkMat(3)} renderedResource={renderedResources.steel} />
-              <ResourceWithDetail
-                resourceName="bauxite"
-                icon={mkMat(4)} renderedResource={renderedResources.bauxite} />
-            </div>
+          <div
+            style={{
+              flex: 1,
+              display: 'grid',
+              gridTemplate: 'auto / 1fr 1fr',
+              alignItems: 'center',
+              marginLeft: 5,
+            }}
+          >
+            <ResourceWithDetail
+              resourceName="fuel"
+              icon={mkMat(1)}
+              renderedResource={renderedResources.fuel}
+            />
+            <ResourceWithDetail
+              resourceName="steel"
+              icon={mkMat(3)}
+              renderedResource={renderedResources.steel}
+            />
+            <ResourceWithDetail
+              resourceName="ammo"
+              icon={mkMat(2)}
+              renderedResource={renderedResources.ammo}
+            />
+            <ResourceWithDetail
+              resourceName="bauxite"
+              icon={mkMat(4)}
+              renderedResource={renderedResources.bauxite}
+            />
           </div>
           <ButtonGroup style={{display: 'flex'}}>
             <Button
