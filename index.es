@@ -7,11 +7,6 @@ import { loadPState } from './p-state'
 // for p-state loading process
 let pStateInitId = null
 
-/*
-   TODO
-   - move "auto switch" into settings
- */
-
 const pluginDidLoad = () => {
   globalSubscribe()
 

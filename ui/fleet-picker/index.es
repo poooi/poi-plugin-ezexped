@@ -56,38 +56,6 @@ class FleetPickerImpl extends Component {
             ))
           }
         </ButtonGroup>
-        {
-          /* TODO: need to move this into settings */
-          false && (
-            <OverlayTrigger
-              key="auto-fleet"
-              placement="left"
-              overlay={
-                <Tooltip id="ezexped-auto-btn-tooltip">
-                  {__("AutoTooltip")}
-                </Tooltip>
-              }>
-              <Button
-                style={{display: 'flex', minWidth: 40}}
-                onClick={this.handleToggleAutoSwitch}>
-                <FontAwesome
-                  style={{marginRight: 5, marginTop: 2}}
-                  name={
-                    this.props.autoSwitch ?
-                        'check-square-o' :
-                        'square-o'
-                  }
-                />
-                <div style={{
-                  flex: "1",
-                  textOverflow: "ellipsis",
-                  overflow: "hidden"}} >
-                  {__("Auto")}
-                </div>
-              </Button>
-            </OverlayTrigger>
-          )
-        }
       </div>)
   }
 }

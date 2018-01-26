@@ -13,6 +13,7 @@ import {
   hideMainFleetSelector,
   hideSatReqsSelector,
   syncMainFleetIdSelector,
+  fleetAutoSwitchSelector,
 } from '../../selectors'
 import { actionCreators } from '../../store'
 import { PTyp } from '../../ptyp'
@@ -25,6 +26,7 @@ class SettingsImpl extends PureComponent {
     hideMainFleet: PTyp.bool.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
     syncMainFleetId: PTyp.bool.isRequired,
+    fleetAutoSwitch: PTyp.bool.isRequired,
     modifyState: PTyp.func.isRequired,
   }
 
@@ -49,6 +51,7 @@ class SettingsImpl extends PureComponent {
       hideMainFleet,
       hideSatReqs,
       syncMainFleetId,
+      fleetAutoSwitch,
     } = this.props
 
     return (
@@ -106,6 +109,25 @@ class SettingsImpl extends PureComponent {
           disabled={!ready}
           checked={syncMainFleetId}
         />
+        <OverlayTrigger
+          overlay={
+            (
+              <Tooltip id="ezexped-auto-btn-tooltip">
+                {__("AutoTooltip")}
+              </Tooltip>
+            )
+          }
+          placement="bottom"
+        >
+          <div>
+            Auto-switch between Fleets
+          </div>
+        </OverlayTrigger>
+        <Checkbox
+          onChange={this.handleChange('fleetAutoSwitch')}
+          disabled={!ready}
+          checked={fleetAutoSwitch}
+        />
       </div>
     )
   }
@@ -118,6 +140,7 @@ const Settings = connect(
     hideMainFleet: hideMainFleetSelector,
     hideSatReqs: hideSatReqsSelector,
     syncMainFleetId: syncMainFleetIdSelector,
+    fleetAutoSwitch: fleetAutoSwitchSelector,
   }),
   actionCreators,
 )(SettingsImpl)
