@@ -14,9 +14,29 @@ class IconAndLabel extends PureComponent {
 
   render() {
     return (
-      <div style={{...this.props.style, paddingLeft: "6px", display: "flex"}}>
-        <div>{this.props.icon}</div>
-        <div style={{flex: "1", marginLeft: "2px", marginRight: "2px"}} >{this.props.label}</div>
+      <div
+        style={{
+          ...this.props.style,
+          paddingLeft: '.2em',
+          display: 'flex',
+          alignItems: 'center',
+        }}>
+        <div
+          style={{
+            minWidth: 18, minHeight: 18,
+            textAlign: 'center',
+          }}
+        >
+          {this.props.icon}
+        </div>
+        <div
+          style={{
+            flex: 1,
+            marginLeft: '.4em',
+          }}
+        >
+          {this.props.label}
+        </div>
       </div>
     )
   }

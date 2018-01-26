@@ -59,7 +59,7 @@ class FleetButtonImpl extends Component {
       <Button
         bsStyle={bsStyle}
         style={{
-          marginRight: 5, flex: 1,
+          flex: 1,
           opacity: focused ? 1 : .5,
           whiteSpace: 'nowrap',
           width: 75,

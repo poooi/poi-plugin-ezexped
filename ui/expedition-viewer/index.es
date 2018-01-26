@@ -170,6 +170,7 @@ class ExpeditionViewerImpl extends Component {
       marginLeft: "10px",
     }
     const hasNormalItem = info.itemNormal
+    // TODO: hint about great-success-only items
     const hasGreatSuccessItem = this.props.greatSuccess && info.itemGreatSuccess
     const prettyRange = (x,y) => x === y ? `${x}` : `${x}~${y}`
 
@@ -213,8 +214,21 @@ class ExpeditionViewerImpl extends Component {
                 icon={mkMat(2)} label={`${info.cost.ammoPercent}%`} />
               <IconAndLabel
                 style={{flex: "2"}}
-                icon={hasGreatSuccessItem ? mkMatFromName(info.itemGreatSuccess.itemId) : "-"}
-                label={hasGreatSuccessItem ? prettyRange(1,info.itemGreatSuccess.itemMaxCount) : "-"} />
+                icon={info.itemGreatSuccess ? mkMatFromName(info.itemGreatSuccess.itemId) : '-'}
+                label={
+                  (
+                    info.itemGreatSuccess ? (
+                      hasGreatSuccessItem ?
+                        prettyRange(1,info.itemGreatSuccess.itemMaxCount) :
+                        (
+                          <span className="text-danger">
+                            {prettyRange(1,info.itemGreatSuccess.itemMaxCount)}
+                          </span>
+                        )
+                    ) : '-'
+                  )
+                }
+              />
             </div>
           </div>
         </div>

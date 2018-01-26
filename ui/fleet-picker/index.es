@@ -34,12 +34,19 @@ class FleetPickerImpl extends Component {
 
   render() {
     return (
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: "5px",
-      }}>
-        <ButtonGroup style={{display: "flex", width: "80%"}}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: 5,
+        }}
+      >
+        <ButtonGroup
+          style={{
+            display: 'flex',
+            width: '100%',
+          }}
+        >
           {
             this.props.fleetIds.map(fleetId => (
               <FleetButton
@@ -49,33 +56,38 @@ class FleetPickerImpl extends Component {
             ))
           }
         </ButtonGroup>
-        <OverlayTrigger
-          key="auto-fleet"
-          placement="left"
-          overlay={
-            <Tooltip id="ezexped-auto-btn-tooltip">
-              {__("AutoTooltip")}
-            </Tooltip>
-          }>
-          <Button
-            style={{display: 'flex', minWidth: 40}}
-            onClick={this.handleToggleAutoSwitch}>
-            <FontAwesome
-              style={{marginRight: 5, marginTop: 2}}
-              name={
-                this.props.autoSwitch ?
-                  'check-square-o' :
-                  'square-o'
-              }
-            />
-            <div style={{
-              flex: "1",
-              textOverflow: "ellipsis",
-              overflow: "hidden"}} >
-              {__("Auto")}
-            </div>
-          </Button>
-        </OverlayTrigger>
+        {
+          /* TODO: need to move this into settings */
+          false && (
+            <OverlayTrigger
+              key="auto-fleet"
+              placement="left"
+              overlay={
+                <Tooltip id="ezexped-auto-btn-tooltip">
+                  {__("AutoTooltip")}
+                </Tooltip>
+              }>
+              <Button
+                style={{display: 'flex', minWidth: 40}}
+                onClick={this.handleToggleAutoSwitch}>
+                <FontAwesome
+                  style={{marginRight: 5, marginTop: 2}}
+                  name={
+                    this.props.autoSwitch ?
+                        'check-square-o' :
+                        'square-o'
+                  }
+                />
+                <div style={{
+                  flex: "1",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden"}} >
+                  {__("Auto")}
+                </div>
+              </Button>
+            </OverlayTrigger>
+          )
+        }
       </div>)
   }
 }
