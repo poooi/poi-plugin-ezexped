@@ -4,28 +4,15 @@ import { EZExpedMain as reactClass } from './ui'
 import { globalSubscribe, globalUnsubscribe } from './observers'
 import { loadPState } from './p-state'
 
-// for p-state loading process
-let pStateInitId = null
-
 const pluginDidLoad = () => {
   globalSubscribe()
-
-  if (pStateInitId !== null) {
-    console.error(`pStateInitId should be null`)
-  }
-  pStateInitId = setTimeout(() => {
+  setTimeout(() =>
     boundActionCreators.pStateReady(loadPState())
-    pStateInitId = null
-  })
+  )
 }
 
 const pluginWillUnload = () => {
   globalUnsubscribe()
-
-  if (pStateInitId !== null) {
-    clearTimeout(pStateInitId)
-    pStateInitId = null
-  }
 }
 
 const switchPluginPath = [
