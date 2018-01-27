@@ -3,7 +3,6 @@ import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
   sortieSelector,
-  wctfSelector,
 } from 'views/utils/selectors'
 
 import { initState } from '../store'
