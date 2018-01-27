@@ -28,6 +28,10 @@ import { join } from 'path-extra'
        - 'expedTableExpanded' is now included in p-state, the default value is false
        - 'configVer' is removed, instead, '$dataVersion' is now in use
 
+   - 1.6.0:
+
+       - added "kanceptsUrl", which can be "github" or "kcwiki"
+
  */
 
 const extStateToPState = extState => {
@@ -42,7 +46,7 @@ const getPStateFilePath = () => {
   return join(configPath,'p-state.json')
 }
 
-const latestVersion = '1.5.0'
+const latestVersion = '1.6.0'
 
 export {
   extStateToPState,

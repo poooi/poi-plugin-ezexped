@@ -25,8 +25,14 @@ const initState = {
     enumFromTo(1,4).map(fleetId => [fleetId, 1])),
   // an Object from expedId to bool, default to true
   dlcFlags: {},
-  kanceptsExportShipList: true,
   expedTableExpanded: false,
+
+  kanceptsExportShipList: true,
+  /*
+     indicates where to locate kancepts,
+     this could be 'github' or 'kcwiki'
+   */
+  kanceptsUrl: 'github',
 
   ready: false,
 }

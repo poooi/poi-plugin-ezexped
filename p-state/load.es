@@ -34,10 +34,16 @@ const updatePState = oldPState => {
     }
   }
 
-  if (
-    ('$dataVersion' in curPState) &&
-    curPState.$dataVersion === latestVersion
-  ) {
+  if (curPState.$dataVersion === '1.5.0') {
+    const newPState = {
+      ...curPState,
+      kanceptsUrl: 'github',
+      $dataVersion: '1.6.0',
+    }
+    curPState = newPState
+  }
+
+  if (curPState.$dataVersion === latestVersion) {
     // schedule a save when it turns out to be a update.
     if (curPState !== oldPState) {
       setTimeout(() => savePState(curPState))
