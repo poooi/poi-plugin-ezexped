@@ -58,49 +58,6 @@ const isMainFleetFuncSelector = createSelector(
       (fleetId => fleetId === 1)
 )
 
-/*
-   returns a function:
-
-   canEquip(equipMstId: int)(shipMstId: int): bool or null
-
-   - curried in such a way to allow parametrizing on equipment id.
-
-   - returning `null` means failure - it could be the case
-     when either equipMstId or shipMstId is not found
-   - returning a bool to indicate if it's possible to equip <equipMstId> on ship <shipMstId>
-
- */
-const canEquipFuncSelector = createSelector(
-  wctfSelector,
-  w => equipMstId => {
-    const eqpInfo = _.get(w, ['items', equipMstId])
-
-    if (_.isEmpty(eqpInfo))
-      return _shipMstId => null
-
-    return shipMstId => {
-      const shipInfo = _.get(w, ['ships', shipMstId])
-      if (_.isEmpty(shipInfo))
-        return null
-
-      const eqpTypeInfo = _.get(w, ['item_types', eqpInfo.type])
-      /* eslint-disable camelcase */
-      const {
-        equipable_extra_ship = [],
-        equipable_on_type,
-      } = eqpTypeInfo
-      /* eslint-enable camelcase */
-      return equipable_on_type.includes(shipInfo.type) ||
-        equipable_extra_ship.includes(shipMstId)
-    }
-  }
-)
-
-const canEquipDLCFuncSelector = createSelector(
-  canEquipFuncSelector,
-  canEquip => _.memoize(canEquip(68 /* 大発動艇 */))
-)
-
 export {
   mkExtPropSelector,
 
@@ -122,5 +79,4 @@ export {
   readySelector,
 
   isMainFleetFuncSelector,
-  canEquipDLCFuncSelector,
 }

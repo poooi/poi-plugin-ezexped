@@ -9,6 +9,7 @@ import {
 } from 'views/utils/selectors'
 
 import { enumFromTo } from 'subtender'
+import { canEquipDLCFuncSelector } from 'subtender/poi'
 import {
   hideMainFleetSelector,
   isMainFleetFuncSelector,
@@ -16,7 +17,7 @@ import {
   gsFlagsSelector,
   dlcFlagsSelector,
   fleetIdSelector,
-  canEquipDLCFuncSelector,
+
 } from './common'
 import { debug } from '../debug'
 
