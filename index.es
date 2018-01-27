@@ -4,13 +4,6 @@ import { EZExpedMain as reactClass } from './ui'
 import { globalSubscribe, globalUnsubscribe } from './observers'
 import { loadPState } from './p-state'
 
-/*
-   TODO:
-
-   - i18n cleanup
-
- */
-
 // for p-state loading process
 let pStateInitId = null
 

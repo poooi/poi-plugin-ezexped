@@ -1,6 +1,5 @@
 {
   "EZ Exped": "易及远征",
-  "Auto": "自动",
   "SparkledCountCustom": "“战意高昂”舰数量",
   "SparkledCountCustomDesc": "定制提高大成功率所需的处于“战意高昂”状态的舰娘数量",
   "HideMainFleet": "隐藏主舰队",
@@ -8,7 +7,6 @@
   "SyncMainFleetId": "与主面板同步切换舰队",
   "FleetAutoSwitch": "在舰队间自动切换",
   "FleetAutoSwitchDesc": "根据游戏内动作自动切换舰队",
-  "Cost": "消耗",
   "Great Success": "大成功",
   "CondNormal": "常规检查",
   "CondGreatSuccess": "大成功检查",
@@ -89,6 +87,5 @@
     "ExportShipList": "导出舰船列表"
   },
   "Expedition made easy": "远征条件检查与精确收入预测",
-  "Required Time (mins)": "所需时间(分钟)",
   "Fleet Composition": "舰队构成"
 }

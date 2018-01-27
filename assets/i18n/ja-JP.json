@@ -1,6 +1,5 @@
 {
   "EZ Exped": "イージー遠征",
-  "Auto": "自動",
   "SparkledCountCustom": "キラキラ艦の数",
   "SparkledCountCustomDesc": "大成功するために必要なキラキラ艦の数を設定する",
   "HideMainFleet": "第一艦隊を隠す",
@@ -8,7 +7,6 @@
   "SyncMainFleetId": "アクティブ艦隊は艦隊パネルに従う",
   "FleetAutoSwitch": "Switching between fleets automatically depending on your in-game actions.",
   "FleetAutoSwitchDesc": "アクティブ艦隊はゲーム内のアクションに従う",
-  "Cost": "コスト",
   "Great Success": "大成功",
   "CondNormal": "普通",
   "CondGreatSuccess": "大成功",
@@ -89,6 +87,5 @@
     "ExportShipList": "艦隊リストをエキスパート"
   },
   "Expedition made easy": "遠征報酬早見表",
-  "Required Time (mins)": "必要時間 (分)",
   "Fleet Composition": "艦隊編成"
 }

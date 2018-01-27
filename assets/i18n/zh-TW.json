@@ -1,6 +1,5 @@
 {
   "EZ Exped": "易及遠征",
-  "Auto": "自動",
   "SparkledCountCustom": "“戰意高昂”艦數量",
   "SparkledCountCustomDesc": "定製提高大成功率所需的處於“戰意高昂”狀態的艦娘數量",
   "HideMainFleet": "隱藏主艦隊",
@@ -8,7 +7,6 @@
   "SyncMainFleetId": "與主面板同步切換艦隊",
   "FleetAutoSwitch": "在艦隊間自動切換",
   "FleetAutoSwitchDesc": "根據遊戲內動作自動切換艦隊",
-  "Cost": "消耗",
   "Great Success": "大成功",
   "CondNormal": "常規檢查",
   "CondGreatSuccess": "大成功檢查",
@@ -89,6 +87,5 @@
     "ExportShipList": "導出艦船列表"
   },
   "Expedition made easy": "遠征條件檢查與精確收入預測",
-  "Required Time (mins)": "所需時間(分鐘)",
   "Fleet Composition": "艦隊構成"
 }

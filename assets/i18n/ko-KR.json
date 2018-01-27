@@ -1,6 +1,5 @@
 {
   "EZ Exped": "EZ Exped",
-  "Auto": "Auto",
   "SparkledCountCustom": "Number of sparkled ships",
   "SparkledCountCustomDesc": "Custom the number of sparkled ships for a better Great Success rate",
   "HideMainFleet": "Hide main fleet",
@@ -8,7 +7,6 @@
   "SyncMainFleetId": "Sync with main fleet focus",
   "FleetAutoSwitch": "Auto-switch between fleets",
   "FleetAutoSwitchDesc": "Switching between fleets automatically depending on your in-game actions.",
-  "Cost": "Cost",
   "Great Success": "Great Success",
   "CondNormal": "Normal",
   "CondGreatSuccess": "Great Success",
@@ -89,6 +87,5 @@
     "ExportShipList": "Export ship list"
   },
   "Expedition made easy": "Expedition made easy",
-  "Required Time (mins)": "Required Time (mins)",
   "Fleet Composition": "Fleet Composition"
 }
