@@ -13,18 +13,11 @@ const updatePState = oldPState => {
   if (oldPState === null)
     return null
 
+  let curPState = oldPState
+
   const stripVersion = ps => {
     const {$dataVersion: _ignored, ...pState} = ps
     return pState
-  }
-
-  let curPState = oldPState
-
-  if (
-    ('$dataVersion' in curPState) &&
-    curPState.$dataVersion === latestVersion
-  ) {
-    return stripVersion(curPState)
   }
 
   // 1.4.0 => 1.5.0
@@ -45,7 +38,10 @@ const updatePState = oldPState => {
     ('$dataVersion' in curPState) &&
     curPState.$dataVersion === latestVersion
   ) {
-    savePState(curPState)
+    // schedule a save when it turns out to be a update.
+    if (curPState !== oldPState) {
+      setTimeout(() => savePState(curPState))
+    }
     return stripVersion(curPState)
   } else {
     console.error('error while updating p-state to latest version')
