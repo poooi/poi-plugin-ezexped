@@ -88,7 +88,7 @@ const ExpeditionPicker = connect(
       const pluginElement = $('#poi-plugin-ezexped.poi-plugin')
       const computedWidth =
         pluginElement ?
-          getComputedStyle(pluginElement).width : '200px'
+          `${pluginElement.clientWidth}px` : '200px'
       return `calc(${computedWidth} - 20px)`
     },
   }),
