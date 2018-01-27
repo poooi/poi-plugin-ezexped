@@ -1,48 +1,29 @@
-import _ from 'lodash'
 import { modifyObject } from 'subtender'
-import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { shell } from 'electron'
 import { Button, Checkbox } from 'react-bootstrap'
+
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
-import { kanceptsExportShipListSelector } from '../../../../selectors'
+import {
+  kanceptsExportShipListSelector,
+  kanceptsUrlSelector,
+} from '../../../../selectors'
 import { __ } from '../../../../tr'
-
-const kanceptsAddr = 'https://javran.github.io/kancepts/'
-// const kanceptsAddr = 'http://localhost:3000/'
-
-const makeLink = exportShipList => {
-  if (exportShipList) {
-    const {getStore} = window
-    const slVal = encodeURIComponent(
-      _.flatMap(
-        Object.values(getStore().info.ships),
-        rawInfo =>
-          rawInfo.api_locked === 1 ? [
-            `${rawInfo.api_lv>99?'r':''}${rawInfo.api_ship_id}`,
-          ] : []
-      ).join(',')
-    )
-    return `${kanceptsAddr}?sl=${slVal}`
-  } else {
-    return kanceptsAddr
-  }
-}
+import { makeLink } from '../../../../kancepts'
 
 class KanceptsExporterImpl extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
 
     exportShipList: PTyp.bool.isRequired,
+    mkLink: PTyp.func.isRequired,
     modifyState: PTyp.func.isRequired,
   }
 
   handleOpen = () =>
-    shell.openExternal(
-      makeLink(this.props.exportShipList)
-    )
+    shell.openExternal(this.props.mkLink())
 
   handleToggleExport = e => {
     const kanceptsExportShipList = e.target.checked
@@ -65,6 +46,7 @@ class KanceptsExporterImpl extends PureComponent {
       >
         <Button
           onClick={this.handleOpen}
+          bsSize="small"
           style={{marginRight: '.5em'}}
         >
           {__('Kancepts.Launch')}
@@ -82,9 +64,12 @@ class KanceptsExporterImpl extends PureComponent {
 }
 
 const KanceptsExporter = connect(
-  createStructuredSelector({
-    exportShipList: kanceptsExportShipListSelector,
-  }),
+  state => {
+    const exportShipList = kanceptsExportShipListSelector(state)
+    const kanceptsUrl = kanceptsUrlSelector(state)
+    const mkLink = () => makeLink(kanceptsUrl)(exportShipList)
+    return {exportShipList, mkLink}
+  },
   mapDispatchToProps,
 )(KanceptsExporterImpl)
 

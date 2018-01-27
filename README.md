@@ -13,6 +13,8 @@ check expedition requirements and estimate expedition income accurately.
 
 - Moving "Auto" switch into settings
 
+- "Kancepts" nows gets a reverse proxy at kcwiki and support is added accordingly.
+
 ### 1.5.2
 
 - Panel update for react-bootstrap

@@ -46,6 +46,8 @@ const expedTableExpandedSelector =
   mkExtPropSelector('expedTableExpanded')
 const kanceptsExportShipListSelector =
   mkExtPropSelector('kanceptsExportShipList')
+const kanceptsUrlSelector =
+  mkExtPropSelector('kanceptsUrl')
 const readySelector =
   mkExtPropSelector('ready')
 
@@ -75,6 +77,7 @@ export {
   dlcFlagsSelector,
   expedTableExpandedSelector,
   kanceptsExportShipListSelector,
+  kanceptsUrlSelector,
   readySelector,
 
   isMainFleetFuncSelector,

@@ -1,8 +1,11 @@
+import { join } from 'path-extra'
 import { createStructuredSelector } from 'reselect'
+
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
   Checkbox, FormControl,
+  FormGroup, Radio,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
@@ -14,10 +17,12 @@ import {
   hideSatReqsSelector,
   syncMainFleetIdSelector,
   fleetAutoSwitchSelector,
+  kanceptsUrlSelector,
 } from '../../selectors'
 import { actionCreators } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
+import { urlGitHub, urlKcWiki } from '../../kancepts'
 
 class SettingsImpl extends PureComponent {
   static propTypes = {
@@ -27,6 +32,7 @@ class SettingsImpl extends PureComponent {
     hideSatReqs: PTyp.bool.isRequired,
     syncMainFleetId: PTyp.bool.isRequired,
     fleetAutoSwitch: PTyp.bool.isRequired,
+    kanceptsUrl: PTyp.string.isRequired,
     modifyState: PTyp.func.isRequired,
   }
 
@@ -44,6 +50,13 @@ class SettingsImpl extends PureComponent {
     )
   }
 
+  handleKanceptsUrlChange = e => {
+    const kanceptsUrl = e.target.value
+    this.props.modifyState(
+      modifyObject('kanceptsUrl', () => kanceptsUrl)
+    )
+  }
+
   render() {
     const {
       ready,
@@ -52,6 +65,7 @@ class SettingsImpl extends PureComponent {
       hideSatReqs,
       syncMainFleetId,
       fleetAutoSwitch,
+      kanceptsUrl,
     } = this.props
 
     return (
@@ -64,6 +78,10 @@ class SettingsImpl extends PureComponent {
           alignItems: 'center',
         }}
       >
+        <link
+          rel="stylesheet"
+          href={join(__dirname, '..', '..', 'assets', 'ezexped.css')}
+        />
         <OverlayTrigger
           overlay={
             (
@@ -128,6 +146,49 @@ class SettingsImpl extends PureComponent {
           disabled={!ready}
           checked={fleetAutoSwitch}
         />
+        <div>
+          Kancepts
+        </div>
+        <FormGroup
+          onChange={this.handleKanceptsUrlChange}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: 0,
+          }}
+        >
+          {
+            [
+              ['github', urlGitHub, 'GitHub'],
+              ['kcwiki', urlKcWiki, 'KcWiki'],
+            ].map(([which, url, text]) => (
+              <Radio
+                checked={which === kanceptsUrl}
+                className="kancepts"
+                value={which}
+                key={which}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+                name="kanceptsUrl"
+                >
+                <OverlayTrigger
+                  placement="left"
+                  overlay={
+                    (
+                      <Tooltip id={`ezexped-settings-kancepts-url-${which}`}>
+                        {url}
+                      </Tooltip>
+                    )
+                  }
+                >
+                  <div>{text}</div>
+                </OverlayTrigger>
+              </Radio>
+            ))
+          }
+        </FormGroup>
       </div>
     )
   }
@@ -141,6 +202,7 @@ const Settings = connect(
     hideSatReqs: hideSatReqsSelector,
     syncMainFleetId: syncMainFleetIdSelector,
     fleetAutoSwitch: fleetAutoSwitchSelector,
+    kanceptsUrl: kanceptsUrlSelector,
   }),
   actionCreators,
 )(SettingsImpl)

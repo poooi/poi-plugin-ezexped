@@ -98,7 +98,7 @@ class ExpeditionTableImpl extends Component {
             )
           }
         </div>
-        <KanceptsExporter style={{}} />
+        <KanceptsExporter style={{marginTop: '.6em'}} />
       </div>
     )
   }
