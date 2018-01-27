@@ -3,7 +3,6 @@ import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
   sortieSelector,
-  configSelector,
   wctfSelector,
 } from 'views/utils/selectors'
 
@@ -50,14 +49,6 @@ const kanceptsExportShipListSelector =
   mkExtPropSelector('kanceptsExportShipList')
 const readySelector =
   mkExtPropSelector('ready')
-
-const themeSelector = createSelector(
-  configSelector,
-  config => _.get(config,'poi.theme','paperdark'))
-
-const isDarkThemeSelector = createSelector(
-  themeSelector,
-  theme => /(dark|black|slate|superhero|papercyan)/i.test(theme))
 
 const isMainFleetFuncSelector = createSelector(
   isFleetCombinedSelector,
@@ -114,7 +105,6 @@ export {
   mkExtPropSelector,
 
   isFleetCombinedSelector,
-  isDarkThemeSelector,
 
   extSelector,
 
