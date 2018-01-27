@@ -160,7 +160,7 @@ class SettingsImpl extends PureComponent {
           {
             [
               ['github', urlGitHub, 'GitHub'],
-              ['kcwiki', urlKcWiki, 'KcWiki'],
+              ['kcwiki', urlKcWiki, 'kcwiki'],
             ].map(([which, url, text]) => (
               <Radio
                 checked={which === kanceptsUrl}
