@@ -63,7 +63,8 @@ const defineWorld2 = defineExped => {
   defineExped(111)(
     [
       mk.MissingInfo(),
-      mk.FleetCompo({CA: 1, CL: 1, DD: 4}),
+      ...fslSc(50,6),
+      mk.FleetCompo({CA: 1, CL: 1, DD: 3}),
       mk.TotalFirepower(360),
     ]
   )
