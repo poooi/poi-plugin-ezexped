@@ -15,6 +15,7 @@ describe('estype', () => {
       assert( estype.isESType.SSLike( ty.SS ) )
       assert( estype.isESType.SSLike( ty.SSV ) )
       assert( ! estype.isESType.SSLike( ty.AV ) )
+      assert( !estype.isESType.CVE(ty.CVL, 521) )
       assert( estype.isESType.CVE(ty.CVL, 529) )
       assert( ! estype.isESType.CVE(ty.CVL, 318))
       assert( estype.isESType.DE( ty.DE ) )

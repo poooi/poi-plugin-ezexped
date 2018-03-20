@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.6.1 (pending)
+
+- Kasuga Maru should not be considered CVE
+
 ### 1.6.0
 
 - Some UI rework

@@ -35,7 +35,7 @@ const [isESType, allESTypes] = (() => {
   defineESType('CT', eq(t.CT))
   defineESType('CA', eq(t.CA))
   defineESType('AS', eq(t.AS))
-  defineESType('CVE', (styp, mstId) => styp === t.CVL && [521, 526, 380, 529].includes(mstId))
+  defineESType('CVE', (styp, mstId) => styp === t.CVL && [526, 380, 529].includes(mstId))
   defineESType('AV', eq(t.AV))
   defineESType('CVLike', oneOf([t.CV,t.CVL,t.AV,t.CVB]))
   defineESType('BBV', eq(t.BBV))
