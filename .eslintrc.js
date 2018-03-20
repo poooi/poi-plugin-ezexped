@@ -3,12 +3,13 @@ module.exports = {
   'plugins': [
     'react',
     'jsx-a11y',
-    'import'
+    'import',
   ],
   'env': {
     'browser': true,
     'es6': true,
     'node': true,
+    'mocha': true,
   },
   'parser': 'babel-eslint',
   'rules': {
