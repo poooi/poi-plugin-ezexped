@@ -56,7 +56,22 @@ const [isESType, allESTypes] = (() => {
      (1) it must be CVL (2) it's ASW is not zero (use "asw_max" for asw stat at level 99)
 
    */
-  defineESType('CVE', (styp, mstId) => styp === t.CVL && [526, 380, 529].includes(mstId))
+  defineESType('CVE', (styp, mstId) =>
+    styp === t.CVL && [
+      // 大鷹
+      526,
+      // 大鷹改
+      380,
+      // 大鷹改二
+      529,
+      // Gambier Bay
+      544,
+      // Gambier Bay改
+      396,
+      // 瑞鳳改二乙
+      560,
+    ].includes(mstId)
+  )
   defineESType('AV', eq(t.AV))
   defineESType('CVLike', oneOf([t.CV,t.CVL,t.AV,t.CVB]))
   defineESType('BBV', eq(t.BBV))
