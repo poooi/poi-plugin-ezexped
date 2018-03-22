@@ -10,6 +10,7 @@ check expedition requirements and estimate expedition income accurately.
 ### 1.6.1 (pending)
 
 - Kasuga Maru should not be considered CVE
+- Consider Gambier Bay (Kai included) and Zuihou Kai Ni B CVE
 
 ### 1.6.0
 
