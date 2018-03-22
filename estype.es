@@ -13,7 +13,21 @@ import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
-const allSTypes = Object.keys( stype )
+const allSTypes = Object.keys(stype)
+
+{
+  const {getStore} = window
+  const allCVLs = _.values(getStore().const.$ships).filter(x => x.api_stype === 7)
+  const wctfShips = getStore().wctf.ships
+  const allCVEs = allCVLs.filter(x => {
+    if (!(x.api_id in wctfShips))
+      return false
+    const asw = _.get(wctfShips, [x.api_id, 'stat', 'asw_max'])
+    return _.isNumber(asw) && asw > 0
+  })
+
+  console.log(allCVEs.map(x => x.api_name))
+}
 
 const [isESType, allESTypes] = (() => {
   const eq = x => y => x === y
