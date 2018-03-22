@@ -15,6 +15,7 @@ import { join } from 'path-extra'
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys(stype)
 
+/*
 {
   const {getStore} = window
   const allCVLs = _.values(getStore().const.$ships).filter(x => x.api_stype === 7)
@@ -26,12 +27,13 @@ const allSTypes = Object.keys(stype)
     return _.isNumber(asw) && asw > 0
   })
 
-  console.log(allCVEs.map(x => x.api_name))
+  console.log(allCVEs.map(x => [x.api_name, x.api_id]))
 }
+*/
 
 const [isESType, allESTypes] = (() => {
   const eq = x => y => x === y
-  const oneOf = xs => y => xs.indexOf(y) !== -1
+  const oneOf = xs => y => xs.includes(y)
   const t = stype
 
   const $isESType = {}
