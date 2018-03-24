@@ -61,7 +61,7 @@ const defineWorld1 = defineExped => {
     [
       ...fslSc(20,4),
       mk.FleetCompo({DDorDE: 4}),
-      mk.TotalAsw(180),
+      mk.TotalAsw(180, true),
       mk.TotalAntiAir(70),
     ]
   )
@@ -73,9 +73,13 @@ const defineWorld1 = defineExped => {
       mk.AnyFleetCompo([
         {CL: 1, DDorDE: 3},
         {DD: 1, DE: 3},
-        {CT: 1, DD: 2, DE: 2},
+        {CVE: 1, DD: 2},
+        {CVE: 1, DE: 2},
+        {CT: 1, DE: 2},
+        {CL: 1, DE: 2},
       ]),
-      mk.TotalAsw(280),
+      mk.TotalAsw(280, true),
+      mk.TotalLos(60),
     ]
   )
 }
