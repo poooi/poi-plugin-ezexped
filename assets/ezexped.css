@@ -38,7 +38,8 @@
     transition: none;
 }
 
-#poi-plugin-ezexped.poi-app-tabpane {
+#poi-plugin-ezexped.poi-app-tabpane,
+#plugin-mountpoint > .poi-app-tabpane {
     display: flex;
     flex-direction: column;
 }
