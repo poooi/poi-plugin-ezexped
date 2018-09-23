@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { WindowEnv } from 'views/components/etc/window-env'
 
 import {
   createStructuredSelector,
@@ -31,39 +32,45 @@ class EZExpedMainImpl extends Component {
       fleet,
     } = this.props
     return (
-      <div
-        style={{
-          flex: 1,
-          height: 0,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-        className="poi-plugin-ezexped"
-      >
-        <link
-          rel="stylesheet"
-          href={join(__dirname, '..', 'assets', 'ezexped.css')}
-        />
-        <div style={{
-          paddingRight: 5,
-          paddingLeft: 5,
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-          <FleetPicker />
-          {
-            fleet && (
-              <ExpeditionViewer />
-            )
-          }
-          {
-            fleet && (
-              <RequirementViewer />
-            )
-          }
-        </div>
-      </div>
+      <WindowEnv.Consumer>
+        {({mountPoint}) => (
+          <div
+            style={{
+              flex: 1,
+              height: 0,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+            className="poi-plugin-ezexped"
+            >
+            <link
+              rel="stylesheet"
+              href={join(__dirname, '..', 'assets', 'ezexped.css')}
+            />
+            <div style={{
+              paddingRight: 5,
+              paddingLeft: 5,
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              <FleetPicker />
+              {
+                fleet && (
+                  <ExpeditionViewer
+                    mountPoint={mountPoint}
+                  />
+                )
+              }
+              {
+                fleet && (
+                  <RequirementViewer />
+                )
+              }
+            </div>
+          </div>
+        )}
+      </WindowEnv.Consumer>
     )
   }
 }

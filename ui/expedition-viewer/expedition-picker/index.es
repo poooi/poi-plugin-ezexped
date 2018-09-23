@@ -18,8 +18,9 @@ class ExpeditionPickerImpl extends PureComponent {
     expedId: PTyp.number.isRequired,
     getExpedInfo: PTyp.func.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
-    computedWidth: PTyp.string.isRequired,
     modifyState: PTyp.func.isRequired,
+
+    mountPoint: PTyp.any.isRequired,
   }
 
   handleToggleExpedTable = (newVal, e, srcInfo) => {
@@ -46,9 +47,21 @@ class ExpeditionPickerImpl extends PureComponent {
   }
 
   render() {
-    const {expedId, getExpedInfo, expedTableExpanded, computedWidth} = this.props
+    const {
+      expedId, getExpedInfo, expedTableExpanded,
+      mountPoint,
+    } = this.props
     const info = getExpedInfo(expedId)
     const {displayNum} = info
+    const menuStyle = {minWidth: 300}
+
+    const curPluginRef =
+      mountPoint && mountPoint.querySelector('.poi-plugin-ezexped')
+
+    if (_.isFinite(_.get(curPluginRef, 'clientWidth'))) {
+      menuStyle.width = `calc(${curPluginRef.clientWidth}px - 20px)`
+    }
+
     return (
       <Dropdown
         open={expedTableExpanded}
@@ -69,7 +82,7 @@ class ExpeditionPickerImpl extends PureComponent {
           </div>
         </Dropdown.Toggle>
         <Dropdown.Menu
-          style={{width: computedWidth}}
+          style={menuStyle}
         >
           <ExpeditionTable />
         </Dropdown.Menu>
@@ -83,14 +96,6 @@ const ExpeditionPicker = connect(
     expedId: expedIdSelector,
     getExpedInfo: getExpedInfoFuncSelector,
     expedTableExpanded: expedTableExpandedSelector,
-    computedWidth: _state => {
-      const {$} = window
-      const pluginElement = $('#poi-plugin-ezexped.poi-plugin')
-      const computedWidth =
-        pluginElement ?
-          `${pluginElement.clientWidth}px` : '200px'
-      return `calc(${computedWidth} - 20px)`
-    },
   }),
   mapDispatchToProps,
 )(ExpeditionPickerImpl)

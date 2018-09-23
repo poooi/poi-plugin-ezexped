@@ -91,6 +91,7 @@ class ExpeditionViewerImpl extends Component {
     greatSuccess: PTyp.bool.isRequired,
     dlcFlag: PTyp.bool.isRequired,
     getExpedInfo: PTyp.func.isRequired,
+    mountPoint: PTyp.any.isRequired,
 
     fleet: PTyp.object.isRequired,
     modifyState: PTyp.func.isRequired,
@@ -129,7 +130,7 @@ class ExpeditionViewerImpl extends Component {
   }
 
   render() {
-    const {expedId, getExpedInfo} = this.props
+    const {expedId, getExpedInfo, mountPoint} = this.props
     const info = getExpedInfo(expedId)
     const resupplyCost =
       fleetResupplyCost(this.props.fleet.ships)(
@@ -184,7 +185,9 @@ class ExpeditionViewerImpl extends Component {
             justifyContent: 'space-between',
           }}
         >
-          <ExpeditionPicker />
+          <ExpeditionPicker
+            mountPoint={mountPoint}
+          />
           <div style={{textAlign: 'center'}}>
             {fmtTime(info.timeInMin)}
           </div>
