@@ -62,15 +62,18 @@ class FleetButtonImpl extends Component {
         style={{
           flex: 1,
           opacity: focused ? 1 : .5,
-          whiteSpace: 'nowrap',
           width: 75,
-          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
         }}
         active={focused}
         onContextMenu={this.handleFocusFleetInMainUI}
         onClick={this.handleChangeFleet}
       >
         <span style={{
+          flex: 1,
+          minWidth: 0,
+          whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
         }}>

@@ -7,6 +7,11 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.6.3
+
+- Fix expedition menu width in split window
+- Improve Fleet button text layout
+
 ### 1.6.2
 
 - Fix split window layout
