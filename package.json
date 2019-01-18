@@ -5,7 +5,7 @@
   "main": "index.es",
   "scripts": {
     "test": "mocha -r @babel/register --recursive",
-    "lint": "eslint '**/*.es' 'test/**/.js' || true"
+    "lint": "eslint '**/*.es' 'test/**/*.js' || true"
   },
   "repository": {
     "type": "git",
