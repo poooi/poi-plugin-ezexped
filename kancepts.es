@@ -3,12 +3,10 @@ import _ from 'lodash'
 const urlGitHub = 'https://javran.github.io/kancepts/'
 const urlKcWiki = 'https://box.kcwiki.org/kancepts/'
 
-/* eslint-disable indent */
 const getActualUrl = kanceptsUrl =>
   kanceptsUrl === 'github' ? urlGitHub :
   kanceptsUrl === 'kcwiki' ? urlKcWiki :
   console.error(`invalid kanceptsUrl: ${kanceptsUrl}`)
-/* eslint-enable indent */
 
 const makeLink = kanceptsUrl => {
   const kanceptsAddr = getActualUrl(kanceptsUrl) || urlGitHub

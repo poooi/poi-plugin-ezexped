@@ -28,7 +28,6 @@ import {
 } from '../../selectors'
 import { debug } from '../../debug'
 
-/* eslint-disable indent */
 const itemNameToMaterialId = x =>
   x === "Bucket" ? 6 :
   x === "Flamethrower" ? 5 :
@@ -37,7 +36,6 @@ const itemNameToMaterialId = x =>
   x === "FCoinMedium" ? 11 :
   x === "FCoinLarge" ? 12 :
   debug.error(`unknown item name: ${x}`)
-/* eslint-enable indent */
 
 // pretty-printing a floating number
 const pprFloat = (v,digits=2) => v.toFixed(digits)
@@ -141,12 +139,10 @@ class ExpeditionViewerImpl extends Component {
     // have to apply a semicolon otherwise parser won't recognize this properly
     const renderedResources = {};
     ["fuel","ammo","steel","bauxite"].map( resourceName => {
-      /* eslint-disable indent */
       const resupply =
         resourceName === 'fuel' ? resupplyCost.fuelCost :
         resourceName === 'ammo' ? resupplyCost.ammoCost :
         0
-      /* eslint-enable indent */
 
       if (info.resources) {
         renderedResources[resourceName] = renderTexts(
@@ -214,23 +210,22 @@ class ExpeditionViewerImpl extends Component {
                 (
                   info.itemGreatSuccess ? (
                     canObtainGreatSuccessItem ?
-                    gsRangeText :
-                    (
-                      <OverlayTrigger
-                        overlay={
-                          (
-                            <Tooltip id="ezexped-great-sucess-only-item">
-                              {__('TTGreatSucessOnlyItem')}
-                            </Tooltip>
-                          )
-                        }
-                                placement="bottom"
+                      gsRangeText : (
+                        <OverlayTrigger
+                          overlay={
+                            (
+                              <Tooltip id="ezexped-great-sucess-only-item">
+                                {__('TTGreatSucessOnlyItem')}
+                              </Tooltip>
+                            )
+                          }
+                          placement="bottom"
                         >
-                        <div className="text-danger">
-                          {gsRangeText}
-                        </div>
-                      </OverlayTrigger>
-                    )
+                          <div className="text-danger">
+                            {gsRangeText}
+                          </div>
+                        </OverlayTrigger>
+                      )
                   ) : '-'
                 )
               }

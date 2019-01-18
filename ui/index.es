@@ -42,7 +42,7 @@ class EZExpedMainImpl extends Component {
               flexDirection: 'column',
             }}
             className="poi-plugin-ezexped"
-            >
+          >
             <link
               rel="stylesheet"
               href={join(__dirname, '..', 'assets', 'ezexped.css')}

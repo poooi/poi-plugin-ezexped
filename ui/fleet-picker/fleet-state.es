@@ -6,12 +6,10 @@ import { __ } from '../../tr'
 const fleetStates = {}
 
 const defineFleetState = (fsName, bsStyleFuncOrStr, maker, describe) => {
-  /* eslint-disable indent */
   const bsStyle =
     typeof bsStyleFuncOrStr === 'function' ? bsStyleFuncOrStr :
     typeof bsStyleFuncOrStr === 'string' ? () => bsStyleFuncOrStr :
     console.error(`unexpected bsStyle arg type: ${typeof bsStyleFuncOrStr}`)
-  /* eslint-enable indent */
 
   fleetStates[fsName] = {
     fsName,

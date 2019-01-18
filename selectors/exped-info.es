@@ -26,7 +26,6 @@ const rawExpedExtraInfo =
 
 const toPercent = x => Math.round(100 * x)
 
-/* eslint-disable indent */
 const itemIdToName = x =>
   x === 1 ? 'Bucket' :
   x === 2 ? 'Flamethrower' :
@@ -35,7 +34,6 @@ const itemIdToName = x =>
   x === 11 ? 'FCoinMedium' :
   x === 12 ? 'FCoinLarge' :
   debug.error(`unknown item id: ${x}`)
-/* eslint-enable indent */
 
 const mkItem = itemData => itemData[0] === 0 ?
   null :

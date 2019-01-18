@@ -172,7 +172,7 @@ class SettingsImpl extends PureComponent {
                   alignItems: 'center',
                 }}
                 name="kanceptsUrl"
-                >
+              >
                 <OverlayTrigger
                   placement="left"
                   overlay={

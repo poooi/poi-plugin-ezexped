@@ -41,7 +41,7 @@ class AnyFleetCompoTooltipContent extends Component {
                   <FontAwesome
                     className={
                       fcInfo.sat ? 'text-success' :
-                        (noDanger ? '' : 'text-danger')
+                      (noDanger ? '' : 'text-danger')
                     }
                     name={fcInfo.sat ? 'check-square-o' : 'square-o'}
                     style={{width: '1em', height: '1em'}}

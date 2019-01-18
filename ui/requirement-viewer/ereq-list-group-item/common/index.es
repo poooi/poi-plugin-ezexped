@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types   */
+/* eslint-disable react/prop-types */
 import _ from 'lodash'
 import React from 'react'
 import {

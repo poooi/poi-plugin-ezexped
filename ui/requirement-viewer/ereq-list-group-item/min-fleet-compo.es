@@ -41,7 +41,7 @@ class MinFleetCompo extends Component {
               <div
                 className={
                   sat ? 'text-success' :
-                    (noDanger ? '' : 'text-danger')
+                  (noDanger ? '' : 'text-danger')
                 }
                 style={{
                   marginLeft: 0,

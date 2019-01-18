@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  Button,
-  Tooltip, OverlayTrigger,
+  Button as RButton,
+  Tooltip as RTooltip,
+  OverlayTrigger as ROverlayTrigger,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
@@ -56,7 +57,7 @@ class FleetButtonImpl extends Component {
     const fleetStateDesc = FleetState.describe(fleetState)
     const shouldHide = fleetState.type === 'Main' && fleetState.shouldHide
     const content = (
-      <Button
+      <RButton
         className="ezexped-fleet-picker-button"
         bsStyle={bsStyle}
         style={{
@@ -87,22 +88,22 @@ class FleetButtonImpl extends Component {
             />
           )
         }
-      </Button>
+      </RButton>
     )
 
     return fleet ? (
-      <OverlayTrigger
+      <ROverlayTrigger
         placement="bottom" overlay={
-          <Tooltip
+          <RTooltip
             className="ezexped-pop"
             id={`ezexped-fpfleet-${fleet.id}`}>
             <FleetTooltipContent
               stateContent={fleetStateDesc}
               fleet={fleet} />
-          </Tooltip>
+          </RTooltip>
         }>
         {content}
-      </OverlayTrigger>
+      </ROverlayTrigger>
     ) : content
   }
 }

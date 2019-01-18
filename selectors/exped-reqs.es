@@ -95,14 +95,13 @@ const mkEReqResultObjectSelectorForFleet = _.memoize(
       const expedReqStage2 =
         expedReqsStage2[expedId] || expedReqsStage2.missing
 
-      /* eslint-disable indent */
       const ereqResultObj =
         expedReqStage2 ?
           mapExpedReq(
             EReq.computeResult(fleet,extra)
           )(expedReqStage2) :
-        null
-      /* eslint-enable indent */
+          null
+
       return ereqResultObj
     }))
 
