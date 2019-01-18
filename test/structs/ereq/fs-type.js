@@ -2,7 +2,7 @@ import {
   describeEReq,
   mkFleet,
   notSatisfied, satisfied,
- } from './common'
+} from './common'
 import { FSType } from '../../../structs/ereq/fs-type'
 import { stype } from '../../../estype'
 
