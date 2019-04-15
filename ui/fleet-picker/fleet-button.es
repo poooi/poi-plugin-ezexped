@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  Button as RButton,
   Tooltip as RTooltip,
   OverlayTrigger as ROverlayTrigger,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import styled from 'styled-components'
+import { Button } from '@blueprintjs/core'
 
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
@@ -18,6 +19,7 @@ import {
   fleetStateSelector,
 } from './selectors'
 
+
 import {
   FleetTooltipContent,
 } from './fleet-tooltip-content'
@@ -25,6 +27,14 @@ import {
 import {
   FleetState,
 } from './fleet-state'
+
+const ZButton = styled(Button)`
+  & > span.bp3-button-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+`
 
 class FleetButtonImpl extends Component {
   static propTypes = {
@@ -57,9 +67,9 @@ class FleetButtonImpl extends Component {
     const fleetStateDesc = FleetState.describe(fleetState)
     const shouldHide = fleetState.type === 'Main' && fleetState.shouldHide
     const content = (
-      <RButton
+      <ZButton
         className="ezexped-fleet-picker-button"
-        bsStyle={bsStyle}
+        intent={/* TODO: should be using intent */bsStyle}
         style={{
           flex: 1,
           opacity: focused ? 1 : .5,
@@ -70,25 +80,29 @@ class FleetButtonImpl extends Component {
         active={focused}
         onContextMenu={this.handleFocusFleetInMainUI}
         onClick={this.handleChangeFleet}
-      >
-        <span style={{
-          flex: 1,
-          minWidth: 0,
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-        }}>
-          {fleet ? fleet.name : __('FleetState.NotAvail')}
-        </span>
-        {
-          shouldHide && (
-            <FontAwesome
-              style={{marginLeft: '.2em'}}
-              name="ban"
-            />
-          )
-        }
-      </RButton>
+        text={(
+          <div style={{display: 'flex', alignItems: 'center', width: '100%'}}>
+            <span style={{
+              flex: 1,
+              minWidth: 0,
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              textAlign: 'center',
+            }}>
+              {fleet ? fleet.name : __('FleetState.NotAvail')}
+            </span>
+            {
+              shouldHide && (
+                <FontAwesome
+                  style={{marginLeft: '.2em'}}
+                  name="ban"
+                />
+              )
+            }
+          </div>
+        )}
+      />
     )
 
     return fleet ? (
