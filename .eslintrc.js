@@ -70,7 +70,12 @@ module.exports = {
     'consistent-return': 'off',
     'no-plusplus': 'off',
     'object-curly-newline': 'off',
-    'function-paren-newline': 'off'
+    'function-paren-newline': 'off',
+    'nonblock-statement-body-position': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'operator-linebreak': 'off',
+    'react/jsx-wrap-multilines': 'off',
+    'react/destructuring-assignment': 'off',
   },
   'settings': {
     'import/resolver': {
