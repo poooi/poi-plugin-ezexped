@@ -292,7 +292,8 @@ class ExpeditionViewerImpl extends Component {
                   textOverflow: 'ellipsis',
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
-                }} >
+                }}
+              >
                 {__("Great Success")}
               </span>
             </Button>

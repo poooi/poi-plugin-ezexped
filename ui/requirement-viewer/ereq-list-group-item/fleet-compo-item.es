@@ -28,7 +28,10 @@ class FleetCompoItem extends Component {
     const {results} = this.props.result.extra
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <div key="header">{__("Fleet Composition")}:</div>
+        <div key="header">
+          {__("Fleet Composition")}
+          :
+        </div>
         <MinFleetCompo
           style={{marginLeft: '.5em'}}
           between=".2em"

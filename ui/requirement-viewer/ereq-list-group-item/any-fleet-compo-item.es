@@ -34,7 +34,10 @@ class AnyFleetCompoItem extends Component {
     const {sat} = this.props.result
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <div key="header">{__("Fleet Composition")}:</div>
+        <div key="header">
+          {__("Fleet Composition")}
+          :
+        </div>
         <div style={{
           marginLeft: '.5em',
           flex: 1,

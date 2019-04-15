@@ -104,6 +104,7 @@ const dispatchEReq = propName => ereq => {
 
 class EReq {
   static allTypes = allEReqTypes
+
   /*
 
      EReq.make.<EReq type>(...args)

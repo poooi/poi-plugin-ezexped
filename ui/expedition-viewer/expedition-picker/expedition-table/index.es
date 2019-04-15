@@ -67,7 +67,8 @@ class ExpeditionTableImpl extends Component {
             gridGap: '2px 5px',
             gridTemplate: `auto / repeat(${worldCount}, 1fr)`,
             alignItems: 'center',
-          }} >
+          }}
+        >
           {
             _.flatMap(
               expedIdsArr,
