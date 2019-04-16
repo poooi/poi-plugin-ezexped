@@ -56,7 +56,7 @@ class FleetButton extends Component {
     fleetId: PTyp.number.isRequired,
     fleet: PTyp.object,
     fleetState: PTyp.object.isRequired,
-
+    // connected
     changeFleet: PTyp.func.isRequired,
     changeFleetFocusInMainUI: PTyp.func.isRequired,
   }
