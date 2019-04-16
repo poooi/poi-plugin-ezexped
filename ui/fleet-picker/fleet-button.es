@@ -36,7 +36,21 @@ const FPButton = styled(Button)`
   }
 `
 
-class FleetButtonImpl extends Component {
+@connect(
+  (state, props) => {
+    const {fleetId} = props
+    const currentFocusingFleetId = fleetIdSelector(state)
+    const fleet = mkFleetInfoSelector(fleetId)(state)
+    const fleetState = fleetStateSelector(fleetId)(state)
+    return {
+      focused: fleetId === currentFocusingFleetId,
+      fleet,
+      fleetState,
+    }
+  },
+  mapDispatchToProps,
+)
+class FleetButton extends Component {
   static propTypes = {
     focused: PTyp.bool.isRequired,
     fleetId: PTyp.number.isRequired,
@@ -121,20 +135,5 @@ class FleetButtonImpl extends Component {
     ) : content
   }
 }
-
-const FleetButton = connect(
-  (state, props) => {
-    const {fleetId} = props
-    const currentFocusingFleetId = fleetIdSelector(state)
-    const fleet = mkFleetInfoSelector(fleetId)(state)
-    const fleetState = fleetStateSelector(fleetId)(state)
-    return {
-      focused: fleetId === currentFocusingFleetId,
-      fleet,
-      fleetState,
-    }
-  },
-  mapDispatchToProps,
-)(FleetButtonImpl)
 
 export { FleetButton }
