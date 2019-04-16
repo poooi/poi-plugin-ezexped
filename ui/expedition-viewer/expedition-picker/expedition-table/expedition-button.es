@@ -1,10 +1,12 @@
 import { join } from 'path-extra'
 import React, { PureComponent } from 'react'
 import {
-  Button,
-  OverlayTrigger,
-  Tooltip,
+  OverlayTrigger as ROverlayTrigger,
+  Tooltip as RTooltip,
 } from 'react-bootstrap'
+import {
+  Button,
+} from '@blueprintjs/core'
 
 import { PTyp } from '../../../../ptyp'
 import { ExpedTooltipContent } from './exped-tooltip-content'
@@ -40,20 +42,23 @@ class ExpeditionButton extends PureComponent {
       btnClassName,
       getExpedInfo, style,
     } = this.props
+
+    // TODO: Button is good enough for now, but we'll need to get inner
+    // wrapped layout right (e.g. set display: flex)
     return (
-      <OverlayTrigger
+      <ROverlayTrigger
         placement="bottom"
         overlay={
-          <Tooltip id={`ezexped-tooltip-${expedId}`}>
+          <RTooltip id={`ezexped-tooltip-${expedId}`}>
             <ExpedTooltipContent
               getExpedInfo={getExpedInfo}
               expedId={expedId}
             />
-          </Tooltip>
+          </RTooltip>
         }>
         <Button
           className={btnClassName}
-          bsStyle={ready ? "primary" : "default"}
+          intent={ready ? "primary" : "none"}
           style={{
             maxWidth: 150,
             width: '100%',
@@ -75,12 +80,18 @@ class ExpeditionButton extends PureComponent {
               <img
                 style={{height: '1.1em', marginLeft: '.6em'}}
                 alt={`/${runningFleetId}`}
-                src={join(__dirname,'..','..','..','..','assets','images',`fleet-${runningFleetId}.png`)}
+                src={
+                  join(
+                    __dirname,'..','..','..','..',
+                    'assets','images',`fleet-${runningFleetId}.png`
+                  )
+                }
               />
             )
           }
         </Button>
-      </OverlayTrigger>)
+      </ROverlayTrigger>
+    )
   }
 }
 
