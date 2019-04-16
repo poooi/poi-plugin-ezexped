@@ -81,8 +81,8 @@ class FleetState {
       ])
   )
 
-  // get bsStyle of a fleet state
-  static bsStyle = dispatchMethodByType('bsStyle')
+  // get intent of a fleet state
+  static intent = dispatchMethodByType('bsStyle')
 
   // get a short description for showing on UI, could be null.
   static describe = dispatchMethodByType('describe')

@@ -28,7 +28,7 @@ import {
   FleetState,
 } from './fleet-state'
 
-const ZButton = styled(Button)`
+const FPButton = styled(Button)`
   & > span.bp3-button-text {
     display: flex;
     align-items: center;
@@ -63,13 +63,13 @@ class FleetButtonImpl extends Component {
 
   render() {
     const {fleet, focused, fleetState} = this.props
-    const bsStyle = FleetState.bsStyle(fleetState)
+    const intent = FleetState.intent(fleetState)
     const fleetStateDesc = FleetState.describe(fleetState)
     const shouldHide = fleetState.type === 'Main' && fleetState.shouldHide
     const content = (
-      <ZButton
+      <FPButton
         className="ezexped-fleet-picker-button"
-        intent={/* TODO: should be using intent */bsStyle}
+        intent={intent}
         style={{
           flex: 1,
           opacity: focused ? 1 : .5,
