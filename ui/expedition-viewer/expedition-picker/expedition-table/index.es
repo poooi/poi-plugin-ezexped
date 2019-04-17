@@ -18,8 +18,26 @@ import {
 import { mapDispatchToProps } from '../../../../store'
 import { KanceptsExporter } from './kancepts-exporter'
 
-class ExpeditionTableImpl extends Component {
+const uiSelector = createStructuredSelector({
+  expedId: expedIdSelector,
+  fleetId: fleetIdSelector,
+  currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
+  getExpedInfo: getExpedInfoFuncSelector,
+  grouppedExpedIds: grouppedExpedIdsSelector,
+})
+
+@connect(
+  state => {
+    const ui = uiSelector(state)
+    const {fleetId} = ui
+    const normGsFlags = mkEReqNormGsFlagsSelectorForFleet(fleetId)(state)
+    return {...ui, normGsFlags}
+  },
+  mapDispatchToProps
+)
+class ExpeditionTable extends Component {
   static propTypes = {
+    // TODO: let's make it explicit everywhere about what props are connected
     // current active expedition
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,
@@ -104,23 +122,5 @@ class ExpeditionTableImpl extends Component {
     )
   }
 }
-
-const uiSelector = createStructuredSelector({
-  expedId: expedIdSelector,
-  fleetId: fleetIdSelector,
-  currentRunningExpedIdToFleetId: currentRunningExpedIdToFleetIdSelector,
-  getExpedInfo: getExpedInfoFuncSelector,
-  grouppedExpedIds: grouppedExpedIdsSelector,
-})
-
-const ExpeditionTable = connect(
-  state => {
-    const ui = uiSelector(state)
-    const {fleetId} = ui
-    const normGsFlags = mkEReqNormGsFlagsSelectorForFleet(fleetId)(state)
-    return {...ui, normGsFlags}
-  },
-  mapDispatchToProps
-)(ExpeditionTableImpl)
 
 export { ExpeditionTable }

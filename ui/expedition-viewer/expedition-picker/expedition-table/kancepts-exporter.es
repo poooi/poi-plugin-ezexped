@@ -13,7 +13,16 @@ import {
 import { __ } from '../../../../tr'
 import { makeLink } from '../../../../kancepts'
 
-class KanceptsExporterImpl extends PureComponent {
+@connect(
+  state => {
+    const exportShipList = kanceptsExportShipListSelector(state)
+    const kanceptsUrl = kanceptsUrlSelector(state)
+    const mkLink = () => makeLink(kanceptsUrl)(exportShipList)
+    return {exportShipList, mkLink}
+  },
+  mapDispatchToProps,
+)
+class KanceptsExporter extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
 
@@ -62,15 +71,5 @@ class KanceptsExporterImpl extends PureComponent {
     )
   }
 }
-
-const KanceptsExporter = connect(
-  state => {
-    const exportShipList = kanceptsExportShipListSelector(state)
-    const kanceptsUrl = kanceptsUrlSelector(state)
-    const mkLink = () => makeLink(kanceptsUrl)(exportShipList)
-    return {exportShipList, mkLink}
-  },
-  mapDispatchToProps,
-)(KanceptsExporterImpl)
 
 export { KanceptsExporter }

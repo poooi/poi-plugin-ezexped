@@ -13,7 +13,13 @@ import { mapDispatchToProps } from '../../store'
 
 import { FleetButton } from './fleet-button'
 
-class FleetPickerImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    fleetIds: visibleFleetIdsSelector,
+  }),
+  mapDispatchToProps,
+)
+class FleetPicker extends PureComponent {
   static propTypes = {
     fleetIds: PTyp.array.isRequired,
     modifyState: PTyp.func.isRequired,
@@ -52,14 +58,5 @@ class FleetPickerImpl extends PureComponent {
       </div>)
   }
 }
-
-const uiSelector = createStructuredSelector({
-  fleetIds: visibleFleetIdsSelector,
-})
-
-const FleetPicker = connect(
-  uiSelector,
-  mapDispatchToProps,
-)(FleetPickerImpl)
 
 export { FleetPicker }

@@ -18,7 +18,12 @@ import {
   fleetInfoSelector,
 } from '../selectors'
 
-class EZExpedMainImpl extends Component {
+@connect(
+  createStructuredSelector({
+    fleet: fleetInfoSelector,
+  })
+)
+class EZExpedMain extends Component {
   static propTypes = {
     fleet: PTyp.object,
   }
@@ -28,9 +33,7 @@ class EZExpedMainImpl extends Component {
   }
 
   render() {
-    const {
-      fleet,
-    } = this.props
+    const {fleet} = this.props
     return (
       <WindowEnv.Consumer>
         {({mountPoint}) => (
@@ -74,14 +77,6 @@ class EZExpedMainImpl extends Component {
     )
   }
 }
-
-const mainUISelector = createStructuredSelector({
-  fleet: fleetInfoSelector,
-})
-
-const EZExpedMain = connect(
-  mainUISelector,
-)(EZExpedMainImpl)
 
 export {
   EZExpedMain,

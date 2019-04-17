@@ -23,7 +23,27 @@ import {
 
 // props:
 // - fleet: fleet representation
-class RequirementViewerImpl extends Component {
+
+const uiExtrasSelector = createStructuredSelector({
+  fleetId: fleetIdSelector,
+  expedId: expedIdSelector,
+  greatSuccess: gsFlagSelector,
+  fillDlc: dlcFlagSelector,
+  hideSatReqs: hideSatReqsSelector,
+})
+
+@connect(
+  state => {
+    const uiExtras = uiExtrasSelector(state)
+    const {fleetId} = uiExtras
+    const ereqResult =
+      mkEReqResultObjectSelectorForFleet(fleetId)(state)
+    const ereqSatFlags =
+      mkEReqSatFlagsSelectorForFleet(fleetId)(state)
+    return {...uiExtras, ereqResult, ...ereqSatFlags}
+  },
+)
+class RequirementViewer extends Component {
   static propTypes = {
     // - target expedition id
     expedId: PTyp.number.isRequired,
@@ -118,25 +138,5 @@ class RequirementViewerImpl extends Component {
     )
   }
 }
-
-const uiExtrasSelector = createStructuredSelector({
-  fleetId: fleetIdSelector,
-  expedId: expedIdSelector,
-  greatSuccess: gsFlagSelector,
-  fillDlc: dlcFlagSelector,
-  hideSatReqs: hideSatReqsSelector,
-})
-
-const RequirementViewer = connect(
-  state => {
-    const uiExtras = uiExtrasSelector(state)
-    const {fleetId} = uiExtras
-    const ereqResult =
-      mkEReqResultObjectSelectorForFleet(fleetId)(state)
-    const ereqSatFlags =
-      mkEReqSatFlagsSelectorForFleet(fleetId)(state)
-    return {...uiExtras, ereqResult, ...ereqSatFlags}
-  },
-)(RequirementViewerImpl)
 
 export { RequirementViewer }

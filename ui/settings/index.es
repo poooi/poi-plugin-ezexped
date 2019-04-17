@@ -24,7 +24,19 @@ import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { urlGitHub, urlKcWiki } from '../../kancepts'
 
-class SettingsImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    ready: readySelector,
+    sparkledCount: sparkledCountSelector,
+    hideMainFleet: hideMainFleetSelector,
+    hideSatReqs: hideSatReqsSelector,
+    syncMainFleetId: syncMainFleetIdSelector,
+    fleetAutoSwitch: fleetAutoSwitchSelector,
+    kanceptsUrl: kanceptsUrlSelector,
+  }),
+  actionCreators,
+)
+class Settings extends PureComponent {
   static propTypes = {
     ready: PTyp.bool.isRequired,
     sparkledCount: PTyp.number.isRequired,
@@ -193,18 +205,5 @@ class SettingsImpl extends PureComponent {
     )
   }
 }
-
-const Settings = connect(
-  createStructuredSelector({
-    ready: readySelector,
-    sparkledCount: sparkledCountSelector,
-    hideMainFleet: hideMainFleetSelector,
-    hideSatReqs: hideSatReqsSelector,
-    syncMainFleetId: syncMainFleetIdSelector,
-    fleetAutoSwitch: fleetAutoSwitchSelector,
-    kanceptsUrl: kanceptsUrlSelector,
-  }),
-  actionCreators,
-)(SettingsImpl)
 
 export { Settings }

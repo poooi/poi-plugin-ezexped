@@ -13,14 +13,22 @@ import {
 } from '../../../selectors'
 import { ExpeditionTable } from './expedition-table'
 
-class ExpeditionPickerImpl extends PureComponent {
+@connect(
+  createStructuredSelector({
+    expedId: expedIdSelector,
+    getExpedInfo: getExpedInfoFuncSelector,
+    expedTableExpanded: expedTableExpandedSelector,
+  }),
+  mapDispatchToProps,
+)
+class ExpeditionPicker extends PureComponent {
   static propTypes = {
+    mountPoint: PTyp.any.isRequired,
+    // connected
     expedId: PTyp.number.isRequired,
     getExpedInfo: PTyp.func.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
     modifyState: PTyp.func.isRequired,
-
-    mountPoint: PTyp.any.isRequired,
   }
 
   handleToggleExpedTable = (newVal, e, srcInfo) => {
@@ -90,14 +98,5 @@ class ExpeditionPickerImpl extends PureComponent {
     )
   }
 }
-
-const ExpeditionPicker = connect(
-  createStructuredSelector({
-    expedId: expedIdSelector,
-    getExpedInfo: getExpedInfoFuncSelector,
-    expedTableExpanded: expedTableExpandedSelector,
-  }),
-  mapDispatchToProps,
-)(ExpeditionPickerImpl)
 
 export { ExpeditionPicker }

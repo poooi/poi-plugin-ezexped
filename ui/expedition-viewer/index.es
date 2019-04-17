@@ -83,15 +83,25 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
 
 const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
 
-class ExpeditionViewerImpl extends Component {
+@connect(
+  createStructuredSelector({
+    expedId: expedIdSelector,
+    fleet: fleetInfoSelector,
+    greatSuccess: gsFlagSelector,
+    dlcFlag: dlcFlagSelector,
+    getExpedInfo: getExpedInfoFuncSelector,
+  }),
+  mapDispatchToProps,
+)
+class ExpeditionViewer extends Component {
   static propTypes = {
+    mountPoint: PTyp.any.isRequired,
+    // connected
     expedId: PTyp.number.isRequired,
+    fleet: PTyp.object.isRequired,
     greatSuccess: PTyp.bool.isRequired,
     dlcFlag: PTyp.bool.isRequired,
     getExpedInfo: PTyp.func.isRequired,
-    mountPoint: PTyp.any.isRequired,
-
-    fleet: PTyp.object.isRequired,
     modifyState: PTyp.func.isRequired,
   }
 
@@ -327,18 +337,5 @@ class ExpeditionViewerImpl extends Component {
     )
   }
 }
-
-const uiSelector = createStructuredSelector({
-  expedId: expedIdSelector,
-  fleet: fleetInfoSelector,
-  greatSuccess: gsFlagSelector,
-  dlcFlag: dlcFlagSelector,
-  getExpedInfo: getExpedInfoFuncSelector,
-})
-
-const ExpeditionViewer = connect(
-  uiSelector,
-  mapDispatchToProps,
-)(ExpeditionViewerImpl)
 
 export { ExpeditionViewer }
