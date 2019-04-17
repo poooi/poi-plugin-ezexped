@@ -38,6 +38,7 @@ import { urlGitHub, urlKcWiki } from '../../kancepts'
 )
 class Settings extends PureComponent {
   static propTypes = {
+    // connected
     ready: PTyp.bool.isRequired,
     sparkledCount: PTyp.number.isRequired,
     hideMainFleet: PTyp.bool.isRequired,

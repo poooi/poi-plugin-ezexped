@@ -45,6 +45,7 @@ const uiExtrasSelector = createStructuredSelector({
 )
 class RequirementViewer extends Component {
   static propTypes = {
+    // connected
     // - target expedition id
     expedId: PTyp.number.isRequired,
     // whether aimming at great success

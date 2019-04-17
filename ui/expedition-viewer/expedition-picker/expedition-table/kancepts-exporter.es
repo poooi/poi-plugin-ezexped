@@ -25,7 +25,7 @@ import { makeLink } from '../../../../kancepts'
 class KanceptsExporter extends PureComponent {
   static propTypes = {
     style: PTyp.object.isRequired,
-
+    // connected
     exportShipList: PTyp.bool.isRequired,
     mkLink: PTyp.func.isRequired,
     modifyState: PTyp.func.isRequired,

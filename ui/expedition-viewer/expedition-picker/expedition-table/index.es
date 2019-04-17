@@ -37,7 +37,7 @@ const uiSelector = createStructuredSelector({
 )
 class ExpeditionTable extends Component {
   static propTypes = {
-    // TODO: let's make it explicit everywhere about what props are connected
+    // connected
     // current active expedition
     expedId: PTyp.number.isRequired,
     fleetId: PTyp.number.isRequired,

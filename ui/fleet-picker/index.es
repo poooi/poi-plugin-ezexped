@@ -21,6 +21,7 @@ import { FleetButton } from './fleet-button'
 )
 class FleetPicker extends PureComponent {
   static propTypes = {
+    // connected
     fleetIds: PTyp.array.isRequired,
     modifyState: PTyp.func.isRequired,
   }

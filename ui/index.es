@@ -25,6 +25,7 @@ import {
 )
 class EZExpedMain extends Component {
   static propTypes = {
+    // connected
     fleet: PTyp.object,
   }
 
