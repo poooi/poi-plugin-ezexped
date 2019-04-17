@@ -2,8 +2,7 @@ import { modifyObject } from 'subtender'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { shell } from 'electron'
-import { Button, Checkbox } from 'react-bootstrap'
-
+import { Button, Checkbox } from '@blueprintjs/core'
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
 import {
@@ -54,12 +53,11 @@ class KanceptsExporter extends PureComponent {
         }}
       >
         <Button
-          onClick={this.handleOpen}
-          bsSize="small"
+          small
           style={{marginRight: '.5em'}}
-        >
-          {__('Kancepts.Launch')}
-        </Button>
+          onClick={this.handleOpen}
+          text={__('Kancepts.Launch')}
+        />
         <Checkbox
           style={{marginBottom: 0, marginTop: 0}}
           checked={exportShipList}
