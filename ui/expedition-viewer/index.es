@@ -1,10 +1,14 @@
 import { createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import {
-  Button,
-  ButtonGroup,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
+
+import {
+  Button,
+  ButtonGroup,
+} from '@blueprintjs/core'
+
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
@@ -279,7 +283,7 @@ class ExpeditionViewer extends Component {
               renderedResource={renderedResources.bauxite}
             />
           </div>
-          <ButtonGroup style={{display: 'flex'}}>
+          <ButtonGroup>
             <Button
               style={{
                 flex: 1, display: 'flex', alignItems: 'baseline',
@@ -318,7 +322,7 @@ class ExpeditionViewer extends Component {
               }
             >
               <Button
-                bsStyle={this.props.dlcFlag ? 'primary' : 'default'}
+                intent={this.props.dlcFlag ? 'primary' : 'none'}
                 onClick={this.handleToggleDlc}
                 style={{
                   width: '3em',
