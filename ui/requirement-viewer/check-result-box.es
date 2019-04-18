@@ -1,10 +1,19 @@
 import FontAwesome from 'react-fontawesome'
 import React, { PureComponent } from 'react'
 import {
-  Label,
-} from 'react-bootstrap'
-
+  Tag,
+} from '@blueprintjs/core'
+import styled from 'styled-components'
 import { PTyp } from '../../ptyp'
+
+const CTag = styled(Tag)`
+  & > span.bp3-text-overflow-ellipsis {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px,
+  }
+`
 
 // a box for showing whether the fleet is ready
 class CheckResultBox extends PureComponent {
@@ -16,16 +25,12 @@ class CheckResultBox extends PureComponent {
   render() {
     const {ready, content} = this.props
     return (
-      <Label
-        bsStyle={ready ? 'success' : 'danger'}
-        disabled={true}
+      <CTag
+        intent={ready ? 'success' : 'danger'}
         style={{
-          fontSize: '100%',
           padding: '.7em',
           margin: '10px 0',
-          borderRadius: '10px',
-          display: 'flex',
-          alignItems: 'center',
+          fontSize: '100%',
         }}>
         <FontAwesome
           name={ready ? 'check-square-o' : 'square-o'}
@@ -38,7 +43,7 @@ class CheckResultBox extends PureComponent {
           textOverflow: 'ellipsis'}}>
           {content}
         </div>
-      </Label>
+      </CTag>
     )
   }
 }
