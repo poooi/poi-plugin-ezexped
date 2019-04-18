@@ -5,15 +5,15 @@ import { __ } from '../../tr'
 
 const fleetStates = {}
 
-const defineFleetState = (fsName, bsStyleFuncOrStr, maker, describe) => {
-  const bsStyle =
-    typeof bsStyleFuncOrStr === 'function' ? bsStyleFuncOrStr :
-    typeof bsStyleFuncOrStr === 'string' ? () => bsStyleFuncOrStr :
-    console.error(`unexpected bsStyle arg type: ${typeof bsStyleFuncOrStr}`)
+const defineFleetState = (fsName, intentFuncOrStr, maker, describe) => {
+  const intent =
+    typeof intentFuncOrStr === 'function' ? intentFuncOrStr :
+    typeof intentFuncOrStr === 'string' ? () => intentFuncOrStr :
+    console.error(`unexpected intent arg type: ${typeof intentFuncOrStr}`)
 
   fleetStates[fsName] = {
     fsName,
-    bsStyle,
+    intent,
     maker,
     describe,
   }
@@ -82,7 +82,7 @@ class FleetState {
   )
 
   // get intent of a fleet state
-  static intent = dispatchMethodByType('bsStyle')
+  static intent = dispatchMethodByType('intent')
 
   // get a short description for showing on UI, could be null.
   static describe = dispatchMethodByType('describe')
