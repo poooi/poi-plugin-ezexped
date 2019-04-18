@@ -1,10 +1,11 @@
+import { modifyObject } from 'subtender'
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
   ButtonGroup,
-} from 'react-bootstrap'
-import { modifyObject } from 'subtender'
+} from '@blueprintjs/core'
+
 import { PTyp } from '../../ptyp'
 import {
   visibleFleetIdsSelector,
@@ -41,12 +42,7 @@ class FleetPicker extends PureComponent {
           marginBottom: 5,
         }}
       >
-        <ButtonGroup
-          style={{
-            display: 'flex',
-            width: '100%',
-          }}
-        >
+        <ButtonGroup fill>
           {
             this.props.fleetIds.map(fleetId => (
               <FleetButton
