@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.7.0 (pending)
+
+- Partially Migrate to Blueprintjs. Fixing some style issues.
+
 ### 1.6.4
 
 - Sync with Shinyou & Makigumo related game updates
