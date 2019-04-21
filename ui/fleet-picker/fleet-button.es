@@ -6,8 +6,9 @@ import {
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import styled from 'styled-components'
-import { Button } from '@blueprintjs/core'
+import { Button, Position } from '@blueprintjs/core'
 
+import { Popover, Tooltip } from 'views/components/etc/overlay'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { mapDispatchToProps } from '../../store'
@@ -32,6 +33,14 @@ const FPButton = styled(Button)`
   & > span.bp3-button-text {
     display: flex;
     align-items: center;
+    width: 100%;
+  }
+`
+
+const FTooltip = styled(Tooltip)`
+  flex: 1 0;
+
+  & > .bp3-popover-target {
     width: 100%;
   }
 `
@@ -87,7 +96,7 @@ class FleetButton extends Component {
         style={{
           flex: 1,
           opacity: focused ? 1 : .5,
-          width: 75,
+          width: '100%',
           display: 'flex',
           alignItems: 'center',
         }}
@@ -120,18 +129,17 @@ class FleetButton extends Component {
     )
 
     return fleet ? (
-      <ROverlayTrigger
-        placement="bottom" overlay={
-          <RTooltip
-            className="ezexped-pop"
-            id={`ezexped-fpfleet-${fleet.id}`}>
-            <FleetTooltipContent
-              stateContent={fleetStateDesc}
-              fleet={fleet} />
-          </RTooltip>
-        }>
+      <FTooltip
+        content={(
+          <FleetTooltipContent
+            stateContent={fleetStateDesc}
+            fleet={fleet}
+          />
+        )}
+        position={Position.BOTTOM}
+      >
         {content}
-      </ROverlayTrigger>
+      </FTooltip>
     ) : content
   }
 }
