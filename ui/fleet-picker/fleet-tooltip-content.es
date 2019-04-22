@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { SlotitemIcon } from 'views/components/etc/icon'
+import styled from 'styled-components'
 
 import { PTyp } from '../../ptyp'
 import { Morale } from './morale'
@@ -16,6 +17,16 @@ const equipIconIds = {
   // 特大発動艇
   193: 20,
 }
+
+const SIcon = styled(SlotitemIcon)`
+  &.svg {
+    height: 1.2em;
+  }
+
+  &.png {
+    height: 1.6em;
+  }
+`
 
 class FleetTooltipContent extends PureComponent {
   static propTypes = {
@@ -70,7 +81,7 @@ class FleetTooltipContent extends PureComponent {
                   ship.equips.map(({rstId,mstId}) => {
                     const iconId = equipIconIds[mstId]
                     return iconId && (
-                      <SlotitemIcon
+                      <SIcon
                         key={rstId}
                         className="slotitem-img"
                         slotitemId={iconId}
