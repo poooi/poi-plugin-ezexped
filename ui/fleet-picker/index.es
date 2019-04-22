@@ -34,25 +34,27 @@ class FleetPicker extends PureComponent {
         x => !x))
 
   render() {
+    const {fleetIds} = this.props
     return (
-      <div
+      <ButtonGroup
+        fill
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
           marginBottom: 5,
+          display: 'grid',
+          gridTemplateColumns: `repeat(${fleetIds.length}, 1fr)`,
+          justifyItems: 'stretch',
         }}
       >
-        <ButtonGroup fill>
-          {
-            this.props.fleetIds.map(fleetId => (
-              <FleetButton
-                key={fleetId}
-                fleetId={fleetId}
-              />
-            ))
-          }
-        </ButtonGroup>
-      </div>)
+        {
+          fleetIds.map(fleetId => (
+            <FleetButton
+              key={fleetId}
+              fleetId={fleetId}
+            />
+          ))
+        }
+      </ButtonGroup>
+    )
   }
 }
 
