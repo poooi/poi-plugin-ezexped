@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap'
 import {
   Button,
+  Classes,
 } from '@blueprintjs/core'
 
 import { PTyp } from '../../../../ptyp'
@@ -57,7 +58,7 @@ class ExpeditionButton extends PureComponent {
           </RTooltip>
         }>
         <Button
-          className={btnClassName}
+          className={[Classes.POPOVER_DISMISS,btnClassName].join(' ')}
           intent={ready ? "primary" : "none"}
           style={{
             maxWidth: 150,

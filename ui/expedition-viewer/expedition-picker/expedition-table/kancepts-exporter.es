@@ -2,7 +2,7 @@ import { modifyObject } from 'subtender'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { shell } from 'electron'
-import { Button, Checkbox } from '@blueprintjs/core'
+import { Button, Checkbox, Classes } from '@blueprintjs/core'
 import { PTyp } from '../../../../ptyp'
 import { mapDispatchToProps } from '../../../../store'
 import {
@@ -54,6 +54,7 @@ class KanceptsExporter extends PureComponent {
       >
         <Button
           small
+          className={Classes.POPOVER_DISMISS}
           style={{marginRight: '.5em'}}
           onClick={this.handleOpen}
           text={__('Kancepts.Launch')}
