@@ -12,6 +12,7 @@ import {
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
+import styled from 'styled-components'
 
 import { MaterialIcon, SlotitemIcon } from 'views/components/etc/icon'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
@@ -85,7 +86,17 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
   }
 }
 
-const mkMat = matId => <MaterialIcon materialId={matId} className="material-icon" />
+const mkMat = matId => (<MaterialIcon materialId={matId} className="material-icon" />)
+
+const SIcon = styled(SlotitemIcon)`
+  &.png {
+    height: 2em;
+  }
+
+  &.svg {
+    height: 1.6em;
+  }
+`
 
 @connect(
   createStructuredSelector({
@@ -329,8 +340,7 @@ class ExpeditionViewer extends Component {
                   padding: 0,
                 }}
               >
-                <SlotitemIcon
-                  className="slotitem-img"
+                <SIcon
                   slotitemId={20}
                 />
               </Button>

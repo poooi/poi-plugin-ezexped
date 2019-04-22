@@ -2,14 +2,6 @@
     max-width: none;
 }
 
-#poi-plugin-ezexped .exped-viewer .slotitem-img.png {
-    height: 2em;
-}
-
-#poi-plugin-ezexped .exped-viewer .slotitem-img.svg {
-    height: 1.6em;
-}
-
 #poi-plugin-ezexped .exped-btn-table .panel-body {
     padding: 8px;
 }
