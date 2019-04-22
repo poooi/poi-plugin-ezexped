@@ -1,9 +1,13 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { Dropdown } from 'react-bootstrap'
+import { Button, Position } from '@blueprintjs/core'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
 import _ from 'lodash'
+import styled from 'styled-components'
+import { Popover } from 'views/components/etc/overlay'
+
 import { PTyp } from '../../../ptyp'
 import { mapDispatchToProps } from '../../../store'
 import {
@@ -12,6 +16,16 @@ import {
   expedTableExpandedSelector,
 } from '../../../selectors'
 import { ExpeditionTable } from './expedition-table'
+
+const PPopover = styled(Popover)`
+  & > span.bp3-popover-target {
+    width: 100%;
+  }
+
+  & > span.bp3-popover-target > button {
+    width: 100%;
+  }
+`
 
 @connect(
   createStructuredSelector({
@@ -56,13 +70,23 @@ class ExpeditionPicker extends PureComponent {
 
   render() {
     const {
-      expedId, getExpedInfo, expedTableExpanded,
+      expedId, getExpedInfo,
+      /*
+         TODO: we'll still need to make this controlled so that
+         when Popover opens we'll have a chance to update current width
+         of the plugin itself.
+       */
+      expedTableExpanded: _ignored,
       mountPoint,
     } = this.props
     const info = getExpedInfo(expedId)
     const {displayNum} = info
     const menuStyle = {minWidth: 300}
 
+    /*
+       TODO: this does not work when the plugin is opened in a new window
+       mountPoint is true-y but the querySelector returns null.
+     */
     const curPluginRef =
       mountPoint && mountPoint.querySelector('.poi-plugin-ezexped')
 
@@ -71,30 +95,14 @@ class ExpeditionPicker extends PureComponent {
     }
 
     return (
-      <Dropdown
-        open={expedTableExpanded}
-        onToggle={this.handleToggleExpedTable}
+      <PPopover
+        content={(<ExpeditionTable style={menuStyle} />)}
+        position={Position.BOTTOM_LEFT}
       >
-        <Dropdown.Toggle
-          noCaret
-          style={{width: '100%'}}
-        >
-          <div
-            style={{
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {`${displayNum} ${info.name}`}
-          </div>
-        </Dropdown.Toggle>
-        <Dropdown.Menu
-          style={menuStyle}
-        >
-          <ExpeditionTable />
-        </Dropdown.Menu>
-      </Dropdown>
+        <Button
+          text={`${displayNum} ${info.name}`}
+        />
+      </PPopover>
     )
   }
 }

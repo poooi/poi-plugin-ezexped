@@ -37,6 +37,7 @@ const uiSelector = createStructuredSelector({
 )
 class ExpeditionTable extends Component {
   static propTypes = {
+    style: PTyp.object.isRequired,
     // connected
     // current active expedition
     expedId: PTyp.number.isRequired,
@@ -69,6 +70,7 @@ class ExpeditionTable extends Component {
       currentRunningExpedIdToFleetId,
       getExpedInfo,
       grouppedExpedIds,
+      style,
     } = this.props
 
     const expedIdsArr = grouppedExpedIds.filter(
@@ -78,7 +80,12 @@ class ExpeditionTable extends Component {
 
     const worldCount = expedIdsArr.length
     return (
-      <div style={{padding: 10}}>
+      <div
+        style={{
+          padding: 10,
+          ...style,
+        }}
+      >
         <div
           style={{
             display: 'grid',
