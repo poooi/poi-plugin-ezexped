@@ -74,8 +74,8 @@ class ExpeditionTable extends Component {
     } = this.props
 
     const expedIdsArr = grouppedExpedIds.filter(
-      // only show expeditions from world 1 to 5
-      ([w,_v]) => w >= 1 && w <= 5
+      // only show expeditions from world 1 to 7
+      ([w,_v]) => w >= 1 && w <= 7
     )
 
     const worldCount = expedIdsArr.length

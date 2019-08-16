@@ -82,6 +82,12 @@ const defineWorld1 = defineExped => {
       mk.TotalLos(60),
     ]
   )
+  defineExped(103)(
+    [
+      ...fslSc(1,5),
+      mk.TotalFirepower(300),
+    ]
+  )
 }
 
 export { defineWorld1 }

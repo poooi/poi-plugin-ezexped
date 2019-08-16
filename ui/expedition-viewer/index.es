@@ -37,6 +37,7 @@ const itemNameToMaterialId = x =>
   x === "Bucket" ? 6 :
   x === "Flamethrower" ? 5 :
   x === "DevMat" ? 7 :
+  x === "ModMat" ? 8 :
   x === "FCoinSmall" ? 10 :
   x === "FCoinMedium" ? 11 :
   x === "FCoinLarge" ? 12 :

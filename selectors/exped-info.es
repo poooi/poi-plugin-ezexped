@@ -30,6 +30,7 @@ const itemIdToName = x =>
   x === 1 ? 'Bucket' :
   x === 2 ? 'Flamethrower' :
   x === 3 ? 'DevMat' :
+  x === 4 ? 'ModMat' :
   x === 10 ? 'FCoinSmall' :
   x === 11 ? 'FCoinMedium' :
   x === 12 ? 'FCoinLarge' :
