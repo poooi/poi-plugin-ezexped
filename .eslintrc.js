@@ -76,6 +76,7 @@ module.exports = {
     'operator-linebreak': 'off',
     'react/jsx-wrap-multilines': 'off',
     'react/destructuring-assignment': 'off',
+    'linebreak-style': 'CRLF',
   },
   'settings': {
     'import/resolver': {
