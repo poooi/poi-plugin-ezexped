@@ -10,6 +10,7 @@ check expedition requirements and estimate expedition income accurately.
 ### 1.7.0 (pending)
 
 - Partially Migrate to Blueprintjs. Fixing some style issues.
+- Early support on A4, B2, B3, B4 and 41-44 (Credit to @Sunev)
 
 ### 1.6.4
 
