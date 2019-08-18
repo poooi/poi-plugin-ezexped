@@ -42,9 +42,10 @@ const defineWorld1 = defineExped => {
   defineExped(8)(fslSc(6,6))
 
   // reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
-  defineExped(100)(
+  defineExped(/* A1 */ 100)(
     [
       ...fslSc(5,4),
+      mk.LevelSum(10),
       mk.FleetCompo({DDorDE: 3}),
     ]
   )
@@ -57,16 +58,17 @@ const defineWorld1 = defineExped => {
      - cases where sum of naked AA stat is less than 70
      - improvement of ASW gears could be taken into account
    */
-  defineExped(101)(
+  defineExped(/* A2 */ 101)(
     [
       ...fslSc(20,4),
       mk.FleetCompo({DDorDE: 4}),
       mk.TotalAsw(180, true),
       mk.TotalAntiAir(70),
+      mk.TotalLos(73),
     ]
   )
 
-  defineExped(102)(
+  defineExped(/* A3 */ 102)(
     [
       ...fslSc(35,5),
       mk.LevelSum(185),
@@ -82,10 +84,16 @@ const defineWorld1 = defineExped => {
       mk.TotalLos(60),
     ]
   )
-  defineExped(103)(
+  defineExped(/* A4 */ 103)(
     [
-      ...fslSc(1,5),
+      ...fslSc(40,5),
+      mk.AnyFleetCompo([
+        {CL: 1, DD: 4},
+        {CVE: 1, DD: 4},
+      ]),
+      mk.LevelSum(250),
       mk.TotalFirepower(300),
+      mk.TotalAsw(200, true),
     ]
   )
 }
