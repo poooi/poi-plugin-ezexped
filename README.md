@@ -11,6 +11,11 @@ check expedition requirements and estimate expedition income accurately.
 
 - Partially Migrate to Blueprintjs. Fixing some style issues.
 - Early support on A4, B2, B3, B4 and 41-44 (Credit to @Sunev)
+  By "early" we meant the requirement are mostly correct
+  except for the case that they aren't.
+- Update resource income on several expeditions.
+  Note that due to wikiwiki and wikia having conflicting info,
+  this update is not meant to be entirely accurate.
 
 ### 1.6.4
 
