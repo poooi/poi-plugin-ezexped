@@ -48,6 +48,8 @@ const kanceptsExportShipListSelector =
   mkExtPropSelector('kanceptsExportShipList')
 const kanceptsUrlSelector =
   mkExtPropSelector('kanceptsUrl')
+const uiWidthSelector =
+  mkExtPropSelector('uiWidth')
 const readySelector =
   mkExtPropSelector('ready')
 
@@ -78,6 +80,7 @@ export {
   expedTableExpandedSelector,
   kanceptsExportShipListSelector,
   kanceptsUrlSelector,
+  uiWidthSelector,
   readySelector,
 
   isMainFleetFuncSelector,

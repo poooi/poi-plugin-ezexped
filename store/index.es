@@ -33,7 +33,11 @@ const initState = {
      this could be 'github' or 'kcwiki'
    */
   kanceptsUrl: 'github',
-
+  /*
+     indicate current width of the plugin.
+     TODO: ideally we don't need to persist state of this one.
+   */
+  uiWidth: 300,
   ready: false,
 }
 
