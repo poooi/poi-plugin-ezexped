@@ -14,6 +14,7 @@ import {
   expedIdSelector,
   getExpedInfoFuncSelector,
   expedTableExpandedSelector,
+  uiWidthSelector,
 } from '../../../selectors'
 import { ExpeditionTable } from './expedition-table'
 
@@ -32,17 +33,20 @@ const PPopover = styled(Popover)`
     expedId: expedIdSelector,
     getExpedInfo: getExpedInfoFuncSelector,
     expedTableExpanded: expedTableExpandedSelector,
+    uiWidth: uiWidthSelector,
   }),
   mapDispatchToProps,
 )
 class ExpeditionPicker extends PureComponent {
   static propTypes = {
+    // TODO: this is no longer needed if we can get ResizeSensor to work.
     mountPoint: PTyp.any.isRequired,
     // connected
     expedId: PTyp.number.isRequired,
     getExpedInfo: PTyp.func.isRequired,
     expedTableExpanded: PTyp.bool.isRequired,
     modifyState: PTyp.func.isRequired,
+    uiWidth: PTyp.number.isRequired,
   }
 
   handleToggleExpedTable = (newVal, e, srcInfo) => {
@@ -77,7 +81,8 @@ class ExpeditionPicker extends PureComponent {
          of the plugin itself.
        */
       expedTableExpanded: _ignored,
-      mountPoint,
+      // mountPoint,
+      uiWidth,
     } = this.props
     const info = getExpedInfo(expedId)
     const {displayNum} = info
@@ -87,11 +92,11 @@ class ExpeditionPicker extends PureComponent {
        TODO: this does not work when the plugin is opened in a new window
        mountPoint is true-y but the querySelector returns null.
      */
-    const curPluginRef =
-      mountPoint && mountPoint.querySelector('.poi-plugin-ezexped')
+    // const curPluginRef =
+    //   mountPoint && mountPoint.querySelector('.poi-plugin-ezexped')
 
-    if (_.isFinite(_.get(curPluginRef, 'clientWidth'))) {
-      menuStyle.width = `calc(${curPluginRef.clientWidth}px - 20px)`
+    if (_.isFinite(uiWidth)) {
+      menuStyle.width = `calc(${uiWidth}px - 20px)`
     }
 
     return (
