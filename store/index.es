@@ -35,9 +35,9 @@ const initState = {
   kanceptsUrl: 'github',
   /*
      indicate current width of the plugin.
-     TODO: ideally we don't need to persist state of this one.
+     Don't need persistency.
    */
-  uiWidth: 300,
+  uiWidth: 400,
   ready: false,
 }
 

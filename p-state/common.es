@@ -35,7 +35,7 @@ import { join } from 'path-extra'
  */
 
 const extStateToPState = extState => {
-  const {ready: _ignored, ...ps} = extState
+  const {ready: _ignored0, uiWidth: _ignored1, ...ps} = extState
   return ps
 }
 
