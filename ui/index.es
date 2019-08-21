@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ResizeSensor } from '@blueprintjs/core'
-import { WindowEnv } from 'views/components/etc/window-env'
 import { modifyObject } from 'subtender'
 
 import {
@@ -52,45 +51,31 @@ class EZExpedMain extends Component {
     const {fleet} = this.props
     return (
       <ResizeSensor onResize={this.handleResize}>
-        <WindowEnv.Consumer>
-          {({mountPoint}) => (
-            <div
-              style={{
-                flex: 1,
-                height: 0,
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-              className="poi-plugin-ezexped"
-            >
-              <link
-                rel="stylesheet"
-                href={join(__dirname, '..', 'assets', 'ezexped.css')}
-              />
-              <div style={{
-                paddingRight: 5,
-                paddingLeft: 5,
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
-                <FleetPicker />
-                {
-                  fleet && (
-                    <ExpeditionViewer
-                      mountPoint={mountPoint}
-                    />
-                  )
-                }
-                {
-                  fleet && (
-                    <RequirementViewer />
-                  )
-                }
-              </div>
-            </div>
-          )}
-        </WindowEnv.Consumer>
+        <div
+          style={{
+            flex: 1,
+            height: 0,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+          className="poi-plugin-ezexped"
+        >
+          <link
+            rel="stylesheet"
+            href={join(__dirname, '..', 'assets', 'ezexped.css')}
+          />
+          <div style={{
+            paddingRight: 5,
+            paddingLeft: 5,
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <FleetPicker />
+            {fleet && (<ExpeditionViewer />)}
+            {fleet && (<RequirementViewer />)}
+          </div>
+        </div>
       </ResizeSensor>
     )
   }

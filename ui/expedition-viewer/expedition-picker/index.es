@@ -1,6 +1,5 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
-import { Dropdown } from 'react-bootstrap'
 import { Button, Position } from '@blueprintjs/core'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
@@ -39,8 +38,6 @@ const PPopover = styled(Popover)`
 )
 class ExpeditionPicker extends PureComponent {
   static propTypes = {
-    // TODO: this is no longer needed if we can get ResizeSensor to work.
-    mountPoint: PTyp.any.isRequired,
     // connected
     expedId: PTyp.number.isRequired,
     getExpedInfo: PTyp.func.isRequired,
@@ -81,19 +78,11 @@ class ExpeditionPicker extends PureComponent {
          of the plugin itself.
        */
       expedTableExpanded: _ignored,
-      // mountPoint,
       uiWidth,
     } = this.props
     const info = getExpedInfo(expedId)
     const {displayNum} = info
     const menuStyle = {minWidth: 300}
-
-    /*
-       TODO: this does not work when the plugin is opened in a new window
-       mountPoint is true-y but the querySelector returns null.
-     */
-    // const curPluginRef =
-    //   mountPoint && mountPoint.querySelector('.poi-plugin-ezexped')
 
     if (_.isFinite(uiWidth)) {
       menuStyle.width = `calc(${uiWidth}px - 20px)`
