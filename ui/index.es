@@ -1,3 +1,4 @@
+import { debounce } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ResizeSensor } from '@blueprintjs/core'
@@ -37,6 +38,10 @@ class EZExpedMain extends Component {
     fleet: null,
   }
 
+  resizeObserver = new ResizeObserver(debounce(this.handleResize, 200))
+
+  webview = React.createRef()
+
   handleResize = entries => {
     /* note: in our case entries should always have exactly one element. */
     if (entries.length !== 1)
@@ -47,36 +52,43 @@ class EZExpedMain extends Component {
     )
   }
 
+  componentDidMount = () => {
+    this.resizeObserver.observe(this.webview.current.view)
+  }
+
+  componentWillUnmount = () => {
+    this.resizeObserver.unobserve(this.webview.current.view)
+  }
+
   render() {
     const {fleet} = this.props
     return (
-      <ResizeSensor onResize={this.handleResize}>
-        <div
-          style={{
-            flex: 1,
-            height: 0,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-          className="poi-plugin-ezexped"
-        >
-          <link
-            rel="stylesheet"
-            href={join(__dirname, '..', 'assets', 'ezexped.css')}
-          />
-          <div style={{
-            paddingRight: 5,
-            paddingLeft: 5,
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
-            <FleetPicker />
-            {fleet && (<ExpeditionViewer />)}
-            {fleet && (<RequirementViewer />)}
-          </div>
+      <div
+        ref={this.webview}
+        style={{
+          flex: 1,
+          height: 0,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        className="poi-plugin-ezexped"
+      >
+        <link
+          rel="stylesheet"
+          href={join(__dirname, '..', 'assets', 'ezexped.css')}
+        />
+        <div style={{
+          paddingRight: 5,
+          paddingLeft: 5,
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          <FleetPicker />
+          {fleet && (<ExpeditionViewer />)}
+          {fleet && (<RequirementViewer />)}
         </div>
-      </ResizeSensor>
+      </div>
     )
   }
 }
