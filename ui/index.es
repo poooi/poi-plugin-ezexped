@@ -1,7 +1,5 @@
-import { debounce } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ResizeSensor } from '@blueprintjs/core'
 import { modifyObject } from 'subtender'
 
 import {
@@ -38,9 +36,7 @@ class EZExpedMain extends Component {
     fleet: null,
   }
 
-  resizeObserver = new ResizeObserver(debounce(this.handleResize, 200))
-
-  webview = React.createRef()
+  target = React.createRef()
 
   handleResize = entries => {
     /* note: in our case entries should always have exactly one element. */
@@ -53,18 +49,19 @@ class EZExpedMain extends Component {
   }
 
   componentDidMount = () => {
-    this.resizeObserver.observe(this.webview.current.view)
+    this.resizeObserver = new ResizeObserver(this.handleResize)
+    this.resizeObserver.observe(this.target.current)
   }
 
   componentWillUnmount = () => {
-    this.resizeObserver.unobserve(this.webview.current.view)
+    this.resizeObserver.unobserve(this.target.current)
   }
 
   render() {
     const {fleet} = this.props
     return (
       <div
-        ref={this.webview}
+        ref={this.target}
         style={{
           flex: 1,
           height: 0,
