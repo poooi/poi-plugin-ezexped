@@ -7,7 +7,7 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.7.0 (pending)
+### 1.7.0
 
 - Partially Migrate to Blueprintjs. Fixing some style issues.
 - Early support on A4, B2, B3, B4 and 41-44 (Credit to @Sunev)
@@ -16,6 +16,7 @@ check expedition requirements and estimate expedition income accurately.
 - Update resource income on several expeditions.
   Note that due to wikiwiki and wikia having conflicting info,
   this update is not meant to be entirely accurate.
+- UI fix: Expedition picker now resizes for new window mode.
 
 ### 1.6.4
 
