@@ -72,11 +72,6 @@ class ExpeditionPicker extends PureComponent {
   render() {
     const {
       expedId, getExpedInfo,
-      /*
-         TODO: we'll still need to make this controlled so that
-         when Popover opens we'll have a chance to update current width
-         of the plugin itself.
-       */
       expedTableExpanded: _ignored,
       uiWidth,
     } = this.props

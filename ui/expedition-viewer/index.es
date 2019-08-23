@@ -111,7 +111,6 @@ const SIcon = styled(SlotitemIcon)`
 )
 class ExpeditionViewer extends Component {
   static propTypes = {
-    mountPoint: PTyp.any.isRequired,
     // connected
     expedId: PTyp.number.isRequired,
     fleet: PTyp.object.isRequired,
@@ -154,7 +153,7 @@ class ExpeditionViewer extends Component {
   }
 
   render() {
-    const {expedId, getExpedInfo, mountPoint} = this.props
+    const {expedId, getExpedInfo} = this.props
     const info = getExpedInfo(expedId)
     const resupplyCost =
       fleetResupplyCost(this.props.fleet.ships)(
@@ -207,9 +206,7 @@ class ExpeditionViewer extends Component {
             justifyContent: 'space-between',
           }}
         >
-          <ExpeditionPicker
-            mountPoint={mountPoint}
-          />
+          <ExpeditionPicker />
           <div style={{textAlign: 'center'}}>
             {fmtTime(info.timeInMin)}
           </div>
