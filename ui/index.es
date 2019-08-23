@@ -1,6 +1,6 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { modifyObject } from 'subtender'
 
 import {
   createStructuredSelector,
@@ -29,7 +29,7 @@ class EZExpedMain extends Component {
   static propTypes = {
     // connected
     fleet: PTyp.object,
-    modifyState: PTyp.func.isRequired,
+    setWidth: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -43,9 +43,10 @@ class EZExpedMain extends Component {
     if (entries.length !== 1)
       return
     const [e] = entries
-    this.props.modifyState(
-      modifyObject('uiWidth', () => e.contentRect.width)
-    )
+    const width = _.get(e,['contentRect', 'width'])
+    if (_.isFinite(width)) {
+      this.props.setWidth(width)
+    }
   }
 
   componentDidMount = () => {

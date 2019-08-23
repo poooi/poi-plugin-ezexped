@@ -27,6 +27,10 @@ const actionCreators = {
       ...(tabSwitch ? {activeMainTab: 'shipView'} : {}),
     },
   }),
+  setWidth: width => ({
+    type: '@poi-plugin-ezexped@SetWidth',
+    width,
+  }),
 }
 
 const mapDispatchToProps = dispatch =>

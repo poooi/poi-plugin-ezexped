@@ -51,6 +51,16 @@ const reducer = (state = initState, action) => {
     }
   }
 
+  // Components can mount prior to when config is loaded,
+  // so we should still allow some non-persistent ones to update.
+  if (action.type === '@poi-plugin-ezexped@SetWidth') {
+    const {width} = action
+    return {
+      ...state,
+      uiWidth: width,
+    }
+  }
+
   // all other actions requires the state to be ready
   if (!state.ready)
     return state
