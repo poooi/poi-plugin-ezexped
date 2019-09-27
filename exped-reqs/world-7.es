@@ -34,9 +34,10 @@ const defineWorld7 = defineExped => {
   defineExped(44)(
     [
       ...fslSc(45,6),
-      mk.FleetCompo({CVLike: 2, AV: 1, CL: 1, DD: 2}),
+      mk.FleetCompo({CVLike: 3, AV: 1, CL: 1, DD: 2}),
       mk.DrumCarrierCount(3),
       mk.DrumCount(6),
+      mk.TotalAsw(200, true),
     ]
   )
 }
