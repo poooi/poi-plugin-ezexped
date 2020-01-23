@@ -84,10 +84,6 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({CA: 2, CL: 1, DD: 2, SSLike: 1}),
       mk.TotalAsw(280, true),
       mk.TotalFirepower(500),
-      // TODO: we are marking this as "MissingInfo"
-      // because right now we don't have a way often
-      // encoding the "carry some mid calibre gun" requirement.
-      mk.MissingInfo(),
     ]
   )
 }
