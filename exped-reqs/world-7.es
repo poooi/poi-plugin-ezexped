@@ -34,7 +34,17 @@ const defineWorld7 = defineExped => {
   defineExped(44)(
     [
       ...fslSc(45,6),
-      mk.FleetCompo({CVLike: 3, AV: 1, CL: 1, DD: 2}),
+      mk.FleetCompo({
+        /*
+           The actual condition is 2CVL 1AV 1CL 2DD.
+           However, since AV also counts as CV-like,
+           this brings total CL-like to 3 rather than 2.
+         */
+        CVLike: 3,
+        AV: 1,
+        CL: 1,
+        DD: 2,
+      }),
       mk.DrumCarrierCount(3),
       mk.DrumCount(6),
       mk.TotalAsw(200, true),
