@@ -41,7 +41,7 @@ const itemNameToMaterialId = x =>
   x === "FCoinSmall" ? 10 :
   x === "FCoinMedium" ? 11 :
   x === "FCoinLarge" ? 12 :
-  debug.error(`unknown item name: ${x}`)
+  (debug.error(`unknown item name: ${x}`) || `#${x}`)
 
 // pretty-printing a floating number
 const pprFloat = (v,digits=2) => v.toFixed(digits)
@@ -87,7 +87,13 @@ const renderTexts = (rawIncome, greatSuccess, bonus, resupply) => {
   }
 }
 
-const mkMat = matId => (<MaterialIcon materialId={matId} className="material-icon" />)
+const mkMat = matId => {
+  if (typeof matId === 'string' && matId.startsWith('#')) {
+    return (<div>{matId}</div>)
+  } else {
+    return (<MaterialIcon materialId={matId} className="material-icon" />)
+  }
+}
 
 const SIcon = styled(SlotitemIcon)`
   &.png {

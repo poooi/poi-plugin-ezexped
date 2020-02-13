@@ -8,8 +8,6 @@ import {
   constSelector,
 } from 'views/utils/selectors'
 
-import { debug } from '../debug'
-
 /*
    exped-extra-info stores some extra information for expeditions:
 
@@ -35,7 +33,7 @@ const itemIdToName = x =>
   x === 10 ? 'FCoinSmall' :
   x === 11 ? 'FCoinMedium' :
   x === 12 ? 'FCoinLarge' :
-  debug.error(`unknown item id: ${x}`)
+  x
 
 const mkItem = itemData => itemData[0] === 0 ?
   null :
