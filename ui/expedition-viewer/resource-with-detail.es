@@ -1,14 +1,23 @@
 import React, { Component } from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import styled from 'styled-components'
+import { Position } from '@blueprintjs/core'
+import {
+  Tooltip as BPTooltip,
+} from 'views/components/etc/overlay'
 
 import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 import { IconAndLabel } from './icon-and-label'
 
+const Tooltip = styled(BPTooltip)`
+  & .bp3-popover-target {
+    width: 100%;
+  }
+`
+
 class ResourceWithDetail extends Component {
   static propTypes = {
-    resourceName: PTyp.string.isRequired,
     icon: PTyp.node.isRequired,
     // - one of "renderedResources"'s value in "ExpeditionViewer"
     renderedResource: PTyp.oneOfType([
@@ -44,10 +53,9 @@ class ResourceWithDetail extends Component {
     ].filter(k => this.props.renderedResource[k])
 
     const tooltip = (
-      <Tooltip
-        className="ezexped-pop"
-        style={{display: "flex"}}
-        id={`ezexped-tooltip-${this.props.resourceName}`}>
+      <div
+        style={{display: 'flex', flexDirection: 'column'}}
+      >
         {
           tooltipTexts.map(x => (
             <div style={{flex: "1", textAlign: "left"}} key={x}>
@@ -57,18 +65,19 @@ class ResourceWithDetail extends Component {
             </div>
           ))
         }
-      </Tooltip>
+      </div>
     )
 
     return (
-      <OverlayTrigger
-        placement="bottom" overlay={tooltip}>
-        <div>
-          <IconAndLabel
-            icon={this.props.icon}
-            label={this.props.renderedResource.finalIncome} />
-        </div>
-      </OverlayTrigger>)
+      <Tooltip
+        position={Position.BOTTOM}
+        content={tooltip}>
+        <IconAndLabel
+          icon={this.props.icon}
+          label={this.props.renderedResource.finalIncome}
+        />
+      </Tooltip>
+    )
   }
 }
 
