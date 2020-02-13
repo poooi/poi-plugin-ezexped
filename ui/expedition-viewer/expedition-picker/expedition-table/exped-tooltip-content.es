@@ -21,11 +21,15 @@ class ExpedTooltipContent extends PureComponent {
           alignItems: 'stretch',
         }}>
         <div
-          style={{paddingLeft: '1em', paddingRight: '1em'}}
+          style={{width: '100%', textAlign: 'center'}}
         >
           {info.name}
         </div>
-        <div>{fmtTime(info.timeInMin)}</div>
+        <div
+          style={{width: '100%', textAlign: 'center'}}
+        >
+          {fmtTime(info.timeInMin)}
+        </div>
         <div
           style={{
             flex: 1,
@@ -57,9 +61,7 @@ class ExpedTooltipContent extends PureComponent {
                     minWidth: '2.5em',
                   }}>
                   {
-                    (info && info.resources) ?
-                      info.resources[resourceName] :
-                      '???'
+                    (info && info.resources) ? info.resources[resourceName] : '???'
                   }
                 </span>
               </div>
