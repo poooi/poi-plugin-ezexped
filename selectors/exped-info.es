@@ -26,6 +26,7 @@ const rawExpedExtraInfo =
 
 const toPercent = x => Math.round(100 * x)
 
+/* TODO: those ids are use item ids */
 const itemIdToName = x =>
   x === 1 ? 'Bucket' :
   x === 2 ? 'Flamethrower' :

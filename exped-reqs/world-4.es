@@ -50,6 +50,22 @@ const defineWorld4 = defineExped => {
       mk.FleetCompo({CT: 1, DD: 2}),
       mk.FSType('CT'),
     ])
+
+  defineExped(/* D1 */ 131)(
+    [
+      ...fslSc(50, 5),
+      mk.FSType('AV'),
+      mk.LevelSum(231),
+      mk.FleetCompo({AV: 1, DDorDE: 4}),
+      mk.TotalAntiAir(240),
+      /* TODO:
+         it's unclear to me whether those special items count.
+         therefore go the conservative way.
+       */
+      mk.TotalAsw(240, true),
+      mk.TotalLos(300),
+    ]
+  )
 }
 
 export { defineWorld4 }
