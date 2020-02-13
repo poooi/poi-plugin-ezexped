@@ -1,16 +1,22 @@
 import { join } from 'path-extra'
 import React, { PureComponent } from 'react'
 import {
-  OverlayTrigger as ROverlayTrigger,
-  Tooltip as RTooltip,
-} from 'react-bootstrap'
-import {
   Button,
   Classes,
+  Position,
 } from '@blueprintjs/core'
-
+import styled from 'styled-components'
+import {
+  Tooltip as BPTooltip,
+} from 'views/components/etc/overlay'
 import { PTyp } from '../../../../ptyp'
 import { ExpedTooltipContent } from './exped-tooltip-content'
+
+const Tooltip = styled(BPTooltip)`
+  & .bp3-popover-target {
+    width: 100%;
+  }
+`
 
 // every expedition button inside the table
 // props:
@@ -28,6 +34,9 @@ class ExpeditionButton extends PureComponent {
     onClick: PTyp.func.isRequired,
     style: PTyp.object,
     btnClassName: PTyp.string,
+
+    expedInd: PTyp.number.isRequired,
+    worldInd: PTyp.number.isRequired,
   }
 
   static defaultProps = {
@@ -42,30 +51,46 @@ class ExpeditionButton extends PureComponent {
       active, runningFleetId,
       btnClassName,
       getExpedInfo, style,
+      expedInd, worldInd,
     } = this.props
 
-    // TODO: Button is good enough for now, but we'll need to get inner
-    // wrapped layout right (e.g. set display: flex)
+    const ThisTooltip = styled(Tooltip)`
+      max-width: 150px;
+      width: 100%;
+      grid-area: ${expedInd+1} / ${worldInd+1};
+      height: 1.8em;
+      margin: 0;
+      padding: 0;
+
+      & .bp3-popover-target {
+        width: 100%;
+        height: 100%;
+      }
+
+      & .bp3-popover-target button {
+        height: 100%;
+        min-height: 100%;
+      }
+    `
+
     return (
-      <ROverlayTrigger
-        placement="bottom"
-        overlay={
-          <RTooltip id={`ezexped-tooltip-${expedId}`}>
-            <ExpedTooltipContent
-              getExpedInfo={getExpedInfo}
-              expedId={expedId}
-            />
-          </RTooltip>
-        }>
+      <ThisTooltip
+        wrapperTagName="div"
+        targetTagName="div"
+        position={Position.BOTTOM}
+        content={(
+          <ExpedTooltipContent
+            getExpedInfo={getExpedInfo}
+            expedId={expedId}
+          />
+        )}
+      >
         <Button
           className={[Classes.POPOVER_DISMISS,btnClassName].join(' ')}
-          intent={ready ? "primary" : "none"}
+          intent={ready ? 'primary' : 'none'}
           style={{
-            maxWidth: 150,
             width: '100%',
-            height: '1.8em',
-            margin: 0,
-            padding: 0,
+            height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -81,17 +106,12 @@ class ExpeditionButton extends PureComponent {
               <img
                 style={{height: '1.1em', marginLeft: '.6em'}}
                 alt={`/${runningFleetId}`}
-                src={
-                  join(
-                    __dirname,'..','..','..','..',
-                    'assets','images',`fleet-${runningFleetId}.png`
-                  )
-                }
+                src={join(__dirname,'..','..','..','..','assets','images',`fleet-${runningFleetId}.png`)}
               />
             )
           }
         </Button>
-      </ROverlayTrigger>
+      </ThisTooltip>
     )
   }
 }

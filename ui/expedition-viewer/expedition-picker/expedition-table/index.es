@@ -102,6 +102,8 @@ class ExpeditionTable extends Component {
                   const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
                   return (
                     <ExpeditionButton
+                      expedInd={expedInd}
+                      worldInd={worldInd}
                       style={{gridArea: `${expedInd+1} / ${worldInd+1}`}}
                       key={expedId}
                       ready={normGsFlag.norm}
