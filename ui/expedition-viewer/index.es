@@ -1,4 +1,5 @@
-import { createStructuredSelector } from 'reselect'
+import _ from 'lodash'
+import { createSelector, createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import {
   OverlayTrigger, Tooltip,
@@ -16,7 +17,6 @@ import styled from 'styled-components'
 
 import { MaterialIcon, SlotitemIcon } from 'views/components/etc/icon'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
-
 import { __, fmtTime } from '../../tr'
 import { PTyp } from '../../ptyp'
 import { mapDispatchToProps } from '../../store'
@@ -30,7 +30,15 @@ import {
   gsFlagSelector,
   dlcFlagSelector,
   getExpedInfoFuncSelector,
+  useitemsSelector,
 } from '../../selectors'
+
+const useItemNameFuncSelector = createSelector(
+  useitemsSelector,
+  useitems =>
+    itemId =>
+      _.get(useitems, [itemId, 'api_name'], null)
+)
 
 const itemNameToMaterialId = x =>
   x === 'Bucket' ? 6 :
@@ -111,6 +119,7 @@ const SIcon = styled(SlotitemIcon)`
     greatSuccess: gsFlagSelector,
     dlcFlag: dlcFlagSelector,
     getExpedInfo: getExpedInfoFuncSelector,
+    getUseitemName: useItemNameFuncSelector,
   }),
   mapDispatchToProps,
 )
@@ -123,6 +132,7 @@ class ExpeditionViewer extends Component {
     dlcFlag: PTyp.bool.isRequired,
     getExpedInfo: PTyp.func.isRequired,
     modifyState: PTyp.func.isRequired,
+    getUseitemName: PTyp.func.isRequired,
   }
 
   handleClickExped = () =>
@@ -158,7 +168,7 @@ class ExpeditionViewer extends Component {
   }
 
   render() {
-    const {expedId, getExpedInfo} = this.props
+    const {expedId, getExpedInfo, getUseitemName: _ignored} = this.props
     const info = getExpedInfo(expedId)
     const resupplyCost =
       fleetResupplyCost(this.props.fleet.ships)(

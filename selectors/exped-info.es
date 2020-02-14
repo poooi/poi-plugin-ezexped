@@ -38,13 +38,20 @@ const itemIdToName = x =>
 const mkItem = itemData => itemData[0] === 0 ?
   null :
   {
+    // TODO: clean this mess up.
+    useitemId: itemData[0],
     itemId: itemIdToName(itemData[0]),
     itemMaxCount: itemData[1],
   }
 
 const rawExpedInfoSelector = createSelector(
   constSelector,
-  ({$missions}) => $missions
+  conzt => _.get(conzt, '$missions', {}),
+)
+
+const useitemsSelector = createSelector(
+  constSelector,
+  conzt => _.get(conzt, '$useitems', {}),
 )
 
 /*
@@ -121,6 +128,7 @@ const expedNameToIdFuncSelector = createSelector(
 )
 
 export {
+  useitemsSelector,
   expedInfoTableSelector,
   getExpedInfoFuncSelector,
   expedNameToIdFuncSelector,
