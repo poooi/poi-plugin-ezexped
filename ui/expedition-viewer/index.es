@@ -31,17 +31,16 @@ import {
   dlcFlagSelector,
   getExpedInfoFuncSelector,
 } from '../../selectors'
-import { debug } from '../../debug'
 
 const itemNameToMaterialId = x =>
-  x === "Bucket" ? 6 :
-  x === "Flamethrower" ? 5 :
-  x === "DevMat" ? 7 :
-  x === "ModMat" ? 8 :
-  x === "FCoinSmall" ? 10 :
-  x === "FCoinMedium" ? 11 :
-  x === "FCoinLarge" ? 12 :
-  (debug.error(`unknown item name: ${x}`) || `#${x}`)
+  x === 'Bucket' ? 6 :
+  x === 'Flamethrower' ? 5 :
+  x === 'DevMat' ? 7 :
+  x === 'ModMat' ? 8 :
+  x === 'FCoinSmall' ? 10 :
+  x === 'FCoinMedium' ? 11 :
+  x === 'FCoinLarge' ? 12 :
+  `#${x}`
 
 // pretty-printing a floating number
 const pprFloat = (v,digits=2) => v.toFixed(digits)
