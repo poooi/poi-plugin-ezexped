@@ -9,7 +9,7 @@ check expedition requirements and estimate expedition income accurately.
 
 ### 1.7.2 (pending)
 
-- Support for expedition D1.
+- Support for expedition 45 and D1.
 
 ### 1.7.1
 
