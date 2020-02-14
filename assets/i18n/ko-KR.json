@@ -16,6 +16,7 @@
     "DD": "Destroyer (DD)",
     "CL": "Light Cruiser (CL)",
     "CVLike": "Aircraft Carriers (CV/CVL/AV/CVB)",
+    "CVL": "Light Carriers (CVL)",
     "SSLike": "Submarines (SS/SSV)",
     "CA": "Heavy Cruiser (CA)",
     "BBV": "Aviation Battleship (BBV)",

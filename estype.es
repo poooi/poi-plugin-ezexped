@@ -53,6 +53,7 @@ const [isESType, allESTypes] = (() => {
   defineESType('CT', eq(t.CT))
   defineESType('CA', eq(t.CA))
   defineESType('AS', eq(t.AS))
+  defineESType('CVL', eq(t.CVL))
   /*
      TODO: it might actually be possible to derive CVE checking from wctf / game data:
      (1) it must be CVL (2) it's ASW is not zero (use "asw_max" for asw stat at level 99)
