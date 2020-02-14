@@ -66,6 +66,17 @@ const defineWorld4 = defineExped => {
       mk.TotalLos(300),
     ]
   )
+
+  defineExped(/* D2 */ 132)(
+    [
+      ...fslSc(55,5),
+      mk.FSType('AS'),
+      mk.AnyFleetCompo([
+        {AS: 1, SSLike: 3, DD: 1},
+        {AS: 1, SSLike: 3, CL: 1},
+      ]),
+    ]
+  )
 }
 
 export { defineWorld4 }
