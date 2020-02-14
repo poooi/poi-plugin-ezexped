@@ -24,23 +24,10 @@ const rawExpedExtraInfo =
 
 const toPercent = x => Math.round(100 * x)
 
-/* TODO: those ids are use item ids */
-const itemIdToName = x =>
-  x === 1 ? 'Bucket' :
-  x === 2 ? 'Flamethrower' :
-  x === 3 ? 'DevMat' :
-  x === 4 ? 'ModMat' :
-  x === 10 ? 'FCoinSmall' :
-  x === 11 ? 'FCoinMedium' :
-  x === 12 ? 'FCoinLarge' :
-  x
-
 const mkItem = itemData => itemData[0] === 0 ?
   null :
   {
-    // TODO: clean this mess up.
     useitemId: itemData[0],
-    itemId: itemIdToName(itemData[0]),
     itemMaxCount: itemData[1],
   }
 

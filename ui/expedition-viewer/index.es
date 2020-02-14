@@ -36,18 +36,25 @@ import {
 const useItemNameFuncSelector = createSelector(
   useitemsSelector,
   useitems =>
-    itemId =>
-      _.get(useitems, [itemId, 'api_name'], null)
+    useitemId =>
+      _.get(useitems, [useitemId, 'api_name'], null)
 )
 
-const itemNameToMaterialId = x =>
-  x === 'Bucket' ? 6 :
-  x === 'Flamethrower' ? 5 :
-  x === 'DevMat' ? 7 :
-  x === 'ModMat' ? 8 :
-  x === 'FCoinSmall' ? 10 :
-  x === 'FCoinMedium' ? 11 :
-  x === 'FCoinLarge' ? 12 :
+const useitemIdToMaterialId = x =>
+  // Bucket
+  x === 1 ? 6 :
+  // Flamethrower
+  x === 2 ? 5 :
+  // DevMat
+  x === 3 ? 7 :
+  // ModMat
+  x === 4 ? 8 :
+  // Furniture coin small
+  x === 10 ? 10 :
+  // Furniture coin medium
+  x === 11 ? 11 :
+  // Furniture coin large
+  x === 12 ? 12 :
   `#${x}`
 
 // pretty-printing a floating number
@@ -196,7 +203,7 @@ class ExpeditionViewer extends Component {
       }
     })
 
-    const mkMatFromName = name => mkMat(itemNameToMaterialId(name))
+    const mkMatFromName = name => mkMat(useitemIdToMaterialId(name))
     const hasNormalItem = info.itemNormal
     const canObtainGreatSuccessItem =
       this.props.greatSuccess && info.itemGreatSuccess
@@ -239,11 +246,11 @@ class ExpeditionViewer extends Component {
               icon={mkMat(2)} label={`${info.cost.ammoPercent}%`}
             />
             <IconAndLabel
-              icon={hasNormalItem ? mkMatFromName(info.itemNormal.itemId) : '-'}
+              icon={hasNormalItem ? mkMatFromName(info.itemNormal.useitemId) : '-'}
               label={hasNormalItem ? prettyRange(0,info.itemNormal.itemMaxCount) : '-'}
             />
             <IconAndLabel
-              icon={info.itemGreatSuccess ? mkMatFromName(info.itemGreatSuccess.itemId) : '-'}
+              icon={info.itemGreatSuccess ? mkMatFromName(info.itemGreatSuccess.useitemId) : '-'}
               label={
                 (
                   info.itemGreatSuccess ? (
