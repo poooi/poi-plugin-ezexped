@@ -47,7 +47,7 @@ class ExpeditionPicker extends PureComponent {
   }
 
   handleToggleExpedTable = (newVal, e, srcInfo) => {
-    const {source} = srcInfo
+    const { source } = srcInfo
     if (source === 'rootClose') {
       /*
          Dropdown won't be closed if our user is
@@ -76,8 +76,8 @@ class ExpeditionPicker extends PureComponent {
       uiWidth,
     } = this.props
     const info = getExpedInfo(expedId)
-    const {displayNum} = info
-    const menuStyle = {minWidth: 300}
+    const { displayNum } = info
+    const menuStyle = { minWidth: 300 }
 
     if (_.isFinite(uiWidth)) {
       menuStyle.width = `calc(${uiWidth}px - 20px)`
@@ -87,6 +87,7 @@ class ExpeditionPicker extends PureComponent {
       <PPopover
         content={(<ExpeditionTable style={menuStyle} />)}
         position={Position.BOTTOM_LEFT}
+        autoFocus={false}
       >
         <Button
           text={`${displayNum} ${info.name}`}
