@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import FontAwesome from 'react-fontawesome'
 import {
-  ListGroupItem,
   OverlayTrigger,
 } from 'react-bootstrap'
 
@@ -48,8 +47,12 @@ class ItemTemplate extends PureComponent {
     )
 
     return (
-      <ListGroupItem
-        style={{padding: 10}}>
+      <div
+        style={{
+          padding: 10,
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        }}>
         {
           tooltip ? (
             <OverlayTrigger
@@ -61,7 +64,7 @@ class ItemTemplate extends PureComponent {
             itemContent
           )
         }
-      </ListGroupItem>
+      </div>
     )
   }
 }

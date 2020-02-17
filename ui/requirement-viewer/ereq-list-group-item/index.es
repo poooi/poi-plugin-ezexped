@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import {
-  ListGroupItem,
-} from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
 import { EReq } from '../../../structs/ereq'
@@ -96,10 +93,14 @@ class EReqListGroupItem extends Component {
     }
 
     return (
-      <ListGroupItem
-        style={{padding: 10}}>
+      <div
+        style={{
+          padding: 10,
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        }}>
         {JSON.stringify(this.props.ereq)}
-      </ListGroupItem>
+      </div>
     )
   }
 }
