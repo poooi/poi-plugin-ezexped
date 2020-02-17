@@ -2,20 +2,16 @@ import _ from 'lodash'
 import { createSelector, createStructuredSelector } from 'reselect'
 import React, { Component } from 'react'
 import {
-  OverlayTrigger, Tooltip,
-} from 'react-bootstrap'
-
-import {
   Button,
   ButtonGroup,
 } from '@blueprintjs/core'
-
+import styled from 'styled-components'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
-import styled from 'styled-components'
 
 import { MaterialIcon, SlotitemIcon } from 'views/components/etc/icon'
+import { Tooltip as BPTooltip } from 'views/components/etc/overlay'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
 import { __, fmtTime } from '../../tr'
 import { PTyp } from '../../ptyp'
@@ -116,6 +112,11 @@ const SIcon = styled(SlotitemIcon)`
 
   &.svg {
     height: 1.6em;
+  }
+`
+const GSTooltip = styled(BPTooltip)`
+  &.bp3-popover-wrapper {
+    flex: 0 0 3em;
   }
 `
 
@@ -256,12 +257,12 @@ class ExpeditionViewer extends Component {
                   info.itemGreatSuccess ? (
                     canObtainGreatSuccessItem ?
                       gsRangeText : (
-                        <OverlayTrigger
-                          overlay={
+                        <BPTooltip
+                          content={
                             (
-                              <Tooltip id="ezexped-great-sucess-only-item">
+                              <div>
                                 {__('TTGreatSucessOnlyItem')}
-                              </Tooltip>
+                              </div>
                             )
                           }
                           placement="bottom"
@@ -269,7 +270,7 @@ class ExpeditionViewer extends Component {
                           <div className="text-danger">
                             {gsRangeText}
                           </div>
-                        </OverlayTrigger>
+                        </BPTooltip>
                       )
                   ) : '-'
                 )
@@ -342,29 +343,27 @@ class ExpeditionViewer extends Component {
                 {__("Great Success")}
               </span>
             </Button>
-            <OverlayTrigger
-              placement="left"
-              overlay={
+            <GSTooltip
+              wrapperTagName="div"
+              targetTagName="div"
+              content={
                 (
-                  <Tooltip id="ezexped-dlc-button">
+                  <div>
                     {__('TTFillDlcExplain')}
-                  </Tooltip>
+                  </div>
                 )
               }
             >
               <Button
                 intent={this.props.dlcFlag ? 'primary' : 'none'}
                 onClick={this.handleToggleDlc}
-                style={{
-                  width: '3em',
-                  padding: 0,
-                }}
+                style={{padding: 0, width: '100%'}}
               >
                 <SIcon
                   slotitemId={20}
                 />
               </Button>
-            </OverlayTrigger>
+            </GSTooltip>
           </ButtonGroup>
         </div>
       </div>
