@@ -26,6 +26,24 @@ const uiSelector = createStructuredSelector({
   grouppedExpedIds: grouppedExpedIdsSelector,
 })
 
+/*
+
+  In-game UI displays worlds in the following order:
+  W1 W2 W3 W7 W4 W5 W6.
+
+  This function returns a zero-based index for each world indicating
+  where it should be placed in the ui (therefore a "visual" index),
+  so that those worlds appear in the order specified above.
+
+ */
+const visualWorldIndex = worldId => {
+  if (worldId === 7)
+    return 3
+  if (worldId <= 3 || worldId >= 8)
+    return worldId - 1
+  return worldId
+}
+
 @connect(
   state => {
     const ui = uiSelector(state)
@@ -97,14 +115,15 @@ class ExpeditionTable extends Component {
           {
             _.flatMap(
               expedIdsArr,
-              ([_world, expedIds], worldInd) =>
+              ([worldId, expedIds], _worldInd) =>
                 expedIds.map((expedId, expedInd) => {
                   const normGsFlag = normGsFlags[expedId] || normGsFlags.missing
+                  const row = expedInd + 1
+                  const col = visualWorldIndex(worldId) + 1
                   return (
                     <ExpeditionButton
-                      expedInd={expedInd}
-                      worldInd={worldInd}
-                      style={{gridArea: `${expedInd+1} / ${worldInd+1}`}}
+                      gridRow={row}
+                      gridCol={col}
                       key={expedId}
                       ready={normGsFlag.norm}
                       btnClassName={

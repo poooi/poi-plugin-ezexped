@@ -32,17 +32,15 @@ class ExpeditionButton extends PureComponent {
     runningFleetId: PTyp.number,
     getExpedInfo: PTyp.func.isRequired,
     onClick: PTyp.func.isRequired,
-    style: PTyp.object,
     btnClassName: PTyp.string,
 
-    expedInd: PTyp.number.isRequired,
-    worldInd: PTyp.number.isRequired,
+    gridRow: PTyp.number.isRequired,
+    gridCol: PTyp.number.isRequired,
   }
 
   static defaultProps = {
     runningFleetId: null,
     btnClassName: '',
-    style: {},
   }
 
   render() {
@@ -50,14 +48,14 @@ class ExpeditionButton extends PureComponent {
       ready, expedId, onClick,
       active, runningFleetId,
       btnClassName,
-      getExpedInfo, style,
-      expedInd, worldInd,
+      getExpedInfo,
+      gridRow, gridCol,
     } = this.props
 
     const ThisTooltip = styled(Tooltip)`
       max-width: 150px;
       width: 100%;
-      grid-area: ${expedInd+1} / ${worldInd+1};
+      grid-area: ${gridRow} / ${gridCol};
       height: 1.8em;
       margin: 0;
       padding: 0;
@@ -94,7 +92,6 @@ class ExpeditionButton extends PureComponent {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            ...style,
           }}
           active={active}
           onClick={onClick}>
