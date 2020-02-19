@@ -1,9 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
-import {
-  Well,
-} from 'react-bootstrap'
-
+import styled from 'styled-components'
 import {
   ItemTemplate,
 } from './common'
@@ -12,6 +9,17 @@ import { PTyp } from '../../../ptyp'
 
 import { MinFleetCompo, computeKey } from './min-fleet-compo'
 import { AnyFleetCompoTooltipContent } from './any-fleet-compo-tooltip-content'
+
+const Well = styled.div`
+  font-size: 100%;
+  min-height: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  border-radius: 1px;
+  margin-top: .1em;
+  margin-bottom: .2em;
+  padding: .2em .2em;
+`
 
 class AnyFleetCompoItem extends Component {
   static propTypes = {
@@ -62,12 +70,7 @@ class AnyFleetCompoItem extends Component {
                     onMouseOver={this.handleChangeKey(key)}
                     onFocus={this.handleChangeKey(key)}
                     key={`${keyPrefix}content`}
-                    style={{
-                      fontSize: '100%',
-                      marginTop: '.1em',
-                      marginBottom: '.1em',
-                      padding: '.2em .2em',
-                    }}>
+                  >
                     <MinFleetCompo
                       style={{
                         marginLeft: 0,
