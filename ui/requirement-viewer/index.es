@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  ListGroup,
-} from 'react-bootstrap'
 import { createStructuredSelector } from 'reselect'
 
 import { __ } from '../../tr'
@@ -117,8 +114,10 @@ class RequirementViewer extends Component {
             )
           }
         </div>
-        <ListGroup
+        <div
           style={{
+            marginBottom: 20,
+            paddingLeft: 0,
             flex: 1,
             overflowY: 'auto',
           }}
@@ -134,7 +133,7 @@ class RequirementViewer extends Component {
               />
             ))
           }
-        </ListGroup>
+        </div>
       </div>
     )
   }
