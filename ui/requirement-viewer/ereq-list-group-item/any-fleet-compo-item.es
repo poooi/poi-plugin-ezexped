@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import {
-  Well, Tooltip,
+  Well,
 } from 'react-bootstrap'
 
 import {
@@ -102,17 +102,16 @@ class AnyFleetCompoItem extends Component {
   }
 
   renderTooltip = () => {
-    const {prefix,result} = this.props
+    // TODO: prefix no longer needed.
+    const {result} = this.props
     return (
-      <Tooltip
-        className="ezexped-pop"
-        id={`${prefix}any-fleet-compo-tooltip`}>
+      <div>
         <AnyFleetCompoTooltipContent
           noDanger={result.sat}
           currentKey={this.state.currentKey}
           fleetCompos={result.extra.results}
         />
-      </Tooltip>
+      </div>
     )
   }
 

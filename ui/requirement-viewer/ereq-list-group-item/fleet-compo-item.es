@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import {
-  Tooltip,
-} from 'react-bootstrap'
-
-import {
   ItemTemplate,
 } from './common'
 import { __ } from '../../../tr'
@@ -43,9 +39,10 @@ class FleetCompoItem extends Component {
 
   renderTooltip = () => {
     const {results} = this.props.result.extra
-    const {prefix} = this.props
+    // TODO: prefix is no longer used.
+    // const {prefix} = this.props
     return (
-      <Tooltip id={`${prefix}req-detail`} className="ezexped-pop">
+      <div>
         <div style={{display: "flex", flexDirection: "column"}}>
           {
             results.map(({estype: estypeK, actual, need, sat}) => (
@@ -73,7 +70,7 @@ class FleetCompoItem extends Component {
             ))
           }
         </div>
-      </Tooltip>
+      </div>
     )
   }
 

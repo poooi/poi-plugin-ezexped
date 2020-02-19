@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
-import {
-} from 'react-bootstrap'
 
 import { PTyp } from '../../../ptyp'
 import { __ } from '../../../tr'

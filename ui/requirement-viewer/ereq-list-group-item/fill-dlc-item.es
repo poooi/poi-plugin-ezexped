@@ -1,9 +1,5 @@
 import React from 'react'
 import {
-  Tooltip,
-} from 'react-bootstrap'
-
-import {
   ItemTemplate,
   getExtraType,
 } from './common'
@@ -14,9 +10,7 @@ import { PTyp } from '../../../ptyp'
 /* eslint-disable react/prop-types */
 const mayFillDlc = props =>
   getExtraType(props) === 'FillDlc' ? (
-    <Tooltip
-      className="ezexped-pop"
-      id={`${props.prefix}detail`}>
+    <div>
       {
         props.result.extra.ships.map(s => (
           <div key={s.mstId}>
@@ -30,7 +24,7 @@ const mayFillDlc = props =>
           </div>
         ))
       }
-    </Tooltip>
+    </div>
   ) : null
 /* eslint-enable react/prop-types */
 

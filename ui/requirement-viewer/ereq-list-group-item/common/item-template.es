@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react'
 import FontAwesome from 'react-fontawesome'
 import {
-  OverlayTrigger,
-} from 'react-bootstrap'
+  Position,
+} from '@blueprintjs/core'
+import {
+  Tooltip as BPTooltip,
+} from 'views/components/etc/overlay'
 
 import { PTyp } from '../../../../ptyp'
 
@@ -55,11 +58,11 @@ class ItemTemplate extends PureComponent {
         }}>
         {
           tooltip ? (
-            <OverlayTrigger
-              placement="top"
-              overlay={tooltip}>
+            <BPTooltip
+              position={Position.TOP}
+              content={tooltip}>
               {itemContent}
-            </OverlayTrigger>
+            </BPTooltip>
           ) : (
             itemContent
           )

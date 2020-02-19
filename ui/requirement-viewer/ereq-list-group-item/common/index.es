@@ -1,9 +1,6 @@
 /* eslint-disable react/prop-types */
 import _ from 'lodash'
 import React from 'react'
-import {
-  Tooltip,
-} from 'react-bootstrap'
 import { __ } from '../../../../tr'
 
 const formatReqExplain = ereqType => (...args) =>
@@ -14,29 +11,25 @@ const getExtraType = props =>
 
 const mayNoFlagship = props =>
   getExtraType(props) === 'NoFlagship' ? (
-    <Tooltip
-      className="ezexped-pop"
-      id={`${props.prefix}detail`}>
+    <div>
       {__('RequirementExplain.TTNoFlagship')}
-    </Tooltip>
+    </div>
   ) : null
 
 const mayNeedMore = (describe,typ = 'GreaterOrEqual') => props =>
   getExtraType(props) === typ ? (
-    <Tooltip
-      className="ezexped-pop"
-      id={`${props.prefix}detail`}>
+    <div>
       {describe(props.result.extra.left, props.result.extra.right)}
-    </Tooltip>
+    </div>
   ) : null
 
 const mayShipList = renderShipList => props =>
   getExtraType(props) === 'ShipList' ? (
-    <Tooltip
+    <div
       className="ezexped-pop"
       id={`${props.prefix}detail`}>
       {renderShipList(props.result.extra.shipList)}
-    </Tooltip>
+    </div>
   ) : null
 
 const renderShipList = (header=null) => shipList => (

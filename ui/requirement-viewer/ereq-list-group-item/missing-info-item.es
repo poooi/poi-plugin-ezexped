@@ -1,9 +1,5 @@
 import React from 'react'
 import {
-  Tooltip,
-} from 'react-bootstrap'
-
-import {
   ItemTemplate,
   formatReqExplain,
 } from './common'
@@ -16,13 +12,11 @@ const MissingInfoItem = props => (
   <ItemTemplate
     content={fmt()}
     tooltip={(
-      <Tooltip
-        className="ezexped-pop"
-        id={`${props.prefix}detail`}>
+      <div>
         <div style={{maxWidth: '30em'}}>
           {__('RequirementExplain.TTMissingInfo')}
         </div>
-      </Tooltip>
+      </div>
     )}
     {...props}
   />

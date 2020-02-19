@@ -18,7 +18,8 @@ const ResupplyItem = props => (
       !props.result.sat &&
       mayShipList(renderShipList(
         __('RequirementExplain.TTResupply')
-      ))(props)}
+      ))(props)
+    }
     {...props}
   />
 )
