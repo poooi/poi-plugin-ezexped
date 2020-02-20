@@ -17,7 +17,6 @@ class FleetCompoItem extends Component {
         results: PTyp.array.isRequired,
       }).isRequired,
     }).isRequired,
-    prefix: PTyp.string.isRequired,
   }
 
   renderContent = () => {
@@ -39,8 +38,6 @@ class FleetCompoItem extends Component {
 
   renderTooltip = () => {
     const {results} = this.props.result.extra
-    // TODO: prefix is no longer used.
-    // const {prefix} = this.props
     return (
       <div>
         <div style={{display: "flex", flexDirection: "column"}}>

@@ -4,7 +4,6 @@ import {
   formatReqExplain,
 } from './common'
 import { __ } from '../../../tr'
-import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('MissingInfo')
 
@@ -21,9 +20,5 @@ const MissingInfoItem = props => (
     {...props}
   />
 )
-
-MissingInfoItem.propTypes = {
-  prefix: PTyp.string.isRequired,
-}
 
 export { MissingInfoItem }

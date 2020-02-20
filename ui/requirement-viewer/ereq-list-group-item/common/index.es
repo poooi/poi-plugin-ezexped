@@ -25,9 +25,7 @@ const mayNeedMore = (describe,typ = 'GreaterOrEqual') => props =>
 
 const mayShipList = renderShipList => props =>
   getExtraType(props) === 'ShipList' ? (
-    <div
-      className="ezexped-pop"
-      id={`${props.prefix}detail`}>
+    <div>
       {renderShipList(props.result.extra.shipList)}
     </div>
   ) : null

@@ -23,7 +23,6 @@ const Well = styled.div`
 
 class AnyFleetCompoItem extends Component {
   static propTypes = {
-    prefix: PTyp.string.isRequired,
     result: PTyp.object.isRequired,
   }
 
@@ -105,7 +104,6 @@ class AnyFleetCompoItem extends Component {
   }
 
   renderTooltip = () => {
-    // TODO: prefix no longer needed.
     const {result} = this.props
     return (
       <div>
