@@ -1,14 +1,19 @@
 import { join } from 'path-extra'
 import { createStructuredSelector } from 'reselect'
-
+import styled from 'styled-components'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
-  Checkbox, FormControl,
-  FormGroup, Radio,
+  FormControl,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
+import {
+  Checkbox, Radio, RadioGroup, Position,
+} from '@blueprintjs/core'
 import { modifyObject } from 'subtender'
+import {
+  Tooltip as BPTooltip,
+} from 'views/components/etc/overlay'
 
 import {
   readySelector,
@@ -23,6 +28,11 @@ import { actionCreators } from '../../store'
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { urlGitHub, urlKcWiki } from '../../kancepts'
+
+const OptionCheckbox = styled(Checkbox)`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
 
 @connect(
   createStructuredSelector({
@@ -123,19 +133,19 @@ class Settings extends PureComponent {
           }
         </FormControl>
         <div>{__("HideMainFleet")}</div>
-        <Checkbox
+        <OptionCheckbox
           onChange={this.handleChange('hideMainFleet')}
           disabled={!ready}
           checked={hideMainFleet}
         />
         <div>{__("HideSatReqs")}</div>
-        <Checkbox
+        <OptionCheckbox
           onChange={this.handleChange('hideSatReqs')}
           disabled={!ready}
           checked={hideSatReqs}
         />
         <div>{__('SyncMainFleetId')}</div>
-        <Checkbox
+        <OptionCheckbox
           onChange={this.handleChange('syncMainFleetId')}
           disabled={!ready}
           checked={syncMainFleetId}
@@ -154,7 +164,7 @@ class Settings extends PureComponent {
             {__('FleetAutoSwitch')}
           </div>
         </OverlayTrigger>
-        <Checkbox
+        <OptionCheckbox
           onChange={this.handleChange('fleetAutoSwitch')}
           disabled={!ready}
           checked={fleetAutoSwitch}
@@ -162,13 +172,14 @@ class Settings extends PureComponent {
         <div>
           Kancepts
         </div>
-        <FormGroup
+        <RadioGroup
           onChange={this.handleKanceptsUrlChange}
           style={{
             display: 'flex',
             flexDirection: 'column',
             marginBottom: 0,
           }}
+          selectedValue={kanceptsUrl}
         >
           {
             [
@@ -176,7 +187,6 @@ class Settings extends PureComponent {
               ['kcwiki', urlKcWiki, 'kcwiki'],
             ].map(([which, url, text]) => (
               <Radio
-                checked={which === kanceptsUrl}
                 className="kancepts"
                 value={which}
                 key={which}
@@ -186,22 +196,16 @@ class Settings extends PureComponent {
                 }}
                 name="kanceptsUrl"
               >
-                <OverlayTrigger
-                  placement="left"
-                  overlay={
-                    (
-                      <Tooltip id={`ezexped-settings-kancepts-url-${which}`}>
-                        {url}
-                      </Tooltip>
-                    )
-                  }
+                <BPTooltip
+                  position={Position.LEFT}
+                  content={url}
                 >
-                  <div>{text}</div>
-                </OverlayTrigger>
+                  {text}
+                </BPTooltip>
               </Radio>
             ))
           }
-        </FormGroup>
+        </RadioGroup>
       </div>
     )
   }
