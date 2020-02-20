@@ -4,11 +4,7 @@ import styled from 'styled-components'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
-  FormControl,
-  OverlayTrigger, Tooltip,
-} from 'react-bootstrap'
-import {
-  Checkbox, Radio, RadioGroup, Position,
+  Checkbox, Radio, RadioGroup, Position, HTMLSelect,
 } from '@blueprintjs/core'
 import { modifyObject } from 'subtender'
 import {
@@ -105,21 +101,21 @@ class Settings extends PureComponent {
           rel="stylesheet"
           href={join(__dirname, '..', '..', 'assets', 'ezexped.css')}
         />
-        <OverlayTrigger
-          overlay={
+        <BPTooltip
+          content={
             (
-              <Tooltip id="ezexped-settings-sparked-count-tooltip">
+              <div id="ezexped-settings-sparked-count-tooltip">
                 {__('SparkledCountCustomDesc')}
-              </Tooltip>
+              </div>
             )
           }
-          placement="bottom"
+          position={Position.BOTTOM}
         >
           <div>
             {__('SparkledCountCustom')}
           </div>
-        </OverlayTrigger>
-        <FormControl
+        </BPTooltip>
+        <HTMLSelect
           onChange={this.handleSparkledCountChange}
           disabled={!ready}
           value={sparkledCount}
@@ -131,7 +127,7 @@ class Settings extends PureComponent {
               </option>
             ))
           }
-        </FormControl>
+        </HTMLSelect>
         <div>{__("HideMainFleet")}</div>
         <OptionCheckbox
           onChange={this.handleChange('hideMainFleet')}
@@ -150,20 +146,20 @@ class Settings extends PureComponent {
           disabled={!ready}
           checked={syncMainFleetId}
         />
-        <OverlayTrigger
-          overlay={
+        <BPTooltip
+          content={
             (
-              <Tooltip id="ezexped-auto-btn-tooltip">
+              <div id="ezexped-auto-btn-tooltip">
                 {__('FleetAutoSwitchDesc')}
-              </Tooltip>
+              </div>
             )
           }
-          placement="bottom"
+          position={Position.BOTTOM}
         >
           <div>
             {__('FleetAutoSwitch')}
           </div>
-        </OverlayTrigger>
+        </BPTooltip>
         <OptionCheckbox
           onChange={this.handleChange('fleetAutoSwitch')}
           disabled={!ready}
