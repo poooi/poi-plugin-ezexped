@@ -7,9 +7,7 @@ import {
   Checkbox, Radio, RadioGroup, Position, HTMLSelect,
 } from '@blueprintjs/core'
 import { modifyObject } from 'subtender'
-import {
-  Tooltip as BPTooltip,
-} from 'views/components/etc/overlay'
+import { Tooltip } from 'views/components/etc/overlay'
 
 import {
   readySelector,
@@ -101,20 +99,12 @@ class Settings extends PureComponent {
           rel="stylesheet"
           href={join(__dirname, '..', '..', 'assets', 'ezexped.css')}
         />
-        <BPTooltip
-          content={
-            (
-              <div id="ezexped-settings-sparked-count-tooltip">
-                {__('SparkledCountCustomDesc')}
-              </div>
-            )
-          }
+        <Tooltip
+          content={__('SparkledCountCustomDesc')}
           position={Position.BOTTOM}
         >
-          <div>
-            {__('SparkledCountCustom')}
-          </div>
-        </BPTooltip>
+          {__('SparkledCountCustom')}
+        </Tooltip>
         <HTMLSelect
           onChange={this.handleSparkledCountChange}
           disabled={!ready}
@@ -146,20 +136,12 @@ class Settings extends PureComponent {
           disabled={!ready}
           checked={syncMainFleetId}
         />
-        <BPTooltip
-          content={
-            (
-              <div id="ezexped-auto-btn-tooltip">
-                {__('FleetAutoSwitchDesc')}
-              </div>
-            )
-          }
+        <Tooltip
+          content={__('FleetAutoSwitchDesc')}
           position={Position.BOTTOM}
         >
-          <div>
-            {__('FleetAutoSwitch')}
-          </div>
-        </BPTooltip>
+          {__('FleetAutoSwitch')}
+        </Tooltip>
         <OptionCheckbox
           onChange={this.handleChange('fleetAutoSwitch')}
           disabled={!ready}
@@ -192,12 +174,12 @@ class Settings extends PureComponent {
                 }}
                 name="kanceptsUrl"
               >
-                <BPTooltip
+                <Tooltip
                   position={Position.LEFT}
                   content={url}
                 >
                   {text}
-                </BPTooltip>
+                </Tooltip>
               </Radio>
             ))
           }

@@ -3,9 +3,7 @@ import FontAwesome from 'react-fontawesome'
 import {
   Position,
 } from '@blueprintjs/core'
-import {
-  Tooltip as BPTooltip,
-} from 'views/components/etc/overlay'
+import { Tooltip } from 'views/components/etc/overlay'
 
 import { PTyp } from '../../../../ptyp'
 
@@ -58,11 +56,11 @@ class ItemTemplate extends PureComponent {
         }}>
         {
           tooltip ? (
-            <BPTooltip
+            <Tooltip
               position={Position.TOP}
               content={tooltip}>
               {itemContent}
-            </BPTooltip>
+            </Tooltip>
           ) : (
             itemContent
           )

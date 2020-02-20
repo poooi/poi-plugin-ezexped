@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
 
 import { MaterialIcon, SlotitemIcon } from 'views/components/etc/icon'
-import { Tooltip as BPTooltip } from 'views/components/etc/overlay'
+import { Tooltip } from 'views/components/etc/overlay'
 import { daihatsu, fleetResupplyCost } from '../../income-calc'
 import { __, fmtTime } from '../../tr'
 import { PTyp } from '../../ptyp'
@@ -114,7 +114,7 @@ const SIcon = styled(SlotitemIcon)`
     height: 1.6em;
   }
 `
-const GSTooltip = styled(BPTooltip)`
+const GSTooltip = styled(Tooltip)`
   &.bp3-popover-wrapper {
     flex: 0 0 3em;
   }
@@ -257,7 +257,7 @@ class ExpeditionViewer extends Component {
                   info.itemGreatSuccess ? (
                     canObtainGreatSuccessItem ?
                       gsRangeText : (
-                        <BPTooltip
+                        <Tooltip
                           content={
                             (
                               <div>
@@ -270,7 +270,7 @@ class ExpeditionViewer extends Component {
                           <div className="text-danger">
                             {gsRangeText}
                           </div>
-                        </BPTooltip>
+                        </Tooltip>
                       )
                   ) : '-'
                 )

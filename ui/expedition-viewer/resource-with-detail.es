@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Position } from '@blueprintjs/core'
-import {
-  Tooltip as BPTooltip,
-} from 'views/components/etc/overlay'
+import { Tooltip } from 'views/components/etc/overlay'
 
 import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
 
 import { IconAndLabel } from './icon-and-label'
 
-const Tooltip = styled(BPTooltip)`
+const RTooltip = styled(Tooltip)`
   & .bp3-popover-target {
     width: 100%;
   }
@@ -69,14 +67,14 @@ class ResourceWithDetail extends Component {
     )
 
     return (
-      <Tooltip
+      <RTooltip
         position={Position.BOTTOM}
         content={tooltip}>
         <IconAndLabel
           icon={this.props.icon}
           label={this.props.renderedResource.finalIncome}
         />
-      </Tooltip>
+      </RTooltip>
     )
   }
 }

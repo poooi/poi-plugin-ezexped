@@ -6,13 +6,11 @@ import {
   Position,
 } from '@blueprintjs/core'
 import styled from 'styled-components'
-import {
-  Tooltip as BPTooltip,
-} from 'views/components/etc/overlay'
+import { Tooltip } from 'views/components/etc/overlay'
 import { PTyp } from '../../../../ptyp'
 import { ExpedTooltipContent } from './exped-tooltip-content'
 
-const Tooltip = styled(BPTooltip)`
+const ETooltip = styled(Tooltip)`
   & .bp3-popover-target {
     width: 100%;
   }
@@ -52,7 +50,7 @@ class ExpeditionButton extends PureComponent {
       gridRow, gridCol,
     } = this.props
 
-    const ThisTooltip = styled(Tooltip)`
+    const ThisTooltip = styled(ETooltip)`
       max-width: 150px;
       width: 100%;
       grid-area: ${gridRow} / ${gridCol};
