@@ -7,9 +7,9 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.7.2 (pending)
+### 1.7.2
 
-- Support for expedition 45, D1 and D2.
+- Early support for expedition 45, D1 and D2.
 - UI tweaks: fully migrated to blueprintjs and some button resizing.
 - Now ordering of worlds are consistent with in-game display.
 
