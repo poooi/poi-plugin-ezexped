@@ -70,11 +70,13 @@ const defineWorld4 = defineExped => {
   defineExped(/* D2 */ 132)(
     [
       ...fslSc(55,5),
+      mk.LevelSum(274),
       mk.FSType('AS'),
       mk.AnyFleetCompo([
         {AS: 1, SSLike: 3, DD: 1},
         {AS: 1, SSLike: 3, CL: 1},
       ]),
+      mk.TotalAsw(50, true),
     ]
   )
 }
