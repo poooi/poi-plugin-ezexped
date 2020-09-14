@@ -9,7 +9,7 @@ check expedition requirements and estimate expedition income accurately.
 
 ### 1.7.3
 
-- Support for expedition A5, A6, B5 and E1.
+- Support for expedition A5, A6, B5 and E1. (Thanks to [AuTa](https://github.com/AuTa))
 
 ### 1.7.2
 
