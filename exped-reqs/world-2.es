@@ -86,6 +86,17 @@ const defineWorld2 = defineExped => {
       mk.TotalFirepower(500),
     ]
   )
+  defineExped(/* B5 */ 114)(
+    [
+      ...fslSc(60,6),
+      mk.LevelSum(346),
+      mk.FleetCompo({AV: 1, CL: 1, DD: 2}),
+      mk.TotalFirepower(510),
+      mk.TotalAsw(285, true),
+      mk.TotalAntiAir(400),
+      mk.TotalLos(385),
+    ]
+  )
 }
 
 export { defineWorld2 }
