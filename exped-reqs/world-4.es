@@ -77,7 +77,9 @@ const defineWorld4 = defineExped => {
         {AS: 1, SSLike: 3, DD: 1},
         {AS: 1, SSLike: 3, CL: 1},
       ]),
+      mk.TotalFirepower(90),
       mk.TotalAsw(50, true),
+      mk.TotalAntiAir(80),
     ]
   )
 }
