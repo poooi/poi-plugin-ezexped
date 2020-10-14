@@ -24,6 +24,10 @@ const overdrumExpeds = {
     mk.SparkledCount(4),
     mk.DrumCount(0+4),
   ],
+  142: [
+    mk.SparkledCount(4),
+    mk.DrumCount(4+1),
+  ],
 }
 
 const greatSuccessReq = id => {
