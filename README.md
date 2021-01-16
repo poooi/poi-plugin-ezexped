@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.7.5
+
+- Correction for expedition D1.
+
 ### 1.7.4
 
 - Support for expedition 46 and E2.
