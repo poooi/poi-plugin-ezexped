@@ -57,7 +57,7 @@ const defineWorld4 = defineExped => {
       mk.LevelSum(200),
       mk.FSType('AV'),
       mk.LevelSum(231),
-      mk.FleetCompo({AV: 1, DDorDE: 3}),
+      mk.FleetCompo({AV: 1, DD: 3}),
       mk.TotalAntiAir(240),
       /* TODO:
          it's unclear to me whether those special items count.
