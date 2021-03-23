@@ -16,22 +16,23 @@ const ETooltip = styled(Tooltip)`
   }
 `
 const ThisTooltip = styled(ETooltip)`
-max-width: 150px;
-width: 100%;
-grid-area: ${({gridRow})=>gridRow} / ${({gridCol})=>gridCol};
-height: 1.8em;
-margin: 0;
-padding: 0;
-
-& .bp3-popover-target {
+  max-width: 150px;
   width: 100%;
-  height: 100%;
-}
+  grid-area: ${({gridRow})=>gridRow} / ${({gridCol})=>gridCol};
+  height: 1.8em;
+  margin: 0;
+  padding: 0;
 
-& .bp3-popover-target button {
-  height: 100%;
-  min-height: 100%;
-}
+  & .bp3-popover-target {
+    width: 100%;
+    height: 100%;
+  }
+
+  & .bp3-popover-target button {
+    height: 100%;
+    min-height: 100%;
+  }
+`
 
 // every expedition button inside the table
 // props:
