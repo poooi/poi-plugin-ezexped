@@ -15,6 +15,23 @@ const ETooltip = styled(Tooltip)`
     width: 100%;
   }
 `
+const ThisTooltip = styled(ETooltip)`
+max-width: 150px;
+width: 100%;
+grid-area: ${({gridRow})=>gridRow} / ${({gridCol})=>gridCol};
+height: 1.8em;
+margin: 0;
+padding: 0;
+
+& .bp3-popover-target {
+  width: 100%;
+  height: 100%;
+}
+
+& .bp3-popover-target button {
+  height: 100%;
+  min-height: 100%;
+}
 
 // every expedition button inside the table
 // props:
@@ -50,30 +67,13 @@ class ExpeditionButton extends PureComponent {
       gridRow, gridCol,
     } = this.props
 
-    const ThisTooltip = styled(ETooltip)`
-      max-width: 150px;
-      width: 100%;
-      grid-area: ${gridRow} / ${gridCol};
-      height: 1.8em;
-      margin: 0;
-      padding: 0;
-
-      & .bp3-popover-target {
-        width: 100%;
-        height: 100%;
-      }
-
-      & .bp3-popover-target button {
-        height: 100%;
-        min-height: 100%;
-      }
-    `
-
     return (
       <ThisTooltip
         wrapperTagName="div"
         targetTagName="div"
         position={Position.BOTTOM}
+        gridRow = {gridRow}
+        gridCol = {gridCol}
         content={(
           <ExpedTooltipContent
             getExpedInfo={getExpedInfo}
