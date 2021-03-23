@@ -18,7 +18,7 @@ const ETooltip = styled(Tooltip)`
 const ThisTooltip = styled(ETooltip)`
   max-width: 150px;
   width: 100%;
-  grid-area: ${({gridRow})=>gridRow} / ${({gridCol})=>gridCol};
+  grid-area: ${({gridRow}) => gridRow} / ${({gridCol}) => gridCol};
   height: 1.8em;
   margin: 0;
   padding: 0;
@@ -73,8 +73,8 @@ class ExpeditionButton extends PureComponent {
         wrapperTagName="div"
         targetTagName="div"
         position={Position.BOTTOM}
-        gridRow = {gridRow}
-        gridCol = {gridCol}
+        gridRow={gridRow}
+        gridCol={gridCol}
         content={(
           <ExpedTooltipContent
             getExpedInfo={getExpedInfo}
