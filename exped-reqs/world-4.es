@@ -75,11 +75,27 @@ const defineWorld4 = defineExped => {
       mk.FSType('AS'),
       mk.AnyFleetCompo([
         {AS: 1, SSLike: 3, DD: 1},
-        {AS: 1, SSLike: 3, CL: 1},
+        {AS: 1, SSLike: 3},
       ]),
       mk.TotalFirepower(90),
       mk.TotalAsw(50, true),
       mk.TotalAntiAir(80),
+    ]
+  )
+
+  defineExped(/* D3 */ 133)(
+    [
+      ...fslSc(65,5),
+      mk.LevelSum(350),
+      mk.FSType('AS'),
+      mk.AnyFleetCompo([
+        {AS: 1, SSLike: 3, DD: 1},
+        {AS: 1, SSLike: 3},
+      ]),
+      mk.TotalFirepower(115),
+      mk.TotalAntiAir(90),
+      mk.TotalAsw(70, true),
+      mk.TotalLos(95),
     ]
   )
 }
