@@ -9,7 +9,7 @@ check expedition requirements and estimate expedition income accurately.
 
 ### Unreleased
 
-- Support for expedition D3.
+- Support for expedition B6 and D3.
 
 ### 1.7.6
 
