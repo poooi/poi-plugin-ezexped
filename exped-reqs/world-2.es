@@ -107,6 +107,7 @@ const defineWorld2 = defineExped => {
       mk.TotalAsw(410, true),
       mk.TotalAntiAir(390),
       mk.TotalLos(340),
+      mk.FSType('CL'),
     ]
   )
 }
