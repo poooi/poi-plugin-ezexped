@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.7.8
+
+- Fix support for expedition B6 (Thanks to [jimmyzzxhlh](https://github.com/jimmyzzxhlh))
+
 ### 1.7.7
 
 - Support for expedition B6 (Thanks to [norly-s](https://github.com/norly-s)) and D3.
