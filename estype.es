@@ -9,29 +9,12 @@
      one SType could belong to multiple ESTypes
  */
 import _ from 'lodash'
-import { createSelector } from 'reselect'
 import { readJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
-import { constSelector, wctfSelector } from 'views/utils/selectors'
+import { allCVEIdsSelector } from 'views/utils/selectors'
 
 const stype = readJsonSync(join(__dirname, 'assets', 'stypes.json'))
 const allSTypes = Object.keys(stype)
-
-const allCVEIdsSelector = createSelector(
-  constSelector,
-  wctfSelector,
-  ({$ships}, wctf) => {
-    const allCVLs = _.values($ships).filter(x => x.api_stype === 7)
-    const wctfShips = _.get(wctf, 'ships') || {}
-    const allCVEs = allCVLs.filter(x => {
-      if (!(x.api_id in wctfShips))
-        return false
-      const asw = _.get(wctfShips, [x.api_id, 'stat', 'asw_max'])
-      return _.isNumber(asw) && asw > 0
-    })
-    return allCVEs.map(x => x.api_id)
-  }
-)
 
 const [isESType, allESTypes] = (() => {
   const eq = x => y => x === y
@@ -46,6 +29,13 @@ const [isESType, allESTypes] = (() => {
     $allESTypes.push(name)
   }
 
+  /*
+    TODO: this is an ugly hack to just get stuff working, do this properly later.
+    (drawback being that this initializes once and have to reload the plugin to apply new changes)
+   */
+  const {getStore} = window
+  const allCVEIds = allCVEIdsSelector(getStore())
+
   defineESType('SSLike', oneOf([t.SS,t.SSV]))
   defineESType('DE', eq(t.DE))
   defineESType('DD', eq(t.DD))
@@ -58,28 +48,7 @@ const [isESType, allESTypes] = (() => {
      TODO: it might actually be possible to derive CVE checking from wctf / game data:
      (1) it must be CVL (2) it's ASW is not zero (use "asw_max" for asw stat at level 99)
    */
-  defineESType('CVE', (styp, mstId) =>
-    styp === t.CVL && [
-      // 大鷹
-      526,
-      // 大鷹改
-      380,
-      // 大鷹改二
-      529,
-      // Gambier Bay
-      544,
-      // Gambier Bay改
-      396,
-      // 瑞鳳改二乙
-      560,
-      // 神鷹
-      534,
-      // 神鷹改
-      381,
-      // 神鷹改二
-      536,
-    ].includes(mstId)
-  )
+  defineESType('CVE', (_styp, mstId) => allCVEIds.includes(mstId))
   defineESType('AV', eq(t.AV))
   defineESType('CVLike', oneOf([t.CV,t.CVL,t.AV,t.CVB]))
   defineESType('BBV', eq(t.BBV))
