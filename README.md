@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.7.10
+
+- Fix expedition 44 requirements (Thanks to [Surlavi](https://github.com/Surlavi))
+
 ### 1.7.9
 
 - Fix CVE ship type checker.
