@@ -41,7 +41,7 @@ const objOrUndef = x =>
     debug.error(`Expecting an Object or undefined value but get ${x}`)
 
 const isExpedRelatedEquipment = mstId =>
-  [75,68,166,167,193].includes(mstId)
+  [75,68,166,167,193,408,409,436,449].includes(mstId)
 
 /*
 
