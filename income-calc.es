@@ -69,6 +69,10 @@ const computeBonus = fleet => {
   let t89Count = 0
   let t2Count = 0
   let tokuCount = 0
+  let abCount = 0
+  let busouCount = 0
+  let t2nafConut = 0
+  let t1Count = 0
   // number of special ships (only applicable to Kinu K2 for now)
   // that grant +5% income (before-cap)
   let spShipCount = 0
@@ -98,15 +102,27 @@ const computeBonus = fleet => {
       } else if (equip.mstId === 193) {
         ++ tokuCount
         countImp()
+      } else if (equip.mstId === 408) {
+        ++ abCount
+        countImp()
+      } else if (equip.mstId === 409) {
+        ++ busouCount
+        countImp()
+      } else if (equip.mstId === 436) {
+        ++ t2nafConut
+        countImp()
+      } else if (equip.mstId === 449) {
+        ++ t1Count
+        countImp()
       }
     })
   })
 
-  const dhtCount = normalCount + t89Count + t2Count + tokuCount
+  const dhtCount = normalCount + t89Count + t2Count + tokuCount + abCount + busouCount + t2nafConut + t1Count
   const aveImp = dhtCount === 0 ? 0 : impLvlCount / dhtCount
   const b1BeforeCap =
     0.05 * (normalCount + tokuCount + spShipCount) +
-    0.02 * t89Count + 0.01 * t2Count
+    0.02 * (t89Count + abCount + t2nafConut + t1Count) + 0.01 * t2Count + 0.03* busouCount
   const b1 = Math.min(0.2, b1BeforeCap)
   const bStar = b1 * aveImp / 100
 
