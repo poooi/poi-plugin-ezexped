@@ -9,6 +9,10 @@ import { ShipCountItem } from './ship-count-item'
 import { DrumCarrierCountItem } from './drum-carrier-count-item'
 import { DrumCountItem } from './drum-count-item'
 import { LevelSumItem } from './level-sum-item'
+import { GSHigherLevelItem } from './gs-higher-level-item'
+import { GSRateNormItem } from './gs-rate-norm-item'
+import { GSRateDrumItem } from './gs-rate-drum-item'
+import { GSRateFlagItem } from './gs-rate-flag-item'
 import { SparkledCountItem } from './sparkled-count-item'
 import { SparkledCountCustomItem } from './sparkled-count-custom-item'
 import { MoraleItem } from './morale-item'
@@ -45,6 +49,10 @@ const ereqComponents = new Map()
     DrumCarrierCountItem,
     DrumCountItem,
     LevelSumItem,
+    GSHigherLevelItem,
+    GSRateNormItem,
+    GSRateDrumItem,
+    GSRateFlagItem,
     SparkledCountItem,
     SparkledCountCustomItem,
     MoraleItem,
