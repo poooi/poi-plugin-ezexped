@@ -1,4 +1,4 @@
-import { fslSc, mk, escortSpecialFleetCompos } from './common'
+import { fslSc, mk } from './common'
 
 const defineWorld1 = defineExped => {
   defineExped(1)(
@@ -22,13 +22,25 @@ const defineWorld1 = defineExped => {
   defineExped(4)(
     [
       ...fslSc(3,3),
-      escortSpecialFleetCompos,
+      mk.AnyFleetCompo([
+        {CL: 1, DDorDE: 2},
+        {DD: 1, DE: 3},
+        {CT: 1, DE: 2},
+        {CVE: 1, DE: 2},
+        {CVE: 1, DD: 2},
+      ])
     ])
 
   defineExped(5)(
     [
       ...fslSc(3,4),
-      escortSpecialFleetCompos,
+      mk.AnyFleetCompo([
+        {CL: 1, DDorDE: 2},
+        {DD: 1, DE: 3},
+        {CT: 1, DE: 2},
+        {CVE: 1, DE: 2},
+        {CVE: 1, DD: 2},
+      ])
     ])
 
   defineExped(6)(
@@ -41,7 +53,6 @@ const defineWorld1 = defineExped => {
 
   defineExped(8)(fslSc(6,6))
 
-  // reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
   defineExped(/* A1 */ 100)(
     [
       ...fslSc(5,4),
@@ -50,21 +61,13 @@ const defineWorld1 = defineExped => {
     ]
   )
 
-  // reference: https://docs.google.com/spreadsheets/d/1BM2SCpxuZRMY0R9ipptY6jQ1-v51tOijBJ8Fofpx33c
-  /*
-     Note: further investigations are still needed, but for now
-     the following requirements will work most of the time.
-     exceptions are (all of above are mentioned in the reference):
-     - cases where sum of naked AA stat is less than 70
-     - improvement of ASW gears could be taken into account
-   */
   defineExped(/* A2 */ 101)(
     [
       ...fslSc(20,4),
       mk.FleetCompo({DDorDE: 4}),
-      mk.TotalAsw(180, true),
+      mk.TotalFirepower(50),
       mk.TotalAntiAir(70),
-      mk.TotalLos(73),
+      mk.TotalAsw(180, true),
     ]
   )
 
@@ -74,11 +77,11 @@ const defineWorld1 = defineExped => {
       mk.LevelSum(185),
       mk.AnyFleetCompo([
         {CL: 1, DDorDE: 3},
+        {CL: 1, DE: 2},
         {DD: 1, DE: 3},
+        {CT: 1, DE: 2},
         {CVE: 1, DD: 2},
         {CVE: 1, DE: 2},
-        {CT: 1, DE: 2},
-        {CL: 1, DE: 2},
       ]),
       mk.TotalAsw(280, true),
       mk.TotalLos(60),
@@ -87,38 +90,54 @@ const defineWorld1 = defineExped => {
   defineExped(/* A4 */ 103)(
     [
       ...fslSc(40,5),
+      mk.LevelSum(200),
       mk.AnyFleetCompo([
-        {CL: 1, DD: 4},
-        {CVE: 1, DD: 4},
+        {CL: 1, DD: 2},
+        {CL: 1, DE: 2},
+        {DD: 1, DE: 3},
+        {CT: 1, DE: 2},
+        {CVE: 1, DD: 2},
+        {CVE: 1, DE: 2},
       ]),
-      mk.LevelSum(250),
       mk.TotalFirepower(300),
+      mk.TotalAntiAir(200),
       mk.TotalAsw(200, true),
+      mk.TotalLos(120),
     ]
   )
   defineExped(/* A5 */ 104)(
     [
       ...fslSc(45,5),
+      mk.LevelSum(230),
       mk.AnyFleetCompo([
-        {CL: 1, DD: 4},
+        {CL: 1, DD: 3},
+        {CL: 1, DE: 2},
+        {DD: 1, DE: 3},
+        {CT: 1, DE: 2},
+        {CVE: 1, DD: 2},
+        {CVE: 1, DE: 2},
       ]),
-      mk.LevelSum(250),
       mk.TotalFirepower(280),
-      mk.TotalAsw(240, true),
       mk.TotalAntiAir(220),
+      mk.TotalAsw(240, true),
       mk.TotalLos(150),
     ]
   )
   defineExped(/* A6 */ 105)(
     [
       ...fslSc(55,6),
+      mk.LevelSum(290),
       mk.AnyFleetCompo([
         {CL: 1, DD: 3},
+        {CL: 1, DE: 2},
+        {DD: 1, DE: 3},
+        {CT: 1, DE: 2},
+        {CVE: 1, DD: 2},
+        {CVE: 1, DE: 2},
       ]),
-      mk.LevelSum(296),
       mk.TotalFirepower(330),
-      mk.TotalAsw(270, true),
       mk.TotalAntiAir(300),
+      mk.TotalAsw(270, true),
       mk.TotalLos(180),
     ]
   )
