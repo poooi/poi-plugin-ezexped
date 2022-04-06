@@ -5,52 +5,48 @@ import { mk } from './common'
 
 const overdrumExpeds = {
   21: [
-    mk.SparkledCount(4),
+    mk.GSRateDrum(3,4),
     mk.DrumCount(3+1),
   ],
   24: [
-    mk.SparkledCount(4),
-    mk.DrumCount(0+4),
+    mk.GSRateDrum(0,2),
+    mk.DrumCount(0+2),
   ],
   37: [
-    mk.SparkledCount(4),
+    mk.GSRateDrum(4,5),
     mk.DrumCount(4+1),
   ],
   38: [
-    mk.SparkledCount(4),
+    mk.GSRateDrum(8,10),
     mk.DrumCount(8+2),
   ],
   40: [
-    mk.SparkledCount(4),
+    mk.GSRateDrum(0,4),
     mk.DrumCount(0+4),
   ],
+  44: [
+    mk.GSRateDrum(6,8),
+    mk.DrumCount(6+2),
+  ],
   142: [
-    mk.SparkledCount(4),
-    mk.DrumCount(4+1),
+    mk.GSRateDrum(4,6),
+    mk.DrumCount(4+2),
   ],
 }
 
-const greatSuccessReq = id => {
-  if (id === 101) {
-    // GS requirement for A2
-    // reference:
-    // - 5DE, all sparkled:
-    //   https://twitter.com/funny_kancolle/status/958682982616723460
-    // - 3DD2DE, 4DD1DE, 5DD, all sparkled:
-    //   https://twitter.com/ZBMBVCfcuCHSi55/status/930538185611886592
-    // therefore I think it's safe to deduce that 5DD/DE should work.
-    return [
-      mk.FleetCompo({DDorDE: 5}),
-      mk.AllSparkled(),
-    ]
-  }
+const flagShipExpeds = [101, 102, 103, 104, 105, 112, 113, 114, 115, 41, 43, 45, 46, 32, 131, 132, 133, 141]
 
+const greatSuccessReq = id => {
+  
   const reqs = overdrumExpeds[id]
 
   if (typeof reqs !== 'undefined')
     return reqs
 
-  return [mk.SparkledCountCustom(), mk.AllSparkled()]
+  if (flagShipExpeds.indexOf(id) > -1)
+    return [mk.GSRateFlag(), mk.GSHigherLevel()]
+
+  return [mk.GSRateNorm(), mk.AllSparkled()]
 }
 
 export { greatSuccessReq }
