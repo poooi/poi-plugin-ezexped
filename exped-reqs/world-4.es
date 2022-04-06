@@ -56,13 +56,9 @@ const defineWorld4 = defineExped => {
       ...fslSc(50, 5),
       mk.LevelSum(200),
       mk.FSType('AV'),
-      mk.LevelSum(231),
+      mk.LevelSum(200),
       mk.FleetCompo({AV: 1, DD: 3}),
       mk.TotalAntiAir(240),
-      /* TODO:
-         it's unclear to me whether those special items count.
-         therefore go the conservative way.
-       */
       mk.TotalAsw(240, true),
       mk.TotalLos(300),
     ]
@@ -71,15 +67,12 @@ const defineWorld4 = defineExped => {
   defineExped(/* D2 */ 132)(
     [
       ...fslSc(55,5),
-      mk.LevelSum(274),
+      mk.LevelSum(270),
       mk.FSType('AS'),
-      mk.AnyFleetCompo([
-        {AS: 1, SSLike: 3, DD: 1},
-        {AS: 1, SSLike: 3},
-      ]),
-      mk.TotalFirepower(90),
-      mk.TotalAsw(50, true),
+      mk.FleetCompo({AS: 1, SSLike: 3}),
+      mk.TotalFirepower(60),
       mk.TotalAntiAir(80),
+      mk.TotalAsw(50, true),
     ]
   )
 
@@ -88,10 +81,7 @@ const defineWorld4 = defineExped => {
       ...fslSc(65,5),
       mk.LevelSum(350),
       mk.FSType('AS'),
-      mk.AnyFleetCompo([
-        {AS: 1, SSLike: 3, DD: 1},
-        {AS: 1, SSLike: 3},
-      ]),
+      mk.FleetCompo({AS: 1, SSLike: 3}),
       mk.TotalFirepower(115),
       mk.TotalAntiAir(90),
       mk.TotalAsw(70, true),

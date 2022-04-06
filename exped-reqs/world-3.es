@@ -51,7 +51,7 @@ const defineWorld3 = defineExped => {
     [
       ...fslSc(50,6),
       mk.LevelSum(200),
-      mk.FleetCompo({CL: 1, DD: 4}),
+      mk.FleetCompo({CL: 1, DDorDE: 4}),
       mk.FSType('CL'),
     ])
 }
