@@ -53,6 +53,10 @@ import { ShipCount } from './ship-count'
 import { DrumCarrierCount } from './drum-carrier-count'
 import { DrumCount } from './drum-count'
 import { LevelSum } from './level-sum'
+import { GSHigherLevel } from './gs-higher-level'
+import { GSRateNorm } from './gs-rate-norm'
+import { GSRateDrum } from './gs-rate-drum'
+import { GSRateFlag } from './gs-rate-flag'
 import { SparkledCount } from './sparkled-count'
 import { SparkledCountCustom } from './sparkled-count-custom'
 import { Morale } from './morale'
@@ -74,6 +78,10 @@ const classTable = _.fromPairs([
   DrumCarrierCount,
   DrumCount,
   LevelSum,
+  GSHigherLevel,
+  GSRateNorm,
+  GSRateDrum,
+  GSRateFlag,
   SparkledCount,
   SparkledCountCustom,
   Morale,
