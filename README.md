@@ -7,9 +7,14 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### Pending
+
+- Fix Great success indicator.
+
 ### 1.8.0
 
-- Support expedition bonuse of daihatsu-class equipments released from 2021.
+- Credit to [OniJAM](https://github.com/OniJAM) for most of the contributions in this release.
+- Support expedition bonuses of daihatsu-class equipments released from 2021
 - A bit update on expedition checkers.
 - Support for great success rate calculation.
 
