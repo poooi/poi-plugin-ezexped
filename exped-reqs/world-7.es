@@ -51,7 +51,7 @@ const defineWorld7 = defineExped => {
       ...fslSc(35,6),
       mk.LevelSum(210),
       mk.FleetCompo({
-        CVLike: 1,
+        CVLike: 2,
         AV: 1,
         CL: 1,
         DDorDE: 2,
