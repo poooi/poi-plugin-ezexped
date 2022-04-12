@@ -24,6 +24,27 @@
 
  */
 
+
+/*
+  Reference: https://twitter.com/Ex_witch/status/797446805847822341
+ */
+const computeTokuBonus = (normalCount, tokuCount) => {
+  if (tokuCount <= 2)
+    return 0.02 * tokuCount
+  if (tokuCount === 3) {
+    return normalCount <= 1 ? 0.05 :
+      normalCount === 2 ? 0.052 :
+      /* normalCount > 2 */ 0.054
+  }
+
+  // tokuCount > 3
+  return normalCount === 0 ? 0.054 :
+    normalCount === 1 ? 0.056 :
+    normalCount === 2 ? 0.058 :
+    normalCount === 3 ? 0.059 :
+    /* normalCount > 3 */ 0.06
+}
+
 /*
 
    returns a structure:
@@ -48,25 +69,7 @@
 
  */
 const computeBonus = fleet => {
-  // reference: wikiwiki (see comment in header)
-  // TODO: this is outdated, see https://twitter.com/Ex_witch/status/797446805847822341
-  const computeTokuBonus = (normalCount, tokuCount) => {
-    if (tokuCount <= 2)
-      return 0.02 * tokuCount
-    if (tokuCount === 3) {
-      return normalCount <= 1 ? 0.05 :
-        normalCount === 2 ? 0.052 :
-        /* normalCount > 2 */ 0.054
-    }
-
-    // tokuCount > 3
-    return normalCount === 0 ? 0.054 :
-      normalCount === 1 ? 0.056 :
-      normalCount === 2 ? 0.058 :
-      normalCount === 3 ? 0.059 :
-      /* normalCount > 3 */ 0.06
-  }
-
+  // Reference: wikiwiki (see comment in header)
   /*
     Basic bonus table (wikiwiki, as of Apr 11, 2022)
 
@@ -86,9 +89,6 @@ const computeBonus = fleet => {
   let countBns02 = 0
   let countBns01 = 0
 
-  // TODO: we only need those two for computing extra bonus.
-  // however the info is a bit outdated.
-  let normalCount = 0
   let tokuCount = 0
 
   // number of special ships (only applicable to Kinu K2 for now)
@@ -114,13 +114,9 @@ const computeBonus = fleet => {
         // 特大発動艇
         193,
       ].includes(equip.mstId)) {
-        if (equip.mstId === 68) {
-          ++normalCount
-        }
         if (equip.mstId === 193) {
           ++tokuCount
         }
-
         ++countBns05
         countImp()
       } else if (
@@ -161,12 +157,22 @@ const computeBonus = fleet => {
   const b1 = Math.min(0.2, b1BeforeCap)
   const bStar = b1 * aveImp / 100
 
+  /*
+    Regarding source bonus, it isn't clear what should be considered as
+    "大発" so here let's just be lazy and count all those that has non-zero bonus
+    (which we have already counted) and exclude "特大発動艇" specifically.
+
+    TODO: we could fix this by having access to $const to get category given equipId,
+    which would require us to wire-in a selector.
+   */
+  const tokuBonus = computeTokuBonus(dhtCount - tokuCount, tokuCount)
+
   return {
     dhtCount,
     impLvlCount,
     normalBonus: b1,
     normalBonusStar: bStar,
-    tokuBonus: computeTokuBonus(normalCount,tokuCount),
+    tokuBonus,
   }
 }
 
