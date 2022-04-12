@@ -7,9 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### Pending
+### 1.8.1
 
 - Fix Great success indicator.
+- Fix expedition 44 requirements (Thanks to [OniJAM](https://github.com/OniJAM))
 
 ### 1.8.0
 
