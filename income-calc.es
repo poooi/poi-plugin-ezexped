@@ -4,7 +4,9 @@
 
    - Daihatsu-related landing craft calculation
 
-       Reference: (as of Mar 27, 2017)
+     + (as of Apr 11, 2022) https://wikiwiki.jp/kancolle/%E8%A3%85%E5%82%99%E6%9C%80%E5%A4%A7%E5%80%A4/%E5%A4%A7%E7%99%BA%E7%B3%BB%E8%A3%85%E5%82%99%E6%97%A9%E8%A6%8B%E8%A1%A8/%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB
+
+     + Reference: (as of Mar 27, 2017)
 
        - wikia: http://kancolle.wikia.com/wiki/Expedition
        - wikiwiki: http://wikiwiki.jp/kancolle/?%C6%C3%C2%E7%C8%AF%C6%B0%C4%FA
@@ -21,7 +23,6 @@
        - wikiwiki: http://wikiwiki.jp/kancolle/?%A5%B1%A5%C3%A5%B3%A5%F3%A5%AB%A5%C3%A5%B3%A5%AB%A5%EA
 
  */
-
 
 /*
 
@@ -48,6 +49,7 @@
  */
 const computeBonus = fleet => {
   // reference: wikiwiki (see comment in header)
+  // TODO: this is outdated, see https://twitter.com/Ex_witch/status/797446805847822341
   const computeTokuBonus = (normalCount, tokuCount) => {
     if (tokuCount <= 2)
       return 0.02 * tokuCount
@@ -65,14 +67,30 @@ const computeBonus = fleet => {
       /* normalCount > 3 */ 0.06
   }
 
+  /*
+    Basic bonus table (wikiwiki, as of Apr 11, 2022)
+
+    - 大発動艇: 5%
+    - 特大発動艇: 5%
+    - 武装大発: 3%
+    - 大発動艇(八九式中戦車＆陸戦隊): 2%
+    - 装甲艇(AB艇): 2%
+    - 大発動艇(II号戦車/北アフリカ仕様): 2%
+    - 特大発動艇＋一式砲戦車: 2%
+    - 特二式内火艇: 1%
+
+   */
+
+  let countBns05 = 0
+  let countBns03 = 0
+  let countBns02 = 0
+  let countBns01 = 0
+
+  // TODO: we only need those two for computing extra bonus.
+  // however the info is a bit outdated.
   let normalCount = 0
-  let t89Count = 0
-  let t2Count = 0
   let tokuCount = 0
-  let abCount = 0
-  let busouCount = 0
-  let t2nafConut = 0
-  let t1Count = 0
+
   // number of special ships (only applicable to Kinu K2 for now)
   // that grant +5% income (before-cap)
   let spShipCount = 0
@@ -81,48 +99,65 @@ const computeBonus = fleet => {
   // one pass to count them all!
   // um, we could do some "pure functional" stuff
   // but I'm sure that'll be awkward.
-  fleet.map( ship => {
+  fleet.map(ship => {
     if (ship.mstId === 487)
       ++spShipCount
 
-    ship.equips.map( equip => {
+    ship.equips.map(equip => {
       const countImp = () => {
         impLvlCount += equip.level
       }
 
-      if (equip.mstId === 68) {
-        ++ normalCount
+      if ([
+        // 大発動艇
+        68,
+        // 特大発動艇
+        193,
+      ].includes(equip.mstId)) {
+        if (equip.mstId === 68) {
+          ++normalCount
+        }
+        if (equip.mstId === 193) {
+          ++tokuCount
+        }
+
+        ++countBns05
         countImp()
-      } else if (equip.mstId === 166) {
-        ++ t89Count
+      } else if (
+        // 武装大発
+        equip.mstId === 409
+      ) {
+        ++countBns03
         countImp()
-      } else if (equip.mstId === 167) {
-        ++ t2Count
+      } else if ([
+        // 大発動艇(八九式中戦車＆陸戦隊)
+        166,
+        // 装甲艇(AB艇)
+        408,
+        // 大発動艇(II号戦車/北アフリカ仕様)
+        436,
+        // 特大発動艇＋一式砲戦車
+        449,
+      ].includes(equip.mstId)) {
+        ++countBns02
         countImp()
-      } else if (equip.mstId === 193) {
-        ++ tokuCount
-        countImp()
-      } else if (equip.mstId === 408) {
-        ++ abCount
-        countImp()
-      } else if (equip.mstId === 409) {
-        ++ busouCount
-        countImp()
-      } else if (equip.mstId === 436) {
-        ++ t2nafConut
-        countImp()
-      } else if (equip.mstId === 449) {
-        ++ t1Count
+      } else if (
+        // 特二式内火艇
+        equip.mstId === 167
+      ) {
+        ++countBns01
         countImp()
       }
     })
   })
 
-  const dhtCount = normalCount + t89Count + t2Count + tokuCount + abCount + busouCount + t2nafConut + t1Count
+  const dhtCount = countBns05 + countBns03 + countBns02 + countBns01
   const aveImp = dhtCount === 0 ? 0 : impLvlCount / dhtCount
   const b1BeforeCap =
-    0.05 * (normalCount + tokuCount + spShipCount) +
-    0.02 * (t89Count + abCount + t2nafConut + t1Count) + 0.01 * t2Count + 0.03* busouCount
+    0.05 * (countBns05 + spShipCount) +
+    0.03 * countBns03 +
+    0.02 * countBns02 +
+    0.01 * countBns01
   const b1 = Math.min(0.2, b1BeforeCap)
   const bStar = b1 * aveImp / 100
 
