@@ -39,7 +39,7 @@ const defineWorld7 = defineExped => {
         {CVL: 1, CT: 1, DE: 2},
         {CVL: 1, CVE: 1, DD: 2},
         {CVL: 1, CVE: 1, DE: 2},
-       ]),
+      ]),
       mk.TotalFirepower(500),
       mk.TotalAntiAir(280),
       mk.TotalAsw(280, true),

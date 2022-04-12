@@ -34,12 +34,13 @@ const overdrumExpeds = {
   ],
 }
 
-const flagShipExpeds = [101, 102, 103, 104, 105, 112, 113, 114, 115, 41, 43, 45, 46, 32, 131, 132, 133, 141]
+const flagShipExpeds = [
+  101, 102, 103, 104, 105, 112, 113, 114, 115,
+  41, 43, 45, 46, 32, 131, 132, 133, 141,
+]
 
 const greatSuccessReq = id => {
-  
   const reqs = overdrumExpeds[id]
-
   if (typeof reqs !== 'undefined')
     return reqs
 

@@ -28,7 +28,7 @@ const defineWorld1 = defineExped => {
         {CT: 1, DE: 2},
         {CVE: 1, DE: 2},
         {CVE: 1, DD: 2},
-      ])
+      ]),
     ])
 
   defineExped(5)(
@@ -40,7 +40,7 @@ const defineWorld1 = defineExped => {
         {CT: 1, DE: 2},
         {CVE: 1, DE: 2},
         {CVE: 1, DD: 2},
-      ])
+      ]),
     ])
 
   defineExped(6)(

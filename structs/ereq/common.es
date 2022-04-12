@@ -1,6 +1,12 @@
 import _ from 'lodash'
 import { singObj } from 'subtender'
 
+/*
+  singObj produces a singleton object
+  e.g.:
+  singObj('foo')(<value>) => {'foo': <value>}
+ */
+
 const checkOk = (extra={}) => ({sat: true, extra})
 
 // zoom in ships Array of a Fleet representation

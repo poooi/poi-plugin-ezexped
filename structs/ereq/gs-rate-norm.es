@@ -12,8 +12,8 @@ class GSRateNorm {
       const sparkledShipsCount = ships.filter(s => isShipSparkled(s)).length
       const gsRate = sparkledShipsCount === shipsCount ?
         Math.round((shipsCount * 15 + 20) / 0.0099) / 100 : 0
-      return {sat: gsRate >= 100, extra: {type:'GSRate', rate: gsRate}}
-  })
+      return {sat: gsRate >= 100, extra: {type: 'GSRate', rate: gsRate}}
+    })
 }
 
 export { GSRateNorm }
