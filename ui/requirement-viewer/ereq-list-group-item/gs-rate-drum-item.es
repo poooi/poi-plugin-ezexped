@@ -16,19 +16,13 @@ const describe = (x) => {
   </div>) : null
 }
 
-const GSRateDrumCheck = props =>
-  props.result.extra.drum >= props.ereq.max ? props.result.extra.rate :
-  props.ereq.min === 0 ? (props.result.extra.rate - 20.2) :
-  props.result.extra.drum >= props.ereq.min ? (props.result.extra.rate - 35.35) : 0
-
-const GSRateDrumItem = props => {
-  props.result.sat = GSRateDrumCheck(props) >= 100
-  return (<ItemTemplate
-    content={fmt(GSRateDrumCheck(props))}
-    tooltip={describe(GSRateDrumCheck(props))}
+const GSRateDrumItem = props => (
+  <ItemTemplate
+    content={fmt(props.result.extra.rate)}
+    tooltip={describe(props.result.extra.rate)}
     {...props}
   />
-)}
+)
 
 GSRateDrumItem.propTypes = {
   ereq: PTyp.object.isRequired,

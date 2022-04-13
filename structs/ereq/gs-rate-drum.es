@@ -5,16 +5,24 @@ import {
   sum,
 } from './common'
 
-class GSRateDrum {
-  static make = () => ({})
+const computeResult = (min, max) => {
+  return ships => {
+    const sparkledShipsCount = ships.filter(s => isShipSparkled(s)).length
+    const drumCount = sum(ships.map(({equips}) => equips.filter(isEqpDrum).length))
+    const gsRate = drumCount >= max ? Math.round((sparkledShipsCount * 15 + 40) / 0.0099) / 100 :
+      min === 0 ? Math.round((sparkledShipsCount * 15 + 20) / 0.0099) / 100 :
+      drumCount >= min ? Math.round((sparkledShipsCount * 15 + 5) / 0.0099) / 100 : 0
+    return {sat: gsRate >= 100, extra: {type: 'GSRate', rate: gsRate, drum: drumCount}}
+  }
+}
 
-  static prepare = () => () =>
-    onFleetShips(ships => {
-      const sparkledShipsCount = ships.filter(s => isShipSparkled(s)).length
-      const drumCount = sum(ships.map(({equips}) => equips.filter(isEqpDrum).length))
-      const gsRate = Math.round((sparkledShipsCount * 15 + 40) / 0.0099) / 100
-      return {sat: gsRate >= 100, extra: {type: 'GSRate', rate: gsRate, drum: drumCount}}
-    })
+class GSRateDrum {
+  static make = (min, max) => ({min, max})
+
+  static prepare = ({min, max}) => {
+    const d = computeResult(min, max)
+    return () => onFleetShips(d)
+  }
 }
 
 export { GSRateDrum }
