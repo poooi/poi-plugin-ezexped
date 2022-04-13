@@ -12,7 +12,7 @@ const computeResult = (min, max) => {
     const gsRate = drumCount >= max ? Math.round((sparkledShipsCount * 15 + 40) / 0.0099) / 100 :
       min === 0 ? Math.round((sparkledShipsCount * 15 + 20) / 0.0099) / 100 :
       drumCount >= min ? Math.round((sparkledShipsCount * 15 + 5) / 0.0099) / 100 : 0
-    return {sat: gsRate >= 100, extra: {type: 'GSRate', rate: gsRate, drum: drumCount}}
+    return {sat: gsRate >= 100, extra: {type: 'GSRate', rate: gsRate}}
   }
 }
 
