@@ -7,15 +7,15 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### Pending
+### 1.8.2
 
 - Fix crash when a fleet is empty.
+- Revert Great success rate indicators (for now until bugs are addressed).
 
 ### 1.8.1
 
 - Fix Great success indicator.
 - Fix expedition 44 requirements (Thanks to [OniJAM](https://github.com/OniJAM))
-- Revert Great success rate indicators.
 
 ### 1.8.0
 
