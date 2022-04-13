@@ -2,6 +2,7 @@ import {
   onFleetShips,
   mkShipList,
   isShipSparkled,
+  unSatNoFlagship,
 } from './common'
 
 class GSHigherLevel {
@@ -10,6 +11,8 @@ class GSHigherLevel {
   static prepare = () => () =>
     onFleetShips(ships => {
       const sparkledShipsCount = ships.filter(s => isShipSparkled(s)).length
+      if (ships.length === 0)
+        return unSatNoFlagship
       const fsLevel = ships[0].level
       const gsRate = Math.round(
         (sparkledShipsCount * 15 + 15 +

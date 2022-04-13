@@ -12,11 +12,13 @@ const checkOk = (extra={}) => ({sat: true, extra})
 // zoom in ships Array of a Fleet representation
 const onFleetShips = f => fleet => f(fleet.ships)
 
+const unSatNoFlagship = {sat: false, extra: {type: 'NoFlagship'}}
+
 // require flagship to present and zoom in on it
 const requireFlagship = onFlagship =>
   onFleetShips(ships =>
     ships.length === 0 ?
-      {sat: false, extra: {type: 'NoFlagship'}} :
+      unSatNoFlagship :
       onFlagship(ships[0]))
 
 // require x >= y and show some message if it's unmet
@@ -44,6 +46,7 @@ export {
   checkOk,
 
   onFleetShips,
+  unSatNoFlagship,
   requireFlagship,
   requireGreaterOrEqual,
   wrapBool,
