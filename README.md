@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### Pending
+
+- (TODO): switch to new GS indicators once issues are addressed.
+
 ### 1.8.2
 
 - Fix crash when a fleet is empty.
