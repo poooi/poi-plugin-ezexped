@@ -15,6 +15,7 @@ check expedition requirements and estimate expedition income accurately.
 
 - Fix Great success indicator.
 - Fix expedition 44 requirements (Thanks to [OniJAM](https://github.com/OniJAM))
+- Revert Great success rate indicators.
 
 ### 1.8.0
 
