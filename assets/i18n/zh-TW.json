@@ -1,7 +1,7 @@
 {
   "EZ Exped": "易及遠征",
-  "SparkledCountCustom": "“戰意高昂”艦數量",
-  "SparkledCountCustomDesc": "定製提高大成功率所需的處於“戰意高昂”狀態的艦娘數量",
+  "GSRateCustom": "大成功率閾值",
+  "GSRateCustomDesc": "定製使大成功檢查通過的大成功率",
   "HideMainFleet": "隱藏主艦隊",
   "HideSatReqs": "隱藏已滿足的條件",
   "SyncMainFleetId": "與主面板同步切換艦隊",
@@ -50,8 +50,6 @@
     "LevelSum": "艦娘等級合計至少爲%s",
     "GSRate": "當前大成功概率: %s%",
     "GSHigherLevel": "將艦隊中等級較高的艦娘設為旗艦以提高大成功率",
-    "SparkledCount": "攜帶至少%s名處於“戰意高昂”狀態的艦娘可極大提高大成功概率",
-    "SparkledCountCustom": "推薦攜帶至少%s名處於“戰意高昂”狀態的艦娘以提高大成功概率",
     "Morale": "艦娘疲勞度至少爲%s",
     "Resupply": "艦隊補給",
     "AllSparkled": "艦隊全體艦娘都需處於“戰意高昂”狀態",

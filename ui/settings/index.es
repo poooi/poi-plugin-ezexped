@@ -11,7 +11,7 @@ import { Tooltip } from 'views/components/etc/overlay'
 
 import {
   readySelector,
-  sparkledCountSelector,
+  gsRateCustomSelector,
   hideMainFleetSelector,
   hideSatReqsSelector,
   syncMainFleetIdSelector,
@@ -31,7 +31,7 @@ const OptionCheckbox = styled(Checkbox)`
 @connect(
   createStructuredSelector({
     ready: readySelector,
-    sparkledCount: sparkledCountSelector,
+    gsRateCustom: gsRateCustomSelector,
     hideMainFleet: hideMainFleetSelector,
     hideSatReqs: hideSatReqsSelector,
     syncMainFleetId: syncMainFleetIdSelector,
@@ -44,7 +44,7 @@ class Settings extends PureComponent {
   static propTypes = {
     // connected
     ready: PTyp.bool.isRequired,
-    sparkledCount: PTyp.number.isRequired,
+    gsRateCustom: PTyp.number.isRequired,
     hideMainFleet: PTyp.bool.isRequired,
     hideSatReqs: PTyp.bool.isRequired,
     syncMainFleetId: PTyp.bool.isRequired,
@@ -60,10 +60,10 @@ class Settings extends PureComponent {
     )
   }
 
-  handleSparkledCountChange = e => {
-    const sparkledCount = Number(e.target.value)
+  handleGSRateCustomChange = e => {
+    const gsRateCustom = Number(e.target.value)
     this.props.modifyState(
-      modifyObject('sparkledCount', () => sparkledCount)
+      modifyObject('gsRateCustom', () => gsRateCustom)
     )
   }
 
@@ -77,7 +77,7 @@ class Settings extends PureComponent {
   render() {
     const {
       ready,
-      sparkledCount,
+      gsRateCustom,
       hideMainFleet,
       hideSatReqs,
       syncMainFleetId,
@@ -100,18 +100,18 @@ class Settings extends PureComponent {
           href={join(__dirname, '..', '..', 'assets', 'ezexped.css')}
         />
         <Tooltip
-          content={__('SparkledCountCustomDesc')}
+          content={__('GSRateCustomDesc')}
           position={Position.BOTTOM}
         >
-          {__('SparkledCountCustom')}
+          {__('GSRateCustom')}
         </Tooltip>
         <HTMLSelect
-          onChange={this.handleSparkledCountChange}
+          onChange={this.handleGSRateCustomChange}
           disabled={!ready}
-          value={sparkledCount}
+          value={gsRateCustom}
           componentClass="select">
           {
-            [6,5,4,3].map(num => (
+            [100,95,90,85,80].map(num => (
               <option key={num} value={num}>
                 {num}
               </option>

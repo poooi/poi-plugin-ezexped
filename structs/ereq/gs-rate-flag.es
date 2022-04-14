@@ -7,7 +7,7 @@ import {
 class GSRateFlag {
   static make = () => {}
 
-  static prepare = () => () =>
+  static prepare = () => ({gsRateCustom}) =>
     onFleetShips(ships => {
       const sparkledShipsCount = ships.filter(s => isShipSparkled(s)).length
       if (ships.length === 0)
@@ -16,7 +16,7 @@ class GSRateFlag {
       const gsRate = Math.round(
         (sparkledShipsCount * 15 + 15 + Math.floor(Math.sqrt(fsLevel) + fsLevel / 10)
         ) / 0.0099) / 100
-      return {sat: gsRate >= 100, extra: {type: 'GSRate', rate: gsRate}}
+      return {sat: gsRate >= gsRateCustom, extra: {type: 'GSRate', rate: gsRate, custom: gsRateCustom}}
     })
 }
 

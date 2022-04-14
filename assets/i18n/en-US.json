@@ -1,7 +1,7 @@
 {
   "EZ Exped": "EZ Exped",
-  "SparkledCountCustom": "Number of sparkled ships",
-  "SparkledCountCustomDesc": "Custom the number of sparkled ships for a better Great Success rate",
+  "GSRateCustom": "Great success rate threshold",
+  "GSRateCustomDesc": "Custom the great success rate to make great success check ready",
   "HideMainFleet": "Hide main fleet",
   "HideSatReqs": "Hide satisfied requirements",
   "SyncMainFleetId": "Sync with main fleet focus",
@@ -50,8 +50,6 @@
     "LevelSum": "Total level of this fleet should be at least %s",
     "GSRate": "Great success rate: %s%",
     "GSHigherLevel": "Flagship needs high level for a great success rate boost",
-    "SparkledCount": "≥%s sparkled ship(s) for a great success rate boost",
-    "SparkledCountCustom": "≥%s sparkled ship(s) for a better great success rate",
     "Morale": "All ships in this fleet should have morale ≥%s",
     "Resupply": "All ships in this fleet should be fully resupplied",
     "AllSparkled": "All ships need to be sparkled",
