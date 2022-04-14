@@ -17,7 +17,7 @@ const mkOldDefaultPState = () => ({
   fleetAutoSwitch: true,
   hideMainFleet: false,
   hideSatReqs: false,
-  sparkledCount: 6,
+  gsRateCustom: 100,
   syncMainFleetId: false,
   fleetId: 1,
   gsFlags: {},
@@ -88,11 +88,11 @@ const loadAndUpdateOldPStateFromConfig = () => {
     })
 
     // field name changed:
-    // recommendSparkledCount => sparkledCount
+    // recommendGSRateCustom => gsRateCustom
     {
-      const val = _.get(oldPStateW,'recommendSparkledCount')
+      const val = _.get(oldPStateW,'recommendGSRateCustom')
       if (typeof val !== 'undefined')
-        currentPState.sparkledCount = val
+        currentPState.gsRateCustom = val
     }
 
     // structural changes

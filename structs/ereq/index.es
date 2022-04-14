@@ -57,8 +57,6 @@ import { GSHigherLevel } from './gs-higher-level'
 import { GSRateNorm } from './gs-rate-norm'
 import { GSRateDrum } from './gs-rate-drum'
 import { GSRateFlag } from './gs-rate-flag'
-import { SparkledCount } from './sparkled-count'
-import { SparkledCountCustom } from './sparkled-count-custom'
 import { Morale } from './morale'
 import { Resupply } from './resupply'
 import { AllSparkled } from './all-sparkled'
@@ -82,8 +80,6 @@ const classTable = _.fromPairs([
   GSRateNorm,
   GSRateDrum,
   GSRateFlag,
-  SparkledCount,
-  SparkledCountCustom,
   Morale,
   Resupply,
   AllSparkled,

@@ -1,7 +1,7 @@
 {
   "EZ Exped": "イージー遠征",
-  "SparkledCountCustom": "キラキラ艦の数",
-  "SparkledCountCustomDesc": "大成功するために必要なキラキラ艦の数を設定する",
+  "GSRateCustom": "大成功の確率",
+  "GSRateCustomDesc": "大成功準備完了ために必要な大成功の確率を設定する",
   "HideMainFleet": "第一艦隊を隠す",
   "HideSatReqs": "満足した条件を隠す",
   "SyncMainFleetId": "アクティブ艦隊は艦隊パネルに従う",
@@ -50,8 +50,6 @@
     "LevelSum": "艦隊合計レベル %s",
     "GSRate": "大成功の確率: %s%",
     "GSHigherLevel": "大成功するため、高いレベルの艦娘が旗艦として設定することが可能です",
-    "SparkledCount": "大成功するため、キラキラ艦の数 ≥%s",
-    "SparkledCountCustom": "大成功するため、キラキラ艦の数 ≥%s",
     "Morale": "各艦の疲労度 ≥%s",
     "Resupply": "各艦とも補給済み",
     "AllSparkled": "各艦ともキラキラ",

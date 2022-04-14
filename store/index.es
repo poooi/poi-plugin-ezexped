@@ -16,7 +16,7 @@ const initState = {
   fleetAutoSwitch: true,
   hideMainFleet: false,
   hideSatReqs: false,
-  sparkledCount: 6,
+  gsRateCustom: 100,
   syncMainFleetId: false,
   fleetId: 1,
   // an Object from expedId to bool, default to false

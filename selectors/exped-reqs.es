@@ -5,7 +5,7 @@ import {
 } from 'views/utils/selectors'
 
 import {
-  sparkledCountSelector,
+  gsRateCustomSelector,
 } from './common'
 
 import {
@@ -17,7 +17,7 @@ import { expedReqs, mapExpedReq } from '../exped-reqs'
 import { EReq } from '../structs/ereq'
 
 // extracts slice of interest related to expedition requirements
-const minPStateSelector = sparkledCountSelector
+const minPStateSelector = gsRateCustomSelector
 
 /*
   spare equipments are those not being used in any fleet.
@@ -71,11 +71,11 @@ const expedReqsStage2Selector = createSelector(
   minPStateSelector,
   /*
      this function can be memoized because for now the only affecting
-     p-state is just `sparkledCount` which is a number that takes
+     p-state is just `gsRateCustom` which is a number that takes
      only a few limited, comparable numbers
    */
-  _.memoize(sparkledCount => {
-    const pState = {sparkledCount}
+  _.memoize(gsRateCustom => {
+    const pState = {gsRateCustom}
     return _.mapValues(
       expedReqs,
       mapExpedReq(EReq.performStage2(pState))

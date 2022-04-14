@@ -30,8 +30,8 @@ const hideMainFleetSelector =
   mkExtPropSelector('hideMainFleet')
 const hideSatReqsSelector =
   mkExtPropSelector('hideSatReqs')
-const sparkledCountSelector =
-  mkExtPropSelector('sparkledCount')
+const gsRateCustomSelector =
+  mkExtPropSelector('gsRateCustom')
 const syncMainFleetIdSelector =
   mkExtPropSelector('syncMainFleetId')
 const fleetIdSelector =
@@ -71,7 +71,7 @@ export {
   fleetAutoSwitchSelector,
   hideMainFleetSelector,
   hideSatReqsSelector,
-  sparkledCountSelector,
+  gsRateCustomSelector,
   syncMainFleetIdSelector,
   fleetIdSelector,
   gsFlagsSelector,

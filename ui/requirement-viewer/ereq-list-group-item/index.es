@@ -13,8 +13,6 @@ import { GSHigherLevelItem } from './gs-higher-level-item'
 import { GSRateNormItem } from './gs-rate-norm-item'
 import { GSRateDrumItem } from './gs-rate-drum-item'
 import { GSRateFlagItem } from './gs-rate-flag-item'
-import { SparkledCountItem } from './sparkled-count-item'
-import { SparkledCountCustomItem } from './sparkled-count-custom-item'
 import { MoraleItem } from './morale-item'
 import { ResupplyItem } from './resupply-item'
 import { AllSparkledItem } from './all-sparkled-item'
@@ -53,8 +51,6 @@ const ereqComponents = new Map()
     GSRateNormItem,
     GSRateDrumItem,
     GSRateFlagItem,
-    SparkledCountItem,
-    SparkledCountCustomItem,
     MoraleItem,
     ResupplyItem,
     AllSparkledItem,

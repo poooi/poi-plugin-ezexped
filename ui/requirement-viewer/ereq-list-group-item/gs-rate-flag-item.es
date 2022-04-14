@@ -11,8 +11,8 @@ import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('GSRate')
 
-const describe = x => {
-  const needShips = Math.ceil((100 - x) / 15 * 0.99)
+const describe = (x, y) => {
+  const needShips = Math.ceil((y - x) / 15 * 0.99)
   return needShips > 0 ? (
     <div>
       {__('RequirementExplain.TTNeedsMoreSparkledShips',needShips > 6 ? 6 : needShips)}
@@ -22,7 +22,7 @@ const describe = x => {
 
 const GSRateFlagItem = props => {
   const rate = _.isFinite(props.result.extra.rate) ? props.result.extra.rate : 0
-  const tooltip = mayNoFlagship(props) || describe(rate)
+  const tooltip = mayNoFlagship(props) || describe(rate, props.result.extra.custom)
 
   return (
     <ItemTemplate
