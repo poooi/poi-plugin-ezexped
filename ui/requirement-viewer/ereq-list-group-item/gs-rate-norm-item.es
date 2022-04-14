@@ -9,11 +9,13 @@ import { PTyp } from '../../../ptyp'
 
 const fmt = formatReqExplain('GSRate')
 
-const describe = (x) => {
+const describe = x => {
   const needShips = Math.ceil((100 - x) / 15 * 0.99)
-  return needShips > 0 ? (<div>
-    {__('RequirementExplain.TTNeedsMoreSparkledShips',needShips > 6 ? 6 : needShips)}
-  </div>) : null
+  return needShips > 0 ? (
+    <div>
+      {__('RequirementExplain.TTNeedsMoreSparkledShips',needShips > 6 ? 6 : needShips)}
+    </div>
+  ) : null
 }
 
 const GSRateNormItem = props => (
@@ -26,6 +28,7 @@ const GSRateNormItem = props => (
 
 GSRateNormItem.propTypes = {
   ereq: PTyp.object.isRequired,
+  result: PTyp.object.isRequired,
 }
 
 export { GSRateNormItem }

@@ -26,6 +26,8 @@ import {
   mapDispatchToProps,
 )
 class EZExpedMain extends Component {
+  target = React.createRef()
+
   static propTypes = {
     // connected
     fleet: PTyp.object,
@@ -35,8 +37,6 @@ class EZExpedMain extends Component {
   static defaultProps = {
     fleet: null,
   }
-
-  target = React.createRef()
 
   handleResize = entries => {
     /* note: in our case entries should always have exactly one element. */
