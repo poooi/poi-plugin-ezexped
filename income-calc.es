@@ -165,7 +165,7 @@ const computeBonus = fleet => {
     TODO: we could fix this by having access to $const to get category given equipId,
     which would require us to wire-in a selector.
    */
-  const tokuBonus = computeTokuBonus(dhtCount - tokuCount, tokuCount)
+  const tokuBonus = computeTokuBonus(countBns05 - tokuCount, tokuCount)
 
   return {
     dhtCount,
