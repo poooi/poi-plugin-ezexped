@@ -11,7 +11,7 @@ import { PTyp } from '../../../../ptyp'
 import { ExpedTooltipContent } from './exped-tooltip-content'
 
 const ETooltip = styled(Tooltip)`
-  & .bp3-popover-target {
+  & .bp4-popover-target {
     width: 100%;
   }
 `
@@ -23,12 +23,12 @@ const ThisTooltip = styled(ETooltip)`
   margin: 0;
   padding: 0;
 
-  & .bp3-popover-target {
+  & .bp4-popover-target {
     width: 100%;
     height: 100%;
   }
 
-  & .bp3-popover-target button {
+  & .bp4-popover-target button {
     height: 100%;
     min-height: 100%;
   }

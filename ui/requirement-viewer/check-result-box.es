@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { PTyp } from '../../ptyp'
 
 const CTag = styled(Tag)`
-  & > span.bp3-text-overflow-ellipsis {
+  & > span.bp4-text-overflow-ellipsis {
     display: flex;
     align-items: center;
     width: 100%;

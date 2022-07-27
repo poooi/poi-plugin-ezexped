@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.8.4
+
+- Fix styles for blueprint4.
+
 ### 1.8.3
 
 - New Great success indicator back again (Thanks to [OniJAM](https://github.com/OniJAM))
