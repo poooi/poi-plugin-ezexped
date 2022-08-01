@@ -118,6 +118,9 @@ const GSTooltip = styled(Tooltip)`
   &.bp4-popover-wrapper {
     flex: 0 0 3em;
   }
+  &.bp3-popover-wrapper {
+    flex: 0 0 3em;
+  }
 `
 
 @connect(

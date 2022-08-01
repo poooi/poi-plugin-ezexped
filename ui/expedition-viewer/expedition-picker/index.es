@@ -22,7 +22,15 @@ const PPopover = styled(Popover)`
     width: 100%;
   }
 
+  & > span.bp3-popover-target {
+    width: 100%;
+  }
+
   & > span.bp4-popover-target > button {
+    width: 100%;
+  }
+
+  & > span.bp3-popover-target > button {
     width: 100%;
   }
 `

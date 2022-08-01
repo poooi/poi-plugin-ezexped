@@ -13,6 +13,13 @@ const CTag = styled(Tag)`
     width: 100%;
     border-radius: 10px,
   }
+
+  & > span.bp3-text-overflow-ellipsis {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px,
+  }
 `
 
 // a box for showing whether the fleet is ready

@@ -14,6 +14,10 @@ const ETooltip = styled(Tooltip)`
   & .bp4-popover-target {
     width: 100%;
   }
+
+  & .bp3-popover-target {
+    width: 100%;
+  }
 `
 const ThisTooltip = styled(ETooltip)`
   max-width: 150px;
@@ -28,7 +32,17 @@ const ThisTooltip = styled(ETooltip)`
     height: 100%;
   }
 
+  & .bp3-popover-target {
+    width: 100%;
+    height: 100%;
+  }
+
   & .bp4-popover-target button {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  & .bp3-popover-target button {
     height: 100%;
     min-height: 100%;
   }

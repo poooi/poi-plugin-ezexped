@@ -12,6 +12,10 @@ const RTooltip = styled(Tooltip)`
   & .bp4-popover-target {
     width: 100%;
   }
+
+  & .bp3-popover-target {
+    width: 100%;
+  }
 `
 
 class ResourceWithDetail extends Component {

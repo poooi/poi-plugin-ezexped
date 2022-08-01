@@ -35,6 +35,16 @@ const FPButton = styled(Button)`
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
+  & > span.bp3-button-text {
+    display: block;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `
 
 const FP0Button = styled(FPButton)`
@@ -45,6 +55,11 @@ const FTooltip = styled(Tooltip)`
   flex: 1 1 0;
 
   & > span.bp4-popover-target {
+    display: flex;
+    width: 100%;
+  }
+
+  & > span.bp3-popover-target {
     display: flex;
     width: 100%;
   }
