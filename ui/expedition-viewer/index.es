@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import {
   Button,
   ButtonGroup,
+  Classes,
 } from '@blueprintjs/core'
 import styled from 'styled-components'
 import FontAwesome from 'react-fontawesome'
@@ -115,10 +116,7 @@ const SIcon = styled(SlotitemIcon)`
   }
 `
 const GSTooltip = styled(Tooltip)`
-  &.bp4-popover-wrapper {
-    flex: 0 0 3em;
-  }
-  &.bp3-popover-wrapper {
+  &.${Classes.POPOVER_WRAPPER} {
     flex: 0 0 3em;
   }
 `

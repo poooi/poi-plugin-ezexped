@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Position } from '@blueprintjs/core'
+import { Position, Classes } from '@blueprintjs/core'
 import { Tooltip } from 'views/components/etc/overlay'
 
 import { __ } from '../../tr'
@@ -9,11 +9,7 @@ import { PTyp } from '../../ptyp'
 import { IconAndLabel } from './icon-and-label'
 
 const RTooltip = styled(Tooltip)`
-  & .bp4-popover-target {
-    width: 100%;
-  }
-
-  & .bp3-popover-target {
+  & .${Classes.POPOVER_TARGET} {
     width: 100%;
   }
 `

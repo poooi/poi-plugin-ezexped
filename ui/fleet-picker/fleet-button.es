@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
 import styled from 'styled-components'
-import { Button, Position } from '@blueprintjs/core'
+import { Button, Position, Classes } from '@blueprintjs/core'
 import { Tooltip } from 'views/components/etc/overlay'
 
 import { PTyp } from '../../ptyp'
@@ -26,17 +26,7 @@ import {
 } from './fleet-state'
 
 const FPButton = styled(Button)`
-  & > span.bp4-button-text {
-    display: block;
-    align-items: center;
-    min-width: 0;
-    overflow: hidden;
-    text-align: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  & > span.bp3-button-text {
+  & > span.${Classes.BUTTON_TEXT} {
     display: block;
     align-items: center;
     min-width: 0;
@@ -54,12 +44,7 @@ const FP0Button = styled(FPButton)`
 const FTooltip = styled(Tooltip)`
   flex: 1 1 0;
 
-  & > span.bp4-popover-target {
-    display: flex;
-    width: 100%;
-  }
-
-  & > span.bp3-popover-target {
+  & > span.${Classes.POPOVER_TARGET} {
     display: flex;
     width: 100%;
   }

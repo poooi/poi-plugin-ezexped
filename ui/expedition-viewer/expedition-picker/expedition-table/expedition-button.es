@@ -11,14 +11,11 @@ import { PTyp } from '../../../../ptyp'
 import { ExpedTooltipContent } from './exped-tooltip-content'
 
 const ETooltip = styled(Tooltip)`
-  & .bp4-popover-target {
-    width: 100%;
-  }
-
-  & .bp3-popover-target {
+  & .${Classes.POPOVER_TARGET} {
     width: 100%;
   }
 `
+
 const ThisTooltip = styled(ETooltip)`
   max-width: 150px;
   width: 100%;
@@ -27,22 +24,12 @@ const ThisTooltip = styled(ETooltip)`
   margin: 0;
   padding: 0;
 
-  & .bp4-popover-target {
+  & .${Classes.POPOVER_TARGET} {
     width: 100%;
     height: 100%;
   }
 
-  & .bp3-popover-target {
-    width: 100%;
-    height: 100%;
-  }
-
-  & .bp4-popover-target button {
-    height: 100%;
-    min-height: 100%;
-  }
-
-  & .bp3-popover-target button {
+  & .${Classes.POPOVER_TARGET} button {
     height: 100%;
     min-height: 100%;
   }

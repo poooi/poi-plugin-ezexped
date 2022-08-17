@@ -2,19 +2,13 @@ import FontAwesome from 'react-fontawesome'
 import React, { PureComponent } from 'react'
 import {
   Tag,
+  Classes,
 } from '@blueprintjs/core'
 import styled from 'styled-components'
 import { PTyp } from '../../ptyp'
 
 const CTag = styled(Tag)`
-  & > span.bp4-text-overflow-ellipsis {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-radius: 10px,
-  }
-
-  & > span.bp3-text-overflow-ellipsis {
+  & > span.${Classes.TEXT_OVERFLOW_ELLIPSIS} {
     display: flex;
     align-items: center;
     width: 100%;

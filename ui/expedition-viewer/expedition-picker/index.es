@@ -1,6 +1,6 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
-import { Button, Position } from '@blueprintjs/core'
+import { Button, Position, Classes } from '@blueprintjs/core'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
 import _ from 'lodash'
@@ -18,19 +18,11 @@ import {
 import { ExpeditionTable } from './expedition-table'
 
 const PPopover = styled(Popover)`
-  & > span.bp4-popover-target {
+  & > span.${Classes.POPOVER_TARGET} {
     width: 100%;
   }
 
-  & > span.bp3-popover-target {
-    width: 100%;
-  }
-
-  & > span.bp4-popover-target > button {
-    width: 100%;
-  }
-
-  & > span.bp3-popover-target > button {
+  & > span.${Classes.POPOVER_TARGET} > button {
     width: 100%;
   }
 `
