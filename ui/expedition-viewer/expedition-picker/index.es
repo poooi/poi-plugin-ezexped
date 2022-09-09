@@ -18,11 +18,11 @@ import {
 import { ExpeditionTable } from './expedition-table'
 
 const PPopover = styled(Popover)`
-  & > span.${Classes.POPOVER_TARGET} {
+  & > span.${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
     width: 100%;
   }
 
-  & > span.${Classes.POPOVER_TARGET} > button {
+  & > span.${Classes.POPOVER_TARGET} > button,  &.bp4-popover2-target > button {
     width: 100%;
   }
 `

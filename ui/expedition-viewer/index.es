@@ -116,7 +116,7 @@ const SIcon = styled(SlotitemIcon)`
   }
 `
 const GSTooltip = styled(Tooltip)`
-  &.${Classes.POPOVER_WRAPPER} {
+  &.${Classes.POPOVER_WRAPPER}, &.bp4-popover2-target {
     flex: 0 0 3em;
   }
 `

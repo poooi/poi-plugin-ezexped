@@ -9,7 +9,7 @@ import { PTyp } from '../../ptyp'
 import { IconAndLabel } from './icon-and-label'
 
 const RTooltip = styled(Tooltip)`
-  & .${Classes.POPOVER_TARGET} {
+  & .${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
     width: 100%;
   }
 `

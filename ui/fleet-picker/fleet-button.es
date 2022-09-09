@@ -44,7 +44,7 @@ const FP0Button = styled(FPButton)`
 const FTooltip = styled(Tooltip)`
   flex: 1 1 0;
 
-  & > span.${Classes.POPOVER_TARGET} {
+  & > span.${Classes.POPOVER_TARGET}, &.bp4-popover-target {
     display: flex;
     width: 100%;
   }
