@@ -88,7 +88,7 @@ class ExpeditionButton extends PureComponent {
           intent={ready ? 'primary' : 'none'}
           style={{
             width: '100%',
-            height: '100%',
+            height: '1.6em',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

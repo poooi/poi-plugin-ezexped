@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### Pending
+
+- Fix popover styling.
+
 ### 1.8.5
 
 - Temporary style fix until majority is on blueprint 4.
