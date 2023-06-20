@@ -32,6 +32,10 @@ import { join } from 'path-extra'
 
        - added "kanceptsUrl", which can be "github" or "kcwiki"
 
+   - 1.9.0:
+
+       - removed "sparkledCount", which is replaced by "gsRateCustom"
+
  */
 
 const extStateToPState = extState => {
@@ -46,7 +50,7 @@ const getPStateFilePath = () => {
   return join(configPath,'p-state.json')
 }
 
-const latestVersion = '1.6.0'
+const latestVersion = '1.9.0'
 
 export {
   extStateToPState,

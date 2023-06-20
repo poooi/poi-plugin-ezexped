@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 import { latestVersion } from './common'
 import { savePState } from './save'
 import { migratePStateAndLoad } from './migrate'
@@ -41,6 +43,30 @@ const updatePState = oldPState => {
       $dataVersion: '1.6.0',
     }
     curPState = newPState
+  }
+
+  if (curPState.$dataVersion === '1.6.0') {
+    /*
+      Migrate from old formula, which should be 21% + {15% * # of sparkled ships}
+
+      ref: https://kancolle.fandom.com/wiki/Expedition?oldid=734928
+     */
+    const {
+      sparkledCount,
+      ...newPState
+    } = curPState
+
+    const gsRateCustom =
+      // although we allow integers but those are all possible numbers from UI.
+      [3,4,5,6].includes(sparkledCount)
+        ? _.min([100, 21 + 15 * sparkledCount])
+        : 100
+
+    curPState = {
+      ...newPState,
+      gsRateCustom,
+      $dataVersion: '1.9.0',
+    }
   }
 
   if (curPState.$dataVersion === latestVersion) {

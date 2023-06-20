@@ -7,9 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### Pending
+### 1.9.0 (Pending)
 
 - Fix popover styling.
+- Great Success checker now is percentage-based instead of counting sparkled ships (Thanks to [OniJAM](https://github.com/OniJAM))
 
 ### 1.8.5
 

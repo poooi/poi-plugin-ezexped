@@ -1,6 +1,9 @@
 /*
-   this module contains migration logic
-   to deal with p-state version prior to 1.5.0
+  This module contains migration logic
+  to deal with p-state version prior to 1.5.0.
+
+  Note that new p-state update logic should be placed in p-state/load.es instead.
+
  */
 import _ from 'lodash'
 import { readJsonSync } from 'fs-extra'
@@ -17,7 +20,7 @@ const mkOldDefaultPState = () => ({
   fleetAutoSwitch: true,
   hideMainFleet: false,
   hideSatReqs: false,
-  gsRateCustom: 100,
+  sparkledCount: 6,
   syncMainFleetId: false,
   fleetId: 1,
   gsFlags: {},
@@ -88,11 +91,11 @@ const loadAndUpdateOldPStateFromConfig = () => {
     })
 
     // field name changed:
-    // recommendGSRateCustom => gsRateCustom
+    // recommendSparkledCount => sparkledCount
     {
-      const val = _.get(oldPStateW,'recommendGSRateCustom')
+      const val = _.get(oldPStateW,'recommendSparkledCount')
       if (typeof val !== 'undefined')
-        currentPState.gsRateCustom = val
+        currentPState.sparkledCount = val
     }
 
     // structural changes
