@@ -5,7 +5,7 @@ import {
   sum,
 } from './common'
 
-const computeResult = (min, max) => ({min, max, gsRateCustom}) => ships => {
+const computeResult = (min, max, gsRateCustom) => ships => {
   const sparkledShipsCount = ships.filter(s => isShipSparkled(s)).length
   const drumCount = sum(ships.map(({equips}) => equips.filter(isEqpDrum).length))
   const gsRate =
@@ -18,10 +18,8 @@ const computeResult = (min, max) => ({min, max, gsRateCustom}) => ships => {
 class GSRateDrum {
   static make = (min, max) => ({min, max})
 
-  static prepare = ({min, max}) => {
-    const d = computeResult(min, max)
-    return () => onFleetShips(d)
-  }
+  static prepare = ({min, max}) => ({gsRateCustom}) =>
+    onFleetShips(computeResult(min, max, gsRateCustom))
 }
 
 export { GSRateDrum }
