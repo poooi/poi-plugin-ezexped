@@ -63,7 +63,7 @@ const defineWorld2 = defineExped => {
       mk.LevelSum(150),
       mk.FleetCompo({AV: 1, CL: 1, DDorDE: 2}),
       mk.TotalAntiAir(200),
-      mk.TotalAsw(200, true),
+      mk.TotalAsw(200),
       mk.TotalLos(140),
     ])
 
@@ -74,7 +74,7 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({CA: 1, CL: 1, DD: 3}),
       mk.TotalFirepower(360),
       mk.TotalAntiAir(160),
-      mk.TotalAsw(160, true),
+      mk.TotalAsw(160),
       mk.TotalLos(140),
     ]
   )
@@ -85,7 +85,7 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({AV: 1, CL: 1, DD: 4}),
       mk.TotalFirepower(400),
       mk.TotalAntiAir(220),
-      mk.TotalAsw(220, true),
+      mk.TotalAsw(220),
       mk.TotalLos(190),
     ]
   )
@@ -97,7 +97,7 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({CA: 2, CL: 1, DD: 2, SSLike: 1}),
       mk.TotalFirepower(500),
       mk.TotalAntiAir(280),
-      mk.TotalAsw(280, true),
+      mk.TotalAsw(280),
       mk.TotalLos(170),
     ]
   )
@@ -108,7 +108,7 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({AV: 1, CL: 1, DD: 2}),
       mk.TotalFirepower(510),
       mk.TotalAntiAir(400),
-      mk.TotalAsw(285, true),
+      mk.TotalAsw(285),
       mk.TotalLos(385),
     ]
   )
@@ -120,7 +120,7 @@ const defineWorld2 = defineExped => {
       mk.FleetCompo({CL: 1, DD: 5}),
       mk.TotalFirepower(410),
       mk.TotalAntiAir(390),
-      mk.TotalAsw(410, true),
+      mk.TotalAsw(410),
       mk.TotalLos(340),
       mk.FSType('CL'),
     ]

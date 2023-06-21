@@ -73,7 +73,7 @@ const defineWorld5 = defineExped => {
       mk.FleetCompo({CA: 1, CL: 1, DD: 3}),
       mk.FSType('CA'),
       mk.TotalFirepower(450),
-      mk.TotalAsw(330, true),
+      mk.TotalAsw(330),
       mk.TotalAntiAir(350),
       mk.TotalLos(250),
     ])
@@ -84,7 +84,7 @@ const defineWorld5 = defineExped => {
       mk.FleetCompo({DD: 5}),
       mk.TotalFirepower(280),
       mk.TotalAntiAir(240),
-      mk.TotalAsw(200, true),
+      mk.TotalAsw(200),
       mk.TotalLos(160),
       mk.DrumCarrierCount(3),
       mk.DrumCount(4),

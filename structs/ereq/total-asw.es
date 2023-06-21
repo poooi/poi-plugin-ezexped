@@ -6,47 +6,37 @@ import {
 
 class TotalAsw {
   /*
-     when noRecon = true, stats from some recon planes should be ignored,
+     note that stats from some recon planes are ignored.
 
      reference: http://wikiwiki.jp/kancolle/?%B1%F3%C0%AC
 
      for exped B1: "但し水偵・水爆・飛行艇の対潜値は無効" (as of Oct 29, 2017)
    */
-  static make = (asw, noRecon=false) => ({asw, noRecon})
+  static make = asw => ({asw})
 
-  static prepare = ({asw, noRecon}) => () =>
+  static prepare = ({asw}) => () =>
     onFleetShips(ships => {
       const totalAsw = _.sum(ships.map(x => x.asw))
-      if (noRecon) {
-        const totalAswRecon = _.sum(
-          _.flatMap(
-            ships,
-            s =>
-              _.flatMap(
-                s.equips,
-                e => e.isRecon ? [e.asw] : []
-              )
-          )
+      const totalAswRecon = _.sum(
+        _.flatMap(
+          ships,
+          s =>
+            _.flatMap(
+              s.equips,
+              e => e.isRecon ? [e.asw] : []
+            )
         )
+      )
 
-        const effectAsw = totalAsw - totalAswRecon
-        const effectAswText = `${effectAsw} = ${totalAsw}-${totalAswRecon}`
-        const {sat,extra} = requireGreaterOrEqual(
-          effectAsw,
-          asw,
-          // show tooltip regardless of sat
-          true,
-        )
-
-        return {sat, extra: {...extra, left: effectAswText}}
-      } else {
-        return requireGreaterOrEqual(
-          totalAsw,
-          asw,
-          // show tooltip regardless of sat
-          true,
-        )
-      }
+      const effectAsw = totalAsw - totalAswRecon
+      const effectAswText = `${effectAsw} = ${totalAsw}-${totalAswRecon}`
+      const {sat,extra} = requireGreaterOrEqual(
+        effectAsw,
+        asw,
+        // show tooltip regardless of sat
+        true,
+      )
+      return {sat, extra: {...extra, left: effectAswText}}
     })
 }
 

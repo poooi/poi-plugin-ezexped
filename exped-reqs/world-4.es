@@ -59,7 +59,7 @@ const defineWorld4 = defineExped => {
       mk.LevelSum(200),
       mk.FleetCompo({AV: 1, DD: 3}),
       mk.TotalAntiAir(240),
-      mk.TotalAsw(240, true),
+      mk.TotalAsw(240),
       mk.TotalLos(300),
     ]
   )
@@ -72,7 +72,7 @@ const defineWorld4 = defineExped => {
       mk.FleetCompo({AS: 1, SSLike: 3}),
       mk.TotalFirepower(60),
       mk.TotalAntiAir(80),
-      mk.TotalAsw(50, true),
+      mk.TotalAsw(50),
     ]
   )
 
@@ -84,7 +84,7 @@ const defineWorld4 = defineExped => {
       mk.FleetCompo({AS: 1, SSLike: 3}),
       mk.TotalFirepower(115),
       mk.TotalAntiAir(90),
-      mk.TotalAsw(70, true),
+      mk.TotalAsw(70),
       mk.TotalLos(95),
     ]
   )

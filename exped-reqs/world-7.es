@@ -8,7 +8,7 @@ const defineWorld7 = defineExped => {
       mk.FleetCompo({DDorDE: 3}),
       mk.TotalFirepower(60),
       mk.TotalAntiAir(80),
-      mk.TotalAsw(210, true),
+      mk.TotalAsw(210),
     ]
   )
   defineExped(42)(
@@ -42,7 +42,7 @@ const defineWorld7 = defineExped => {
       ]),
       mk.TotalFirepower(500),
       mk.TotalAntiAir(280),
-      mk.TotalAsw(280, true),
+      mk.TotalAsw(280),
       mk.TotalLos(170),
     ]
   )
@@ -59,7 +59,7 @@ const defineWorld7 = defineExped => {
       mk.DrumCarrierCount(3),
       mk.DrumCount(6),
       mk.TotalAntiAir(200),
-      mk.TotalAsw(200, true),
+      mk.TotalAsw(200),
       mk.TotalLos(150),
     ]
   )
@@ -72,7 +72,7 @@ const defineWorld7 = defineExped => {
       DDorDE: 4,
     }),
     mk.TotalAntiAir(240),
-    mk.TotalAsw(300, true),
+    mk.TotalAsw(300),
     mk.TotalLos(180),
   ])
   defineExped(46)([
@@ -85,7 +85,7 @@ const defineWorld7 = defineExped => {
     }),
     mk.TotalFirepower(350),
     mk.TotalAntiAir(250),
-    mk.TotalAsw(220, true),
+    mk.TotalAsw(220),
     mk.TotalLos(190),
   ])
 }
