@@ -158,11 +158,12 @@ const computeBonus = fleet => {
 
   const dhtCount = countBns05 + countBns03 + countBns02 + countBns01
   const aveImp = dhtCount === 0 ? 0 : impLvlCount / dhtCount
-  const b1BeforeCap =
-    0.05 * (countBns05 + spShipCount) +
-    0.03 * countBns03 +
-    0.02 * countBns02 +
-    0.01 * countBns01
+  const b1BeforeCap = (
+    5 * (countBns05 + spShipCount) +
+    3 * countBns03 +
+    2 * countBns02 +
+    countBns01
+  ) / 100
   const b1 = Math.min(0.2, b1BeforeCap)
   const bStar = b1 * aveImp / 100
 
