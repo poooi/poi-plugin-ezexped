@@ -47,43 +47,53 @@ const computeTokuBonus = (normalCount, tokuCount) => {
 
 /*
 
-   returns a structure:
+  Returns a structure:
 
-   { impLvlCount:
-       improvement level count of daihatsu-class equipments
-   , dhtCount:
-       # of daihatsu-class equipments
-   , normalBonus:
-       bonus granted by all Daihatsu-class equipments and Kinu K2
-       without taking into account improvements
-       referred to as "B_1" by wikia
-   , normalBonusStar:
-       bouns granted by improvement levels and normalBonus,
-       referred to as "B_star" by wikia
-   , tokuBonus:
-       extra bonus factor granted by Toku Daihatsus.
-       referred to as "B_2 + ?" part by wikia
-       (however this part is computed according to wikiwiki
-       because which seems to be more accurate)
-   }
+  { impLvlCount:
+      improvement level count of daihatsu-class equipments
+  , dhtCount:
+      # of daihatsu-type equipments
+  , normalBonus:
+      bonus granted by all Daihatsu-type equipments and Kinu K2
+      without taking into account improvements
+      referred to as "B_1" by wikia
+  , normalBonusStar:
+      bouns granted by improvement levels and normalBonus,
+      referred to as "B_star" by wikia
+  , tokuBonus:
+      extra bonus factor granted by Toku Daihatsus.
+      referred to as "B_2 + ?" part by wikia
+      (however this part is computed according to wikiwiki
+      because which seems to be more accurate)
+  }
 
+   Ref: wikiwiki (see comment in header)
  */
 const computeBonus = fleet => {
-  // Reference: wikiwiki (see comment in header)
   /*
-    Basic bonus table (wikiwiki, as of Apr 11, 2022)
+    Basic bonus table
+    Ref: https://en.kancollewiki.net/Expeditions#Base_Daihatsu_Bonus (as of Jun 20, 2023)
 
     - 大発動艇: 5%
     - 特大発動艇: 5%
+
     - 武装大発: 3%
+
     - 大発動艇(八九式中戦車＆陸戦隊): 2%
     - 装甲艇(AB艇): 2%
     - 大発動艇(II号戦車/北アフリカ仕様): 2%
     - 特大発動艇＋一式砲戦車: 2%
+
     - 特二式内火艇: 1%
+
+    Note: DLC bonus seems to be an equipment-specific thing so getting access to
+    equip type won't help much, instead we just update the lookup table for the time being.
 
    */
 
+  /*
+    Now count equipments by bonus bucket (variable names should be self-explanatory).
+   */
   let countBns05 = 0
   let countBns03 = 0
   let countBns02 = 0
@@ -91,8 +101,10 @@ const computeBonus = fleet => {
 
   let tokuCount = 0
 
-  // number of special ships (only applicable to Kinu K2 for now)
-  // that grant +5% income (before-cap)
+  /*
+    Number of special ships (only applicable to Kinu K2 for now)
+    that grant +5% income (before-cap)
+   */
   let spShipCount = 0
   let impLvlCount = 0
 
@@ -100,14 +112,11 @@ const computeBonus = fleet => {
   // um, we could do some "pure functional" stuff
   // but I'm sure that'll be awkward.
   fleet.map(ship => {
+    // Kinu K2
     if (ship.mstId === 487)
       ++spShipCount
 
     ship.equips.map(equip => {
-      const countImp = () => {
-        impLvlCount += equip.level
-      }
-
       if ([
         // 大発動艇
         68,
@@ -118,13 +127,11 @@ const computeBonus = fleet => {
           ++tokuCount
         }
         ++countBns05
-        countImp()
       } else if (
         // 武装大発
         equip.mstId === 409
       ) {
         ++countBns03
-        countImp()
       } else if ([
         // 大発動艇(八九式中戦車＆陸戦隊)
         166,
@@ -136,14 +143,16 @@ const computeBonus = fleet => {
         449,
       ].includes(equip.mstId)) {
         ++countBns02
-        countImp()
       } else if (
         // 特二式内火艇
         equip.mstId === 167
       ) {
         ++countBns01
-        countImp()
+      } else {
+        // early return for equipments whose imp level don't matter.
+        return
       }
+      impLvlCount += equip.level
     })
   })
 
@@ -158,12 +167,10 @@ const computeBonus = fleet => {
   const bStar = b1 * aveImp / 100
 
   /*
-    Regarding source bonus, it isn't clear what should be considered as
-    "大発" so here let's just be lazy and count all those that has non-zero bonus
-    (which we have already counted) and exclude "特大発動艇" specifically.
+    Since countBns05 is just counting 大発動艇 + 特大発動艇, we have enough info to refer to
+    tokuBonus table.
 
-    TODO: we could fix this by having access to $const to get category given equipId,
-    which would require us to wire-in a selector.
+    Ref: https://bbs.nga.cn/read.php?pid=616486588&opt=128
    */
   const tokuBonus = computeTokuBonus(countBns05 - tokuCount, tokuCount)
 
