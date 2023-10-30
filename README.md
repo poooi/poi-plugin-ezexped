@@ -7,6 +7,10 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
+### 1.9.1
+
+- Improved translation in JP (Thanks to [isso0424](https://github.com/isso0424))
+
 ### 1.9.0
 
 - Fix popover styling.
