@@ -28,6 +28,7 @@ import {
   getExpedInfoFuncSelector,
   useitemsSelector,
 } from '../../selectors'
+import { CompatClasses } from '../compat'
 
 const useItemNameFuncSelector = createSelector(
   useitemsSelector,
@@ -115,7 +116,7 @@ const SIcon = styled(SlotitemIcon)`
   }
 `
 const GSTooltip = styled(Tooltip)`
-  &.${Classes.POPOVER_WRAPPER}, &.bp4-popover2-target {
+  &.${Classes.POPOVER_WRAPPER}, &.${CompatClasses.POPOVER_TARGET} {
     flex: 0 0 3em;
   }
 `

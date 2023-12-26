@@ -9,6 +9,7 @@ import {
   kanceptsExportShipListSelector,
   kanceptsUrlSelector,
 } from '../../../../selectors'
+import { CompatClasses } from '../../../compat'
 import { __ } from '../../../../tr'
 import { makeLink } from '../../../../kancepts'
 
@@ -54,7 +55,7 @@ class KanceptsExporter extends PureComponent {
       >
         <Button
           small
-          className={[Classes.POPOVER_DISMISS,'bp4-popover2-dismiss'].join(' ')}
+          className={[Classes.POPOVER_DISMISS,CompatClasses.POPOVER_DISMISS].join(' ')}
           style={{marginRight: '.5em'}}
           onClick={this.handleOpen}
           text={__('Kancepts.Launch')}

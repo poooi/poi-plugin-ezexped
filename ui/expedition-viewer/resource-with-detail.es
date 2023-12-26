@@ -5,11 +5,12 @@ import { Tooltip } from 'views/components/etc/overlay'
 
 import { __ } from '../../tr'
 import { PTyp } from '../../ptyp'
+import { CompatClasses } from '../compat'
 
 import { IconAndLabel } from './icon-and-label'
 
 const RTooltip = styled(Tooltip)`
-  & .${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
+  & .${Classes.POPOVER_TARGET}, &.${CompatClasses.POPOVER_TARGET} {
     width: 100%;
   }
 `

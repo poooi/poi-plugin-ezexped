@@ -15,14 +15,15 @@ import {
   expedTableExpandedSelector,
   uiWidthSelector,
 } from '../../../selectors'
+import { CompatClasses } from '../../compat'
 import { ExpeditionTable } from './expedition-table'
 
 const PPopover = styled(Popover)`
-  & > span.${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
+  & > span.${Classes.POPOVER_TARGET}, &.${CompatClasses.POPOVER_TARGET} {
     width: 100%;
   }
 
-  & > span.${Classes.POPOVER_TARGET} > button,  &.bp4-popover2-target > button {
+  & > span.${Classes.POPOVER_TARGET} > button, &.${CompatClasses.POPOVER_TARGET} > button {
     width: 100%;
   }
 `

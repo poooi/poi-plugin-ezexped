@@ -8,10 +8,11 @@ import {
 import styled from 'styled-components'
 import { Tooltip } from 'views/components/etc/overlay'
 import { PTyp } from '../../../../ptyp'
+import { CompatClasses } from '../../../compat'
 import { ExpedTooltipContent } from './exped-tooltip-content'
 
 const ETooltip = styled(Tooltip)`
-  & .${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
+  & .${Classes.POPOVER_TARGET}, &.${CompatClasses.POPOVER_TARGET} {
     width: 100%;
   }
 `
@@ -24,12 +25,12 @@ const ThisTooltip = styled(ETooltip)`
   margin: 0;
   padding: 0;
 
-  & .${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
+  & .${Classes.POPOVER_TARGET}, &.${CompatClasses.POPOVER_TARGET} {
     width: 100%;
     height: 100%;
   }
 
-  & .${Classes.POPOVER_TARGET} button, &.bp4-popover2-target button {
+  & .${Classes.POPOVER_TARGET} button, &.${CompatClasses.POPOVER_TARGET} button {
     height: 100%;
     min-height: 100%;
   }
@@ -84,7 +85,7 @@ class ExpeditionButton extends PureComponent {
         )}
       >
         <Button
-          className={[Classes.POPOVER_DISMISS,btnClassName,'bp4-popover2-dismiss'].join(' ')}
+          className={[Classes.POPOVER_DISMISS,btnClassName,CompatClasses.POPOVER_DISMISS].join(' ')}
           intent={ready ? 'primary' : 'none'}
           style={{
             width: '100%',

@@ -12,6 +12,7 @@ import {
   fleetIdSelector,
   mkFleetInfoSelector,
 } from '../../selectors'
+import { CompatClasses } from '../compat'
 import {
   fleetStateSelector,
 } from './selectors'
@@ -44,7 +45,7 @@ const FP0Button = styled(FPButton)`
 const FTooltip = styled(Tooltip)`
   flex: 1 1 0;
 
-  & > span.${Classes.POPOVER_TARGET}, &.bp4-popover-target {
+  & > span.${Classes.POPOVER_TARGET}, &.${CompatClasses.POPOVER_TARGET} {
     display: flex;
     width: 100%;
   }
