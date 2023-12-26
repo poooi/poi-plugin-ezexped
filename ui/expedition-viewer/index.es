@@ -7,7 +7,6 @@ import {
   Classes,
 } from '@blueprintjs/core'
 import styled from 'styled-components'
-import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { modifyObject } from 'subtender'
 
@@ -318,19 +317,12 @@ class ExpeditionViewer extends Component {
           </div>
           <ButtonGroup>
             <Button
+              intent={this.props.greatSuccess ? 'primary' : 'none'}
               style={{
                 flex: 1, display: 'flex', alignItems: 'baseline',
                 width: 0,
               }}
               onClick={this.handleToggleGS}>
-              <FontAwesome
-                className={
-                  this.props.greatSuccess ?
-                    `poi-ship-cond-53 dark` :
-                    ''
-                }
-                style={{marginRight: 5}}
-                name={this.props.greatSuccess ? "check-square-o" : "square-o"} />
               <span
                 className={
                   this.props.greatSuccess ? `poi-ship-cond-53 dark` : ''}
