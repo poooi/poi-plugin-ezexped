@@ -7,7 +7,7 @@ check expedition requirements and estimate expedition income accurately.
 
 [![npm version](https://badge.fury.io/js/poi-plugin-ezexped.svg)](https://badge.fury.io/js/poi-plugin-ezexped)
 
-### 1.9.2 (pending)
+### 1.9.2
 
 - Some UI tweaks and adjustment for Blueprint 5.
 
