@@ -20,13 +20,19 @@ const actionCreators = {
     type: '@poi-plugin-ezexped@AutoSwitchToNextAvailable',
     reason,
   }),
-  changeFleetFocusInMainUI: (fleetId, tabSwitch=true) => ({
-    type: '@@TabSwitch',
-    tabInfo: {
+  changeFleetFocusInMainUI: (fleetId, tabSwitch=true) => {
+    const tabInfo = {
       activeFleetId: fleetId-1,
       ...(tabSwitch ? {activeMainTab: 'shipView'} : {}),
-    },
-  }),
+    }
+    // for compat. newer version needs this payload bs wrapper.
+    // TODO: maybe do a version constraint next release
+    return {
+      type: '@@TabSwitch',
+      tabInfo: tabInfo,
+      payload: {tabInfo: tabInfo},
+    }
+  },
   setWidth: width => ({
     type: '@poi-plugin-ezexped@SetWidth',
     width,
