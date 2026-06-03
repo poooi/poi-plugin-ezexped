@@ -91,6 +91,7 @@ class ExpeditionPicker extends PureComponent {
         autoFocus={false}
       >
         <Button
+          style={{'width': '100%'}}
           text={`${displayNum} ${info.name}`}
         />
       </PPopover>
