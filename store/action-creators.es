@@ -1,6 +1,18 @@
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 
+const _createTabSwitchAction = (() => {
+  try {
+    const { createTabSwitchAction } = require('views/redux/actions/ui')
+    if (typeof createTabSwitchAction === 'function') {
+      return createTabSwitchAction
+    }
+  } catch (e) {
+    // module not found -> legacy poi
+  }
+  return null
+})()
+
 const actionCreators = {
   pStateReady: pState => ({
     type: '@poi-plugin-ezexped@PStateReady',
@@ -25,13 +37,10 @@ const actionCreators = {
       activeFleetId: fleetId-1,
       ...(tabSwitch ? {activeMainTab: 'shipView'} : {}),
     }
-    // for compat. newer version needs this payload bs wrapper.
-    // TODO: maybe do a version constraint next release
-    return {
-      type: '@@TabSwitch',
-      tabInfo: tabInfo,
-      payload: {tabInfo: tabInfo},
+    if (_createTabSwitchAction) {
+      return _createTabSwitchAction({ tabInfo })
     }
+    return { type: '@@TabSwitch', tabInfo }
   },
   setWidth: width => ({
     type: '@poi-plugin-ezexped@SetWidth',
